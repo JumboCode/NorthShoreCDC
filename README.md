@@ -1,2 +1,4 @@
 # NorthShoreCDC
-North Shore Community Development Coalition 
+North Shore Community Development Coalition
+
+Ian Mao
