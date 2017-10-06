@@ -1,0 +1,22 @@
+{% block content %}
+  <h3> Complete below</h3>
+    <p>Please complete the form below<p>
+    <form action="" method="post" name="api">
+      <p> Please enter a movie you want to add.: <br>
+      {{ form.title(size=40) }}<br>
+      {% for error in form.title.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p> Please enter the year the movie was released.: <br>
+      {{ form.year(size=40) }} <br>
+      {% for error in form.year.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p> Please enter the rating you give the movie out of 10.: <br>
+      {{ form.rating(size=40) }} <br>
+      {% for error in form.rating.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p><input type ="submit" value="Add" class="btn btn-sm btn-primary"></p>
+    </form>
+{% endblock %}
