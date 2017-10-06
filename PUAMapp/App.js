@@ -1,22 +1,22 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
-import {StackNavigator} from 'react-navigation'
+import { StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
+import {StackNavigator} from 'react-navigation';
 import MapView from 'react-native-maps';
+
 
 // TODO turn this into a navigation thingy
 
-const App = StackNavigator({
-  Welcome: {screen: WelcomeScreen},
-  MapScreen: {screen: MapScreen}
-})
-
-export default App;
-
-
 class WelcomeScreen extends React.Component {
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.container}>
+        <Button
+          title="Go to Map"
+          onPress={() =>
+          navigate('MapScreen')
+        }
+        />
         <Text>Open up App.js to start working on your app!</Text>
         <Text>Changes you make will automatically reload.</Text>
         <Text>Shake your phone to open the developer menu.</Text>
@@ -43,6 +43,14 @@ class MapScreen extends React.Component {
         )
     }
 }
+
+
+const App = StackNavigator({
+  Welcome: {screen: WelcomeScreen},
+  MapScreen: {screen: MapScreen}
+});
+
+export default App;
 
 const styles = StyleSheet.create({
   container: {
