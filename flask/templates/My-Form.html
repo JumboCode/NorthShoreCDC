@@ -2,6 +2,7 @@
   <h3> Complete below</h3>
     <p>Please complete the form below<p>
     <form action="" method="post" name="api">
+      {{ form.csrf_token }}
       <p> Please enter a movie you want to add.: <br>
       {{ form.title(size=40) }}<br>
       {% for error in form.title.errors %}
