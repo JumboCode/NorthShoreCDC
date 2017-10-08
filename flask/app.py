@@ -1,13 +1,16 @@
 from flask import Flask, render_template
 from firebase import firebase
 import os
-from flask.ext.wtf import Form
+from flask.ext.wtf import FlaskForm as Form
 from wtforms.fields import StringField, BooleanField
 from wtforms.validators import DataRequired
 from flask_wtf.csrf import CSRFProtect
 
+firebase_path = os.environ.get('FIREBASE_PATH')
+firebase = firebase.FirebaseApplication(firebase_path, None)
+
 app = Flask(__name__)
-app.secret_key = os.environ.get('FIREBASE_KEY', '/.env')
+app.secret_key = os.environ.get('APP_KEY')
 
 class FirePut(Form):
     title = StringField('title', validators=[DataRequired()])
@@ -24,9 +27,8 @@ def fireput():
         count += 1
         putData = {'Title' : form.title.data, 'Year' : form.year.data,
                    'Rating' : form.rating.data}
-        firebase.put('/films', 'film' + str(count), putData)
-        return render_template('api-put-result.html', form=form,
-                                putData=putData)
+        firebase.put('/films', putData['Title'], putData)
+        # return render_template('form-result.html', putData=putData)
     return render_template('My-Form.html', form=form)
 
 @app.route('/')
