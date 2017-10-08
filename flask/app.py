@@ -28,7 +28,7 @@ def fireput():
         putData = {'Title' : form.title.data, 'Year' : form.year.data,
                    'Rating' : form.rating.data}
         firebase.put('/films', putData['Title'], putData)
-        # return render_template('form-result.html', putData=putData)
+        return render_template('form-result.html', putData=putData)
     return render_template('My-Form.html', form=form)
 
 @app.route('/')
