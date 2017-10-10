@@ -2,13 +2,21 @@
 ## North Shore Community Development Coalition
 
 ### Running the Flask App Locally
-Create a `.env` file in your root project directory folder with the following keys:
+* Set the following environment variables. 
 
 <pre>
-FIREBASE_KEY =
+export FIREBASE_PATH="<firebase path>"
+export APP_KEY="<app key>"
+export FLASK_APP=app.py
 </pre>
 
-To get the blank value, grab the secret key from our firebase account under project settings.
+* Then use the command <pre>flask run</pre> to start the server.
+
+
+### Running the PUAM React-Native App Locally
+
+* Install dependencies with <pre> npm install </pre>
+* Run the server with <pre> npm run start </pre>
 
 ### Team
 - Lillianna Levonick
