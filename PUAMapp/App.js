@@ -3,6 +3,11 @@ import { StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
 import {StackNavigator} from 'react-navigation';
 import MapView from 'react-native-maps';
 
+import HomePage from './HomePage'
+import GalleryPage from './GalleryPage'
+import ExplorePage from './ExplorePage'
+import ContactPage from './ContactPage'
+
 
 // TODO turn this into a navigation thingy
 
@@ -46,8 +51,10 @@ class MapScreen extends React.Component {
 
 
 const App = StackNavigator({
-  Welcome: {screen: WelcomeScreen},
-  MapScreen: {screen: MapScreen}
+  HomePage: {screen: HomePage},
+  ExplorePage: {screen: ExplorePage},
+  GalleryPage: {screen: GalleryPage},
+  ContactPage: {screen: ContactPage}
 });
 
 export default App;
