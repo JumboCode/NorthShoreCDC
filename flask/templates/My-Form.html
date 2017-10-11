@@ -4,51 +4,53 @@
     <form action="" method="post" name="api">
       {{ form.csrf_token }}
       <p> Please enter a photo of the mural you want to add.: <br>
-      {{ form.title(size=40) }}<br>
+      {{ form.photo(size=40) }}<br>
+      {% for error in form.photo.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p> Please enter the title of the mural: <br>
+      {{ form.title(size=40) }} <br>
       {% for error in form.title.errors %}
         <span style="color: red;">[{{ error }}]</span>
-      <p> Please enter the title of the mural: <br>
-      {{ form.rating(size=40) }} <br>
-      {% for error in form.rating.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
       <p> Please enter the artist: <br>
-      {{ form.rating(size=40) }} <br>
-      {% for error in form.rating.errors %}
+      {{ form.artist(size=40) }} <br>
+      {% for error in form.artist.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
       <p> Please enter the latitude: <br>
-      {{ form.year(size=40) }} <br>
-      {% for error in form.year.errors %}
+      {{ form.lat(size=40) }} <br>
+      {% for error in form.lat.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
       <p> Please enter the longitude: <br>
-      {{ form.rating(size=40) }} <br>
-      {% for error in form.rating.errors %}
+      {{ form.longitude(size=40) }} <br>
+      {% for error in form.longitude.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
       <p> Please enter the street address: <br>
-      {{ form.rating(size=40) }} <br>
-      {% for error in form.rating.errors %}
+      {{ form.streetaddress(size=40) }} <br>
+      {% for error in form.streetaddress.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
       <p> Please enter the state: <br>
-      {{ form.rating(size=40) }} <br>
-      {% for error in form.rating.errors %}
+      {{ form.state(size=40) }} <br>
+      {% for error in form.state.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
       <p> Please enter the zipcode: <br>
-      {{ form.rating(size=40) }} <br>
-      {% for error in form.rating.errors %}
+      {{ form.zipcode(size=40) }} <br>
+      {% for error in form.zipcode.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
       <p> Please enter the month the mural was painted: <br>
-      {{ form.rating(size=40) }} <br>
-      {% for error in form.rating.errors %}
+      {{ form.month(size=40) }} <br>
+      {% for error in form.month.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
       <p> Please enter the year the mural was painted: <br>
-      {{ form.rating(size=40) }} <br>
-      {% for error in form.rating.errors %}
+      {{ form.year(size=40) }} <br>
+      {% for error in form.year.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
       <p><input type ="submit" value="Add" class="btn btn-sm btn-primary"></p>

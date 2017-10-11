@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from firebase import firebase
 import os
-from flask.ext.wtf import FlaskForm as Form
+from flask_wtf import FlaskForm as Form
 from wtforms.fields import StringField, BooleanField
 from wtforms.validators import DataRequired
 from flask_wtf.csrf import CSRFProtect
