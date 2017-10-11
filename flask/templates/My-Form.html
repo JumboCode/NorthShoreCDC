@@ -3,17 +3,50 @@
     <p>Please complete the form below<p>
     <form action="" method="post" name="api">
       {{ form.csrf_token }}
-      <p> Please enter a movie you want to add.: <br>
+      <p> Please enter a photo of the mural you want to add.: <br>
       {{ form.title(size=40) }}<br>
       {% for error in form.title.errors %}
         <span style="color: red;">[{{ error }}]</span>
+      <p> Please enter the title of the mural: <br>
+      {{ form.rating(size=40) }} <br>
+      {% for error in form.rating.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      <p> Please enter the artist: <br>
+      {{ form.rating(size=40) }} <br>
+      {% for error in form.rating.errors %}
+        <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
-      <p> Please enter the year the movie was released.: <br>
+      <p> Please enter the latitude: <br>
       {{ form.year(size=40) }} <br>
       {% for error in form.year.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
-      <p> Please enter the rating you give the movie out of 10.: <br>
+      <p> Please enter the longitude: <br>
+      {{ form.rating(size=40) }} <br>
+      {% for error in form.rating.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p> Please enter the street address: <br>
+      {{ form.rating(size=40) }} <br>
+      {% for error in form.rating.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p> Please enter the state: <br>
+      {{ form.rating(size=40) }} <br>
+      {% for error in form.rating.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p> Please enter the zipcode: <br>
+      {{ form.rating(size=40) }} <br>
+      {% for error in form.rating.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p> Please enter the month the mural was painted: <br>
+      {{ form.rating(size=40) }} <br>
+      {% for error in form.rating.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p> Please enter the year the mural was painted: <br>
       {{ form.rating(size=40) }} <br>
       {% for error in form.rating.errors %}
         <span style="color: red;">[{{ error }}]</span>

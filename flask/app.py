@@ -15,8 +15,8 @@ app.secret_key = os.environ.get('APP_KEY')
 class FirePut(Form):
     photo = StringField('Photo', validators=[DataRequired()])
     lat = StringField('Lat', validators=[DataRequired()])
-    longitude = StringField('Longitute', validators=[DataRequired()])
-    streetaddress = StringField('Street Address', validators=[DataRequired()])
+    longitude = StringField('Long', validators=[DataRequired()])
+    streetaddress = StringField('Street_Address', validators=[DataRequired()])
     city = StringField('City', validators=[DataRequired()])
     state = StringField('State', validators=[DataRequired()])
     zipcode = StringField('Zipcode', validators=[DataRequired()])
@@ -34,7 +34,7 @@ def fireput():
         global count
         count += 1
         putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
-        			'Long' : form.longitude.data, 'Street Address' : form.streetaddress.data,
+        			'Long' : form.longitude.data, 'Street_Address' : form.streetaddress.data,
         			'City' : form.city.data, 'State' : form.state.data,
         			'Zipcode' : form.zipcode.data, 'Artist' : form.artist.data,
         			'Title' : form.title.data, 'Month' : form.month.data,
