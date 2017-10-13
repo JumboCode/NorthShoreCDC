@@ -18,7 +18,7 @@ export default class HomePage extends React.Component {
             <TouchableHighlight
               style = {styles.buttonLink}
               onPress={() =>
-              navigate('GalleryPage')
+              navigate('GalleryPage') 
             }>
               <Text style = {styles.buttonText}>Gallery</Text>
             </TouchableHighlight>
