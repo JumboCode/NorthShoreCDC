@@ -33,6 +33,11 @@
       {% for error in form.streetaddress.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
+      <p> Please enter the city: <br>
+      {{ form.city(size=40) }} <br>
+      {% for error in form.city.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
       <p> Please enter the state: <br>
       {{ form.state(size=40) }} <br>
       {% for error in form.state.errors %}
