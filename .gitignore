@@ -1,0 +1,7 @@
+./PUAMapp/node_modules
+.DS_Store
+*.pyc
+*.swp
+*.env
+env/
+flask/.python-version
