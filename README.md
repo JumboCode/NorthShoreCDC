@@ -25,3 +25,4 @@ export FLASK_APP=app.py
 - Wayne Yirong Tang
 - Suruchi Devanahalli
 - Dakota LeRoy
+- Emma Pannullo
