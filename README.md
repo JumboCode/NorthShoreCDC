@@ -1,3 +1,8 @@
+
+# NorthShoreCDC
+North Shore Community Development Coalition
+
+
 # Punto Urban Art Museum
 ## North Shore Community Development Coalition
 
@@ -25,3 +30,4 @@ export FLASK_APP=app.py
 - Wayne Yirong Tang
 - Suruchi Devanahalli
 - Dakota LeRoy
+- Emma Pannullo

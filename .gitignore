@@ -3,4 +3,5 @@
 *.pyc
 *.swp
 *.env
+env/
 flask/.python-version
