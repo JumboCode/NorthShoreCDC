@@ -13,7 +13,7 @@ export default class ExplorePage extends React.Component {
             <View style = {{flex: 1}}>
             <MapView
               style = {{flex: 1 }}
-              initialRegion={{
+              region = {{
                 latitude: 37,
                 longitude: -122,
                 latitudeDelta: 0.0922,
