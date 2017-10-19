@@ -7,6 +7,7 @@ import HomePage from './HomePage'
 import GalleryPage from './GalleryPage'
 import ExplorePage from './ExplorePage'
 import ContactPage from './ContactPage'
+import MuralInfoPage from './MuralInfoPage'
 
 
 // TODO turn this into a navigation thingy
@@ -54,7 +55,8 @@ const App = StackNavigator({
   HomePage: {screen: HomePage},
   ExplorePage: {screen: ExplorePage},
   GalleryPage: {screen: GalleryPage},
-  ContactPage: {screen: ContactPage}
+  ContactPage: {screen: ContactPage},
+  MuralInfoPage: {screen: MuralInfoPage}
 });
 
 export default App;

@@ -6,6 +6,9 @@ import MapView from 'react-native-maps';
 
 export default class ExplorePage extends React.Component {
     render() {
+        
+        const { navigate } = this.props.navigation;
+        
         return (
             <View style = {{flex: 1}}>
             <MapView
@@ -16,19 +19,17 @@ export default class ExplorePage extends React.Component {
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}>
-              <MapView.Marker
+                <MapView.Marker
                   coordinate= {{latitude: 37, longitude: -122}}
-                  title= "titleeee"
-                  description= "descriptiooooon"
                   pinColor = 'pink'
+                  onPress = { () => { navigate('MuralInfoPage') } }
                 />
                 <MapView.Marker
                     coordinate= {{latitude: 38, longitude: -122}}
-                    title= "titleeee"
-                    description= "descriptiooooon"
                     pinColor = 'green'
+                    onPress = { () => { navigate('MuralInfoPage') } }
                   />
-              </MapView>
+                  </MapView>
             </View>
         )
     }
