@@ -54,7 +54,7 @@ const App = StackNavigator({
   HomePage: {screen: HomePage},
   ExplorePage: {screen: ExplorePage},
   GalleryPage: {screen: GalleryPage},
-  ContactPage: {screen: ContactPage}
+  ContactPage: {screen: ContactPage},
 });
 
 export default App;

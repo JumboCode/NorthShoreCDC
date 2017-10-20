@@ -1,9 +1,9 @@
-
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableHighlight} from 'react-native';
 import Dimensions from 'Dimensions';
+import Accordion from 'react-native-collapsible/Accordion';
 
-export default class HomePage extends React.Component {
+export default class ContactPage extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
@@ -11,25 +11,25 @@ export default class HomePage extends React.Component {
             <TouchableHighlight
               style = {styles.buttonLink}
               onPress={() =>
-              navigate('ExplorePage')
+              navigate('InfoPage')
             }>
-              <Text style = {styles.buttonText}>Explore</Text>
+              <Text style = {styles.buttonText}>Information</Text>
             </TouchableHighlight>
             <TouchableHighlight
               style = {styles.buttonLink}
               onPress={() =>
               navigate('GalleryPage')
             }>
-              <Text style = {styles.buttonText}>Gallery</Text>
+              <Text style = {styles.buttonText}>Administrative</Text>
             </TouchableHighlight>
             <TouchableHighlight
               style = {styles.buttonLink}
               onPress={() =>
               navigate('ContactPage')
             }>
-              <Text style = {styles.buttonText}>Contact</Text>
+              <Text style = {styles.buttonText}>Social Media</Text>
             </TouchableHighlight>
-</View>
+            </View>
         )
     }
 }
@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     color: 'white'
   }
 });
-
 
 
 
