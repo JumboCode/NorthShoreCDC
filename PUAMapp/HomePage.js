@@ -20,7 +20,7 @@ export default class HomePage extends React.Component {
               <TouchableHighlight
                 style = {styles.greyButton}
                 onPress={() =>
-                navigate('GalleryPage') 
+                navigate('GalleryPage')
               }>
                 <Text style = {styles.buttonText}>Gallery</Text>
               </TouchableHighlight>
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     position: 'absolute',
-    resizeMode: 'stretch',
+    resizeMode: 'cover',
     height: '100%',
     width: '100%'
   },
@@ -80,8 +80,3 @@ const styles = StyleSheet.create({
     color: 'white'
   }
 });
-
-
-
-
-
