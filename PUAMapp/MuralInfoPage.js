@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Button,
+          Animated } from 'react-native';
 
 
 export default class MuralInfoPage extends React.Component {
@@ -19,9 +20,7 @@ export default class MuralInfoPage extends React.Component {
     render() {
         return (
             <View style = {styles.container}>
-              {this.state.descriptionVisible && 
-                <View style = {styles.darkOverlay}/>
-              }
+              <OpacityView style = {styles.darkOverlay} visible = {this.state.descriptionVisible}/>
               <View style = {styles.textContainer}>
                 <View style = {styles.top}>
                   <View style = {styles.info}>
@@ -33,14 +32,12 @@ export default class MuralInfoPage extends React.Component {
                     </View>
                   </View>
                   <View style = {styles.button}>
-                    <Button title = "i" onPress = {this.toggleShowDescription.bind(this)} />
+                    <Button title = "CLICK ME" onPress = {this.toggleShowDescription.bind(this)} />
                   </View>
                 </View>
-                { this.state.descriptionVisible &&
-                  <View style = {styles.description}>
-                    <Text>This is the description w00t</Text>
-                  </View>
-                }
+                <DrawerView style = {styles.description} visible = {this.state.descriptionVisible}>
+                  <Text>This is the description w00t</Text>
+                </DrawerView>
               </View>
             </View>
         )
@@ -86,7 +83,101 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     backgroundColor: 'grey',
-    opacity: .25
   }
 });
+
+
+// A view that transitions from hidden to visible and back
+class OpacityView extends React.Component {
+  
+  constructor(props) {
+    super(props)
+    opacity = 0.0;
+    if (props.visible) {
+      opacity = 1.0
+    }
+    this.state = {
+      opacity: new Animated.Value(opacity)
+    };
+  }
+  
+  componentWillReceiveProps(nextProps) {
+    
+    toValue = 0.0
+    if (nextProps.visible) {
+      toValue = 1.0
+    }
+    
+    Animated.timing(                  // Animate over time
+      this.state.opacity,            // The animated value to drive
+      {
+        toValue: toValue,                   // Animate to opacity: 1 (opaque)
+        duration: 1 * 500,              // Make it take a while
+      }
+    ).start();                        // Starts the animation    
+  }
+
+  render() {
+    let { opacity } = this.state;
+    
+    let style = StyleSheet.flatten([this.props.style, {opacity: opacity}])
+    
+    return (
+      <Animated.View                 // Special animatable View
+        style={style}
+      >
+        {this.props.children}
+      </Animated.View>
+    );
+  }
+}
+
+// A view that transitions from hidden to visible by rising
+// Hidden : margin-top = a big number
+// Visible : margin-top = 0
+class DrawerView extends React.Component {
+  
+  constructor(props) {
+    super(props)
+    margin = 1000;
+    if (props.visible) {
+      margin = 0
+    }
+    this.state = {
+      margin: new Animated.Value(margin)
+    };
+  }
+  
+  componentWillReceiveProps(nextProps) {
+    
+    toValue = 1000
+    if (nextProps.visible) {
+      toValue = 0
+    }
+    
+    Animated.timing(
+      this.state.margin,
+      {
+        toValue: toValue,
+        duration: 1 * 500,
+      }
+    ).start();                        // Starts the animation    
+  }
+
+  render() {
+    let { margin } = this.state;
+    
+    let style = StyleSheet.flatten([this.props.style, {marginTop: margin}])
+    
+    return (
+      <Animated.View                 // Special animatable View
+        style={style}
+      >
+        {this.props.children}
+      </Animated.View>
+    );
+  }
+}
+
+
 
