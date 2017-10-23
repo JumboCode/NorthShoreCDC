@@ -5,21 +5,22 @@ import { StyleSheet, Text, View, Image, ScrollView, Button,
 
 
 export default class MuralInfoPage extends React.Component {
-  
+
     constructor(props) {
       super(props)
       this.state = {
         descriptionVisible: false
       }
     }
-    
+
     toggleShowDescription() {
       this.setState({descriptionVisible: !this.state.descriptionVisible})
     }
-    
+
     render() {
         return (
             <View style = {styles.container}>
+              <Image style={{flex: 1, position: "absolute", resizeMode: 'cover', height: '100%', width: '100%'}} source={{uri: "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg"}} />
               <OpacityView style = {styles.darkOverlay} visible = {this.state.descriptionVisible}/>
               <View style = {styles.textContainer}>
                 <View style = {styles.top}>
@@ -36,7 +37,7 @@ export default class MuralInfoPage extends React.Component {
                   </View>
                 </View>
                 <DrawerView style = {styles.description} visible = {this.state.descriptionVisible}>
-                  <Text>This is the description w00t</Text>
+                  <Text style = {{color: 'white'}}>This is the description w00t</Text>
                 </DrawerView>
               </View>
             </View>
@@ -70,9 +71,14 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   name: {
+    color: 'white',
+    textShadowColor: 'black',
+    textShadowOffset: {width : 1, height: 1},
     fontSize: 36
   },
   artist: {
+    color: 'white',
+    textShadowOffset: {width : 1, height: 1},
     fontSize: 24
   },
   description: {
@@ -89,39 +95,39 @@ const styles = StyleSheet.create({
 
 // A view that transitions from hidden to visible and back
 class OpacityView extends React.Component {
-  
+
   constructor(props) {
     super(props)
     opacity = 0.0;
     if (props.visible) {
-      opacity = 1.0
+      opacity = .7
     }
     this.state = {
       opacity: new Animated.Value(opacity)
     };
   }
-  
+
   componentWillReceiveProps(nextProps) {
-    
+
     toValue = 0.0
     if (nextProps.visible) {
-      toValue = 1.0
+      toValue = .7
     }
-    
+
     Animated.timing(                  // Animate over time
       this.state.opacity,            // The animated value to drive
       {
         toValue: toValue,                   // Animate to opacity: 1 (opaque)
         duration: 1 * 500,              // Make it take a while
       }
-    ).start();                        // Starts the animation    
+    ).start();                        // Starts the animation
   }
 
   render() {
     let { opacity } = this.state;
-    
+
     let style = StyleSheet.flatten([this.props.style, {opacity: opacity}])
-    
+
     return (
       <Animated.View                 // Special animatable View
         style={style}
@@ -136,7 +142,7 @@ class OpacityView extends React.Component {
 // Hidden : margin-top = a big number
 // Visible : margin-top = 0
 class DrawerView extends React.Component {
-  
+
   constructor(props) {
     super(props)
     margin = 1000;
@@ -147,28 +153,28 @@ class DrawerView extends React.Component {
       margin: new Animated.Value(margin)
     };
   }
-  
+
   componentWillReceiveProps(nextProps) {
-    
+
     toValue = 1000
     if (nextProps.visible) {
       toValue = 0
     }
-    
+
     Animated.timing(
       this.state.margin,
       {
         toValue: toValue,
         duration: 1 * 500,
       }
-    ).start();                        // Starts the animation    
+    ).start();                        // Starts the animation
   }
 
   render() {
     let { margin } = this.state;
-    
+
     let style = StyleSheet.flatten([this.props.style, {marginTop: margin}])
-    
+
     return (
       <Animated.View                 // Special animatable View
         style={style}
@@ -178,6 +184,3 @@ class DrawerView extends React.Component {
     );
   }
 }
-
-
-
