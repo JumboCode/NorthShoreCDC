@@ -14,18 +14,18 @@ export default class ExplorePage extends React.Component {
             <MapView
               style = {{flex: 1 }}
               region = {{
-                latitude: 37,
-                longitude: -122,
+                latitude: 42.5,
+                longitude: -70.9,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}>
                 <MapView.Marker
-                  coordinate= {{latitude: 37, longitude: -122}}
+                  coordinate= {{latitude: 42.5, longitude: -70.9}}
                   pinColor = 'pink'
                   onPress = { () => { navigate('MuralInfoPage') } }
                 />
                 <MapView.Marker
-                    coordinate= {{latitude: 38, longitude: -122}}
+                    coordinate= {{latitude: 42.5, longitude: -70.88}}
                     pinColor = 'green'
                     onPress = { () => { navigate('MuralInfoPage') } }
                   />
