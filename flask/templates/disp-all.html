@@ -1,0 +1,13 @@
+{% block content %}
+<body>
+<table style="width:80%">
+<tr><th>Title</th><th>Artist</th><th>Photo</th><th>Latitude</th><th>Longitude</th><th>Street Address</th><th>City</th><th>State</th><th>Zipcode</th><th>Month</th><th>Year</th></tr>
+
+{% for m in murals %}
+<tr>
+<td>{{ murals[m].Title }}</td> <td>{{ murals[m].Artist }}</td> <td>{{ murals[m].Photo }}</td><td>{{ murals[m].Lat }}</td> <td>{{ murals[m].Long }}</td> <td>{{ murals[m].Street_Address }} </td> <td>{{ murals[m].City }}</td> <td>{{ murals[m].State }}</td> <td>{{ murals[m].Zipcode }}</td> <td>{{ murals[m].Month }}</td> <td>{{ murals[m].Year }}</td>
+</tr>
+{% endfor %}
+</table>
+<body>
+{% endblock %}

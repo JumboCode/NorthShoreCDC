@@ -45,7 +45,9 @@ def fireput():
 
 @app.route('/api/get', methods = ['GET'])
 def fireget():
-	return str(firebase.get('/','murals'))
+	murals = firebase.get('/','murals')
+	print(murals)
+	return render_template('disp-all.html', murals=murals)
 
 
 @app.route('/')
