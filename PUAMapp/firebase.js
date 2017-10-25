@@ -1,12 +1,12 @@
 import * as firebase from 'firebase';
 
-// should go in a secret file
+// should go in a secret file- add credentisls before running the app
 const config = {
-    apiKey: "AIzaSyDbWmnZG4J3YM1qPIwrSpMM60eLM6TPHsA",
-    authDomain: "puntourbanart.firebaseapp.com",
-    databaseURL: "https://puntourbanart.firebaseio.com",
-    storageBucket: "puntourbanart.appspot.com",
-    messagingSenderId: "873188637889"
+    apiKey: "",
+    authDomain: "",
+    databaseURL: "",
+    storageBucket: "",
+    messagingSenderId: ""
 };
 firebase.initializeApp(config);
 
