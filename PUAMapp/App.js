@@ -18,10 +18,18 @@ import { Provider } from 'react-redux';
 import { store } from './redux';
 
 class AppInner extends React.Component {
+  
+  constructor(props) {
+    super(props)
+    props.getMurals()
+  }
+  
   render() {
+    
     return (
-      <View >
+      <View>
         <GalleryPage murals={this.props.murals ? this.props.murals : []} getMurals={() => this.props.getMurals()}/>
+
       </View>
 
       );
@@ -51,6 +59,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
     murals: state.muralData.murals,
+    loading: state.muralData.loading
 });
 
 const mapDispatchToProps = (dispatch) => {
