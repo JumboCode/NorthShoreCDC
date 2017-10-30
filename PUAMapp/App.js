@@ -27,11 +27,7 @@ class AppInner extends React.Component {
   render() {
     
     return (
-      <View>
-        <GalleryPage murals={this.props.murals ? this.props.murals : []} getMurals={() => this.props.getMurals()}/>
-
-      </View>
-
+      <AppNav screenProps = {this.props} />
       );
   }
 }
@@ -70,19 +66,21 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
+const AppNav = StackNavigator({
+  HomePage: {screen: HomePage},
+  ExplorePage: {screen: ExplorePage},
+  GalleryPage: {screen: GalleryPage},
+  ContactPage: {screen: ContactPage},
+  MuralInfoPage: {screen: MuralInfoPage, }
+});
+
+
 const AppContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-  )(AppInner);
+)(AppInner);
 
 
-// const App = StackNavigator({
-//   HomePage: {screen: HomePage},
-//   ExplorePage: {screen: ExplorePage},
-//   GalleryPage: {screen: GalleryPage},
-//   ContactPage: {screen: ContactPage},
-//   MuralInfoPage: {screen: MuralInfoPage}
-// });
 
 // export default App;
 

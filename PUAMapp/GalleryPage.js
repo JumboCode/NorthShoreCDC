@@ -13,7 +13,7 @@ export default class GalleryPage extends React.Component {
     }
     
  	renderImages() {
-        murals = this.props.murals
+        murals = this.props.screenProps.murals || {}
         return Object.keys(murals).map((key,i) =>{
             uri = murals[key]["Photo"]
               return(
@@ -25,7 +25,7 @@ export default class GalleryPage extends React.Component {
     render() {
         return (
           <ScrollView>
-            <View >
+            <View>
               <Image style={{height: 190,  alignSelf: 'stretch'}} source={{uri: this.state.featuredArtistImage}} />
               <View style={{backgroundColor: 'rgba(0,0,0,.4)', height: 190, position : 'absolute', width: 380 }} >
                <Text style={{ color: 'white', fontSize: 30, marginTop: 80, marginLeft: 15}}> Featured Artist </Text>
