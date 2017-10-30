@@ -1,20 +1,31 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Button,
-          Animated } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView,
+          Animated, TouchableOpacity } from 'react-native';
 
+var infoButtons = [
+    require('./info.png'),
+    require('./close.png')
+];
 
 export default class MuralInfoPage extends React.Component {
 
     constructor(props) {
       super(props)
       this.state = {
-        descriptionVisible: false
+        descriptionVisible: false,
+        info: 0
       }
     }
 
     toggleShowDescription() {
       this.setState({descriptionVisible: !this.state.descriptionVisible})
+      if (this.state.info == 0){
+          this.setState({info: 1})
+      }
+      else{
+          this.setState({info: 0})
+      }
     }
 
     render() {
@@ -33,7 +44,9 @@ export default class MuralInfoPage extends React.Component {
                     </View>
                   </View>
                   <View style = {styles.button}>
-                    <Button title = "CLICK ME" onPress = {this.toggleShowDescription.bind(this)} />
+                    <TouchableOpacity onPress = {this.toggleShowDescription.bind(this)}>
+                        <Image source={infoButtons[this.state.info]} style={{width: 30, height: 30}}/>
+                    </TouchableOpacity>
                   </View>
                 </View>
                 <DrawerView style = {styles.description} visible = {this.state.descriptionVisible}>
