@@ -5,7 +5,33 @@ import MapView from 'react-native-maps';
 
 
 export default class ExplorePage extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+        } 
+    }
+    renderImages() {
+        const { navigate } = this.props.navigation;
+        murals = this.props.screenProps.murals || {}
+        return Object.keys(murals).map((key,i) =>{
+            lat = parseFloat(murals[key]["Lat"]);
+            long = parseFloat(murals[key]["Long"]);
+
+            return(
+              <MapView.Marker
+                  key={i}
+                  coordinate= {{latitude: lat, longitude: long}}
+                  pinColor = 'pink'
+                  onPress = { () => { navigate('MuralInfoPage') }}
+              />
+                
+            );
+        })
+    }
+
     render() {
+    
         
         const { navigate } = this.props.navigation;
         
@@ -19,17 +45,9 @@ export default class ExplorePage extends React.Component {
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}>
-                <MapView.Marker
-                  coordinate= {{latitude: 42.5, longitude: -70.9}}
-                  pinColor = 'pink'
-                  onPress = { () => { navigate('MuralInfoPage') } }
-                />
-                <MapView.Marker
-                    coordinate= {{latitude: 42.5, longitude: -70.88}}
-                    pinColor = 'green'
-                    onPress = { () => { navigate('MuralInfoPage') } }
-                  />
-                  </MapView>
+              {this.renderImages()}
+                
+            </MapView>
             </View>
         )
     }
