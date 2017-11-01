@@ -4,8 +4,10 @@ import {
 	createStore,
 } from 'redux';
 import thunk from 'redux-thunk'
-import firebase from './firebase';
+import config from './firebase';
+import * as firebase from 'firebase';
 
+firebase.initializeApp(config);
 //actions
 export const getMuralsStart = () => ({
 	type: 'GET_MURALS_START'
