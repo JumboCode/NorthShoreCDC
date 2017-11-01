@@ -1,33 +1,51 @@
+# Punto Urban Art Museum App
+Project of North Shore Community Development Coalition and JumboCode
 
-# NorthShoreCDC
-North Shore Community Development Coalition
+### About
+The purpose of this app is to bring more people to see Punto's murals and to provide a better experience finding and learning about the murals. 
 
 
-# Punto Urban Art Museum
-## North Shore Community Development Coalition
+### Running App Locally
 
-### Running the Flask App Locally
+* Install the dependencies 
+
+```
+npm install
+```
+
+* Run the Expo Server
+
+```
+npm start
+```
+
+
+### Running the Flask Site Locally
 * Set the following environment variables. 
 
-<pre>
+```
 export FIREBASE_PATH="<firebase path>"
 export APP_KEY="<app key>"
 export FLASK_APP=app.py
-</pre>
+```
 
-* Then use the command <pre>flask run</pre> to start the server.
+* Start the server. 
+ 
+```
+flask run
+```
 
 
-### Running the PUAM React-Native App Locally
 
-* Install dependencies with <pre> npm install </pre>
-* Run the server with <pre> npm run start </pre>
 
 ### Team
-- Lillianna Levonick
+- Barry Eom
 - Benjamin Steephenson
 - Brendan Fahey
-- Wayne Yirong Tang
-- Suruchi Devanahalli
-- Dakota LeRoy
 - Emma Pannullo
+- Ian Mao
+- Isaiah Fischer-Brown
+- Lillianna Levonick
+- Suruchi Devanahalli
+- Wayne Yirong Tang
+- Zach Nassar
