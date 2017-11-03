@@ -1,27 +1,30 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity} from 'react-native';
 
 
 export default class GalleryPage extends React.Component {
-    
+
     constructor(props) {
         super(props)
         this.state = {
           featuredArtistImage :"https://www.creativesalem.com/wp-content/uploads/2017/08/Mary-Jane-Lee-Park-Salem-MA-2293.jpg"
-        } 
+        }
     }
-    
+
  	renderImages() {
+		const { navigate } = this.props.navigation;
         murals = this.props.screenProps.murals || {}
         return Object.keys(murals).map((key,i) =>{
             uri = murals[key]["Photo"]
               return(
-                <Image key={i} style={{height: 100, width: 100, margin: 10}} source={{uri: uri}} />
+				<TouchableOpacity key={i} onPress = {() => navigate('MuralInfoPage')}>
+                  <Image key={i} style={{height: 100, width: 100, margin: 10}} source={{uri: uri}} />
+				</TouchableOpacity>
               );
         })
   }
-  	
+
     render() {
         return (
           <ScrollView>
@@ -40,6 +43,3 @@ export default class GalleryPage extends React.Component {
         )
     }
 }
-
-
-
