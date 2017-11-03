@@ -22,7 +22,7 @@ export default class GalleryPage extends React.Component {
         return Object.keys(murals).map((key,i) =>{
             uri = murals[key]["Photo"]
               return(
-				<TouchableOpacity key={i} onPress = {() => navigate('MuralInfoPage')}>
+				<TouchableOpacity key={i} onPress = {() => navigate('MuralInfoPage', {mural: murals[key]})}>
                   <Image key={i} style={{height: width, width: width, margin: 1}} source={{uri: uri}} />
 				</TouchableOpacity>
               );
