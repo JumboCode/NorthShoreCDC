@@ -29,18 +29,21 @@ export default class MuralInfoPage extends React.Component {
     }
 
     render() {
+        
+        const mural = this.props.navigation.state.params.mural
+      
         return (
             <View style = {styles.container}>
-              <Image style={{flex: 1, position: "absolute", resizeMode: 'cover', height: '100%', width: '100%'}} source={{uri: "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg"}} />
+              <Image style={{flex: 1, position: "absolute", resizeMode: 'cover', height: '100%', width: '100%'}} source={{uri: mural.Photo}} />
               <OpacityView style = {styles.darkOverlay} visible = {this.state.descriptionVisible}/>
               <View style = {styles.textContainer}>
                 <View style = {styles.top}>
                   <View style = {styles.info}>
                     <View>
-                      <Text style = {styles.name}>Mural Name</Text>
+                      <Text style = {styles.name}>{mural.Title}</Text>
                     </View>
                     <View>
-                      <Text style = {styles.artist}>Artist Name</Text>
+                      <Text style = {styles.artist}>{mural.Artist}</Text>
                     </View>
                   </View>
                   <View style = {styles.button}>
@@ -50,7 +53,7 @@ export default class MuralInfoPage extends React.Component {
                   </View>
                 </View>
                 <DrawerView style = {styles.description} visible = {this.state.descriptionVisible}>
-                  <Text style = {{color: 'white'}}>This is the description w00t</Text>
+                  <Text style = {{color: 'white'}}>{JSON.stringify(mural)}</Text>
                 </DrawerView>
               </View>
             </View>

@@ -5,34 +5,38 @@ import MapView from 'react-native-maps';
 
 
 export default class ExplorePage extends React.Component {
+
     constructor(props) {
-      super(props)
-      this.state = {
-        markers: [{
-          key: 1,
-          title: 'hello',
-          description: 'lol',
-          color: 'pink',
-          coordinates: {
-            latitude: 42.5,
-            longitude: -70.9
-          },
-        },
-        {
-          key: 2,
-          title: 'hi',
-          description: "Im dead",
-          color: 'green',
-          coordinates: {
-            latitude: 42.5,
-            longitude: -70.88
-          },
-        }]
-      }
+        super(props)
+        this.state = {
+        } 
+    }
+    renderImages() {
+        const { navigate } = this.props.navigation;
+        murals = this.props.screenProps.murals || {}
+        return Object.keys(murals).map((key,i) =>{
+            lat = parseFloat(murals[key]["Lat"]);
+            long = parseFloat(murals[key]["Long"]);
+            title = murals[key]["Title"];
+            description = murals[key]["Description"];
+
+            return(
+              <MapView.Marker
+                  key={i}
+                  title = {title}
+                  description = {description}
+                  coordinate= {{latitude: lat, longitude: long}}
+                  pinColor = 'pink'
+                  onCalloutPress = { () => { navigate('MuralInfoPage', {mural: murals[key]}) }}
+              />
+                
+            );
+        })
     }
 
     render() {
-
+    
+        
         const { navigate } = this.props.navigation;
 
         return (
@@ -45,17 +49,9 @@ export default class ExplorePage extends React.Component {
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}>
-              {this.state.markers.map(marker => (
-                <MapView.Marker
-                  key = {marker.key}
-                  coordinate = {marker.coordinates}
-                  pinColor = {marker.color}
-                  title = {marker.title}
-                  description = {marker.description}
-                  onCalloutPress={() => navigate('MuralInfoPage')}
-                />
-              ))}
-                  </MapView>
+              {this.renderImages()}
+                
+            </MapView>
             </View>
         )
     }
