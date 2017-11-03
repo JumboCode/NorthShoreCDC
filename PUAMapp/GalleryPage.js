@@ -12,15 +12,15 @@ export default class GalleryPage extends React.Component {
         }
     }
 
- 	renderImages() {
-		const { navigate } = this.props.navigation;
+   renderImages() {
+    const { navigate } = this.props.navigation;
         murals = this.props.screenProps.murals || {}
         return Object.keys(murals).map((key,i) =>{
             uri = murals[key]["Photo"]
               return(
-				<TouchableOpacity key={i} onPress = {() => navigate('MuralInfoPage')}>
+                <TouchableOpacity key={i} onPress = {() => navigate('MuralInfoPage', {mural: murals[key]})}>
                   <Image key={i} style={{height: 100, width: 100, margin: 10}} source={{uri: uri}} />
-				</TouchableOpacity>
+                </TouchableOpacity>
               );
         })
   }
