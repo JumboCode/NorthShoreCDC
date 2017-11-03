@@ -17,13 +17,17 @@ export default class ExplorePage extends React.Component {
         return Object.keys(murals).map((key,i) =>{
             lat = parseFloat(murals[key]["Lat"]);
             long = parseFloat(murals[key]["Long"]);
+            title = murals[key]["Title"];
+            description = murals[key]["Description"];
 
             return(
               <MapView.Marker
                   key={i}
+                  title = {title}
+                  description = {description}
                   coordinate= {{latitude: lat, longitude: long}}
                   pinColor = 'pink'
-                  onPress = { () => { navigate('MuralInfoPage') }}
+                  onCalloutPress = { () => { navigate('MuralInfoPage') }}
               />
                 
             );
@@ -34,7 +38,7 @@ export default class ExplorePage extends React.Component {
     
         
         const { navigate } = this.props.navigation;
-        
+
         return (
             <View style = {{flex: 1}}>
             <MapView
@@ -52,6 +56,3 @@ export default class ExplorePage extends React.Component {
         )
     }
 }
-
-
-
