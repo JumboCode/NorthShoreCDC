@@ -27,7 +27,7 @@ export default class ExplorePage extends React.Component {
                   description = {description}
                   coordinate= {{latitude: lat, longitude: long}}
                   pinColor = 'pink'
-                  onCalloutPress = { () => { navigate('MuralInfoPage') }}
+                  onCalloutPress = { () => { navigate('MuralInfoPage', {mural: murals[key]}) }}
               />
                 
             );
