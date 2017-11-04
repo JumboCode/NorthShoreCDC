@@ -1,6 +1,21 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
+import Hyperlink from 'react-native-hyperlink'
+import LinkifyIt from 'linkify-it'
+
+linkify = new LinkifyIt().add('tel:', 'http:').add('fax:', 'http:')
+
+
+links = {
+  "http://northshorecdc.org/about-us/contact-us/": "Our website",
+  "tel://9787458071": "Tel: (978)745-8071",
+  "http://northshorecdc.org/": "NSCDC Website",
+  "https://www.facebook.com/NorthShoreCDC/": "Facebook: @NorthShoreCDC",
+  "https://www.twitter.com/NorthShoreCDC": "Twitter: @NorthShoreCDC",
+  "https://www.instagram.com/NorthShoreCDC": "Instagram: @NorthShoreCDC",
+  "mailto:info@northshorecdc.org": "info@northshorecdc.org"
+}
 
 
 export default class ContactPage extends React.Component {
@@ -9,24 +24,47 @@ export default class ContactPage extends React.Component {
       headerTintColor: 'white',
       headerStyle: {backgroundColor: 'pink'},
     };
-
+    
+    textForLink(text) {
+      return links[text] || text
+    }
+    
     render() {
         return (
             <View style = {styles.container}>
               <Image style = {styles.image} source = {{uri: "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg"}} />
               <View style = {styles.textContainer}>
+              <Hyperlink linkify = {linkify} linkDefault={ true } linkStyle={ { color: '#0f53c1', fontWeight: "bold" }} linkText = {this.textForLink} >
               <Text style = {styles.text}>
                 A project of the North Shore Community Development Coalition.
+                
+                http://northshorecdc.org/
+                {"\n"}
+                {"\n"}
               
-                NSCDC Website
+                96 Lafayette Street
+                {"\n"}
+                Salem, MA 01970
+                {"\n"}
+                tel://9787458071 
+                {"\n"}
+                Fax: (978)745-4345
+                {"\n"}
+                {"\n"}
               
-                Address: 96 Lafayette Street Salem, MA 01970
-              
-                Phone & Fax: p: (978) 745-8071 f: (978) 745-4345
-              
-                Email: info@northshorecdc.org
-              
-                Twitter, Instagram, Facebook links
+                Email: mailto:info@northshorecdc.org
+                
+                
+                {"\n"}
+                {"\n"}
+                https://www.facebook.com/NorthShoreCDC/ 
+                {"\n"}
+                https://www.twitter.com/NorthShoreCDC
+                {"\n"}
+                https://www.instagram.com/NorthShoreCDC
+                {"\n"}
+                {"\n"}
+                
               
                 Donate Link
               
@@ -35,6 +73,7 @@ export default class ContactPage extends React.Component {
                 Lo quality
                 
                 </Text>
+                </Hyperlink>
             </View>
             </View>
         )
@@ -57,12 +96,12 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'rgba(255, 255, 255, .5)',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    padding: 50
+    padding: 20
   },
   text: {
-    fontSize: 14 * 1.5,
+    fontSize: 18,
     color: 'black'
   }
 
