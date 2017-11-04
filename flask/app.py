@@ -2,24 +2,34 @@ from flask import Flask, render_template
 from firebase import firebase
 import os
 from flask_wtf import FlaskForm as Form
-from wtforms.fields import StringField, BooleanField
+from wtforms.fields import *
 from wtforms.validators import *
 from flask_wtf.csrf import CSRFProtect
+from firebase.firebase import FirebaseApplication, FirebaseAuthentication
+
 
 firebase_path = os.environ.get('FIREBASE_PATH')
-firebase = firebase.FirebaseApplication(firebase_path, None)
+
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('APP_KEY')
 
+#authentication = FirebaseAuthentication(os.environ.get('FIREBASE_KEY'), 'info@northshorecdc.org', extra={'id': 123})
+#firebase.authentication = authentication
+
+firebase = FirebaseApplication(firebase_path, None)
+
+#user = authentication.get_user()
+
+
 class FirePut(Form):
     photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
-    lat = StringField('Lat', validators=[DataRequired(), NumberRange(min="40.0", max = "43.0")])
-    longitude = StringField('Long', validators=[DataRequired(), NumberRange(min="-71.0", max = "-69.0")])
+    lat = DecimalField('Lat', validators=[DataRequired(), NumberRange(min=40.0, max = 43.0)])
+    longitude = DecimalField('Long', validators=[DataRequired(), NumberRange(min=-71.0, max = -69.0)])
     artist = StringField('Artist', validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
     month = StringField('Month', validators=[DataRequired(), AnyOf(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"])])
-    year = StringField('Year', validators=[DataRequired(), NumberRange(min="1980", max = "3000")])
+    year = IntegerField('Year', validators=[DataRequired(), NumberRange(min=1980, max = 3000)])
 
 count = 0
 
