@@ -2,6 +2,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView,
           Animated, TouchableOpacity } from 'react-native';
+import { lightpurple, darkpurple, pink } from './colors.js';
 
 var infoButtons = [
     require('./info.png'),
@@ -23,7 +24,7 @@ export default class MuralInfoPage extends React.Component {
     static navigationOptions = {
       title: 'Punto Urban Art Museum',
       headerTintColor: 'white',
-      headerStyle: {backgroundColor: 'pink'},
+      headerStyle: {backgroundColor: pink},
     };
 
     toggleShowDescription() {

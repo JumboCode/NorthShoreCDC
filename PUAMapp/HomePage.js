@@ -1,13 +1,14 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableHighlight} from 'react-native';
+import { lightpurple, darkpurple, pink } from './colors.js';
 
 
 export default class HomePage extends React.Component {
     static navigationOptions = {
       title: 'Punto Urban Art Museum',
       headerTintColor: 'white',
-      headerStyle: {backgroundColor: 'pink'},
+      headerStyle: {backgroundColor: pink},
     };
     render() {
         const { navigate } = this.props.navigation;
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   },
   pinkButton: {
     height: '15%',
-    backgroundColor: 'pink',
+    backgroundColor: pink,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
