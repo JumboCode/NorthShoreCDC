@@ -38,6 +38,16 @@
       {% for error in form.year.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
+      <p> Please enter a description of the mural: <br>
+      {{ form.description(rows=8, cols=60) }} <br>
+      {% for error in form.description.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p> Please enter the medium of the mural: <br>
+      {{ form.medium(size=40) }} <br>
+      {% for error in form.medium.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
       <p><input type ="submit" value="Add" class="btn btn-sm btn-primary"></p>
     </form>
 {% endblock %}
