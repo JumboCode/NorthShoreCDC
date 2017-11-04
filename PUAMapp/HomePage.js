@@ -11,6 +11,13 @@ export default class HomePage extends React.Component {
             <View style = {styles.container}>
               <Image style = {styles.image} source = {{uri: "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg"}} />
               <TouchableHighlight
+                style = {styles.title}
+                onPress={() =>
+                navigate('ExplorePage')
+              }>
+                <Text style = {styles.titleText}>Punto Urban Art Museum</Text>
+              </TouchableHighlight>
+              <TouchableHighlight
                 style = {styles.blackButton}
                 onPress={() =>
                 navigate('ExplorePage')
@@ -74,6 +81,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     opacity: .9
+  },
+  title: {
+    height: '15%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: '65%'
+  },
+  titleText: {
+    fontSize: 26,
+    color: 'white'
   },
   buttonText: {
     fontSize: 42,
