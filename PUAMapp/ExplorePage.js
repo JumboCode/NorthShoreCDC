@@ -2,6 +2,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
 import MapView from 'react-native-maps';
+import { lightpurple, darkpurple, pink } from './colors.js';
 
 
 export default class ExplorePage extends React.Component {
@@ -15,7 +16,7 @@ export default class ExplorePage extends React.Component {
     static navigationOptions = {
       title: 'Explore',
       headerTintColor: 'white',
-      headerStyle: {backgroundColor: 'pink'},
+      headerStyle: {backgroundColor: pink},
     };
 
     renderImages() {

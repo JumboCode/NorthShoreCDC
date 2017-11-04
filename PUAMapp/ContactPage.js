@@ -1,6 +1,8 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
+import { lightpurple, darkpurple, pink } from './colors.js';
+
 import Hyperlink from 'react-native-hyperlink'
 import LinkifyIt from 'linkify-it'
 
@@ -22,7 +24,7 @@ export default class ContactPage extends React.Component {
     static navigationOptions = {
       title: 'Contact',
       headerTintColor: 'white',
-      headerStyle: {backgroundColor: 'pink'},
+      headerStyle: {backgroundColor: pink},
     };
     
     textForLink(text) {
