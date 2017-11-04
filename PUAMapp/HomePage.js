@@ -4,6 +4,7 @@ import { lightpurple, darkpurple, pink } from './colors.js';
 import homepic from './home.jpg'
 
 export default class HomePage extends React.Component {
+
   static navigationOptions = {
     title: 'Punto Urban Art',
     headerTintColor: 'white',
