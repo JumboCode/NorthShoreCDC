@@ -11,10 +11,27 @@ export default class ContactPage extends React.Component {
       headerStyle: {backgroundColor: pink},
     };
 
+    renderArtists() {
+    
+   
+   
+    
+    const { navigate } = this.props.navigation;
+        artists = this.props.screenProps.artists || {}
+        return Object.keys(artists).map((key,i) =>{
+            name = key
+              return(
+       
+
+        <Text key={i} > {name} </Text>
+              );
+        })
+  }
+
     render() {
         return (
             <View>
-                <Text>Contact</Text>
+                 {this.renderArtists()}
             </View>
         )
     }
