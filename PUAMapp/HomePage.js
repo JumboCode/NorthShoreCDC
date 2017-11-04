@@ -17,25 +17,25 @@ export default class HomePage extends React.Component {
             <View style = {styles.container}>
               <Image style = {styles.image} source = {{uri: "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg"}} />
               <TouchableHighlight
-                style = {styles.blackButton}
+                style = {styles.darkPurpleButton}
                 onPress={() =>
                 navigate('ExplorePage')
               }>
-                <Text style = {styles.buttonText}>Explore</Text>
+                <Text style = {styles.buttonText}>EXPLORE</Text>
               </TouchableHighlight>
               <TouchableHighlight
-                style = {styles.greyButton}
+                style = {styles.lightPurpleButton}
                 onPress={() =>
                 navigate('GalleryPage')
               }>
-                <Text style = {styles.buttonText}>Gallery</Text>
+                <Text style = {styles.buttonText}>GALLERY</Text>
               </TouchableHighlight>
               <TouchableHighlight
                 style = {styles.pinkButton}
                 onPress={() =>
                 navigate('ContactPage')
               }>
-                <Text style = {styles.buttonText}>Contact</Text>
+                <Text style = {styles.buttonText}>CONTACT</Text>
               </TouchableHighlight>
           </View>
         )
@@ -57,21 +57,23 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%'
   },
-  blackButton: {
+  darkPurpleButton: {
     height: '15%',
-    backgroundColor: 'black',
+    backgroundColor: darkpurple,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    opacity: .9
+    opacity: .9,
+    margin: -1
   },
-  greyButton: {
+  lightPurpleButton: {
     height: '15%',
-    backgroundColor: 'grey',
+    backgroundColor: lightpurple,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    opacity: .9
+    opacity: .9,
+    margin: -1
   },
   pinkButton: {
     height: '15%',
@@ -79,10 +81,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    opacity: .9
+    opacity: .9,
+    margin: -1
   },
   buttonText: {
-    fontSize: 42,
+    fontSize: 36,
     color: 'white'
   }
 });
