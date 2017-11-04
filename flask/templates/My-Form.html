@@ -28,26 +28,6 @@
       {% for error in form.longitude.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
-      <p> Please enter the street address: <br>
-      {{ form.streetaddress(size=40) }} <br>
-      {% for error in form.streetaddress.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}<br>
-      <p> Please enter the city: <br>
-      {{ form.city(size=40) }} <br>
-      {% for error in form.city.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}<br>
-      <p> Please enter the state: <br>
-      {{ form.state(size=40) }} <br>
-      {% for error in form.state.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}<br>
-      <p> Please enter the zipcode: <br>
-      {{ form.zipcode(size=40) }} <br>
-      {% for error in form.zipcode.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}<br>
       <p> Please enter the month the mural was painted: <br>
       {{ form.month(size=40) }} <br>
       {% for error in form.month.errors %}
