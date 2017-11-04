@@ -12,6 +12,12 @@ export default class GalleryPage extends React.Component {
         }
     }
 
+  static navigationOptions = {
+      title: 'Gallery',
+      headerTintColor: 'white',
+      headerStyle: {backgroundColor: 'pink'},
+    };
+
  	renderImages() {
     
     var {width} = Dimensions.get('window');

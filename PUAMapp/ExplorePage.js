@@ -11,6 +11,13 @@ export default class ExplorePage extends React.Component {
         this.state = {
         } 
     }
+
+    static navigationOptions = {
+      title: 'Explore',
+      headerTintColor: 'white',
+      headerStyle: {backgroundColor: 'pink'},
+    };
+
     renderImages() {
         const { navigate } = this.props.navigation;
         murals = this.props.screenProps.murals || {}

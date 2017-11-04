@@ -4,6 +4,11 @@ import { StyleSheet, Text, View, Image, ScrollView, TouchableHighlight} from 're
 
 
 export default class HomePage extends React.Component {
+    static navigationOptions = {
+      title: 'Punto Urban Art Museum',
+      headerTintColor: 'white',
+      headerStyle: {backgroundColor: 'pink'},
+    };
     render() {
         const { navigate } = this.props.navigation;
         // TODO: replace the background image (it's the wrong proportions)
