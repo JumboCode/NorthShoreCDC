@@ -89,12 +89,15 @@ const styles = StyleSheet.create({
   name: {
     color: 'white',
     textShadowColor: 'black',
-    textShadowOffset: {width : 1, height: 1},
+    textShadowOffset: {width : -1, height: 0},
+    textShadowRadius: 5,
     fontSize: 36
   },
   artist: {
     color: 'white',
-    textShadowOffset: {width : 1, height: 1},
+    textShadowColor: 'black',
+    textShadowOffset: {width : -1, height: 0},
+    textShadowRadius: 5,
     fontSize: 24
   },
   description: {
@@ -104,19 +107,25 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: '100%',
     width: '100%',
-    backgroundColor: 'grey',
+    backgroundColor: 'black',
   }
 });
 
 
+
 // A view that transitions from hidden to visible and back
 class OpacityView extends React.Component {
-
+  
+  
   constructor(props) {
     super(props)
-    opacity = 0.0;
+
+    this.hidden_opacity = .3
+    this.visible_opacity = .7
+
+    opacity = this.hidden_opacity;
     if (props.visible) {
-      opacity = .7
+      opacity = this.visible_opacity
     }
     this.state = {
       opacity: new Animated.Value(opacity)
@@ -125,9 +134,9 @@ class OpacityView extends React.Component {
 
   componentWillReceiveProps(nextProps) {
 
-    toValue = 0.0
+    toValue = this.hidden_opacity
     if (nextProps.visible) {
-      toValue = .7
+      toValue = this.visible_opacity
     }
 
     Animated.timing(                  // Animate over time
@@ -158,38 +167,59 @@ class OpacityView extends React.Component {
 // Hidden : margin-top = a big number
 // Visible : margin-top = 0
 class DrawerView extends React.Component {
-
+    
   constructor(props) {
     super(props)
-    margin = 1000;
+
+    this.hidden_margin = 100
+    this.visible_margin = 0
+    this.hidden_opacity = 0.0
+    this.visible_opacity = 1.0
+
+    margin = this.hidden_margin;
+    opacity = this.hidden_opacity;
     if (props.visible) {
-      margin = 0
+      margin = this.visible_margin
+      opacity = this.visible_opacity
     }
     this.state = {
-      margin: new Animated.Value(margin)
+      margin: new Animated.Value(margin),
+      opacity: new Animated.Value(opacity)
     };
   }
 
   componentWillReceiveProps(nextProps) {
 
-    toValue = 1000
+    toValueMargin = this.hidden_margin
+    toValueOpacity = this.hidden_opacity
     if (nextProps.visible) {
-      toValue = 0
+      toValueMargin = this.visible_margin
+      toValueOpacity = this.visible_opacity
     }
 
-    Animated.timing(
-      this.state.margin,
-      {
-        toValue: toValue,
-        duration: 1 * 500,
-      }
-    ).start();                        // Starts the animation
+    // Animated.timing(
+    //   this.state.margin,
+    //   {
+    //     toValue: toValue,
+    //     duration: 1 * 500,
+    //   }
+    // ).start();                        // Starts the animation
+    Animated.parallel([
+      Animated.timing(this.state.margin, {
+        toValue: toValueMargin,
+        duration: 500
+      }),
+      Animated.spring(this.state.opacity, {
+        toValue: toValueOpacity,
+        duration: 500
+      })
+    ]).start()
   }
 
   render() {
-    let { margin } = this.state;
+    let { margin, opacity } = this.state;
 
-    let style = StyleSheet.flatten([this.props.style, {marginTop: margin}])
+    let style = StyleSheet.flatten([this.props.style, {marginTop: margin, opacity: opacity}])
 
     return (
       <Animated.View                 // Special animatable View
