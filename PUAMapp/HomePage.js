@@ -18,14 +18,14 @@ export default class HomePage extends React.Component {
         <View style = {styles.container}>
           <Image style = {styles.image} source = {homepic} />
           <TouchableHighlight
-            style = {styles.blackButton}
+            style = {styles.darkPurpleButton}
             onPress={() =>
             navigate('ExplorePage')
           }>
             <Text style = {styles.buttonText}>EXPLORE</Text>
           </TouchableHighlight>
           <TouchableHighlight
-            style = {styles.greyButton}
+            style = {styles.lightPurpleButton}
             onPress={() =>
             navigate('GalleryPage')
           }>
@@ -57,21 +57,23 @@ export default class HomePage extends React.Component {
       height: '100%',
       width: '100%'
     },
-    blackButton: {
+    darkPurpleButton: {
       height: '15%',
-      backgroundColor: 'black',
+      backgroundColor: darkpurple,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      opacity: .9
+      opacity: .9,
+      margin: -1
     },
-    greyButton: {
+    lightPurpleButton: {
       height: '15%',
-      backgroundColor: 'grey',
+      backgroundColor: lightpurple,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      opacity: .9
+      opacity: .9,
+      margin: -1
     },
     pinkButton: {
       height: '15%',
@@ -79,7 +81,8 @@ export default class HomePage extends React.Component {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      opacity: .9
+      opacity: .9,
+      margin: -1
     },
     buttonText: {
       fontSize: 36,
