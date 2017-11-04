@@ -6,6 +6,7 @@ from wtforms.fields import *
 from wtforms.validators import *
 from flask_wtf.csrf import CSRFProtect
 from firebase.firebase import FirebaseApplication, FirebaseAuthentication
+import uuid
 
 
 firebase_path = os.environ.get('FIREBASE_PATH')
@@ -30,6 +31,8 @@ class FirePut(Form):
     title = StringField('Title', validators=[DataRequired()])
     month = StringField('Month', validators=[DataRequired(), AnyOf(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"])])
     year = IntegerField('Year', validators=[DataRequired(), NumberRange(min=1980, max = 3000)])
+    description = TextAreaField('Description', validators=[DataRequired()])
+    medium = StringField('Medium', validators=[DataRequired()])
 
 count = 0
 
@@ -42,8 +45,9 @@ def fireput():
         putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
         			'Long' : form.longitude.data, 'Artist' : form.artist.data,
         			'Title' : form.title.data, 'Month' : form.month.data,
-        			'Year' : form.year.data }
-        firebase.put('/murals', putData['Title'], putData)
+        			'Year' : form.year.data, 'Description' : form.description.data,
+        			'Medium' : form.medium.data }
+        firebase.put('/murals', uuid.uuid4(), putData)
         return render_template('form-result.html', putData=putData)
     return render_template('My-Form.html', form=form)
 
