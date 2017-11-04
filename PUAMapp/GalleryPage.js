@@ -1,51 +1,48 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Dimensions} from 'react-native';
 
 
 export default class GalleryPage extends React.Component {
-	constructor(props) {
-	    super(props);
-	    this.state = {showText: "hello",
-                      imageURLs: ["https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg", 
-                                 "https://www.creativesalem.com/wp-content/uploads/2017/10/Punto-Urban-Art-Museum-chorboogie-570x350.jpg",
-                                 "http://salem.org/wp-content/uploads/2017/08/puam_cpwon.jpg",
-                                 "https://static.wixstatic.com/media/ae30cb_fa00e7256b474b13ba2cf27d82f92b12~mv2.jpg",
-                                 "https://scontent-sjc2-1.cdninstagram.com/t51.2885-15/s320x320/e35/c0.42.720.720/21911239_1840467466243531_248052524760694784_n.jpg",
-                                 "https://c.o0bg.com/rf/image_1920w/Boston/2011-2020/2017/07/19/BostonGlobe.com/Metro/Images/tlumacki_salemmurals_metro164copy.jpg",
-                                 "http://northshorecdc.org/wp-content/uploads/2017/08/0V1A2477-1.jpg",
-                                 "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg",
-                                 "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg",
-                                 "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg",
-                                 "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg", 
-                                 "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg",
-                                 "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg",
-                                 "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg",
-                                 "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg",
-                                 "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg",
-                                 "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg",
-                                 "https://www.creativesalem.com/wp-content/uploads/2017/09/809f86cc5e7a3b2eb09158dcd3404c77.jpg", ],
-                      featuredArtistImage: "https://www.creativesalem.com/wp-content/uploads/2017/08/Mary-Jane-Lee-Park-Salem-MA-2293.jpg",};
-  	}
+
+    constructor(props) {
+        super(props)
+        this.state = {
+          featuredArtistImage :"https://www.creativesalem.com/wp-content/uploads/2017/08/Mary-Jane-Lee-Park-Salem-MA-2293.jpg"
+        }
+    }
+
  	renderImages() {
-    return this.state.imageURLs.map((uri,i) =>{
-      return(
-        <Image key={i} style={{height: 100, width: 100, margin: 10}} source={{uri: uri}} />
-      );
-    })
+    
+    var {width} = Dimensions.get('window');
+    width = width / 3 - 2
+    
+		const { navigate } = this.props.navigation;
+        murals = this.props.screenProps.murals || {}
+        return Object.keys(murals).map((key,i) =>{
+            uri = murals[key]["Photo"]
+              return(
+				<TouchableOpacity key={i} onPress = {() => navigate('MuralInfoPage', {mural: murals[key]})}>
+                  <Image key={i} style={{height: width, width: width, margin: 1}} source={{uri: uri}} />
+				</TouchableOpacity>
+              );
+        })
   }
-  	
+
     render() {
+        
+        var {height} = Dimensions.get('window');
+         height = height / 4
         return (
           <ScrollView>
-            <View >
-              <Image style={{height: 190,  alignSelf: 'stretch'}} source={{uri: this.state.featuredArtistImage}} />
-              <View style={{backgroundColor: 'rgba(0,0,0,.4)', height: 190, position : 'absolute', width: 380 }} >
-               <Text style={{ color: 'white', fontSize: 30, marginTop: 80, marginLeft: 15}}> Featured Artist </Text>
-               <Text style={{ color: 'white', fontSize: 20, marginTop: 0, marginLeft: 20}}> Artist Name </Text>
+            <View>
+              <Image style={{height: height,  alignSelf: 'stretch'}} source={{uri: this.state.featuredArtistImage}} />
+              <View style={{backgroundColor: 'rgba(0,0,0,.4)', height: height, position : 'absolute', width: 380 }} >
+               <Text style={{ color: 'white', fontSize: 30 / 190 * height, marginTop: 80 / 190 * height, marginLeft: 15}}> Featured Artist </Text>
+               <Text style={{ color: 'white', fontSize: 20 / 190 * height, marginTop: 0 / 190 * height, marginLeft: 20}}> Artist Name </Text>
               </View>
             </View>
-            <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', marginLeft: 7}}>
+            <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', marginTop: 0}}>
                {this.renderImages()}
             </View>
             </ScrollView>
@@ -53,6 +50,3 @@ export default class GalleryPage extends React.Component {
         )
     }
 }
-
-
-

@@ -43,6 +43,13 @@ def fireput():
         return render_template('form-result.html', putData=putData)
     return render_template('My-Form.html', form=form)
 
+@app.route('/api/get', methods = ['GET'])
+def fireget():
+	murals = firebase.get('/','murals')
+	print(murals)
+	return render_template('disp-all.html', murals=murals)
+
+
 @app.route('/')
 def hello_world():
     return firebase.get('/', 'test')
