@@ -40,6 +40,7 @@ export default class MuralInfoPage extends React.Component {
     render() {
         
         const mural = this.props.navigation.state.params.mural
+        const artist = this.props.navigation.state.params.artist
         
         var readMoreButton = null
         var closeButton = null
@@ -77,7 +78,7 @@ export default class MuralInfoPage extends React.Component {
                         <Text style = {styles.name}>{mural.Title}</Text>
                       </View>
                       <View>
-                        <Text style = {styles.artist}>{mural.Artist}</Text>
+                        <Text style = {styles.artist}>{artist.name}</Text>
                       </View>
                       <View>
                         { readMoreButton }

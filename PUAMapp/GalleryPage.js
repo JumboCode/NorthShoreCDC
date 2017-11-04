@@ -27,10 +27,11 @@ export default class GalleryPage extends React.Component {
     
 		const { navigate } = this.props.navigation;
         murals = this.props.screenProps.murals || {}
+        artists = this.props.screenProps.artists || {}
         return Object.keys(murals).map((key,i) =>{
             uri = murals[key]["Photo"]
               return(
-				<TouchableOpacity key={i} onPress = {() => navigate('MuralInfoPage', {mural: murals[key]})}>
+				<TouchableOpacity key={i} onPress = {() => navigate('MuralInfoPage', {mural: murals[key], artist: artists[murals[key]["Artist"]]})}>
                   <Image key={i} style={{height: width, width: width, margin: 1}} source={{uri: uri}} />
 				</TouchableOpacity>
               );
