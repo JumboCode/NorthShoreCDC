@@ -25,8 +25,8 @@ firebase = FirebaseApplication(firebase_path, None)
 
 class FirePut(Form):
     photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
-    lat = DecimalField('Lat', validators=[DataRequired(), NumberRange(min=42.4, max = 42.6)])
-    longitude = DecimalField('Long', validators=[DataRequired(), NumberRange(min=-71.0, max = -70.8)])
+    lat = DecimalField('Lat', validators=[DataRequired(), NumberRange(min=42.51, max = 42.52)])
+    longitude = DecimalField('Long', validators=[DataRequired(), NumberRange(min=-70.88, max = -70.9)])
     artist = SelectField('Artist', coerce = int, validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
     month = StringField('Month', validators=[DataRequired(), AnyOf(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"])])
