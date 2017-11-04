@@ -17,6 +17,14 @@ export default class MuralInfoPage extends React.Component {
         info: 0
       }
     }
+    
+
+
+    static navigationOptions = {
+      title: 'Punto Urban Art Museum',
+      headerTintColor: 'white',
+      headerStyle: {backgroundColor: 'pink'},
+    };
 
     toggleShowDescription() {
       this.setState({descriptionVisible: !this.state.descriptionVisible})
