@@ -1,6 +1,8 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Dimensions} from 'react-native';
+import { lightpurple, darkpurple, pink } from './colors.js';
+
 
 
 export default class GalleryPage extends React.Component {
@@ -15,7 +17,7 @@ export default class GalleryPage extends React.Component {
   static navigationOptions = {
       title: 'Gallery',
       headerTintColor: 'white',
-      headerStyle: {backgroundColor: 'pink'},
+      headerStyle: {backgroundColor: pink},
     };
 
  	renderImages() {
