@@ -31,32 +31,46 @@ export default class MuralInfoPage extends React.Component {
     render() {
         
         const mural = this.props.navigation.state.params.mural
-      
+        
+        var readMoreButton = null
+        var closeButton = null
+        if (this.state.descriptionVisible) {
+          closeButton = <Image source={infoButtons[this.state.info]} style={{width: 30, height: 30}}/>
+        } else {
+          readMoreButton =  <TouchableOpacity onPress = {this.toggleShowDescription.bind(this)}>
+                              <Text style = {styles.moreInfoButton}>Read More</Text>
+                            </TouchableOpacity>
+        }
+        
+        
         return (
-            <View style = {styles.container}>
-              <Image style={{flex: 1, position: "absolute", resizeMode: 'cover', height: '100%', width: '100%'}} source={{uri: mural.Photo}} />
-              <OpacityView style = {styles.darkOverlay} visible = {this.state.descriptionVisible}/>
-              <View style = {styles.textContainer}>
-                <View style = {styles.top}>
-                  <View style = {styles.info}>
-                    <View>
-                      <Text style = {styles.name}>{mural.Title}</Text>
+              <TouchableOpacity style = {styles.container} onPress = {this.toggleShowDescription.bind(this)} activeOpacity = {1} >
+                <Image style={{flex: 1, position: "absolute", resizeMode: 'cover', height: '100%', width: '100%'}} source={{uri: mural.Photo}} />
+                <OpacityView style = {styles.darkOverlay} visible = {this.state.descriptionVisible}/>
+                <View style = {styles.textContainer}>
+                  <View style = {styles.top}>
+                    <View style = {styles.info}>
+                      <View>
+                        <Text style = {styles.name}>{mural.Title}</Text>
+                      </View>
+                      <View>
+                        <Text style = {styles.artist}>{mural.Artist}</Text>
+                      </View>
+                      <View>
+                        { readMoreButton }
+                      </View>
                     </View>
-                    <View>
-                      <Text style = {styles.artist}>{mural.Artist}</Text>
+                    <View style = {styles.button}>
+                      <TouchableOpacity onPress = {this.toggleShowDescription.bind(this)}>
+                          { closeButton }
+                      </TouchableOpacity>
                     </View>
                   </View>
-                  <View style = {styles.button}>
-                    <TouchableOpacity onPress = {this.toggleShowDescription.bind(this)}>
-                        <Image source={infoButtons[this.state.info]} style={{width: 30, height: 30}}/>
-                    </TouchableOpacity>
-                  </View>
+                  <DrawerView style = {styles.description} visible = {this.state.descriptionVisible}>
+                    <Text style = {{color: 'white'}}>{JSON.stringify(mural)}</Text>
+                  </DrawerView>
                 </View>
-                <DrawerView style = {styles.description} visible = {this.state.descriptionVisible}>
-                  <Text style = {{color: 'white'}}>{JSON.stringify(mural)}</Text>
-                </DrawerView>
-              </View>
-            </View>
+              </TouchableOpacity>
         )
     }
 }
@@ -82,9 +96,9 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start'
   },
   button: {
-    flex: 1,
+    flex: 2,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'flex-end'
   },
   name: {
     color: 'white',
@@ -108,6 +122,14 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     backgroundColor: 'black',
+  },
+  moreInfoButton: {
+    color: 'white',
+    textShadowColor: 'black',
+    textShadowOffset: {width : -1, height: 0},
+    textShadowRadius: 5,
+    fontSize: 15, 
+    marginTop: 20
   }
 });
 
