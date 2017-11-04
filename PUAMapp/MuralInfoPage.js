@@ -50,6 +50,20 @@ export default class MuralInfoPage extends React.Component {
                             </TouchableOpacity>
         }
         
+        var description = ""
+        if (mural['Month'] && mural['Year']) {
+          description += mural['Month'] + ", " + mural['Year']
+        }
+        
+        if (mural['Medium']) {
+          description += '\n' + mural['Medium']
+        }
+        
+        if (mural['Description']) {
+          description += '\n\n' + mural['Description']
+        }
+        
+        
         
         return (
               <TouchableOpacity style = {styles.container} onPress = {this.toggleShowDescription.bind(this)} activeOpacity = {1} >
@@ -75,7 +89,7 @@ export default class MuralInfoPage extends React.Component {
                     </View>
                   </View>
                   <DrawerView style = {styles.description} visible = {this.state.descriptionVisible}>
-                    <Text style = {{color: 'white'}}>{JSON.stringify(mural)}</Text>
+                    <Text style = {{color: 'white'}}>{description}</Text>
                   </DrawerView>
                 </View>
               </TouchableOpacity>
@@ -120,7 +134,8 @@ const styles = StyleSheet.create({
     textShadowColor: 'black',
     textShadowOffset: {width : -1, height: 0},
     textShadowRadius: 5,
-    fontSize: 24
+    fontSize: 24,
+    marginBottom: 20
   },
   description: {
     marginTop: 50
@@ -137,7 +152,6 @@ const styles = StyleSheet.create({
     textShadowOffset: {width : -1, height: 0},
     textShadowRadius: 5,
     fontSize: 15, 
-    marginTop: 20
   }
 });
 
