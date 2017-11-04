@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 from firebase import firebase
 import os
 from flask_wtf import FlaskForm as Form
@@ -34,6 +34,13 @@ class FirePut(Form):
     description = TextAreaField('Description', validators=[DataRequired()])
     medium = StringField('Medium', validators=[DataRequired()])
 
+class ArtistPut(Form):
+    photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
+    name = StringField('Name', validators=[DataRequired()])
+    city = StringField('City', validators=[DataRequired()])
+    bio = TextAreaField('Bio', validators=[DataRequired()])
+
+
 count = 0
 
 @app.route('/api/put', methods=['GET', 'POST'])
@@ -50,6 +57,18 @@ def fireput():
         firebase.put('/murals', uuid.uuid4(), putData)
         return render_template('form-result.html', putData=putData)
     return render_template('My-Form.html', form=form)
+
+
+@app.route('/api/new_artist', methods=['GET', 'POST'])
+def artistput():
+    form = ArtistPut()
+    if form.validate_on_submit():
+        putData = { 'photo' : form.photo.data, 'name' : form.name.data,
+        			'city' : form.city.data, 'bio' : form.bio.data}
+       	artists = firebase.get('/', 'artists')
+        firebase.put('/artists', str(len(artists)), putData)
+        return redirect("localhost:5000/api/put", code=302)
+    return render_template('artist-form.html', form=form)
 
 @app.route('/api/get', methods = ['GET'])
 def fireget():

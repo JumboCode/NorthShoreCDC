@@ -1,0 +1,28 @@
+{% block content %}
+  <h3> Add Artist:</h3>
+    <p>Please complete the form below<p>
+    <form action="" method="post" name="api">
+      {{ form.csrf_token }}
+      <p> Please enter a photo of the artist you want to add.: <br>
+      {{ form.photo(size=40) }}<br>
+      {% for error in form.photo.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p> Please enter the name of the artist: <br>
+      {{ form.name(size=40) }} <br>
+      {% for error in form.name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p> Please enter the artist's city: <br>
+      {{ form.city(size=40) }} <br>
+      {% for error in form.city.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p> Please enter a bio for the artist: <br>
+      {{ form.bio(rows=8, cols=60) }} <br>
+      {% for error in form.bio.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p><input type ="submit" value="Add" class="btn btn-sm btn-primary"></p>
+    </form>
+{% endblock %}
