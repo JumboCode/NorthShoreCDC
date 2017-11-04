@@ -11,7 +11,7 @@ import MuralInfoPage from './MuralInfoPage'
 
 
 import {
-  getMurals
+  getMurals, getArtists
 } from './redux';
 
 import { Provider } from 'react-redux';
@@ -22,6 +22,7 @@ class AppInner extends React.Component {
   constructor(props) {
     super(props)
     props.getMurals()
+    props.getArtists()
   }
   
   render() {
@@ -54,14 +55,23 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-    murals: state.muralData.murals,
-    loading: state.muralData.loading
+    murals: state.firebaseData.murals,
+    muralsloading: state.firebaseData.muralsloading,
+    muralsloaded:state.firebaseData.muralsloading,
+    artistsloading: state.firebaseData.artistsloading,
+    artistsloaded:state.firebaseData.artistsloading,
+    artists: state.firebaseData.artists,
+
+
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getMurals : () => {
       dispatch(getMurals())
+    },
+    getArtists : () => {
+      dispatch(getArtists())
     }
   }
 };

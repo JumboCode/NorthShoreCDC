@@ -8,7 +8,7 @@ import config from './firebase';
 import * as firebase from 'firebase';
 
 firebase.initializeApp(config);
-//actions
+// Actions relating to getting murals from database 
 export const getMuralsStart = () => ({
 	type: 'GET_MURALS_START'
 
@@ -37,26 +37,67 @@ export const getMurals = () => {
     }
 }
 
+export const getArtistsStart = () => ({
+	type: 'GET_ARTISTS_START'
+
+});
+
+export const getArtistsSuccess = (artists) => ({
+	type: 'GET_ARTISTS_SUCCESS',
+	payload: artists
+});
+
+export const getArtists = () => {
+	    return function (dispatch) {
+        dispatch(getArtistsStart());
+
+        firebase.database()
+                .ref('artists')
+                .orderByKey()
+                .on('value', (snapshot) => {
+                    // gets around Redux panicking about actions in reducers
+                    setTimeout(() => {
+                        const messages = snapshot.val() || [];
+
+                        dispatch(getArtistsSuccess(messages))
+                    }, 0);
+                });
+    }
+}
+
 // reducers
 
 const initialState = {
-	loading: false,
-	loaded: false,
-	murals: []
+	muralsloading: false,
+	muralsloaded: false,
+	artistsloading: false,
+	artistsloaded: false,
+	murals: [],
+	artists: [],
 }
 
 
-const muralData = (state = initialState, action) => {
+const firebaseData = (state = initialState, action) => {
 	switch (action.type) {
 		case 'GET_MURALS_START':
 			return Object.assign({}, state, {
-                loading: true
+                muralsloading: true
             });
 		case 'GET_MURALS_SUCCESS':
 			return Object.assign({}, state, {
-                loading: false,
-                loaded: true,
+                muralsloading: false,
+                muralsloaded: true,
                 murals: action.payload
+            });
+        case 'GET_ARTISTS_START':
+			return Object.assign({}, state, {
+                artistsloading: true
+            });
+		case 'GET_ARTISTS_SUCCESS':
+			return Object.assign({}, state, {
+                artistsloading: false,
+                artistsloaded: true,
+                artists: action.payload
             });
 
 			default: return state;
@@ -64,7 +105,7 @@ const muralData = (state = initialState, action) => {
 };
 
 export const reducers = combineReducers({
-	muralData
+	firebaseData
 });
 
 

@@ -22,20 +22,21 @@ export default class ExplorePage extends React.Component {
     renderImages() {
         const { navigate } = this.props.navigation;
         murals = this.props.screenProps.murals || {}
+        artists = this.props.screenProps.artists || {}
         return Object.keys(murals).map((key,i) =>{
             lat = parseFloat(murals[key]["Lat"]);
             long = parseFloat(murals[key]["Long"]);
             title = murals[key]["Title"];
-            description = murals[key]["Description"];
+            artistName = artists[murals[key]["Artist"]]["name"];
 
             return(
               <MapView.Marker
                   key={i}
                   title = {title}
-                  description = {description}
+                  description = {artistName}
                   coordinate= {{latitude: lat, longitude: long}}
                   pinColor = 'pink'
-                  onCalloutPress = { () => { navigate('MuralInfoPage', {mural: murals[key]}) }}
+                  onCalloutPress = { () => { navigate('MuralInfoPage', {mural: murals[key], artist: artists[murals[key]["Artist"]]}) }}
               />
                 
             );
