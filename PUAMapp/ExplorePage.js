@@ -53,10 +53,10 @@ export default class ExplorePage extends React.Component {
             <MapView
               style = {{flex: 1 }}
               region = {{
-                latitude: 42.5,
-                longitude: -70.9,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
+                latitude: 42.5183849,
+                longitude: -70.8957987,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.015,
               }}>
               {this.renderImages()}
                 
