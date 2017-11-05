@@ -13,7 +13,7 @@
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
-    "test": "",
+    "test": "echo 0",
     "appr": "appr"
   },
   "jest": {
