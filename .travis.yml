@@ -4,4 +4,5 @@ node_js:
   - "node"
 cache: yarn
 script:
+  - yarn ci-test-command
   - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then yarn appr; fi'
