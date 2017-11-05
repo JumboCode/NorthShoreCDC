@@ -27,9 +27,6 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-22.0.2.tar.gz",
     "react-native-firebase": "^3.0.5",
     "react-native-hyperlink": "0.0.11",
-    "react-native-icon-button": "^1.0.0",
-    "react-native-image-button": "^1.0.0",
-    "react-native-img-button": "^1.0.1",
     "react-navigation": "^1.0.0-beta.13",
     "react-redux": "^5.0.6",
     "redux-thunk": "^2.2.0"
