@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Button, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Button, StatusBar, Platform} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 
@@ -8,6 +8,8 @@ import GalleryPage from './GalleryPage'
 import ExplorePage from './ExplorePage'
 import ContactPage from './ContactPage'
 import MuralInfoPage from './MuralInfoPage'
+
+import { lightpurple, darkpurple, pink } from './colors.js';
 
 import {
   getMurals, getArtists
@@ -28,9 +30,12 @@ class AppInner extends React.Component {
     return (
       <View style={{flex: 1}}>
         <StatusBar 
-          backgroundColor="blue"
+          backgroundColor={lightpurple}
+          translucent={false}
           barStyle="light-content"/>
-        <AppNav screenProps = {this.props} />
+        <View style={{flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight}}>
+          <AppNav screenProps = {this.props}/> 
+        </View>
       </View>
       );
   }
