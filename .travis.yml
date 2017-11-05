@@ -1,3 +1,4 @@
+before_install: cd PUAMapp
 language: node_js
 node_js:
   - "node"
