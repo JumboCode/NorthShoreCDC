@@ -64,7 +64,7 @@ export default class MuralInfoPage extends React.Component {
         
         return (
               <TouchableOpacity style = {styles.container} onPress = {this.toggleShowDescription.bind(this)} activeOpacity = {1} >
-                <Image style={{flex: 1, position: "absolute", resizeMode: 'cover', height: '100%', width: '100%'}} source={{uri: mural.Photo, cache: 'force-cache'}} />
+                <Image style={{flex: 1, position: "absolute", resizeMode: 'cover', height: '100%', width: '100%'}} source={{uri: mural.Photo}} />
                 <OpacityView style = {styles.darkOverlay} visible = {this.state.descriptionVisible}/>
                 <View style = {styles.textContainer}>
                   <View style = {styles.top}>
