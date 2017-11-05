@@ -9,27 +9,14 @@ export default class ExplorePage extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            lastLat: null,
-            lastLong: null,
-        } 
     }
 
     componentDidMount() {
-        this.watchID = navigator.geolocation.watchPosition((position) => {
-            this.onLocationChange(position.coords.latitude, position.coords.longitude);
-        });
+        this.watchID = navigator.geolocation.watchPosition();
     }
 
     componentWillUnmount() {
         navigator.geolocation.clearWatch(this.watchID);
-    }
-
-    onLocationChange(lastLat, lastLong) {
-        this.setState({
-            lastLat: lastLat || this.state.lastLat,
-            lastLong: lastLong || this.state.lastLong
-        });
     }
 
     static navigationOptions = {
@@ -40,6 +27,7 @@ export default class ExplorePage extends React.Component {
 
     renderImages() {
         const { navigate } = this.props.navigation;
+        
         murals = this.props.screenProps.murals || {}
         artists = this.props.screenProps.artists || {}
         return Object.keys(murals).map((key,i) =>{
@@ -63,8 +51,6 @@ export default class ExplorePage extends React.Component {
     }
 
     render() {
-    
-        
         const { navigate } = this.props.navigation;
 
         return (

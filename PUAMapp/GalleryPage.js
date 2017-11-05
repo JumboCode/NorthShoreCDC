@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Dimensions} from 'react-native';
-import ProgressBar from 'react-native-progress/Bar'
 import { lightpurple, darkpurple, pink } from './colors.js';
 
 
