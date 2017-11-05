@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
-import {StackNavigator} from 'react-navigation';
+import { StyleSheet, Text, View, Image, ScrollView, Button, StatusBar } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 
 import HomePage from './HomePage'
@@ -8,7 +8,6 @@ import GalleryPage from './GalleryPage'
 import ExplorePage from './ExplorePage'
 import ContactPage from './ContactPage'
 import MuralInfoPage from './MuralInfoPage'
-
 
 import {
   getMurals, getArtists
@@ -26,9 +25,13 @@ class AppInner extends React.Component {
   }
   
   render() {
-    
     return (
-      <AppNav screenProps = {this.props} />
+      <View style={{flex: 1}}>
+        <StatusBar 
+          backgroundColor="blue"
+          barStyle="light-content"/>
+        <AppNav screenProps = {this.props} />
+      </View>
       );
   }
 }
@@ -61,8 +64,6 @@ const mapStateToProps = (state) => ({
     artistsloading: state.firebaseData.artistsloading,
     artistsloaded:state.firebaseData.artistsloading,
     artists: state.firebaseData.artists,
-
-
 });
 
 const mapDispatchToProps = (dispatch) => {
