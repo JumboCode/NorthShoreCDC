@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
-import MapView from 'react-native-maps';
+import { MapView } from 'expo';
 import { lightpurple, darkpurple, pink } from './colors.js';
 
 
@@ -44,8 +44,6 @@ export default class ExplorePage extends React.Component {
     }
 
     render() {
-    
-        
         const { navigate } = this.props.navigation;
 
         return (
