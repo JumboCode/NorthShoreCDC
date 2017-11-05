@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Dimensions} from 'react-native';
+import ProgressBar from 'react-native-progress/Bar'
 import { lightpurple, darkpurple, pink } from './colors.js';
 
 
@@ -32,7 +33,7 @@ export default class GalleryPage extends React.Component {
             uri = murals[key]["Photo"]
               return(
 				<TouchableOpacity key={i} onPress = {() => navigate('MuralInfoPage', {mural: murals[key], artist: artists[murals[key]["Artist"]]})}>
-                  <Image key={i} style={{height: width, width: width, margin: 1}} source={{uri: uri}} />
+                  <Image key={i} style={{height: width, width: width, margin: 1}} source={{uri: uri, cache: 'force-cache'}} />
 				</TouchableOpacity>
               );
         })

@@ -10,7 +10,26 @@ export default class ExplorePage extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            lastLat: null,
+            lastLong: null,
         } 
+    }
+
+    componentDidMount() {
+        this.watchID = navigator.geolocation.watchPosition((position) => {
+            this.onLocationChange(position.coords.latitude, position.coords.longitude);
+        });
+    }
+
+    componentWillUnmount() {
+        navigator.geolocation.clearWatch(this.watchID);
+    }
+
+    onLocationChange(lastLat, lastLong) {
+        this.setState({
+            lastLat: lastLat || this.state.lastLat,
+            lastLong: lastLong || this.state.lastLong
+        });
     }
 
     static navigationOptions = {
@@ -35,7 +54,7 @@ export default class ExplorePage extends React.Component {
                   title = {title}
                   description = {artistName}
                   coordinate= {{latitude: lat, longitude: long}}
-                  pinColor = 'pink'
+                  pinColor = {pink}
                   onCalloutPress = { () => { navigate('MuralInfoPage', {mural: murals[key], artist: artists[murals[key]["Artist"]]}) }}
               />
                 
@@ -51,6 +70,7 @@ export default class ExplorePage extends React.Component {
         return (
             <View style = {{flex: 1}}>
             <MapView
+              showsUserLocation={true}
               style = {{flex: 1 }}
               region = {{
                 latitude: 42.5183849,
