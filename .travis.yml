@@ -1,0 +1,8 @@
+before_install: cd PUAMapp; echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+language: node_js
+node_js:
+  - "node"
+cache: yarn
+script:
+  - yarn --version
+  - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then npm dedupe; yarn appr; fi'
