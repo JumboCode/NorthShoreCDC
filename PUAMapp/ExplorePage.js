@@ -1,22 +1,26 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableHighlight, Button} from 'react-native';
 import MapView from 'react-native-maps';
+import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
 
 
 export default class ExplorePage extends React.Component {
-
     constructor(props) {
         super(props)
         this.state = {
         } 
     }
-
+    
     static navigationOptions = {
-      title: 'Explore',
-      headerTintColor: 'white',
-      headerStyle: {backgroundColor: pink},
+    headerLeft:   
+    <TouchableHighlight onPress={() => this.props.navigation.dispatch(NavigationActions.back())} >
+    <Image 
+    style= {{height: 40, width: 40, position: 'absolute',zIndex: 100, top: 0, left: 0, right: 0}}
+    source={require('./backbutton.png')} /> 
+    </TouchableHighlight>,
+    headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0 } 
     };
 
     renderImages() {
@@ -44,10 +48,7 @@ export default class ExplorePage extends React.Component {
     }
 
     render() {
-    
-        
-        const { navigate } = this.props.navigation;
-
+    const { navigate } = this.props.navigation;
         return (
             <View style = {{flex: 1}}>
             <MapView
@@ -59,9 +60,9 @@ export default class ExplorePage extends React.Component {
                 longitudeDelta: 0.015,
               }}>
               {this.renderImages()}
-                
             </MapView>
             </View>
         )
     }
 }
+
