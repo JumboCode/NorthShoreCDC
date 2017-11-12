@@ -8,7 +8,7 @@ import GalleryPage from './GalleryPage'
 import ExplorePage from './ExplorePage'
 import ContactPage from './ContactPage'
 import MuralInfoPage from './MuralInfoPage'
-
+import SplashScreen from './SplashScreen'
 
 import {
   getMurals, getArtists
@@ -77,6 +77,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const AppNav = StackNavigator({
+  SplashScreen: {screen: SplashScreen},
   HomePage: {screen: HomePage},
   ExplorePage: {screen: ExplorePage},
   GalleryPage: {screen: GalleryPage},
