@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect
-from firebase import firebase
+from firebase import firebase 
 import os
 from flask_wtf import FlaskForm as Form
 from wtforms.fields import *
@@ -7,6 +7,8 @@ from wtforms.validators import *
 from flask_wtf.csrf import CSRFProtect
 from firebase.firebase import FirebaseApplication, FirebaseAuthentication
 import uuid
+import requests
+import json
 
 
 firebase_path = os.environ.get('FIREBASE_PATH')
@@ -15,14 +17,26 @@ firebase_path = os.environ.get('FIREBASE_PATH')
 app = Flask(__name__)
 app.secret_key = os.environ.get('APP_KEY')
 
-#authentication = FirebaseAuthentication(os.environ.get('FIREBASE_KEY'), 'info@northshorecdc.org', extra={'id': 123})
-#firebase.authentication = authentication
+authentication = FirebaseAuthentication(os.environ.get('FIREBASE_KEY'), 'info@northshorecdc.org', extra={'id': 123})
+firebase.authentication = authentication
 
 firebase = FirebaseApplication(firebase_path, None)
 
-#user = authentication.get_user()
+user = authentication.get_user()
 
+def sign_in_with_email_and_password(email, password):
+        request_ref = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key={0}".format(os.environ.get('FIREBASE_KEY'))
+        headers = {"content-type": "application/json; charset=UTF-8"}
+        data = json.dumps({"email": "info@northshorecdc.org", "password": "test-pssword", "returnSecureToken": True})
+        request_object = requests.post(request_ref, headers=headers, data=data)
+        current_user = request_object#request_object.json()
+        print current_user
+        if current_user.errors != None
+        	# handle errors
+        else
+        	firebase.authentication = current_user.localId
 
+sign_in_with_email_and_password("","")
 class FirePut(Form):
     photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
     lat = DecimalField('Lat', validators=[DataRequired(), NumberRange(min=40.0, max = 43.0)])
