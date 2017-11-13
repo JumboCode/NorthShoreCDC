@@ -12,16 +12,17 @@ export default class ExplorePage extends React.Component {
         this.state = {
         } 
     }
-    
-    static navigationOptions = {
+
+    static navigationOptions = ({ navigation }) => ({
     headerLeft:   
-    <TouchableHighlight onPress={() => this.props.navigation.dispatch(NavigationActions.back())} >
+    <TouchableHighlight onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
     style= {{height: 40, width: 40, position: 'absolute',zIndex: 100, top: 0, left: 0, right: 0}}
     source={require('./backbutton.png')} /> 
     </TouchableHighlight>,
-    headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0 } 
-    };
+    headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0 }
+    });
+
 
     renderImages() {
         const { navigate } = this.props.navigation;
