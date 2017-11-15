@@ -33,7 +33,9 @@ class AppInner extends React.Component {
           backgroundColor={lightpurple}
           translucent={false}
           barStyle="light-content"/>
-        <View style={{flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight}}>
+        <View style={{flex: 1, 
+                      backgroundColor: pink,  
+                      paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight}}>
           <AppNav screenProps = {this.props}/> 
         </View>
       </View>
