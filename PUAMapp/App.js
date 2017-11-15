@@ -29,10 +29,7 @@ class AppInner extends React.Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <StatusBar 
-          backgroundColor={lightpurple}
-          translucent={false}
-          barStyle="light-content"/>
+        <StatusBar barStyle="light-content"/>
         <View style={{flex: 1, 
                       backgroundColor: pink,  
                       paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight}}>
@@ -71,6 +68,8 @@ const mapStateToProps = (state) => ({
     artistsloading: state.firebaseData.artistsloading,
     artistsloaded:state.firebaseData.artistsloading,
     artists: state.firebaseData.artists,
+
+    
 });
 
 const mapDispatchToProps = (dispatch) => {
