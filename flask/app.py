@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, session
 from firebase import firebase 
 import os
 from flask_wtf import FlaskForm as Form
@@ -9,6 +9,7 @@ from firebase.firebase import FirebaseApplication, FirebaseAuthentication
 import uuid
 import requests
 import json
+#from flask.ext.session import Session
 
 
 firebase_path = os.environ.get('FIREBASE_PATH')
@@ -17,26 +18,30 @@ firebase_path = os.environ.get('FIREBASE_PATH')
 app = Flask(__name__)
 app.secret_key = os.environ.get('APP_KEY')
 
-authentication = FirebaseAuthentication(os.environ.get('FIREBASE_KEY'), 'info@northshorecdc.org', extra={'id': 123})
-firebase.authentication = authentication
 
-firebase = FirebaseApplication(firebase_path, None)
+firebase = firebase.FirebaseApplication(firebase_path, None)
 
-user = authentication.get_user()
+
+#SESSION_TYPE = 'redis'
+#Session(app)
 
 def sign_in_with_email_and_password(email, password):
         request_ref = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key={0}".format(os.environ.get('FIREBASE_KEY'))
         headers = {"content-type": "application/json; charset=UTF-8"}
-        data = json.dumps({"email": "info@northshorecdc.org", "password": "test-pssword", "returnSecureToken": True})
+        data = json.dumps({"email": email, "password": password, "returnSecureToken": True})
         request_object = requests.post(request_ref, headers=headers, data=data)
-        current_user = request_object#request_object.json()
-        print current_user
-        if current_user.errors != None
-        	# handle errors
-        else
-        	firebase.authentication = current_user.localId
+        current_user = request_object.json()
+        try: 
+            reg = current_user["registered"]
+            session["auth"] = current_user["localId"]
+            print "Hello again"
+            print session["auth"]
+            return redirect("localhost:5000/api/put", code=302)
+        except KeyError:
+            return redirect("localhost:5000/api/login", code=302)
 
-sign_in_with_email_and_password("","")
+ 
+
 class FirePut(Form):
     photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
     lat = DecimalField('Lat', validators=[DataRequired(), NumberRange(min=40.0, max = 43.0)])
@@ -47,6 +52,10 @@ class FirePut(Form):
     year = IntegerField('Year', validators=[DataRequired(), NumberRange(min=1980, max = 3000)])
     description = TextAreaField('Description', validators=[DataRequired()])
     medium = StringField('Medium', validators=[DataRequired()])
+
+class Validate(Form):
+    email = StringField('Email', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
 
 class ArtistPut(Form):
     photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
@@ -61,34 +70,45 @@ count = 0
 def fireput():
     form = FirePut()
     if form.validate_on_submit():
-        global count
-        count += 1
-        putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
-        			'Long' : form.longitude.data, 'Artist' : form.artist.data,
-        			'Title' : form.title.data, 'Month' : form.month.data,
-        			'Year' : form.year.data, 'Description' : form.description.data,
-        			'Medium' : form.medium.data }
-        firebase.put('/murals', uuid.uuid4(), putData)
-        return render_template('form-result.html', putData=putData)
+        if "auth" in session:
+            
+            firebase.authentication = {"provider": "anonymous"}
+            global count
+            count += 1
+            putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
+                        'Long' : form.longitude.data, 'Artist' : form.artist.data,
+                        'Title' : form.title.data, 'Month' : form.month.data,
+                        'Year' : form.year.data, 'Description' : form.description.data,
+                        'Medium' : form.medium.data }
+            firebase.put('/murals', uuid.uuid4(), putData)
+            return render_template('form-result.html', putData=putData)
+        else:
+            return redirect("localhost:5000/api/login", code=302)
     return render_template('My-Form.html', form=form)
 
+@app.route('/api/login', methods=['GET','POST'])
+def validate():
+    form = Validate()
+    if form.validate_on_submit():
+        sign_in_with_email_and_password(form.email.data, form.password.data)
+    return render_template('validation-form.html', form=form)
 
 @app.route('/api/new_artist', methods=['GET', 'POST'])
 def artistput():
     form = ArtistPut()
     if form.validate_on_submit():
         putData = { 'photo' : form.photo.data, 'name' : form.name.data,
-        			'city' : form.city.data, 'bio' : form.bio.data}
-       	artists = firebase.get('/', 'artists')
+                    'city' : form.city.data, 'bio' : form.bio.data}
+        artists = firebase.get('/', 'artists')
         firebase.put('/artists', str(len(artists)), putData)
         return redirect("localhost:5000/api/put", code=302)
     return render_template('artist-form.html', form=form)
 
 @app.route('/api/get', methods = ['GET'])
 def fireget():
-	murals = firebase.get('/','murals')
-	print(murals)
-	return render_template('disp-all.html', murals=murals)
+    murals = firebase.get('/','murals')
+    print(murals)
+    return render_template('disp-all.html', murals=murals)
 
 
 @app.route('/')

@@ -1,0 +1,17 @@
+{% block content %}
+<p>Provide the following info below<p>
+<form action="" method="post" name="api">
+{{ form.csrf_token}}
+<p>Email: <br>
+{{form.email(size=40)}}<br>
+{% for error in form.email.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}<br>
+<p>Password: <br>
+{{form.password(size=40)}} <br>
+{% for error in form.password.errors %}
+<span style="color: red;">[{{ error }}] </span>
+{% endfor %}<br>
+<p><input type="submit" value="Submit" class="btn btn-sm btn-primary"
+</p></form>
+{% endblock %}
