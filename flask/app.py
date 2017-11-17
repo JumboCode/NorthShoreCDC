@@ -26,18 +26,19 @@ firebase = firebase.FirebaseApplication(firebase_path, None)
 #Session(app)
 
 def sign_in_with_email_and_password(email, password):
-        request_ref = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key={0}".format(os.environ.get('FIREBASE_KEY'))
+        request_ref = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key={0}".format(os.environ.get('APP_KEY'))
         headers = {"content-type": "application/json; charset=UTF-8"}
         data = json.dumps({"email": email, "password": password, "returnSecureToken": True})
         request_object = requests.post(request_ref, headers=headers, data=data)
         current_user = request_object.json()
         try: 
             reg = current_user["registered"]
-            session["auth"] = current_user["localId"]
+            session["auth"] = current_user["idToken"]
             print "Hello again"
             print session["auth"]
-            return redirect("localhost:5000/api/put", code=302)
+            return redirect("/api/put")
         except KeyError:
+            print "KeyError"
             return redirect("localhost:5000/api/login", code=302)
 
  
@@ -90,7 +91,7 @@ def fireput():
 def validate():
     form = Validate()
     if form.validate_on_submit():
-        sign_in_with_email_and_password(form.email.data, form.password.data)
+        return sign_in_with_email_and_password(form.email.data, form.password.data)
     return render_template('validation-form.html', form=form)
 
 @app.route('/api/new_artist', methods=['GET', 'POST'])
