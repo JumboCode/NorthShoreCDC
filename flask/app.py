@@ -9,6 +9,8 @@ from firebase.firebase import FirebaseApplication, FirebaseAuthentication
 import uuid
 import requests
 import json
+import time
+from functools import wraps
 #from flask.ext.session import Session
 
 
@@ -34,6 +36,11 @@ def sign_in_with_email_and_password(email, password):
         try: 
             reg = current_user["registered"]
             session["auth"] = current_user["idToken"]
+            
+            # Say it will expire in expiresIn seconds - 5 minutes 
+            # session["auth_expiration"] = time.time() + 10
+            session["auth_ends_at"] = time.time() + int(current_user["expiresIn"]) - 60*5
+            
             print "Hello again"
             print session["auth"]
             return redirect("/api/put")
@@ -64,27 +71,39 @@ class ArtistPut(Form):
     city = StringField('City', validators=[DataRequired()])
     bio = TextAreaField('Bio', validators=[DataRequired()])
 
+def requires_auth(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if 'auth' in session and 'auth_expiration' in session:
+            auth = session['auth']
+            auth_expiration = session['auth_expiration']
+            
+            # If the auth token is not expired, then you're still "logged in"
+            if auth and auth_expiration and time.time() <= auth_expiration:
+                return f(*args, **kwargs)
+            
+        return redirect('/api/login')
+    return decorated
+
+
 
 count = 0
 
 @app.route('/api/put', methods=['GET', 'POST'])
+@requires_auth
 def fireput():
     form = FirePut()
     if form.validate_on_submit():
-        if "auth" in session:
-            
-            firebase.authentication = {"provider": "anonymous"}
-            global count
-            count += 1
-            putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
-                        'Long' : form.longitude.data, 'Artist' : form.artist.data,
-                        'Title' : form.title.data, 'Month' : form.month.data,
-                        'Year' : form.year.data, 'Description' : form.description.data,
-                        'Medium' : form.medium.data }
-            firebase.put('/murals', uuid.uuid4(), putData)
-            return render_template('form-result.html', putData=putData)
-        else:
-            return redirect("localhost:5000/api/login", code=302)
+        firebase.authentication = {"provider": "anonymous"}
+        global count
+        count += 1
+        putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
+                    'Long' : form.longitude.data, 'Artist' : form.artist.data,
+                    'Title' : form.title.data, 'Month' : form.month.data,
+                    'Year' : form.year.data, 'Description' : form.description.data,
+                    'Medium' : form.medium.data }
+        firebase.put('/murals', uuid.uuid4(), putData)
+        return render_template('form-result.html', putData=putData)
     return render_template('My-Form.html', form=form)
 
 @app.route('/api/login', methods=['GET','POST'])
@@ -95,6 +114,7 @@ def validate():
     return render_template('validation-form.html', form=form)
 
 @app.route('/api/new_artist', methods=['GET', 'POST'])
+@requires_auth
 def artistput():
     form = ArtistPut()
     if form.validate_on_submit():
