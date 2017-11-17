@@ -10,9 +10,6 @@ export default class GalleryPage extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-          featuredArtistImage :"https://www.creativesalem.com/wp-content/uploads/2017/08/Mary-Jane-Lee-Park-Salem-MA-2293.jpg"
-        }
     }
 
     static navigationOptions = ({ navigation }) => ({
@@ -46,14 +43,14 @@ export default class GalleryPage extends React.Component {
     render() {
         
         var {height, width} = Dimensions.get('window');
-         height = height / 3.5
+         height = height / 3
         return (
           <ScrollView>
             <View>
-              <Image style={{height: height,  alignSelf: 'stretch'}} source={{uri: this.state.featuredArtistImage}} />
+              <Image style={{height: height,  alignSelf: 'stretch'}} source={{uri: this.props.screenProps.artists[1]["photo"]}} />
               <View style={{backgroundColor: 'rgba(0,0,0,.4)', height: height, position : 'absolute', width: width }} >
                <Text style={{ color: 'white', fontSize: 30 / 190 * height, marginTop: 100 / 190 * height, marginLeft: 15}}> Featured Artist </Text>
-               <Text style={{ color: 'white', fontSize: 20 / 190 * height, marginTop: 0 / 190 * height, marginLeft: 20}}> Artist Name </Text>
+               <Text style={{ color: 'white', fontSize: 20 / 190 * height, marginTop: 0 / 190 * height, marginLeft: 20}}> {this.props.screenProps.artists[1]["name"]} </Text>
               </View>
             </View>
             <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', marginTop: 0}}>
