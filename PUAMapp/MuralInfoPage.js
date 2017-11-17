@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView,
-          Animated, TouchableOpacity } from 'react-native';
+          Animated, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
 
 var infoButtons = [
@@ -19,11 +20,15 @@ export default class MuralInfoPage extends React.Component {
       }
     }
 
-    static navigationOptions = {
-      title: 'Punto Urban Art',
-      headerTintColor: 'white',
-      headerStyle: {backgroundColor: pink},
-    };
+    static navigationOptions = ({ navigation }) => ({
+    headerLeft:   
+    <TouchableHighlight onPress={() => navigation.dispatch(NavigationActions.back())} >
+    <Image 
+    style= {{height: 50, width: 50, position: 'absolute',zIndex: 100, top: 0, left: 0, right: 0}}
+    source={require('./backbutton.png')} /> 
+    </TouchableHighlight>,
+    headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
+    });
 
     toggleShowDescription() {
       this.setState({descriptionVisible: !this.state.descriptionVisible})
@@ -102,6 +107,7 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     marginTop: '10%',
+    paddingTop: 60,
     padding: 20,
     backgroundColor: 'transparent'
   },

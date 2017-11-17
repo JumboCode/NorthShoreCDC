@@ -23,10 +23,10 @@ export default class ExplorePage extends React.Component {
     headerLeft:   
     <TouchableHighlight onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
-    style= {{height: 40, width: 40, position: 'absolute',zIndex: 100, top: 0, left: 0, right: 0}}
+    style= {{height: 50, width: 50, position: 'absolute',zIndex: 100, top: 0, left: 0, right: 0}}
     source={require('./backbutton.png')} /> 
     </TouchableHighlight>,
-    headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0 }
+    headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
     });
 
 

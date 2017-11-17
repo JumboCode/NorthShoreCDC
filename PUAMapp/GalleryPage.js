@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Dimensions} from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, TouchableHighlight, Dimensions} from 'react-native';
+import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
 
 
@@ -14,11 +15,15 @@ export default class GalleryPage extends React.Component {
         }
     }
 
-  static navigationOptions = {
-      title: 'Gallery',
-      headerTintColor: 'white',
-      headerStyle: {backgroundColor: pink},
-    };
+    static navigationOptions = ({ navigation }) => ({
+    headerLeft:   
+    <TouchableHighlight onPress={() => navigation.dispatch(NavigationActions.back())} >
+    <Image 
+    style= {{height: 50, width: 50, position: 'absolute',zIndex: 100, top: 0, left: 0, right: 0}}
+    source={require('./backbutton.png')} /> 
+    </TouchableHighlight>,
+    headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
+    });
 
  	renderImages() {
     
@@ -40,17 +45,16 @@ export default class GalleryPage extends React.Component {
 
     render() {
         
-        var {height} = Dimensions.get('window');
-         height = height / 4
+        var {height, width} = Dimensions.get('window');
+         height = height / 3.5
         return (
           <ScrollView>
             <View>
-              {/*<Image style={{height: height,  alignSelf: 'stretch'}} source={{uri: this.state.featuredArtistImage}} />
-              <View style={{backgroundColor: 'rgba(0,0,0,.4)', height: height, position : 'absolute', width: 380 }} >
-               <Text style={{ color: 'white', fontSize: 30 / 190 * height, marginTop: 80 / 190 * height, marginLeft: 15}}> Featured Artist </Text>
+              <Image style={{height: height,  alignSelf: 'stretch'}} source={{uri: this.state.featuredArtistImage}} />
+              <View style={{backgroundColor: 'rgba(0,0,0,.4)', height: height, position : 'absolute', width: width }} >
+               <Text style={{ color: 'white', fontSize: 30 / 190 * height, marginTop: 100 / 190 * height, marginLeft: 15}}> Featured Artist </Text>
                <Text style={{ color: 'white', fontSize: 20 / 190 * height, marginTop: 0 / 190 * height, marginLeft: 20}}> Artist Name </Text>
               </View>
-              */}
             </View>
             <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', marginTop: 0}}>
                {this.renderImages()}
