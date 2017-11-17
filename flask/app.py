@@ -80,7 +80,15 @@ def requires_auth(f):
             
             # If the auth token is not expired, then you're still "logged in"
             if auth and auth_expiration and time.time() <= auth_expiration:
+                
+                # TODO this commented out stuff is not tested (but might work?)!
+                # firebase.authentication = FirebaseAuthentication(auth, "dummy@email.com")
+                # result = f(*args, **kwargs)
+                # firebase.authentication = None
+                # return result
+                
                 return f(*args, **kwargs)
+                
             
         return redirect('/api/login')
     return decorated
