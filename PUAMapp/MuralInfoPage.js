@@ -18,11 +18,9 @@ export default class MuralInfoPage extends React.Component {
         info: 0
       }
     }
-    
-
 
     static navigationOptions = {
-      title: 'Punto Urban Art Museum',
+      title: 'Punto Urban Art',
       headerTintColor: 'white',
       headerStyle: {backgroundColor: pink},
     };
@@ -38,7 +36,6 @@ export default class MuralInfoPage extends React.Component {
     }
 
     render() {
-        
         const mural = this.props.navigation.state.params.mural
         const artist = this.props.navigation.state.params.artist
         
@@ -64,8 +61,6 @@ export default class MuralInfoPage extends React.Component {
         if (mural['Description']) {
           description += '\n\n' + mural['Description']
         }
-        
-        
         
         return (
               <TouchableOpacity style = {styles.container} onPress = {this.toggleShowDescription.bind(this)} activeOpacity = {1} >
