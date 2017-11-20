@@ -16,8 +16,8 @@ export default class GalleryPage extends React.Component {
     headerLeft:   
     <TouchableHighlight onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
-    style= {{height: 50, width: 50, position: 'absolute',zIndex: 100, top: 0, left: 0, right: 0}}
-    source={require('./backbutton.png')} /> 
+    style= {{position: 'absolute', zIndex: 100, top: 10, left: 10}}
+    source={require('./backButtonWhite.png')} /> 
     </TouchableHighlight>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
     });
