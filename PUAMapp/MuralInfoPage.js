@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView,
-          Animated, TouchableOpacity, TouchableHighlight } from 'react-native';
+          Animated, TouchableOpacity} from 'react-native';
 import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
 
@@ -21,11 +21,11 @@ export default class MuralInfoPage extends React.Component {
 
     static navigationOptions = ({ navigation }) => ({
     headerLeft:   
-    <TouchableHighlight onPress={() => navigation.dispatch(NavigationActions.back())} >
+    <TouchableOpacity style = {{top: 40, left: 20, padding: 50}} onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
-    style= {{position: 'absolute', zIndex: 100, top: 10, left: 10}}
+    style= {{position: 'absolute', zIndex: 100}}
     source={require('./backButtonWhite.png')} /> 
-    </TouchableHighlight>,
+    </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
     });
 
