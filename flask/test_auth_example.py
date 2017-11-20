@@ -1,3 +1,11 @@
+# This exercises the firebase library we modified
+# See custom_firebase/firebase.py
+
+# The auth flow is as follows
+# 1. Use an email and password to get a auth token from GoogleIdentityToolkit
+# 2. Make requests to firebase using that auth token REQUEST_URL?auth=THE_AUTH_TOKEN
+
+
 from flask import Flask, render_template, redirect, session
 
 import sys

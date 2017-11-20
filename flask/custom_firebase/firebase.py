@@ -1,3 +1,12 @@
+# This a modified version of python-firebase
+# See the LICENSE for more information
+
+# To use the modified auth flow
+# 1. Somehow get an auth token (Use the GoogleIdentityToolkit API)
+# 2. Do firebase.authentication = THE_AUTH_TOKEN
+# 3. Make requests as you normally would
+# 4. Set firebase.authentication = None when you no longer need to auth requests
+
 try:
     import urlparse
 except ImportError:
