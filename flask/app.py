@@ -1,11 +1,14 @@
 from flask import Flask, render_template, redirect, session
-from firebase import firebase 
+
+import sys
+from custom_firebase import firebase 
+
 import os
 from flask_wtf import FlaskForm as Form
 from wtforms.fields import *
 from wtforms.validators import *
 from flask_wtf.csrf import CSRFProtect
-from firebase.firebase import FirebaseApplication, FirebaseAuthentication
+from custom_firebase.firebase import FirebaseApplication, FirebaseAuthentication
 import uuid
 import requests
 import json
@@ -39,7 +42,7 @@ def sign_in_with_email_and_password(email, password):
             
             # Say it will expire in expiresIn seconds - 5 minutes 
             # session["auth_expiration"] = time.time() + 10
-            session["auth_ends_at"] = time.time() + int(current_user["expiresIn"]) - 60*5
+            session["auth_expiration"] = time.time() + int(current_user["expiresIn"]) - 60*5
             
             print "Hello again"
             print session["auth"]
@@ -71,7 +74,7 @@ class ArtistPut(Form):
     city = StringField('City', validators=[DataRequired()])
     bio = TextAreaField('Bio', validators=[DataRequired()])
 
-def requires_auth(f):
+def requires_auth(f):    
     @wraps(f)
     def decorated(*args, **kwargs):
         if 'auth' in session and 'auth_expiration' in session:
@@ -80,15 +83,10 @@ def requires_auth(f):
             
             # If the auth token is not expired, then you're still "logged in"
             if auth and auth_expiration and time.time() <= auth_expiration:
-                
-                # TODO this commented out stuff is not tested (but might work?)!
-                # firebase.authentication = FirebaseAuthentication(auth, "dummy@email.com")
-                # result = f(*args, **kwargs)
-                # firebase.authentication = None
-                # return result
-                
-                return f(*args, **kwargs)
-                
+                firebase.authentication = auth
+                result = f(*args, **kwargs)
+                firebase.authentication = None
+                return result
             
         return redirect('/api/login')
     return decorated
@@ -102,7 +100,6 @@ count = 0
 def fireput():
     form = FirePut()
     if form.validate_on_submit():
-        firebase.authentication = {"provider": "anonymous"}
         global count
         count += 1
         putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
