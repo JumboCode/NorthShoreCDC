@@ -6,18 +6,35 @@ export default class SpalshScreen extends Component {
         super(props)
     }
 
-    componentDidMount() {
+    componentWillUpdate() {
         const { navigate } = this.props.navigation;
-        setTimeout(() => {
+         if ((this.props.screenProps.muralsloaded  == true) && (this.props.screenProps.artistsloaded == true)) {
             navigate("HomePage");
-        }, 3000);
-    }
+         } 
 
+     }
+  
     render () {
+        
+
         return (
             <View style={{flex:1}}>
+
                 <Image style={{flex:1, resizeMode: 'cover', position: 'absolute', height: '100%', width: '100%'}} source={require('./splashscreen.png')} />
             </View>
         )
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

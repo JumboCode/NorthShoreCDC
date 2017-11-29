@@ -9,6 +9,7 @@ export default class HomePage extends React.Component {
     title: 'Punto Urban Art',
     headerTintColor: 'white',
     headerStyle: {backgroundColor: pink},
+    headerLeft: null,
   };
 
   render() {
