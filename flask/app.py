@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session
+from flask import Flask, render_template, redirect, session, url_for, request
 
 import sys
 from custom_firebase import firebase 
@@ -44,20 +44,18 @@ def sign_in_with_email_and_password(email, password):
             # session["auth_expiration"] = time.time() + 10
             session["auth_expiration"] = time.time() + int(current_user["expiresIn"]) - 60*5
             
-            print "Hello again"
-            print session["auth"]
             return redirect("/api/put")
         except KeyError:
-            print "KeyError"
+            print "Invalid login attempt 47"
             return redirect("/api/login", code=302)
 
  
 
 class FirePut(Form):
     photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
-    lat = DecimalField('Lat', validators=[DataRequired(), NumberRange(min=40.0, max = 43.0)])
-    longitude = DecimalField('Long', validators=[DataRequired(), NumberRange(min=-71.0, max = -69.0)])
-    artist = StringField('Artist', validators=[DataRequired()])
+    lat = DecimalField('Lat', validators=[DataRequired(), NumberRange(min=42.51, max = 42.52)])
+    longitude = DecimalField('Long', validators=[DataRequired(), NumberRange(min=-70.9, max = -70.88)])
+    artist = SelectField('Artist', coerce = int, validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
     month = StringField('Month', validators=[DataRequired(), AnyOf(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"])])
     year = IntegerField('Year', validators=[DataRequired(), NumberRange(min=1980, max = 3000)])
@@ -99,6 +97,12 @@ count = 0
 @requires_auth
 def fireput():
     form = FirePut()
+    artists = firebase.get('/', 'artists')
+    c = []
+    for i in range(len(artists)):
+    	c.append((i, artists[i]["name"]))
+ 	c = sorted(c, key = lambda x: x[1])
+ 	form.artist.choices = c
     if form.validate_on_submit():
         global count
         count += 1
@@ -127,14 +131,18 @@ def artistput():
                     'city' : form.city.data, 'bio' : form.bio.data}
         artists = firebase.get('/', 'artists')
         firebase.put('/artists', str(len(artists)), putData)
-        return redirect("/api/put", code=302)
+        return redirect(url_for('fireput'), code=302)
     return render_template('artist-form.html', form=form)
 
-@app.route('/api/get', methods = ['GET'])
+@app.route('/api/get', methods = ['GET', 'POST'])
 def fireget():
-    murals = firebase.get('/','murals')
-    print(murals)
-    return render_template('disp-all.html', murals=murals)
+	murals = firebase.get('/','murals')
+	return render_template('disp-all.html', murals=murals)
+
+@app.route('/api/delete_mural', methods = ['GET', 'POST'])
+def delete_mural():
+	firebase.delete('/murals', str(request.form["muralid"]))
+	return redirect(url_for('fireget'), code=302)
 
 
 @app.route('/')
