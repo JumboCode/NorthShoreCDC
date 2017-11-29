@@ -49,7 +49,7 @@ def sign_in_with_email_and_password(email, password):
             return redirect("/api/put")
         except KeyError:
             print "KeyError"
-            return redirect("localhost:5000/api/login", code=302)
+            return redirect("/api/login", code=302)
 
  
 
@@ -127,7 +127,7 @@ def artistput():
                     'city' : form.city.data, 'bio' : form.bio.data}
         artists = firebase.get('/', 'artists')
         firebase.put('/artists', str(len(artists)), putData)
-        return redirect("localhost:5000/api/put", code=302)
+        return redirect("/api/put", code=302)
     return render_template('artist-form.html', form=form)
 
 @app.route('/api/get', methods = ['GET'])
