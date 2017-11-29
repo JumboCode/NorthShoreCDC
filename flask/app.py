@@ -21,7 +21,9 @@ firebase_path = os.environ.get('FIREBASE_PATH')
 
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('APP_KEY')
+
+# This is a flask specific secret_key, used for encrypting session cookies
+app.secret_key = os.environ.get('SECRET_KEY')
 
 
 firebase = firebase.FirebaseApplication(firebase_path, None)
