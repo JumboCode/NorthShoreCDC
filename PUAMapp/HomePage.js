@@ -6,18 +6,20 @@ import homepic from './home.jpg'
 export default class HomePage extends React.Component {
 
   static navigationOptions = {
-    title: 'Punto Urban Art',
-    headerTintColor: 'white',
-    headerStyle: {backgroundColor: pink},
-    headerLeft: null,
+  header:null,
   };
 
   render() {
     const { navigate } = this.props.navigation;
-    // TODO: replace the background image (it's the wrong proportions)
       return (
         <View style = {styles.container}>
           <Image style = {styles.image} source = {homepic} />
+          <View style = {styles.titleContainer}>
+            <Text style = {styles.titleText}> PUNTO </Text>
+            <Text style = {styles.titleText}> URBAN </Text>
+            <Text style = {styles.titleText}> ART </Text>
+            <Text style = {styles.titleText}> MUSEUM </Text>
+          </View>
           <TouchableHighlight
             style = {styles.darkPurpleButton}
             onPress={() =>
@@ -52,14 +54,28 @@ export default class HomePage extends React.Component {
       alignItems: 'stretch',
       justifyContent: 'flex-end',
     },
+    titleContainer: {
+      marginTop: '6%',
+      marginLeft: '1%',
+      marginRight: '3%',
+      flex: 1,
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+    },
+    titleText: {
+      fontSize: 80,
+      marginBottom: '2%',
+      color: 'white',
+      backgroundColor: 'transparent',
+    },
     image: {
       resizeMode: 'cover',
       position: 'absolute',
       height: '100%',
-      width: '100%'
+      width: '100%',
     },
     darkPurpleButton: {
-      height: '15%',
+      height: '14%',
       backgroundColor: darkpurple,
       display: 'flex',
       justifyContent: 'center',
@@ -68,7 +84,7 @@ export default class HomePage extends React.Component {
       margin: -1
     },
     lightPurpleButton: {
-      height: '15%',
+      height: '14%',
       backgroundColor: lightpurple,
       display: 'flex',
       justifyContent: 'center',
@@ -77,7 +93,7 @@ export default class HomePage extends React.Component {
       margin: -1
     },
     pinkButton: {
-      height: '15%',
+      height: '14%',
       backgroundColor: pink,
       display: 'flex',
       justifyContent: 'center',
