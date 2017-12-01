@@ -80,9 +80,10 @@ const initialState = {
 const firebaseData = (state = initialState, action) => {
 	switch (action.type) {
 		case 'GET_MURALS_START':
-			return Object.assign({}, state, {
-                muralsloading: true
-            });
+			// return Object.assign({}, state, {
+   //              muralsloading: true
+   //          });
+            return {...state, muralsloading: true}
 		case 'GET_MURALS_SUCCESS':
 			return Object.assign({}, state, {
                 muralsloading: false,

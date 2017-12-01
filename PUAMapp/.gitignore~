@@ -1,6 +1,4 @@
 node_modules/
-package-lock.json
 .expo/
 firebase.js
 npm-debug.*
-package-lock.json
