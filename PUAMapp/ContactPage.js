@@ -11,13 +11,14 @@ linkify = new LinkifyIt().add('tel:', 'http:').add('fax:', 'http:')
 
 links = {
   "http://northshorecdc.org/about-us/contact-us/": "Our website",
-  "tel://9787458071": "(978)745-8071",
-  "fax://9787454345": "(978)745-4345",
+  "tel://9787458071": "978-745-8071",
+  "fax://9787454345": "978-745-4345",
   "http://northshorecdc.org/": "NSCDC Website",
   "https://www.facebook.com/NorthShoreCDC/": "Facebook: @NorthShoreCDC",
   "https://www.twitter.com/NorthShoreCDC": "Twitter: @NorthShoreCDC",
   "https://www.instagram.com/NorthShoreCDC": "Instagram: @NorthShoreCDC",
-  "mailto:info@northshorecdc.org": "info@northshorecdc.org"
+  "mailto:info@northshorecdc.org": "info@northshorecdc.org",
+  "https://www.paypal.com/donate/?token=Erl0zI5p3A7McUyM5Ojn8YosROX695c4wRuRBurTsgEVppiFyvdv18jaKdw_O4jTdi-AU0&country.x=US&locale.x=US": "Donate"
 }
 
 
@@ -46,9 +47,14 @@ export default class ContactPage extends React.Component {
                   {"\n"}
                   Coalition
                 </Text>
+                <TouchableOpacity onPress={() => Linking.openURL("https://www.paypal.com/donate/?token=Erl0zI5p3A7McUyM5Ojn8YosROX695c4wRuRBurTsgEVppiFyvdv18jaKdw_O4jTdi-AU0&country.x=US&locale.x=US").catch(err => console.error('An error occurred', err))}>
+                  <Image style={{ height: 50, resizeMode: 'contain', marginLeft: -80, marginTop: 20 }} source = {require('./donate.png')}>
+                    <Text style = {{ color: "white", fontSize: 25, paddingTop: 8, paddingLeft: 58}}> Donate </Text>
+                  </Image>
+                </TouchableOpacity>
               </View>
               <View style = {styles.textContainerRight}>
-                <Hyperlink linkify = {linkify} linkDefault={ true } linkStyle={ { color: '#0f53c1', fontWeight: "bold" }} linkText = {this.textForLink} >
+                <Hyperlink linkify = {linkify} linkDefault={ true } linkStyle={ { color: 'grey' }} linkText = {this.textForLink} >
                   <Text style = {styles.textRight}>
                     96 Lafayette St
                     {"\n"}
@@ -64,16 +70,16 @@ export default class ContactPage extends React.Component {
                 
                 <View style={{flexDirection: 'row'}}>
                   <TouchableOpacity onPress={() => Linking.openURL("https://www.facebook.com/NorthShoreCDC/").catch(err => console.error('An error occurred', err))}> 
-                    <Image style={{height: 40, width: 40}} source = {require('./200.gif')}/>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => Linking.openURL("https://www.twitter.com/NorthShoreCDC").catch(err => console.error('An error occurred', err))}> 
-                    <Image style={{height: 40, width: 40}} source = {require('./200.gif')}/>
+                    <Image style={{height: 30, width: 30, margin: 10}} source = {require('./facebook.png')}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => Linking.openURL("https://www.instagram.com/NorthShoreCDC").catch(err => console.error('An error occurred', err))}> 
-                    <Image style={{height: 40, width: 40}} source = {require('./200.gif')}/>
+                    <Image style={{height: 30, width: 30, margin: 10}} source = {require('./instagram.png')}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => Linking.openURL("mailto:info@northshorecdc.org").catch(err => console.error('An error occurred', err))}> 
-                    <Image style={{height: 40, width: 40}} source = {require('./200.gif')}/>
+                  <TouchableOpacity onPress={() => Linking.openURL("https://www.twitter.com/NorthShoreCDC").catch(err => console.error('An error occurred', err))}> 
+                    <Image style={{height: 30, width: 30, margin: 10}} source = {require('./twitter.png')}/>
+                  </TouchableOpacity>
+                  <TouchableOpacity> 
+                    <Image style={{height: 30, width: 30, margin: 10}} source = {require('./email.png')}/>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -111,7 +117,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     paddingLeft: 100,
-    paddingTop: 250
+    paddingTop: 175
   },
   textRight: {
     fontSize: 23,
