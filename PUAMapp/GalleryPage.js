@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Dimensions} from 'react-native';
 import { NavigationActions } from 'react-navigation'
@@ -14,9 +13,9 @@ export default class GalleryPage extends React.Component {
 
     static navigationOptions = ({ navigation }) => ({
     headerLeft:   
-    <TouchableOpacity style = {{top: 40, left: 20, padding: 50}} onPress={() => navigation.dispatch(NavigationActions.back())} >
+    <TouchableOpacity style = {{top: 50, left: 15, padding: 50}} onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
-    style= {{position: 'absolute', zIndex: 100, maxWidth: 40, maxHeight: 40}}
+    style= {{position: 'absolute', zIndex: 100, maxWidth: 120, maxHeight: 40}}
     source={require('./backbutton.png')} /> 
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }

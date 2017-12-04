@@ -7,7 +7,7 @@ import homepic from './home.jpg'
 const x = Dimensions.get('window').width;
 const y = Dimensions.get('window').height;
 
-var FONT_SIZE = y * 0.11;
+var FONT_SIZE = y * 0.12;
 
 export default class HomePage extends React.Component {
 
@@ -62,7 +62,6 @@ export default class HomePage extends React.Component {
     },
     titleContainer: {
       marginTop: '4%',
-      marginLeft: '1%',
       marginRight: '3%',
       flex: 1,
       justifyContent: 'space-between',
@@ -70,7 +69,6 @@ export default class HomePage extends React.Component {
     },
     titleText: {
       fontSize: FONT_SIZE,
-      marginBottom: '2%',
       color: 'white',
       backgroundColor: 'transparent',
     },
