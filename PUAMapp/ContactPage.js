@@ -18,7 +18,7 @@ links = {
   "https://www.twitter.com/NorthShoreCDC": "Twitter: @NorthShoreCDC",
   "https://www.instagram.com/NorthShoreCDC": "Instagram: @NorthShoreCDC",
   "mailto:info@northshorecdc.org": "info@northshorecdc.org",
-  "https://www.paypal.com/donate/?token=Erl0zI5p3A7McUyM5Ojn8YosROX695c4wRuRBurTsgEVppiFyvdv18jaKdw_O4jTdi-AU0&country.x=US&locale.x=US": "Donate"
+  "https://www.paypal.com/donate/?token=RloObfAoYt72YGoA5wngQTe-aqBKDjN6Ud9Rlew1IBoH9vuf4l0AFdWZDAbyf0wsCToKOm&country.x=US&locale.x=US": "Donate"
 }
 
 
