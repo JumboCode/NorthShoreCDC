@@ -1,7 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableHighlight} from 'react-native';
 import { lightpurple, darkpurple, pink } from './colors.js';
+import Dimensions from 'Dimensions';
 import homepic from './home.jpg'
+
+const x = Dimensions.get('window').width;
+const y = Dimensions.get('window').height;
+
+var FONT_SIZE = y * 0.11;
 
 export default class HomePage extends React.Component {
 
@@ -55,7 +61,7 @@ export default class HomePage extends React.Component {
       justifyContent: 'flex-end',
     },
     titleContainer: {
-      marginTop: '6%',
+      marginTop: '4%',
       marginLeft: '1%',
       marginRight: '3%',
       flex: 1,
@@ -63,7 +69,7 @@ export default class HomePage extends React.Component {
       alignItems: 'flex-start',
     },
     titleText: {
-      fontSize: 80,
+      fontSize: FONT_SIZE,
       marginBottom: '2%',
       color: 'white',
       backgroundColor: 'transparent',
