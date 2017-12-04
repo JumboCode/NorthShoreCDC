@@ -48,8 +48,8 @@ export default class GalleryPage extends React.Component {
             <View>
               <Image style={{height: height,  alignSelf: 'stretch'}} source={{uri: this.props.screenProps.artists[1]["photo"]}} />
               <View style={{backgroundColor: 'rgba(0,0,0,.4)', height: height, position : 'absolute', width: width }} >
-               <Text style={{ color: 'white', fontSize: 30 / 190 * height, marginTop: 100 / 190 * height, marginLeft: 15}}> Featured Artist </Text>
-               <Text style={{ color: 'white', fontSize: 20 / 190 * height, marginTop: 0 / 190 * height, marginLeft: 20}}> {this.props.screenProps.artists[1]["name"]} </Text>
+               <Text style={{ color: 'white', fontSize: 50 / 190 * height, marginTop: 100 / 190 * height, marginLeft: '25%'}}> Gallery </Text>
+               {/*<Text style={{ color: 'white', fontSize: 20 / 190 * height, marginTop: 0 / 190 * height, marginLeft: 20}}> {this.props.screenProps.artists[1]["name"]} </Text>*/}
               </View>
             </View>
             <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', marginTop: 0}}>

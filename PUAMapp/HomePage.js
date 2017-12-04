@@ -7,7 +7,7 @@ import homepic from './home.jpg'
 const x = Dimensions.get('window').width;
 const y = Dimensions.get('window').height;
 
-var FONT_SIZE = y * 0.12;
+var FONT_SIZE = y * 0.10;
 
 export default class HomePage extends React.Component {
 
@@ -21,10 +21,12 @@ export default class HomePage extends React.Component {
         <View style = {styles.container}>
           <Image style = {styles.image} source = {homepic} />
           <View style = {styles.titleContainer}>
+           <View style = {styles.innerTitleContainer}>
             <Text style = {styles.titleText}> PUNTO </Text>
             <Text style = {styles.titleText}> URBAN </Text>
             <Text style = {styles.titleText}> ART </Text>
             <Text style = {styles.titleText}> MUSEUM </Text>
+            </View>
           </View>
           <TouchableHighlight
             style = {styles.darkPurpleButton}
@@ -61,11 +63,23 @@ export default class HomePage extends React.Component {
       justifyContent: 'flex-end',
     },
     titleContainer: {
-      marginTop: '4%',
-      marginRight: '3%',
+      // marginTop: '4%',
+      // marginRight: '3%',
       flex: 1,
       justifyContent: 'space-between',
       alignItems: 'flex-start',
+      backgroundColor: 'rgba(0,0,0,.4)',
+      
+
+
+
+
+      // style={{, , ,  }} 
+    },
+    innerTitleContainer:{
+      marginTop: '9%',
+      paddingBottom: '0%',
+
     },
     titleText: {
       fontSize: FONT_SIZE,
