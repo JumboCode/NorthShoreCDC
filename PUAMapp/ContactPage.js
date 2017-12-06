@@ -2,7 +2,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Linking } from 'react-native';
 import { lightpurple, darkpurple, pink } from './colors.js';
-
+import { NavigationActions } from 'react-navigation'
 import Hyperlink from 'react-native-hyperlink'
 import LinkifyIt from 'linkify-it'
 
@@ -23,11 +23,15 @@ links = {
 
 
 export default class ContactPage extends React.Component {
-    static navigationOptions = {
-      title: 'Contact',
-      headerTintColor: 'white',
-      headerStyle: {backgroundColor: pink},
-    };
+    static navigationOptions = ({ navigation }) => ({
+    headerLeft:   
+    <TouchableOpacity style = {{top: 50, left: 15, padding: 50}} onPress={() => navigation.dispatch(NavigationActions.back())} >
+    <Image 
+    style= {{position: 'absolute', zIndex: 100, maxWidth: 120, maxHeight: 40}}
+    source={require('./backbutton.png')} /> 
+    </TouchableOpacity>,
+    headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
+    });
     
     textForLink(text) {
       return links[text] || text
@@ -48,7 +52,7 @@ export default class ContactPage extends React.Component {
                   Coalition
                 </Text>
                 <TouchableOpacity onPress={() => Linking.openURL("https://www.paypal.com/donate/?token=Erl0zI5p3A7McUyM5Ojn8YosROX695c4wRuRBurTsgEVppiFyvdv18jaKdw_O4jTdi-AU0&country.x=US&locale.x=US").catch(err => console.error('An error occurred', err))}>
-                  <Image style={{ height: 50, resizeMode: 'contain', marginLeft: -80, marginTop: 20 }} source = {require('./donate.png')}>
+                  <Image style={{ height: 50, resizeMode: 'contain', marginLeft: 0, marginTop: 20 }} source = {require('./donate.png')}>
                     <Text style = {{ color: "white", fontSize: 25, paddingTop: 8, paddingLeft: 58}}> Donate </Text>
                   </Image>
                 </TouchableOpacity>
@@ -103,9 +107,9 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     display: 'flex',
     justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingRight: 100,
-    paddingTop: 60
+    alignItems: 'flex-start',
+    paddingLeft: '4%',
+    paddingTop: '24%'
   },
   textLeft: {
     fontSize: 25,
@@ -115,9 +119,9 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     display: 'flex',
     justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingLeft: 100,
-    paddingTop: 175
+    alignItems: 'flex-end',
+    paddingRight: '4%',
+    paddingTop: '40%',
   },
   textRight: {
     fontSize: 23,
