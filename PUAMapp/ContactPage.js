@@ -109,10 +109,10 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     paddingLeft: '4%',
-    paddingTop: '24%'
+    paddingTop: '30%'
   },
   textLeft: {
-    fontSize: 25,
+    fontSize: 20,
     color: 'black'
   },
   textContainerRight: {
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     paddingTop: '40%',
   },
   textRight: {
-    fontSize: 23,
+    fontSize: 20,
     color: 'grey',
     textAlign: 'right'
   }
