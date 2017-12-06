@@ -150,3 +150,9 @@ def delete_mural():
 @app.route('/')
 def hello_world():
     return firebase.get('/', 'test')
+
+@app.route('/api/logout', methods = ['GET'])
+def logout():
+    session.clear()
+    return redirect('/api/login')
+
