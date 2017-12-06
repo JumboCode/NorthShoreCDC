@@ -59,10 +59,10 @@ export default class ExplorePage extends React.Component {
               showsUserLocation={true}
               style = {{flex: 1 }}
               region = {{
-                latitude: 42.5183849,
-                longitude: -70.8957987,
-                latitudeDelta: 0.015,
-                longitudeDelta: 0.015,
+                latitude: 42.518217,
+                longitude: -70.891919,
+                latitudeDelta: 0.005,
+                longitudeDelta: 0.005,
               }}>
               {this.renderImages()}
                 
