@@ -109,7 +109,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     paddingLeft: '4%',
-    paddingTop: '30%'
+    paddingTop: '30%',
+    marginBottom: 'auto',
   },
   textLeft: {
     fontSize: 20,
@@ -121,12 +122,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
     paddingRight: '4%',
-    paddingTop: '40%',
+    // paddingTop: '40%',
+   marginTop: 'auto',
+
   },
   textRight: {
     fontSize: 20,
     color: 'grey',
-    textAlign: 'right'
+    textAlign: 'right',
+    
   }
 });
 
