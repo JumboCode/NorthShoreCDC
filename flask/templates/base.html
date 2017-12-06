@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+    <!-- <div class="container"> -->
+      <!-- <div class="navbar"> -->
+      <!--   <div class="navbar-inner"> -->
+      <!--     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> -->
+      <!--       <span class="icon-bar"></span> -->
+      <!--       <span class="icon-bar"></span> -->
+      <!--       <span class="icon-bar"></span> -->
+      <!--     </a> -->
+      <!--     <a class="brand" id="brand_name" href="/">Vote Pledge</a> -->
+      <!--       <ul class="nav"> -->
+      <!--         <li><a class="page_link" href="{{ "alksdjflkasjf" }}">Home</a></li> -->
+      <!--         <li><a class="page_link" href="/login">Sign Up</a></li> -->
+      <!--       </ul> -->
+      <!--     <div class="nav-collapse collapse"> -->
+      <!--     </div> -->
+      <!--   </div> -->
+      <!-- </div> -->
+      <!-- <div class="row"> -->
+        <!-- <div class="span12"> -->
+    <body>
+      <header id="parent_header">
+      <h1>Punto Urban Art Museum - Data Entry</h1>
+      </header>
+        <main id="override_bootstrap">
+          <div>
+            <a href = "{{ url_for('fireput') }}">Add a mural!</a>
+            <a href = "{{ url_for('fireget') }}">See all murals!</a>
+            <a href = "{{ url_for('artistput') }}">Add an artist!</a>
+          </div>
+          {% block content %}
+		<!-- <div class="container"> -->
+                        <div id='page-wrap'>
+                            <!-- <center> -->
+                                {% block page_content %}{% endblock %}
+                            <!-- </center> -->
+                        </div>
+		<!-- </div> -->
+           {% endblock %}
+        </main>
+	<!-- </div> -->
+       <!-- </div> -->
+    <!-- </div> -->   
+    </body>
+
+
+</html>

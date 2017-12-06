@@ -83,7 +83,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const AppNav = StackNavigator({
   SplashScreen: {screen: SplashScreen},
-  HomePage: {screen: HomePage},
+  HomePage: {screen: HomePage, navigationOptions: {gesturesEnabled: false}},
   ExplorePage: {screen: ExplorePage},
   GalleryPage: {screen: GalleryPage},
   ContactPage: {screen: ContactPage},
