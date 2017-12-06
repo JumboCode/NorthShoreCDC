@@ -137,6 +137,7 @@ def artistput():
     return render_template('artist-form.html', form=form)
 
 @app.route('/api/get', methods = ['GET', 'POST'])
+@requires_auth
 def fireget():
 	murals = firebase.get('/','murals')
 	return render_template('disp-all.html', murals=murals)
