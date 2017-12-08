@@ -40,7 +40,7 @@ export default class ContactPage extends React.Component {
     render() {
         return (
             <View style = {styles.container}>
-            <StatusBar barStyle="dark-content"/>
+            <StatusBar barStyle = { Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
               <Image style = {styles.image} source = {require('./contact_background.png')} />
               <View style = {styles.textContainerLeft}>
                 <Text style = {styles.textLeft}>

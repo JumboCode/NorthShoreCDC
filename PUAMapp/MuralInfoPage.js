@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView,
-          Animated, TouchableOpacity, Platform} from 'react-native';
+          Animated, TouchableOpacity, Platform, StatusBar} from 'react-native';
 import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
 
@@ -68,6 +68,7 @@ export default class MuralInfoPage extends React.Component {
         
         return (
               <TouchableOpacity style = {styles.container} onPress = {this.toggleShowDescription.bind(this)} activeOpacity = {1} >
+              <StatusBar barStyle = { Platform.OS === 'ios' ? "light-content" : "light-content"}/>
                 <Image style={{flex: 1, position: "absolute", resizeMode: 'cover', height: '100%', width: '100%'}} source={{uri: mural.Photo}} />
                 <OpacityView style = {styles.darkOverlay} visible = {this.state.descriptionVisible}/>
                 <View style = {styles.textContainer}>
