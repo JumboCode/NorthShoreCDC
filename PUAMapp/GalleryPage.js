@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Dimensions} from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Dimensions, Platform} from 'react-native';
 import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
 
@@ -11,7 +11,7 @@ export default class GalleryPage extends React.Component {
         super(props)
     }
 
-    static navigationOptions = ({ navigation }) => ({
+    static navigationOptions = ({ navigation }) => (Platform.OS === 'ios' ? {
     headerLeft:   
     <TouchableOpacity style = {{top: 50, left: 15, padding: 50}} onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
@@ -19,7 +19,7 @@ export default class GalleryPage extends React.Component {
     source={require('./backbutton.png')} /> 
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
-    });
+    } : {title: 'Punto Urban Art', headerTintColor: 'white', headerStyle: {backgroundColor: pink},});
 
  	renderImages() {
     
