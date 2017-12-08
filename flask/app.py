@@ -136,6 +136,7 @@ def artistput():
         return redirect(url_for('fireput'), code=302)
     return render_template('artist-form.html', form=form)
 
+@app.route('/', methods = ['GET', 'POST'])
 @app.route('/api/get', methods = ['GET', 'POST'])
 @requires_auth
 def fireget():
@@ -148,7 +149,7 @@ def delete_mural():
 	return redirect(url_for('fireget'), code=302)
 
 
-@app.route('/')
+@app.route('/test')
 def hello_world():
     return firebase.get('/', 'test')
 
