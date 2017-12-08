@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableHighlight} from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableHighlight, Platform} from 'react-native';
 import { lightpurple, darkpurple, pink } from './colors.js';
 import Dimensions from 'Dimensions';
 import homepic from './home.jpg'
@@ -56,6 +56,7 @@ export default class HomePage extends React.Component {
 
   const styles = StyleSheet.create({
     container: {
+      marginTop: Platform.OS === 'ios' ? '0%' : '-8%',
       flex: 1,
       display: 'flex',
       backgroundColor: '#fff',
