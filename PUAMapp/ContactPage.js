@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Linking, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Linking, StatusBar, Platform } from 'react-native';
 import { lightpurple, darkpurple, pink } from './colors.js';
 import { NavigationActions } from 'react-navigation'
 import Hyperlink from 'react-native-hyperlink'
@@ -23,7 +23,7 @@ links = {
 
 
 export default class ContactPage extends React.Component {
-    static navigationOptions = ({ navigation }) => ({
+    static navigationOptions = ({ navigation }) => (Platform.OS === 'ios' ? {
     headerLeft:   
     <TouchableOpacity style = {{top: 50, left: 15, padding: 50}} onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
@@ -31,7 +31,7 @@ export default class ContactPage extends React.Component {
     source={require('./backbutton.png')} /> 
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
-    });
+    } : {title: 'Punto Urban Art', headerTintColor: 'white', headerStyle: {backgroundColor: pink},});
     
     textForLink(text) {
       return links[text] || text
