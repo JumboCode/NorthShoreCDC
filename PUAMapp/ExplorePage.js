@@ -1,12 +1,12 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Button} from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Button, StatusBar} from 'react-native';
 import MapView from 'react-native-maps';
+import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
 
 
 export default class ExplorePage extends React.Component {
-
     constructor(props) {
         super(props)
     }
@@ -19,11 +19,16 @@ export default class ExplorePage extends React.Component {
         navigator.geolocation.clearWatch(this.watchID);
     }
 
-    static navigationOptions = {
-      title: 'Explore',
-      headerTintColor: 'white',
-      headerStyle: {backgroundColor: pink},
-    };
+    static navigationOptions = ({ navigation }) => ({
+    headerLeft:   
+    <TouchableOpacity style = {{top: 50, left: 15, padding: 50}} onPress={() => navigation.dispatch(NavigationActions.back())} >
+    <Image 
+    style= {{position: 'absolute', zIndex: 100, maxWidth: 120, maxHeight: 40}}
+    source={require('./backbutton.png')} /> 
+    </TouchableOpacity>,
+    headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
+    });
+
 
     renderImages() {
         const { navigate } = this.props.navigation;
@@ -52,9 +57,9 @@ export default class ExplorePage extends React.Component {
 
     render() {
         const { navigate } = this.props.navigation;
-
         return (
             <View style = {{flex: 1}}>
+            <StatusBar barStyle="dark-content"/>
             <MapView
               showsUserLocation={true}
               style = {{flex: 1 }}
@@ -65,9 +70,9 @@ export default class ExplorePage extends React.Component {
                 longitudeDelta: 0.005,
               }}>
               {this.renderImages()}
-                
             </MapView>
             </View>
         )
     }
 }
+

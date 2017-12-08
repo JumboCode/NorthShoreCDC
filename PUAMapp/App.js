@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Button, StatusBar, Platform} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation'
 
 import HomePage from './HomePage'
 import GalleryPage from './GalleryPage'
@@ -19,7 +20,6 @@ import { Provider } from 'react-redux';
 import { store } from './redux';
 
 class AppInner extends React.Component {
-  
   constructor(props) {
     super(props)
     props.getMurals()
@@ -41,13 +41,11 @@ class AppInner extends React.Component {
 }
 
 export default class App extends React.Component {
-
   render () {
     return (
       <Provider store={store}>
         <AppContainer />
       </Provider>
-
       );
   }
 }
@@ -97,8 +95,6 @@ const AppContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(AppInner);
-
-
 
 // export default App;
 
