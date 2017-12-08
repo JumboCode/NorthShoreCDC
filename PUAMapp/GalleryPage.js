@@ -46,9 +46,9 @@ export default class GalleryPage extends React.Component {
         return (
           <ScrollView>
             <View>
-              <Image style={{height: height,  alignSelf: 'stretch'}} source={{uri: this.props.screenProps.artists[1]["photo"]}} />
+              <Image style={{height: height,  alignSelf: 'stretch'}} source={{uri: 'https://i.imgur.com/CPcgwSa.jpg'}} />
               <View style={{backgroundColor: 'rgba(0,0,0,.4)', height: height, position : 'absolute', width: width }} >
-               <Text style={{ color: 'white', fontSize: 50 / 190 * height, marginTop: 100 / 190 * height, marginLeft: '25%'}}> Gallery </Text>
+               <Text style={{ color: 'white', fontSize: 50 / 190 * height, marginTop: 100 / 190 * height, marginLeft: '23%'}}> Gallery </Text>
                {/*<Text style={{ color: 'white', fontSize: 20 / 190 * height, marginTop: 0 / 190 * height, marginLeft: 20}}> {this.props.screenProps.artists[1]["name"]} </Text>*/}
               </View>
             </View>

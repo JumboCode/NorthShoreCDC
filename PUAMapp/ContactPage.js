@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Linking } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Linking, StatusBar } from 'react-native';
 import { lightpurple, darkpurple, pink } from './colors.js';
 import { NavigationActions } from 'react-navigation'
 import Hyperlink from 'react-native-hyperlink'
@@ -40,6 +40,7 @@ export default class ContactPage extends React.Component {
     render() {
         return (
             <View style = {styles.container}>
+            <StatusBar barStyle="dark-content"/>
               <Image style = {styles.image} source = {require('./contact_background.png')} />
               <View style = {styles.textContainerLeft}>
                 <Text style = {styles.textLeft}>
@@ -124,6 +125,7 @@ const styles = StyleSheet.create({
     paddingRight: '4%',
     // paddingTop: '40%',
    marginTop: 'auto',
+   paddingBottom: '4%',
 
   },
   textRight: {

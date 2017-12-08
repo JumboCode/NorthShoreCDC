@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Button} from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Button, StatusBar} from 'react-native';
 import MapView from 'react-native-maps';
 import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
@@ -59,6 +59,7 @@ export default class ExplorePage extends React.Component {
         const { navigate } = this.props.navigation;
         return (
             <View style = {{flex: 1}}>
+            <StatusBar barStyle="dark-content"/>
             <MapView
               showsUserLocation={true}
               style = {{flex: 1 }}
