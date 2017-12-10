@@ -14,13 +14,17 @@ export default class SpalshScreen extends Component {
 
      }
   
+    static navigationOptions = ({ navigation }) => ({
+    headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
+    });
+
     render () {
         
 
         return (
             <View style={{flex:1}}>
 
-                <Image style={{flex:1, resizeMode: 'cover', position: 'absolute', height: '100%', width: '100%'}} source={require('./splashscreen.png')} />
+                <Image style={{flex:1, resizeMode: 'cover', position: 'absolute', height: '100%', width: '100%'}} source={require('./splash-background.jpg')} />
             </View>
         )
     }

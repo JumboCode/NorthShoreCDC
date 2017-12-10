@@ -1,10 +1,11 @@
 {
   "expo": {
     "name": "PUNTO",
-    "icon": "./rsz_punto_logo.png",
+    "icon": "./icon.png",
     "version": "1.0.0",
     "slug": "PUNTO",
     "sdkVersion": "21.0.0",
+    "orientation": "portrait",
     "ios": {
       "bundleIdentifier": "com.jumbocode.punto"
     },

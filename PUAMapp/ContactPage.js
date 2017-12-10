@@ -14,11 +14,13 @@ links = {
   "tel://9787458071": "978-745-8071",
   "fax://9787454345": "978-745-4345",
   "http://northshorecdc.org/": "NSCDC Website",
-  "https://www.facebook.com/NorthShoreCDC/": "Facebook: @NorthShoreCDC",
+
+
+  "https://www.facebook.com/puntourbanartmuseum/": "Facebook: @puntourbanartmuseum",
   "https://www.twitter.com/NorthShoreCDC": "Twitter: @NorthShoreCDC",
-  "https://www.instagram.com/NorthShoreCDC": "Instagram: @NorthShoreCDC",
+  "https://www.instagram.com/urban.art.museum": "Instagram: @urban.art.museum",
   "mailto:info@northshorecdc.org": "info@northshorecdc.org",
-  "https://www.paypal.com/donate/?token=RloObfAoYt72YGoA5wngQTe-aqBKDjN6Ud9Rlew1IBoH9vuf4l0AFdWZDAbyf0wsCToKOm&country.x=US&locale.x=US": "Donate"
+  "http://northshorecdc.org/support-us/donate/": "Donate"
 }
 
 
@@ -41,7 +43,7 @@ export default class ContactPage extends React.Component {
         return (
             <View style = {styles.container}>
             <StatusBar barStyle = { Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
-              <Image style = {styles.image} source = {require('./contact_background.png')} />
+              <Image style = {styles.image} source = {require('./contact_background.jpg')} />
               <View style = {styles.textContainerLeft}>
                 <Text style = {styles.textLeft}>
                   A project of the North 
@@ -52,7 +54,7 @@ export default class ContactPage extends React.Component {
                   {"\n"}
                   Coalition
                 </Text>
-                <TouchableOpacity onPress={() => Linking.openURL("https://www.paypal.com/donate/?token=Erl0zI5p3A7McUyM5Ojn8YosROX695c4wRuRBurTsgEVppiFyvdv18jaKdw_O4jTdi-AU0&country.x=US&locale.x=US").catch(err => console.error('An error occurred', err))}>
+                <TouchableOpacity onPress={() => Linking.openURL("http://northshorecdc.org/support-us/donate/").catch(err => console.error('An error occurred', err))}>
                   <Image style={{ height: 50, resizeMode: 'contain', marginLeft: 0, marginTop: 20 }} source = {require('./donate.png')}>
                     <Text style = {{ color: "white", fontSize: 25, paddingTop: 8, paddingLeft: 58}}> Donate </Text>
                   </Image>
@@ -74,16 +76,16 @@ export default class ContactPage extends React.Component {
                 </Hyperlink>
                 
                 <View style={{flexDirection: 'row'}}>
-                  <TouchableOpacity onPress={() => Linking.openURL("https://www.facebook.com/NorthShoreCDC/").catch(err => console.error('An error occurred', err))}> 
+                  <TouchableOpacity onPress={() => Linking.openURL("https://www.facebook.com/puntourbanartmuseum/").catch(err => console.error('An error occurred', err))}> 
                     <Image style={{height: 30, width: 30, margin: 10}} source = {require('./facebook.png')}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => Linking.openURL("https://www.instagram.com/NorthShoreCDC").catch(err => console.error('An error occurred', err))}> 
+                  <TouchableOpacity onPress={() => Linking.openURL("https://www.instagram.com/urban.art.museum").catch(err => console.error('An error occurred', err))}> 
                     <Image style={{height: 30, width: 30, margin: 10}} source = {require('./instagram.png')}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => Linking.openURL("https://www.twitter.com/NorthShoreCDC").catch(err => console.error('An error occurred', err))}> 
                     <Image style={{height: 30, width: 30, margin: 10}} source = {require('./twitter.png')}/>
                   </TouchableOpacity>
-                  <TouchableOpacity> 
+                  <TouchableOpacity onPress={() => Linking.openURL("https://goo.gl/forms/9QnLoyStB3UOLewz1").catch(err => console.error('An error occurred', err))}> 
                     <Image style={{height: 30, width: 30, margin: 10}} source = {require('./email.png')}/>
                   </TouchableOpacity>
                 </View>
