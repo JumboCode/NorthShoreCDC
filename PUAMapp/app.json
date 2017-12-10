@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "slug": "PUNTO",
     "sdkVersion": "21.0.0",
+    "orientation": "portrait",
     "ios": {
       "bundleIdentifier": "com.jumbocode.punto"
     },
