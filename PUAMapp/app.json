@@ -1,16 +1,17 @@
 {
   "expo": {
-    "name": "PUNTO",
-    "icon": "./icon.png",
-    "version": "1.0.1",
+    "name": "PUAM",
+    "version": "1.0.2",
     "slug": "PUNTO",
     "sdkVersion": "21.0.0",
     "orientation": "portrait",
     "ios": {
-      "bundleIdentifier": "com.jumbocode.punto"
+      "bundleIdentifier": "com.jumbocode.punto",
+      "icon": "./icon.png",
     },
     "android": {
       "package": "com.jumbocode.punto",
+      "icon": "./android-icon.png",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyCxOTFsRnpLVDhmpVw-feRcsfndL36VfD8"
