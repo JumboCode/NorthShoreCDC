@@ -12,11 +12,11 @@ export default class ExplorePage extends React.Component {
     }
 
     componentDidMount() {
-        if (Platform.OS === 'ios') this.watchID = navigator.geolocation.watchPosition();
+        // if (Platform.OS === 'ios') this.watchID = navigator.geolocation.watchPosition();
     }
 
     componentWillUnmount() {
-        if (Platform.OS === 'ios') navigator.geolocation.clearWatch(this.watchID);
+        // if (Platform.OS === 'ios') navigator.geolocation.clearWatch(this.watchID);
     }
 
     static navigationOptions = ({ navigation }) => (Platform.OS === 'ios' ? {
@@ -61,7 +61,7 @@ export default class ExplorePage extends React.Component {
             <View style = {{flex: 1}}>
             <StatusBar barStyle = { Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
             <MapView
-              showsUserLocation={true}
+              // showsUserLocation={true}
               style = {{flex: 1 }}
               region = {{
                 latitude: 42.518217,
