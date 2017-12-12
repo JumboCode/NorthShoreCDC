@@ -18,7 +18,8 @@ This app is a Project of North Shore Community Development Coalition and JumboCo
 
 ## Test the App on your phone:
 * Download the Expo App: <a href="https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en">Android</a> / <a href="https://itunes.apple.com/us/app/expo-client/id982107779?mt=8">iOS</a>
-* Scan the QR code <a href="https://expo.io/@chris-anderson67/PUNTO">HERE</a> using the Expo App 
+* Scan this QR code:
+![qr code](QR.png)
 <br>***OR***
 * Enter this URL in the Expo App <a href="https://expo.io/@chris-anderson67/PUNTO">https://expo.io/@chris-anderson67/PUNTO</a>
 
