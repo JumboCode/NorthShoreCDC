@@ -10,11 +10,11 @@ The Punto Urban Art Museum's vision is to create a world class urban arts distri
 
 This app is a Project of North Shore Community Development Coalition and JumboCode
 
-![screenshot](screenshots/screenshot1.jpg)
-![screenshot](screenshots/screenshot2.jpg)
-![screenshot](screenshots/screenshot3.jpg)
-![screenshot](screenshots/screenshot4.jpg)
-![screenshot](screenshots/screenshot5.jpg)
+![screenshot](screenshots/screenshot1.png)
+![screenshot](screenshots/screenshot2.png)
+![screenshot](screenshots/screenshot3.png)
+![screenshot](screenshots/screenshot4.png)
+![screenshot](screenshots/screenshot5.png)
 
 
 ## Test the App on your phone:
