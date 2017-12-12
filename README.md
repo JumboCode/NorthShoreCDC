@@ -3,7 +3,7 @@
 ![Contributors](https://img.shields.io/github/contributors/jumbocodefall2017/NorthShoreCDC.svg)
 ![License](https://img.shields.io/github/license/jumbocodefall2017/NorthShoreCDC.svg)
 
-<img src="http://puntourbanartmuseum.org/images/logo.png" alt="PUAM Logo" height="100"><br>
+<img src="http://puntourbanartmuseum.org/images/logo.png" alt="PUAM Logo" width="auto"><br>
 
 ## About the PUAM App
 The Punto Urban Art Museum's vision is to create a world class urban arts district in Salem’s Point Neighborhood, one that embraces its rich immigrant and architectural history and presents a dynamic opportunity for the neighborhood’s future. The PUAM App allows the user to explore over 50 murals in this neighborhood!
