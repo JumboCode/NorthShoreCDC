@@ -21,6 +21,7 @@ import { store } from './redux';
 
 class AppInner extends React.Component {
   constructor(props) {
+    Text.defaultProps.allowFontScaling = false;
     super(props)
     props.getMurals()
     props.getArtists()
