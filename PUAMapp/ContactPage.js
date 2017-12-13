@@ -54,12 +54,12 @@ export default class ContactPage extends React.Component {
                   {"\n"}
                   Coalition
                 </Text>
+              </View>
                 <TouchableOpacity onPress={() => Linking.openURL("http://northshorecdc.org/support-us/donate/").catch(err => console.error('An error occurred', err))}>
-                  <Image style={{ height: 50, resizeMode: 'contain', marginLeft: 0, marginTop: 20 }} source = {require('./donate.png')}>
-                    <Text style = {{ color: "white", fontSize: 25, paddingTop: 8, paddingLeft: 58}}> Donate </Text>
+                  <Image style={{ height: 50, resizeMode: 'contain', marginLeft: "3%", marginRight: "auto", marginTop: "-28%"}} source = {require('./donate.png')}>
+                    <Text style = {{backgroundColor: 'transparent', color: "white", fontSize: 25, paddingTop: 8, paddingLeft: 60}}> Donate </Text>
                   </Image>
                 </TouchableOpacity>
-              </View>
               <View style = {styles.textContainerRight}>
                 <Hyperlink linkify = {linkify} linkDefault={ true } linkStyle={ { color: 'grey' }} linkText = {this.textForLink} >
                   <Text style = {styles.textRight}>
