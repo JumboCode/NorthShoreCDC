@@ -18,11 +18,12 @@ This app is a Project of North Shore Community Development Coalition and JumboCo
 
 ## Test an *unreleased* version of the App on your phone:
 * Download the Expo App: <a href="https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en">Android</a> / <a href="https://itunes.apple.com/us/app/expo-client/id982107779?mt=8">iOS</a>
-* Scan the QR code <a href="https://expo.io/@chris-anderson67/PUNTO">HERE</a> using the Expo App 
-<br>***OR***
-* Enter this URL in the Expo App: <a href="https://expo.io/@chris-anderson67/PUNTO">https://expo.io/@chris-anderson67/PUNTO</a>
+* Scan this QR code using the Expo app:
 
-## Run the react-native App locally
+<img src="QR.png" alt="PUAM Logo" width="225">
+
+## Test / Develop Locally
+### Run the react-native App locally
 * Install the dependencies and start the packager:
 
 ```
@@ -31,7 +32,7 @@ npm start
 ```
 
 
-## Run the Flask site locally
+### Run the Flask site locally
 * Set the following environment variables and start the server
 
 ```
