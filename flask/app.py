@@ -109,12 +109,13 @@ def fireput():
     if form.validate_on_submit():
         global count
         count += 1
+        uuidtoken = uuid.uuid4()
         putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
                     'Long' : form.longitude.data, 'Artist' : form.artist.data,
                     'Title' : form.title.data, 'Month' : form.month.data,
                     'Year' : form.year.data, 'Description' : form.description.data,
-                    'Medium' : form.medium.data }
-        firebase.put('/murals', uuid.uuid4(), putData)
+                    'Medium' : form.medium.data, 'uuid' : uuidtoken }
+        firebase.put('/murals', uuidtoken, putData)
         return render_template('form-result.html', putData=putData)
     return render_template('My-Form.html', form=form)
 
