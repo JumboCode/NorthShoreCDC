@@ -114,7 +114,7 @@ def fireput():
                     'Long' : form.longitude.data, 'Artist' : form.artist.data,
                     'Title' : form.title.data, 'Month' : form.month.data,
                     'Year' : form.year.data, 'Description' : form.description.data,
-                    'Medium' : form.medium.data, 'uuid' : uuidtoken }
+                    'Medium' : form.medium.data, 'uuid' : str(uuidtoken) }
         firebase.put('/murals', uuidtoken, putData)
         return render_template('form-result.html', putData=putData)
     return render_template('My-Form.html', form=form)
@@ -134,7 +134,7 @@ def artistput():
         uuidtoken = uuid.uuid4()
         putData = { 'photo' : form.photo.data, 'name' : form.name.data,
                     'city' : form.city.data, 'bio' : form.bio.data,
-                    'uuid' : uuidtoken}
+                    'uuid' : str(uuidtoken)}
         artists = firebase.get('/', 'artists')
         firebase.put('/artists', uuidtoken, putData)
         return redirect(url_for('fireput'), code=302)
