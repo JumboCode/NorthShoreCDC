@@ -100,20 +100,22 @@ count = 0
 def fireput():
     form = FirePut()
     artists = firebase.get('/', 'artists')
+    print (artists)
     c = []
     for i in range(len(artists)):
-    	c.append((i, artists[i]["name"]))
+    	c.append((artists[i]["uuid"], artists[i]["name"]))
  	c = sorted(c, key = lambda x: x[1])
  	form.artist.choices = c
     if form.validate_on_submit():
         global count
         count += 1
+        uuidtoken = uuid.uuid4()
         putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
                     'Long' : form.longitude.data, 'Artist' : form.artist.data,
                     'Title' : form.title.data, 'Month' : form.month.data,
                     'Year' : form.year.data, 'Description' : form.description.data,
-                    'Medium' : form.medium.data }
-        firebase.put('/murals', uuid.uuid4(), putData)
+                    'Medium' : form.medium.data, 'uuid' : str(uuidtoken) }
+        firebase.put('/murals', uuidtoken, putData)
         return render_template('form-result.html', putData=putData)
     return render_template('My-Form.html', form=form)
 
@@ -129,10 +131,12 @@ def validate():
 def artistput():
     form = ArtistPut()
     if form.validate_on_submit():
+        uuidtoken = uuid.uuid4()
         putData = { 'photo' : form.photo.data, 'name' : form.name.data,
-                    'city' : form.city.data, 'bio' : form.bio.data}
+                    'city' : form.city.data, 'bio' : form.bio.data,
+                    'uuid' : str(uuidtoken)}
         artists = firebase.get('/', 'artists')
-        firebase.put('/artists', str(len(artists)), putData)
+        firebase.put('/artists', uuidtoken, putData)
         return redirect(url_for('fireput'), code=302)
     return render_template('artist-form.html', form=form)
 
