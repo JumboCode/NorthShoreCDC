@@ -100,6 +100,7 @@ count = 0
 def fireput():
     form = FirePut()
     artists = firebase.get('/', 'artists')
+    print (artists)
     c = []
     for i in range(len(artists)):
     	c.append((i, artists[i]["name"]))
@@ -132,7 +133,7 @@ def artistput():
         putData = { 'photo' : form.photo.data, 'name' : form.name.data,
                     'city' : form.city.data, 'bio' : form.bio.data}
         artists = firebase.get('/', 'artists')
-        firebase.put('/artists', str(len(artists)), putData)
+        firebase.put('/artists', uuid.uuid4(), putData)
         return redirect(url_for('fireput'), code=302)
     return render_template('artist-form.html', form=form)
 
