@@ -103,7 +103,7 @@ def fireput():
     print (artists)
     c = []
     for i in range(len(artists)):
-    	c.append((i, artists[i]["name"]))
+    	c.append((artists[i]["uuid"], artists[i]["name"]))
  	c = sorted(c, key = lambda x: x[1])
  	form.artist.choices = c
     if form.validate_on_submit():
@@ -130,10 +130,12 @@ def validate():
 def artistput():
     form = ArtistPut()
     if form.validate_on_submit():
+        uuidtoken = uuid.uuid4()
         putData = { 'photo' : form.photo.data, 'name' : form.name.data,
-                    'city' : form.city.data, 'bio' : form.bio.data}
+                    'city' : form.city.data, 'bio' : form.bio.data,
+                    'uuid' : uuidtoken}
         artists = firebase.get('/', 'artists')
-        firebase.put('/artists', uuid.uuid4(), putData)
+        firebase.put('/artists', uuidtoken, putData)
         return redirect(url_for('fireput'), code=302)
     return render_template('artist-form.html', form=form)
 
