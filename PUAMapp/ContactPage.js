@@ -56,8 +56,8 @@ export default class ContactPage extends React.Component {
                 </Text>
               </View>
                 <TouchableOpacity onPress={() => Linking.openURL("http://northshorecdc.org/support-us/donate/").catch(err => console.error('An error occurred', err))}>
-                  <Image style={{ height: 50, resizeMode: 'contain', marginLeft: "3%", marginRight: "auto", marginTop: "-28%"}} source = {require('./donate.png')}>
-                    <Text style = {{backgroundColor: 'transparent', color: "white", fontSize: 25, paddingTop: 8, paddingLeft: 60}}> Donate </Text>
+                  <Image style={styles.donateImage} source = {require('./donate.png')}>
+                    <Text style = {styles.donateText}> Donate </Text>
                   </Image>
                 </TouchableOpacity>
               <View style = {styles.textContainerRight}>
@@ -75,18 +75,18 @@ export default class ContactPage extends React.Component {
                   </Text>
                 </Hyperlink>
                 
-                <View style={{flexDirection: 'row'}}>
+                <View style={styles.socialStyle}>
                   <TouchableOpacity onPress={() => Linking.openURL("https://www.facebook.com/puntourbanartmuseum/").catch(err => console.error('An error occurred', err))}> 
-                    <Image style={{height: 30, width: 30, margin: 10}} source = {require('./facebook.png')}/>
+                    <Image style={styles.iconStyle} source = {require('./facebook.png')}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => Linking.openURL("https://www.instagram.com/urban.art.museum").catch(err => console.error('An error occurred', err))}> 
-                    <Image style={{height: 30, width: 30, margin: 10}} source = {require('./instagram.png')}/>
+                    <Image style={styles.iconStyle}  source = {require('./instagram.png')}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => Linking.openURL("https://www.twitter.com/NorthShoreCDC").catch(err => console.error('An error occurred', err))}> 
-                    <Image style={{height: 30, width: 30, margin: 10}} source = {require('./twitter.png')}/>
+                    <Image style={styles.iconStyle}  source = {require('./twitter.png')}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => Linking.openURL("https://goo.gl/forms/9QnLoyStB3UOLewz1").catch(err => console.error('An error occurred', err))}> 
-                    <Image style={{height: 30, width: 30, margin: 10}} source = {require('./email.png')}/>
+                    <Image style={styles.iconStyle}  source = {require('./email.png')}/>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -94,8 +94,11 @@ export default class ContactPage extends React.Component {
         )
     }
 }
+styles = {}
 
-const styles = StyleSheet.create({
+if (Platform.OS === 'ios') { 
+
+  styles = StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -135,7 +138,105 @@ const styles = StyleSheet.create({
     color: 'grey',
     textAlign: 'right',
     
-  }
+  },
+  socialStyle: {
+    flexDirection: 'row'
+
+  },
+  iconStyle: {
+    height: 30, 
+    width: 30, 
+    margin: 10
+
+  },
+  donateText: {
+    backgroundColor: 'transparent', 
+    color: "white", 
+    fontSize: 25, 
+    paddingTop: 8, 
+    paddingLeft: 60
+
+  },
+  donateImage: {
+    height: 50, 
+    resizeMode: 'contain', 
+    marginLeft: "3%", 
+    marginRight: "auto", 
+    marginTop: "-28%"
+
+  },
+});} 
+else  { 
+  styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  image: {
+    flex: 1,
+    position: 'absolute',
+    resizeMode: 'cover',
+    height: '100%',
+    width: '100%'
+  },
+  textContainerLeft: {
+    backgroundColor: "transparent",
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    paddingLeft: '4%',
+    paddingTop: '12%',
+    marginBottom: 'auto',
+  },
+  textLeft: {
+    fontSize: 20,
+    color: 'black'
+  },
+  textContainerRight: {
+    backgroundColor: "transparent",
+    display: 'flex',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    paddingRight: '4%',
+    // paddingTop: '40%',
+   marginTop: 'auto',
+   paddingBottom: '4%',
+
+  },
+  textRight: {
+    fontSize: 20,
+    color: 'grey',
+    textAlign: 'right',
+    
+  },
+  socialStyle: {
+    flexDirection: 'row'
+
+  },
+  iconStyle: {
+    height: 30, 
+    width: 30, 
+    margin: 10
+
+  },
+  donateText: {
+    backgroundColor: 'transparent', 
+    color: "white", 
+    fontSize: 27, 
+    paddingTop: 4,
+    paddingLeft: 55
+
+  },
+  donateImage: {
+    height: 50, 
+    resizeMode: 'contain', 
+    marginLeft: "8%", 
+    //marginRight: "auto", 
+    marginBottom: "20%"
+
+  },
 });
+
+}
+
 
 
