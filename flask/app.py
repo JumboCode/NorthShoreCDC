@@ -64,6 +64,18 @@ class FirePut(Form):
     description = TextAreaField('Description', validators=[DataRequired()])
     medium = StringField('Medium', validators=[DataRequired()])
 
+class FireEdit(Form):
+    photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
+    lat = DecimalField('Lat', places = 7, validators=[DataRequired(), NumberRange(min=42.51, max = 42.52)])
+    longitude = DecimalField('Long', places = 7, validators=[DataRequired(), NumberRange(min=-70.9, max = -70.88)])
+    artist = SelectField('Artist', coerce = unicode, validators=[DataRequired()])
+    title = StringField('Title', validators=[DataRequired()])
+    month = StringField('Month', validators=[DataRequired(), AnyOf(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"])])
+    year = IntegerField('Year', validators=[DataRequired(), NumberRange(min=1980, max = 3000)])
+    description = TextAreaField('Description', validators=[DataRequired()])
+    medium = StringField('Medium', validators=[DataRequired()])
+
+
 class Validate(Form):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -100,7 +112,6 @@ count = 0
 def fireput():
     form = FirePut()
     artists = firebase.get('/', 'artists')
-    print (artists)
     c = []
     for a in artists:
     	c.append((artists[a]["uuid"], artists[a]["name"]))
@@ -118,6 +129,43 @@ def fireput():
         firebase.put('/murals', uuidtoken, putData)
         return render_template('form-result.html', putData=putData)
     return render_template('My-Form.html', form=form)
+
+@app.route('/api/edit', methods=['GET', 'POST'])
+@requires_auth
+def fireedit():
+    form = FireEdit()
+    muralid = str(request.form["muralid"])
+    murals = firebase.get('/', 'murals')
+    mural = murals[muralid]
+    artists = firebase.get('/', 'artists')
+    c = []
+    for a in artists:
+        c.append((artists[a]["uuid"], artists[a]["name"]))
+    c = sorted(c, key = lambda x: x[1])
+    form.artist.choices = c
+    form.photo.data = mural["Photo"]
+    form.lat.data = mural["Lat"]
+    form.longitude.data = mural["Long"]
+    form.artist.data = mural["Artist"]
+    form.title.data = mural["Title"]
+    form.month.data = mural["Month"]
+    form.year.data = mural["Year"]
+    form.description.data = mural["Description"]
+    form.medium.data = mural["Medium"]
+    if form.validate_on_submit():
+        print "hello?"
+        putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
+                    'Long' : form.longitude.data, 'Artist' : form.artist.data,
+                    'Title' : form.title.data, 'Month' : form.month.data,
+                    'Year' : form.year.data, 'Description' : form.description.data,
+                    'Medium' : form.medium.data, 'uuid' : str(muralid) }
+        print putData
+        firebase.delete('/murals', str(muralid))
+        print "deleted"
+        firebase.put('/murals', muralid, putData)
+        print "added"
+        return render_template('disp-all.html', murals=murals)
+    return render_template('edit.html', form=form)
 
 @app.route('/api/login', methods=['GET','POST'])
 def validate():

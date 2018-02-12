@@ -8,7 +8,7 @@
 {% for m in murals %}
 <tr>
 <td>{{ murals[m].Title }}</td> <td>{{ murals[m].Artist }}</td> <td>{{ murals[m].Photo }}</td><td>{{ murals[m].Lat }}</td> <td>{{ murals[m].Long }}</td>  <td>{{ murals[m].Month }}</td> <td>{{ murals[m].Year }}</td>
-	<td><form action="{{url_for('delete_mural')}}" method = "POST"> <input type = "hidden" name = "muralid" value = "{{ m }}"><button type="submit" name="del">Delete</button></form></td>
+	<td><form action="{{url_for('delete_mural')}}" method = "POST"> <input type = "hidden" name = "muralid" value = "{{ m }}"><button type="submit" name="del">Delete</button></form></td><td><form action="{{url_for('fireedit')}}" method = "POST"> <input type = "hidden" name = "muralid" value = "{{ m }}"><button type="submit" name="edit">Edit</button></form></td>
 </tr>
 {% endfor %}
 </table>
