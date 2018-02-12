@@ -9,6 +9,9 @@
     "ios": {
       "bundleIdentifier": "com.jumbocode.punto",
       "icon": "./icon.png",
+      "infoPlist": {
+          "NSLocationWhenInUseUsageDescription": "The app uses the user's location to provide an interactive tour experience."
+      }
     },
     "android": {
       "package": "com.jumbocode.punto",
