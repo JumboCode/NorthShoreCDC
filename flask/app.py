@@ -57,7 +57,7 @@ class FirePut(Form):
     photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
     lat = DecimalField('Lat', validators=[DataRequired(), NumberRange(min=42.51, max = 42.52)])
     longitude = DecimalField('Long', validators=[DataRequired(), NumberRange(min=-70.9, max = -70.88)])
-    artist = SelectField('Artist', coerce = int, validators=[DataRequired()])
+    artist = SelectField('Artist', coerce = unicode, validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
     month = StringField('Month', validators=[DataRequired(), AnyOf(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"])])
     year = IntegerField('Year', validators=[DataRequired(), NumberRange(min=1980, max = 3000)])
@@ -102,8 +102,8 @@ def fireput():
     artists = firebase.get('/', 'artists')
     print (artists)
     c = []
-    for i in range(len(artists)):
-    	c.append((artists[i]["uuid"], artists[i]["name"]))
+    for a in artists:
+    	c.append((artists[a]["uuid"], artists[a]["name"]))
  	c = sorted(c, key = lambda x: x[1])
  	form.artist.choices = c
     if form.validate_on_submit():
