@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Dimensions, Platform} from 'react-native';
 import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
+import Img from 'react-native-image-progress';
+import Progress from 'react-native-progress';
 
 
 
@@ -33,7 +35,12 @@ export default class GalleryPage extends React.Component {
             uri = murals[key]["Photo"]
               return(
 				<TouchableOpacity key={i} onPress = {() => navigate('MuralInfoPage', {mural: murals[key], artist: artists[murals[key]["Artist"]]})}>
-                  <Image key={i} style={{height: width, width: width, margin: 1}} source={{uri: uri}} />
+                  <Img 
+                  key={i} 
+                  style={{height: width, width: width, margin: 1}} 
+                  source={{uri: uri}} 
+                  indicator={Progress}
+                   />
 				</TouchableOpacity>
               );
         })
@@ -46,7 +53,11 @@ export default class GalleryPage extends React.Component {
         return (
           <ScrollView>
             <View>
-              <Image style={{height: height,  alignSelf: 'stretch'}} source={{uri: 'https://i.imgur.com/CPcgwSa.jpg'}} />
+              <Img
+                style={{height: height,  alignSelf: 'stretch'}} 
+                source={{uri: 'https://i.imgur.com/CPcgwSa.jpg'}} 
+                indicator={Progress}
+              />
               <View style={{backgroundColor: 'rgba(0,0,0,.4)', height: height, position : 'absolute', width: width }} >
                <Text style={{ color: 'white', fontSize: 50 / 190 * height, marginTop: 100 / 190 * height, marginLeft: '23%'}}> Gallery </Text>
                {/*<Text style={{ color: 'white', fontSize: 20 / 190 * height, marginTop: 0 / 190 * height, marginLeft: 20}}> {this.props.screenProps.artists[1]["name"]} </Text>*/}
