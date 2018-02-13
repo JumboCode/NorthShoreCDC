@@ -17,8 +17,9 @@ export default class GalleryPage extends React.Component {
     headerLeft:   
     <TouchableOpacity style = {{top: 30, left: -25, padding: 40}} onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
+
     style= {{position: 'center', zIndex: 100, maxWidth: 120, maxHeight: 40}}
-    source={require('./backbutton.png')} /> 
+    source={require('./assets/images/backbutton.png')} /> 
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
     } : {title: 'Punto Urban Art', headerTintColor: 'white', headerStyle: {backgroundColor: pink},});
@@ -55,7 +56,7 @@ export default class GalleryPage extends React.Component {
             <View>
               <Img
                 style={{height: height,  alignSelf: 'stretch'}} 
-                source={{uri: 'https://i.imgur.com/CPcgwSa.jpg'}} 
+                source = {require('./assets/images/gallery_top_image.jpg')}
                 indicator={Progress}
               />
               <View style={{backgroundColor: 'rgba(0,0,0,.4)', height: height, position : 'absolute', width: width }} >

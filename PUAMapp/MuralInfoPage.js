@@ -6,8 +6,8 @@ import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
 
 var infoButtons = [
-    require('./info.png'),
-    require('./xbutton.png')
+    require('./assets/images/info.png'),
+    require('./assets/images/xbutton.png')
 ];
 
 export default class MuralInfoPage extends React.Component {
@@ -24,7 +24,7 @@ export default class MuralInfoPage extends React.Component {
     <TouchableOpacity style = {{top: 30, left: -25, padding: 40}} onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
     style= {{position: 'center', zIndex: 100, maxWidth: 120, maxHeight: 40}}
-    source={require('./backbutton.png')} /> 
+    source={require('./assets/images/backbutton.png')} /> 
 
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }

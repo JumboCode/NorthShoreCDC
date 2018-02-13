@@ -5,14 +5,15 @@
     "slug": "PUNTO",
     "sdkVersion": "25.0.0",
     "orientation": "portrait",
-    "splash": {"image": "splash-background.png", "resize-mode": "cover"},
+    "assetBundlePatterns": ["assets/images/*"],
+    "splash": {"image": "./assets/images/splash-background.png", "resize-mode": "cover"},
     "ios": {
       "bundleIdentifier": "com.jumbocode.punto",
-      "icon": "./icon.png",
+      "icon": "./assets/images/icon.png",
     },
     "android": {
       "package": "com.jumbocode.punto",
-      "icon": "./android-icon.png",
+      "icon": "./assets/images/android-icon.png",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyCxOTFsRnpLVDhmpVw-feRcsfndL36VfD8"
