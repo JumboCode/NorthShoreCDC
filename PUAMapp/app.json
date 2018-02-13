@@ -6,14 +6,14 @@
     "sdkVersion": "21.0.0",
     "orientation": "portrait",
     "assetBundlePatterns": ["images/*"],
-    "splash": {"image": "splash-background.png", "resize-mode": "cover"},
+    "splash": {"image": "./images/splash-background.png", "resize-mode": "cover"},
     "ios": {
       "bundleIdentifier": "com.jumbocode.punto",
-      "icon": "./icon.png",
+      "icon": "./images/icon.png",
     },
     "android": {
       "package": "com.jumbocode.punto",
-      "icon": "./android-icon.png",
+      "icon": "./images/android-icon.png",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyCxOTFsRnpLVDhmpVw-feRcsfndL36VfD8"
