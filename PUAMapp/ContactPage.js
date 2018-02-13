@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Linking, StatusBar, Platform } from 'react-native';
+import { StyleSheet, Text, View, Image, ImageBackground, ScrollView, Button, TouchableOpacity, Linking, StatusBar, Platform } from 'react-native';
 import { lightpurple, darkpurple, pink } from './colors.js';
 import { NavigationActions } from 'react-navigation'
 import Hyperlink from 'react-native-hyperlink'
@@ -29,7 +29,7 @@ export default class ContactPage extends React.Component {
     headerLeft:   
     <TouchableOpacity style = {{top: 30, left: -25, padding: 40}} onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
-    style= {{position: 'center', zIndex: 100, maxWidth: 120, maxHeight: 40}}
+    style= {{position: 'relative', zIndex: 100, maxWidth: 120, maxHeight: 40}}
     source={require('./assets/images/backbutton.png')} /> 
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
@@ -56,9 +56,9 @@ export default class ContactPage extends React.Component {
                 </Text>
               </View>
                 <TouchableOpacity onPress={() => Linking.openURL("http://northshorecdc.org/support-us/donate/").catch(err => console.error('An error occurred', err))}>
-                  <Image style={styles.donateImage} source = {require('./assets/images/donate.png')}>
+                  <ImageBackground style={styles.donateImage} source = {require('./assets/images/donate.png')}>
                     <Text style = {styles.donateText}> Donate </Text>
-                  </Image>
+                  </ImageBackground>
                 </TouchableOpacity>
               <View style = {styles.textContainerRight}>
                 <Hyperlink linkify = {linkify} linkDefault={ true } linkStyle={ { color: 'grey' }} linkText = {this.textForLink} >
@@ -159,7 +159,6 @@ if (Platform.OS === 'ios') {
   },
   donateImage: {
     height: 50, 
-    resizeMode: 'contain', 
     marginLeft: "3%", 
     marginRight: "auto", 
     marginTop: "-28%"
