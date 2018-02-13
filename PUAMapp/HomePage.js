@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableHighlight, Platform} from 'react-native';
 import { lightpurple, darkpurple, pink } from './colors.js';
 import Dimensions from 'Dimensions';
-import homepic from './home.jpg'
+import homepic from './images/home.jpg'
 
 const x = Dimensions.get('window').width;
 const y = Dimensions.get('window').height;

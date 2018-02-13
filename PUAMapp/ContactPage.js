@@ -30,7 +30,7 @@ export default class ContactPage extends React.Component {
     <TouchableOpacity style = {{top: 50, left: 15, padding: 50}} onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
     style= {{position: 'absolute', zIndex: 100, maxWidth: 120, maxHeight: 40}}
-    source={require('./backbutton.png')} /> 
+    source={require('./images/backbutton.png')} /> 
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
     } : {title: 'Punto Urban Art', headerTintColor: 'white', headerStyle: {backgroundColor: pink},});
@@ -43,7 +43,7 @@ export default class ContactPage extends React.Component {
         return (
             <View style = {styles.container}>
             <StatusBar barStyle = { Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
-              <Image style = {styles.image} source = {require('./contact_background.jpg')} />
+              <Image style = {styles.image} source = {require('./images/contact_background.jpg')} />
               <View style = {styles.textContainerLeft}>
                 <Text style = {styles.textLeft}>
                   A project of the North 
@@ -56,7 +56,7 @@ export default class ContactPage extends React.Component {
                 </Text>
               </View>
                 <TouchableOpacity onPress={() => Linking.openURL("http://northshorecdc.org/support-us/donate/").catch(err => console.error('An error occurred', err))}>
-                  <Image style={styles.donateImage} source = {require('./donate.png')}>
+                  <Image style={styles.donateImage} source = {require('./images/donate.png')}>
                     <Text style = {styles.donateText}> Donate </Text>
                   </Image>
                 </TouchableOpacity>
@@ -77,16 +77,16 @@ export default class ContactPage extends React.Component {
                 
                 <View style={styles.socialStyle}>
                   <TouchableOpacity onPress={() => Linking.openURL("https://www.facebook.com/puntourbanartmuseum/").catch(err => console.error('An error occurred', err))}> 
-                    <Image style={styles.iconStyle} source = {require('./facebook.png')}/>
+                    <Image style={styles.iconStyle} source = {require('./images/facebook.png')}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => Linking.openURL("https://www.instagram.com/urban.art.museum").catch(err => console.error('An error occurred', err))}> 
-                    <Image style={styles.iconStyle}  source = {require('./instagram.png')}/>
+                    <Image style={styles.iconStyle}  source = {require('./images/instagram.png')}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => Linking.openURL("https://www.twitter.com/NorthShoreCDC").catch(err => console.error('An error occurred', err))}> 
-                    <Image style={styles.iconStyle}  source = {require('./twitter.png')}/>
+                    <Image style={styles.iconStyle}  source = {require('./images/twitter.png')}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => Linking.openURL("https://goo.gl/forms/9QnLoyStB3UOLewz1").catch(err => console.error('An error occurred', err))}> 
-                    <Image style={styles.iconStyle}  source = {require('./email.png')}/>
+                    <Image style={styles.iconStyle}  source = {require('./images/email.png')}/>
                   </TouchableOpacity>
                 </View>
               </View>

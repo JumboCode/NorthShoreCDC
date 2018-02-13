@@ -5,6 +5,7 @@
     "slug": "PUNTO",
     "sdkVersion": "21.0.0",
     "orientation": "portrait",
+    "assetBundlePatterns": ["images/*"],
     "splash": {"image": "splash-background.png", "resize-mode": "cover"},
     "ios": {
       "bundleIdentifier": "com.jumbocode.punto",

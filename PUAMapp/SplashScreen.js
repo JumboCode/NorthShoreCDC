@@ -24,7 +24,7 @@ export default class SpalshScreen extends Component {
         return (
             <View style={{flex:1}}>
 
-                <Image style={{flex:1, resizeMode: 'cover', position: 'absolute', height: '100%', width: '100%'}} source={require('./splash-background.jpg')} />
+                <Image style={{flex:1, resizeMode: 'cover', position: 'absolute', height: '100%', width: '100%'}} source={require('./images/splash-background.jpg')} />
             </View>
         )
     }
