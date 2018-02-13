@@ -75,7 +75,6 @@ class FireEdit(Form):
     description = TextAreaField('Description', validators=[DataRequired()])
     medium = StringField('Medium', validators=[DataRequired()])
 
-
 class Validate(Form):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -135,6 +134,7 @@ def fireput():
 def fireedit():
     form = FireEdit()
     muralid = str(request.form["muralid"])
+    print muralid
     murals = firebase.get('/', 'murals')
     mural = murals[muralid]
     artists = firebase.get('/', 'artists')
@@ -165,7 +165,7 @@ def fireedit():
         firebase.put('/murals', muralid, putData)
         print "added"
         return render_template('disp-all.html', murals=murals)
-    return render_template('edit.html', form=form)
+    return render_template('edit.html', form=form, muralid=muralid)
 
 @app.route('/api/login', methods=['GET','POST'])
 def validate():
