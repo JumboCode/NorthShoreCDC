@@ -23,7 +23,7 @@ export default class ExplorePage extends React.Component {
     static navigationOptions = ({ navigation }) => 
     (Platform.OS === 'ios' ? {headerLeft:   
     <TouchableOpacity style = {{top: 25, left: -25, padding: 40}} onPress={() => navigation.dispatch(NavigationActions.back())} >
-    <Image style= {{position: 'center', zIndex: 100, maxWidth: 120, maxHeight: 40}} source={require('./assets/images/backbutton.png')} /> 
+    <Image style= {{position: 'relative', zIndex: 100, maxWidth: 120, maxHeight: 40}} source={require('./assets/images/backbutton.png')} /> 
 
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }

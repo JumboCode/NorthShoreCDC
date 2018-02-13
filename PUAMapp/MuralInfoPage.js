@@ -23,7 +23,7 @@ export default class MuralInfoPage extends React.Component {
     headerLeft:   
     <TouchableOpacity style = {{top: 30, left: -25, padding: 40}} onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
-    style= {{position: 'center', zIndex: 100, maxWidth: 120, maxHeight: 40}}
+    style= {{position: 'relative', zIndex: 100, maxWidth: 120, maxHeight: 40}}
     source={require('./assets/images/backbutton.png')} /> 
 
     </TouchableOpacity>,
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    marginTop: '10%',
+    marginTop: '20%',
     paddingTop: 60,
     padding: 20,
     backgroundColor: 'transparent'

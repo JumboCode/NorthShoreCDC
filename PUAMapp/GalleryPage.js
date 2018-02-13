@@ -18,7 +18,7 @@ export default class GalleryPage extends React.Component {
     <TouchableOpacity style = {{top: 30, left: -25, padding: 40}} onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
 
-    style= {{position: 'center', zIndex: 100, maxWidth: 120, maxHeight: 40}}
+    style= {{position: 'relative', zIndex: 100, maxWidth: 120, maxHeight: 40}}
     source={require('./assets/images/backbutton.png')} /> 
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
@@ -54,13 +54,12 @@ export default class GalleryPage extends React.Component {
         return (
           <ScrollView>
             <View>
-              <Img
-                style={{height: height,  alignSelf: 'stretch'}} 
+              <Image
+                style={{alignSelf: 'center', position: 'relative', height: height + 40, width: width, resizeMode: 'cover'}} 
                 source = {require('./assets/images/gallery_top_image.jpg')}
-                indicator={Progress}
               />
-              <View style={{backgroundColor: 'rgba(0,0,0,.4)', height: height, position : 'absolute', width: width }} >
-               <Text style={{ color: 'white', fontSize: 50 / 190 * height, marginTop: 100 / 190 * height, marginLeft: '23%'}}> Gallery </Text>
+              <View style={{backgroundColor: 'rgba(0,0,0,.4)', height: height + 40, position : 'absolute', width: width }} >
+               <Text style={{ color: 'white', fontSize: 50 / 190 * height, marginTop: 100 / 145 * height, marginLeft: '23%'}}> Gallery </Text>
                {/*<Text style={{ color: 'white', fontSize: 20 / 190 * height, marginTop: 0 / 190 * height, marginLeft: 20}}> {this.props.screenProps.artists[1]["name"]} </Text>*/}
               </View>
             </View>
