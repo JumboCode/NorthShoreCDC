@@ -3,7 +3,7 @@
     "name": "PUAM",
     "version": "1.0.4",
     "slug": "PUNTO",
-    "sdkVersion": "21.0.0",
+    "sdkVersion": "25.0.0",
     "orientation": "portrait",
     "assetBundlePatterns": ["assets/images/*"],
     "splash": {"image": "./assets/images/splash-background.png", "resize-mode": "cover"},
