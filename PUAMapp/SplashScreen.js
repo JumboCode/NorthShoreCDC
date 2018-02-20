@@ -25,7 +25,7 @@ export default class SpalshScreen extends Component {
             <View style={{flex:1}}>
                 <Image style={{flex:1, resizeMode: 'cover', position: 'absolute', height: '100%', width: '100%'}} source={require('./assets/images/splash-background.jpg')} />
                 <View style={[styles.container, styles.horizontal]}>
-                  <ActivityIndicator size="large" color="pink" />
+                  <ActivityIndicator size="large" color="gray" />
                 </View>
             </View>
         )
