@@ -137,34 +137,6 @@ def fireput():
         return render_template('form-result.html', putData=putData)
     return render_template('My-Form.html', form=form)
 
-# @app.route('/api/edit', methods=['GET', 'POST'])
-# @requires_auth
-# def fireedit():
-#     form = FirePut()
-#     #muralid = str(request.form["muralid"])
-#     muralid = str(request.args["muralid"])
-#     print muralid
-#     artists = firebase.get('/', 'artists')
-#     c = []
-#     for a in artists:
-#         c.append((artists[a]["uuid"], artists[a]["name"]))
-#     c = sorted(c, key = lambda x: x[1])
-#     form.artist.choices = c
-#     if form.validate_on_submit():
-#         global count
-#         count += 1
-#         uuidtoken = uuid.uuid4()
-#         putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
-#                     'Long' : form.longitude.data, 'Artist' : form.artist.data,
-#                     'Title' : form.title.data, 'Month' : form.month.data,
-#                     'Year' : form.year.data, 'Description' : form.description.data,
-#                     'Medium' : form.medium.data, 'uuid' : str(uuidtoken) }
-#         firebase.put('/murals', uuidtoken, putData)
-#         return render_template('form-result.html', putData=putData)
-#     return render_template('My-Form.html', form=form)
-
-
-
 @app.route('/api/edit', methods=['GET', 'POST'])
 @requires_auth
 def fireedit():
