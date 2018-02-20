@@ -2,6 +2,16 @@
 {% extends "base.html" %}
 
 {% block page_content %}
+<script>
+  window.onload = set_select;
+  function set_select() {
+    console.log("In function");
+    select_elem = document.getElementById("select_elem");
+    select_elem.value = '{{mural["Artist"]}}';
+    select_elem = document.getElementById("desc");
+    select_elem.value = '{{mural["Description"]}}';
+  }
+</script>
   <h3> Edit</h3>
     <p>Please complete the form below<p>
     <form action="" method="post" name="api">
@@ -17,7 +27,7 @@
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
       <p> Please select the artist (See above link to add a new one): <br>
-      {{ form.artist(size=5, option= mural["Artist"]) }} <br>
+      {{ form.artist(size=5, id = "select_elem", option= mural["Artist"]) }} <br>
       {% for error in form.artist.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
@@ -42,7 +52,7 @@
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
       <p> Please enter a description of the mural: <br>
-      {{ form.description(rows=8, cols=60, value= mural["Description"]) }} <br>
+      {{ form.description(rows = 8, cols = 60, id = "desc", value= mural["Description"]) }} <br>
       {% for error in form.description.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>

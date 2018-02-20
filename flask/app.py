@@ -14,6 +14,8 @@ import requests
 import json
 import time
 from functools import wraps
+from flask import make_response
+from functools import update_wrapper
 #from flask.ext.session import Session
 
 
@@ -102,6 +104,12 @@ def requires_auth(f):
         return redirect('/api/login')
     return decorated
 
+def nocache(f):
+    def new_func(*args, **kwargs):
+        resp = make_response(f(*args, **kwargs))
+        resp.cache_control.no_cache = True
+        return resp
+    return update_wrapper(new_func, f)
 
 
 count = 0
@@ -171,16 +179,6 @@ def fireedit():
         c.append((artists[a]["uuid"], artists[a]["name"]))
     c = sorted(c, key = lambda x: x[1])
     form.artist.choices = c
-    # form.photo.data = mural["Photo"]
-    # form.lat.data = mural["Lat"]
-    # form.longitude.data = mural["Long"]
-    # form.artist.data = mural["Artist"]
-    # form.title.data = mural["Title"]
-    # form.month.data = mural["Month"]
-    # form.year.data = mural["Year"]
-    #form.description.data = mural["Description"]
-    # form.medium.data = mural["Medium"]
-    #form.description.default = mural["Description"]
     if form.validate_on_submit():
         print "hello?"
         putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
@@ -193,7 +191,7 @@ def fireedit():
         print "deleted"
         firebase.put('/murals', muralid, putData)
         print "added"
-        return render_template('disp-all.html', murals=murals, artists = artists)
+        return redirect(url_for('fireget'), code=302)
     return render_template('edit.html', form=form, mural = mural, murals = murals, muralid=muralid)
 
 @app.route('/api/login', methods=['GET','POST'])
@@ -221,6 +219,7 @@ def artistput():
 
 @app.route('/api/get', methods = ['GET', 'POST'])
 @requires_auth
+@nocache
 def fireget():
     artists = firebase.get('/','artists')
     murals = firebase.get('/','murals')
