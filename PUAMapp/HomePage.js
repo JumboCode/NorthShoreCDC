@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableHighlight, Platform} from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Platform} from 'react-native';
 import { lightpurple, darkpurple, pink } from './colors.js';
 import Dimensions from 'Dimensions';
 import homepic from './assets/images/home.jpg'
@@ -28,27 +28,30 @@ export default class HomePage extends React.Component {
             <Text style = {styles.titleText}> MUSEUM </Text>
             </View>
           </View>
-          <TouchableHighlight
+          <TouchableOpacity
+            activeOpacity = {0.75}
             style = {styles.darkPurpleButton}
             onPress={() =>
             navigate('ExplorePage')
           }>
             <Text style = {styles.buttonText}>EXPLORE</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity = {0.75}
             style = {styles.lightPurpleButton}
             onPress={() =>
             navigate('GalleryPage')
           }>
             <Text style = {styles.buttonText}>GALLERY</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity = {0.75}
             style = {styles.pinkButton}
             onPress={() =>
             navigate('ContactPage')
           }>
             <Text style = {styles.buttonText}>CONTACT</Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
       )
     }
