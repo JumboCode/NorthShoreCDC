@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ActivityIndicator, AppRegistry, StyleSheet } from 'react-native';
+import { View, Text, Image, ActivityIndicator, AppRegistry, StyleSheet, Platform } from 'react-native';
 
 export default class SpalshScreen extends Component {
     constructor(props) {
@@ -22,7 +22,8 @@ export default class SpalshScreen extends Component {
 
 
         return (
-            <View style={{flex:1}}>
+            <View style={{flex:1, 
+                          marginTop: Platform.OS == 'ios' ? 0 : -Expo.Constants.statusBarHeight}}>
                 <Image style={{flex:1, resizeMode: 'cover', position: 'absolute', height: '100%', width: '100%'}} source={require('./assets/images/splash-background.jpg')} />
                 <View style={[styles.container, styles.horizontal]}>
                   <ActivityIndicator size="large" color="gray" />
