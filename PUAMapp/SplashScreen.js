@@ -14,9 +14,9 @@ export default class SpalshScreen extends Component {
 
      }
 
-    static navigationOptions = ({ navigation }) => ({
-    headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
-    });
+    static navigationOptions = {
+      header: null
+    };
 
     render () {
 
