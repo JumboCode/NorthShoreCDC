@@ -19,12 +19,12 @@ export default class ExplorePage extends React.Component {
         // if (Platform.OS === 'ios') navigator.geolocation.clearWatch(this.watchID);
     }
 
-    static navigationOptions = ({ navigation }) => (Platform.OS === 'ios' ? {
-    headerLeft:   
-    <TouchableOpacity style = {{top: 50, left: 15, padding: 50}} onPress={() => navigation.dispatch(NavigationActions.back())} >
-    <Image 
-    style= {{position: 'absolute', zIndex: 100, maxWidth: 120, maxHeight: 40}}
-    source={require('./backbutton.png')} /> 
+
+    static navigationOptions = ({ navigation }) => 
+    (Platform.OS === 'ios' ? {headerLeft:   
+    <TouchableOpacity style = {{top: 25, left: -25, padding: 40}} onPress={() => navigation.dispatch(NavigationActions.back())} >
+    <Image style= {{position: 'relative', zIndex: 100, maxWidth: 120, maxHeight: 40}} source={require('./assets/images/backbutton.png')} /> 
+
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
     } : {title: 'Punto Urban Art', headerTintColor: 'white', headerStyle: {backgroundColor: pink},});

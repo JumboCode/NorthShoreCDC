@@ -6,8 +6,8 @@ import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
 
 var infoButtons = [
-    require('./info.png'),
-    require('./xbutton.png')
+    require('./assets/images/info.png'),
+    require('./assets/images/xbutton.png')
 ];
 
 export default class MuralInfoPage extends React.Component {
@@ -21,10 +21,11 @@ export default class MuralInfoPage extends React.Component {
 
     static navigationOptions = ({ navigation }) => ( Platform.OS === 'ios' ? {
     headerLeft:   
-    <TouchableOpacity style = {{top: 50, left: 15, padding: 50}} onPress={() => navigation.dispatch(NavigationActions.back())} >
+    <TouchableOpacity style = {{top: 30, left: -25, padding: 40}} onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
-    style= {{position: 'absolute', zIndex: 100, maxWidth: 120, maxHeight: 40}}
-    source={require('./backbutton.png')} /> 
+    style= {{position: 'relative', zIndex: 100, maxWidth: 120, maxHeight: 40}}
+    source={require('./assets/images/backbutton.png')} /> 
+
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
     } : {title: 'Punto Urban Art', headerTintColor: 'white', headerStyle: {backgroundColor: pink},});
@@ -42,7 +43,7 @@ export default class MuralInfoPage extends React.Component {
     render() {
         const mural = this.props.navigation.state.params.mural
         const artist = this.props.navigation.state.params.artist
-        
+
         var readMoreButton = null
         var closeButton = null
         if (this.state.descriptionVisible) {
@@ -52,20 +53,24 @@ export default class MuralInfoPage extends React.Component {
                               <Text style = {styles.moreInfoButton}>Read More</Text>
                             </TouchableOpacity>
         }
-        
+
         var description = ""
-        if (mural['Month'] && mural['Year']) {
-          description += mural['Month'] + ", " + mural['Year']
+        if (artist['city']) {
+          description += artist['city']
         }
-        
+
+        if (mural['Month'] && mural['Year']) {
+          description += '\n\n' + mural['Month'] + ", " + mural['Year']
+        }
+
         if (mural['Medium']) {
           description += '\n' + mural['Medium']
         }
-        
-        if (mural['Description']) {
-          description += '\n\n' + mural['Description']
+
+        if (artist['bio']) {
+          description += '\n\n' + artist['bio']
         }
-        
+
         return (
               <TouchableOpacity style = {styles.container} onPress = {this.toggleShowDescription.bind(this)} activeOpacity = {1} >
               <StatusBar barStyle = { Platform.OS === 'ios' ? "light-content" : "light-content"}/>
@@ -106,7 +111,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    marginTop: '10%',
+    marginTop: '20%',
     paddingTop: 60,
     padding: 20,
     backgroundColor: 'transparent'
@@ -154,7 +159,7 @@ const styles = StyleSheet.create({
     textShadowColor: 'black',
     textShadowOffset: {width : -1, height: 0},
     textShadowRadius: 5,
-    fontSize: 15, 
+    fontSize: 15,
   }
 });
 
@@ -162,8 +167,8 @@ const styles = StyleSheet.create({
 
 // A view that transitions from hidden to visible and back
 class OpacityView extends React.Component {
-  
-  
+
+
   constructor(props) {
     super(props)
 
@@ -214,7 +219,7 @@ class OpacityView extends React.Component {
 // Hidden : margin-top = a big number
 // Visible : margin-top = 0
 class DrawerView extends React.Component {
-    
+
   constructor(props) {
     super(props)
 
