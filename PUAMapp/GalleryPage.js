@@ -50,7 +50,8 @@ export default class GalleryPage extends React.Component {
     render() {
         
         var {height, width} = Dimensions.get('window');
-         height = height / 3
+        height = height / 3
+
         return (
           <ScrollView>
             <View>
@@ -58,9 +59,8 @@ export default class GalleryPage extends React.Component {
                 style={{alignSelf: 'center', position: 'relative', height: height + 40, width: width, resizeMode: 'cover'}} 
                 source = {require('./assets/images/gallery_top_image.jpg')}
               />
-              <View style={{backgroundColor: 'rgba(0,0,0,.4)', height: height + 40, position : 'absolute', width: width }} >
-               <Text style={{ color: 'white', fontSize: 50 / 190 * height, marginTop: 100 / 145 * height, marginLeft: '23%'}}> Gallery </Text>
-               {/*<Text style={{ color: 'white', fontSize: 20 / 190 * height, marginTop: 0 / 190 * height, marginLeft: 20}}> {this.props.screenProps.artists[1]["name"]} </Text>*/}
+              <View style={{backgroundColor: 'rgba(0,0,0,.6)', height: height + 40, position : 'absolute', width: width, justifyContent: 'center', alignItems: 'center' }} >
+               <Text style={{ color: 'white', fontSize: 50 / 190 * height, marginTop: Platform.OS === 'ios' ? 100 : 0}}>Gallery</Text>
               </View>
             </View>
             <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', marginTop: 0}}>
