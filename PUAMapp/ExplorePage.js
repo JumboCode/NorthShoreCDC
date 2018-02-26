@@ -1,10 +1,17 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Button, StatusBar, Platform} from 'react-native';
+import {Permissions} from 'expo'
 import MapView from 'react-native-maps';
 import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
 
+
+// This triggers asking the user for location permissions.
+// This won't do anything if the permission is already granted.
+// NOTE: I'm not entirely sure if this bit is necessary since permissions
+// get declared in app.json
+Permissions.askAsync(Permissions.LOCATION);
 
 export default class ExplorePage extends React.Component {
     constructor(props) {
@@ -61,6 +68,7 @@ export default class ExplorePage extends React.Component {
             <View style = {{flex: 1}}>
             <StatusBar barStyle = { Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
             <MapView
+              showsUserLocation = {true}
               style = {{flex: 1 }}
               region = {{
                 latitude: 42.518217,
