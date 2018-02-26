@@ -104,64 +104,127 @@ export default class MuralInfoPage extends React.Component {
     }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff'
-  },
-  textContainer: {
-    flex: 1,
-    marginTop: '20%',
-    paddingTop: 60,
-    padding: 20,
-    backgroundColor: 'transparent'
-  },
-  top: {
-    display: 'flex',
-    flexDirection: 'row'
-  },
-  info: {
-    flex: 4,
-    justifyContent: 'center',
-    alignItems: 'flex-start'
-  },
-  button: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'flex-end'
-  },
-  name: {
-    color: 'white',
-    textShadowColor: 'black',
-    textShadowOffset: {width : -1, height: 0},
-    textShadowRadius: 5,
-    fontSize: 36
-  },
-  artist: {
-    color: 'white',
-    textShadowColor: 'black',
-    textShadowOffset: {width : -1, height: 0},
-    textShadowRadius: 5,
-    fontSize: 24,
-    marginBottom: 20
-  },
-  description: {
-    marginTop: 50
-  },
-  darkOverlay: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    backgroundColor: 'black',
-  },
-  moreInfoButton: {
-    color: 'white',
-    textShadowColor: 'black',
-    textShadowOffset: {width : -1, height: 0},
-    textShadowRadius: 5,
-    fontSize: 15,
-  }
-});
+styles = {}
+if (Platform.OS === 'ios') {
+  styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff'
+    },
+    textContainer: {
+      flex: 1,
+      marginTop: '20%',
+      paddingTop: 60,
+      padding: 20,
+      backgroundColor: 'transparent'
+    },
+    top: {
+      display: 'flex',
+      flexDirection: 'row'
+    },
+    info: {
+      flex: 4,
+      justifyContent: 'center',
+      alignItems: 'flex-start'
+    },
+    button: {
+      flex: 2,
+      justifyContent: 'center',
+      alignItems: 'flex-end'
+    },
+    name: {
+      color: 'white',
+      textShadowColor: 'black',
+      textShadowOffset: {width : -1, height: 0},
+      textShadowRadius: 5,
+      fontSize: 36
+    },
+    artist: {
+      color: 'white',
+      textShadowColor: 'black',
+      textShadowOffset: {width : -1, height: 0},
+      textShadowRadius: 5,
+      fontSize: 24,
+      marginBottom: 20
+    },
+    description: {
+      marginTop: 50,
+      paddingTop: 30
+    },
+    darkOverlay: {
+      position: 'absolute',
+      height: '100%',
+      width: '100%',
+      backgroundColor: 'black',
+    },
+    moreInfoButton: {
+      color: 'white',
+      textShadowColor: 'black',
+      textShadowOffset: {width : -1, height: 0},
+      textShadowRadius: 5,
+      fontSize: 15,
+    }
+  });
+} else {
+  styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff'
+    },
+    textContainer: {
+      flex: 1,
+      paddingTop: 60,
+      padding: 20,
+      backgroundColor: 'transparent'
+    },
+    top: {
+      display: 'flex',
+      flexDirection: 'row'
+    },
+    info: {
+      flex: 4,
+      justifyContent: 'center',
+      alignItems: 'flex-start'
+    },
+    button: {
+      flex: 2,
+      justifyContent: 'center',
+      alignItems: 'flex-end'
+    },
+    name: {
+      color: 'white',
+      textShadowColor: 'black',
+      textShadowOffset: {width : -1, height: 0},
+      textShadowRadius: 5,
+      fontSize: 36
+    },
+    artist: {
+      color: 'white',
+      textShadowColor: 'black',
+      textShadowOffset: {width : -1, height: 0},
+      textShadowRadius: 5,
+      fontSize: 24,
+      marginBottom: 20
+    },
+    description: {
+      marginTop: 50,
+      paddingTop: 30
+    },
+    darkOverlay: {
+      position: 'absolute',
+      height: '100%',
+      width: '100%',
+      backgroundColor: 'black',
+    },
+    moreInfoButton: {
+      color: 'white',
+      textShadowColor: 'black',
+      textShadowOffset: {width : -1, height: 0},
+      textShadowRadius: 5,
+      fontSize: 15,
+    }
+  });
+}
 
 
 
