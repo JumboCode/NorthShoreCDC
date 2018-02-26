@@ -25,7 +25,7 @@ links = {
 
 
 export default class ContactPage extends React.Component {
-    static navigationOptions = ({ navigation }) => (Platform.OS === 'ios' ? {
+  static navigationOptions = ({ navigation }) => (Platform.OS === 'ios' ? {
     headerLeft:
     <TouchableOpacity style = {{top: 30, left: -25, padding: 40}} onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image
@@ -33,7 +33,7 @@ export default class ContactPage extends React.Component {
     source={require('./assets/images/backbutton.png')} />
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
-    } : {title: 'Punto Urban Art', headerTintColor: 'white', headerStyle: {backgroundColor: pink},});
+  } : {title: 'Punto Urban Art', headerTintColor: 'white', headerStyle: {backgroundColor: pink},});
 
     textForLink(text) {
       return links[text] || text

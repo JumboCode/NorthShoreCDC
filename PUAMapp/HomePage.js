@@ -81,7 +81,7 @@ export default class HomePage extends React.Component {
       // style={{, , ,  }} 
     },
     innerTitleContainer:{
-      marginTop: '9%',
+      marginTop: '13.5%',
       paddingBottom: '0%',
 
     },
