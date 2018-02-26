@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Platform} from 'react-native';
 import { lightpurple, darkpurple, pink } from './colors.js';
 import Dimensions from 'Dimensions';
-import homepic from './assets/images/home.jpg'
+import homepic from './assets/images/home-background.jpg'
 
 const x = Dimensions.get('window').width;
 const y = Dimensions.get('window').height;
@@ -20,14 +20,6 @@ export default class HomePage extends React.Component {
       return (
         <View style = {styles.container}>
           <Image style = {styles.image} source = {homepic} />
-          <View style = {styles.titleContainer}>
-           <View style = {styles.innerTitleContainer}>
-            <Text style = {styles.titleText}> PUNTO </Text>
-            <Text style = {styles.titleText}> URBAN </Text>
-            <Text style = {styles.titleText}> ART </Text>
-            <Text style = {styles.titleText}> MUSEUM </Text>
-            </View>
-          </View>
           <TouchableOpacity
             activeOpacity = {0.75}
             style = {styles.darkPurpleButton}
@@ -97,7 +89,7 @@ export default class HomePage extends React.Component {
       width: '100%',
     },
     darkPurpleButton: {
-      height: '14%',
+      height: '13%',
       backgroundColor: darkpurple,
       display: 'flex',
       justifyContent: 'center',
@@ -106,7 +98,7 @@ export default class HomePage extends React.Component {
       margin: -1
     },
     lightPurpleButton: {
-      height: '14%',
+      height: '13%',
       backgroundColor: lightpurple,
       display: 'flex',
       justifyContent: 'center',
@@ -115,7 +107,7 @@ export default class HomePage extends React.Component {
       margin: -1
     },
     pinkButton: {
-      height: '14%',
+      height: '13%',
       backgroundColor: pink,
       display: 'flex',
       justifyContent: 'center',
@@ -125,6 +117,7 @@ export default class HomePage extends React.Component {
     },
     buttonText: {
       fontSize: 36,
+      fontWeight: 'bold',
       color: 'white'
     }
   }
