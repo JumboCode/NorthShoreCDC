@@ -150,19 +150,21 @@ if (Platform.OS === 'ios') {
   donateText: {
     fontSize: 25,
     paddingTop: '2%',
-    marginLeft: "25%",
     color: 'white',
   },
   donateImage: {
+    alignItems: 'center',
+    paddingLeft: 5,
+    padding: 2,
+    paddingBottom: 5,
     backgroundColor: pink,
-    width: '40%',
-    marginLeft: "5%",
-    marginRight: "auto",
-    marginTop: "-50%",
+    width: 150,
+    marginLeft: "7%",
+    marginTop: "-40%",
     borderRadius: 20,
-    shadowColor: 'grey',
-    shadowOffset: {width: 5, height: 6, },
-    shadowOpacity: 1.0,
+    shadowColor: 'black',
+    shadowOffset: {width: 3, height: 4, },
+    shadowOpacity: 0.5,
   },
 });}
 else  {
@@ -183,7 +185,7 @@ else  {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     paddingLeft: '4%',
-    paddingTop: '12%',
+    paddingTop: '8%',
     marginBottom: 'auto',
   },
   textLeft: {
@@ -220,10 +222,19 @@ else  {
   donateText: {
     backgroundColor: 'transparent',
     color: "white",
-    fontSize: 27,
-    paddingTop: 4,
-    paddingLeft: 55
-
+    fontSize: 25,
+  },
+  donateImage: {
+    alignItems: 'center',
+    backgroundColor: pink,
+    padding: 3,
+    paddingLeft: 5,
+    width: 150,
+    marginLeft: "7%",
+    marginRight: "auto",
+    marginTop: "-15%",
+    borderRadius: 20,
+    elevation: 12
   },
 });
 
