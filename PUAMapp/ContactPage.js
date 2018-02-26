@@ -41,11 +41,11 @@ export default class ContactPage extends React.Component {
 
     render() {
         return (
-            <View style = {styles.container}>
+            <View style = {contactStyles.container}>
             <StatusBar barStyle = { Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
-              <Image style = {styles.image} source = {require('./assets/images/contact_background.jpg')} />
-              <View style = {styles.textContainerLeft}>
-                <Text style = {styles.textLeft}>
+              <Image style = {contactStyles.image} source = {require('./assets/images/contact_background.jpg')} />
+              <View style = {contactStyles.textContainerLeft}>
+                <Text style = {contactStyles.textLeft}>
                   A project of the North
                   {"\n"}
                   Shore Community
@@ -55,12 +55,12 @@ export default class ContactPage extends React.Component {
                   Coalition
                 </Text>
               </View>
-                <TouchableOpacity style= {styles.donateImage} onPress={() => Linking.openURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UF8MF7Q9E7HSA").catch(err => console.error('An error occurred', err))}>
-                    <Text style = {styles.donateText}> Donate </Text>
+                <TouchableOpacity style= {contactStyles.donateImage} onPress={() => Linking.openURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UF8MF7Q9E7HSA").catch(err => console.error('An error occurred', err))}>
+                    <Text style = {contactStyles.donateText}> Donate </Text>
                 </TouchableOpacity>
-              <View style = {styles.textContainerRight}>
+              <View style = {contactStyles.textContainerRight}>
                 <Hyperlink linkify = {linkify} linkDefault={ true } linkStyle={ { color: 'grey' }} linkText = {this.textForLink} >
-                  <Text style = {styles.textRight}>
+                  <Text style = {contactStyles.textRight}>
                     96 Lafayette St
                     {"\n"}
                     Salem, MA 01970
@@ -73,18 +73,18 @@ export default class ContactPage extends React.Component {
                   </Text>
                 </Hyperlink>
 
-                <View style={styles.socialStyle}>
+                <View style={contactStyles.socialStyle}>
                   <TouchableOpacity onPress={() => Linking.openURL("https://www.facebook.com/puntourbanartmuseum/").catch(err => console.error('An error occurred', err))}>
-                    <Image style={styles.iconStyle} source = {require('./assets/images/facebook.png')}/>
+                    <Image style={contactStyles.iconStyle} source = {require('./assets/images/facebook.png')}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => Linking.openURL("https://www.instagram.com/urban.art.museum").catch(err => console.error('An error occurred', err))}>
-                    <Image style={styles.iconStyle}  source = {require('./assets/images/instagram.png')}/>
+                    <Image style={contactStyles.iconStyle}  source = {require('./assets/images/instagram.png')}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => Linking.openURL("https://www.twitter.com/NorthShoreCDC").catch(err => console.error('An error occurred', err))}>
-                    <Image style={styles.iconStyle}  source = {require('./assets/images/twitter.png')}/>
+                    <Image style={contactStyles.iconStyle}  source = {require('./assets/images/twitter.png')}/>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => Linking.openURL("https://goo.gl/forms/9QnLoyStB3UOLewz1").catch(err => console.error('An error occurred', err))}>
-                    <Image style={styles.iconStyle}  source = {require('./assets/images/email.png')}/>
+                    <Image style={contactStyles.iconStyle}  source = {require('./assets/images/email.png')}/>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -92,11 +92,11 @@ export default class ContactPage extends React.Component {
         )
     }
 }
-styles = {}
+contactStyles = {}
 
 if (Platform.OS === 'ios') {
 
-  styles = StyleSheet.create({
+  contactStyles = StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -113,7 +113,7 @@ if (Platform.OS === 'ios') {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     paddingLeft: '4%',
-    paddingTop: '30%',
+    paddingTop: '34%',
     marginBottom: 'auto',
   },
   textLeft: {
@@ -168,7 +168,7 @@ if (Platform.OS === 'ios') {
   },
 });}
 else  {
-  styles = StyleSheet.create({
+  contactStyles = StyleSheet.create({
   container: {
     flex: 1,
   },
