@@ -26,19 +26,19 @@ links = {
 
 export default class ContactPage extends React.Component {
     static navigationOptions = ({ navigation }) => (Platform.OS === 'ios' ? {
-    headerLeft:   
+    headerLeft:
     <TouchableOpacity style = {{top: 30, left: -25, padding: 40}} onPress={() => navigation.dispatch(NavigationActions.back())} >
-    <Image 
+    <Image
     style= {{position: 'relative', zIndex: 100, maxWidth: 120, maxHeight: 40}}
-    source={require('./assets/images/backbutton.png')} /> 
+    source={require('./assets/images/backbutton.png')} />
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
     } : {title: 'Punto Urban Art', headerTintColor: 'white', headerStyle: {backgroundColor: pink},});
-    
+
     textForLink(text) {
       return links[text] || text
     }
-    
+
     render() {
         return (
             <View style = {styles.container}>
@@ -46,19 +46,17 @@ export default class ContactPage extends React.Component {
               <Image style = {styles.image} source = {require('./assets/images/contact_background.jpg')} />
               <View style = {styles.textContainerLeft}>
                 <Text style = {styles.textLeft}>
-                  A project of the North 
+                  A project of the North
                   {"\n"}
-                  Shore Community 
+                  Shore Community
                   {"\n"}
-                  Development 
+                  Development
                   {"\n"}
                   Coalition
                 </Text>
               </View>
-                <TouchableOpacity onPress={() => Linking.openURL("http://northshorecdc.org/support-us/donate/").catch(err => console.error('An error occurred', err))}>
-                  <ImageBackground style={styles.donateImage} source = {require('./assets/images/donate.png')}>
+                <TouchableOpacity style= {styles.donateImage} onPress={() => Linking.openURL("http://northshorecdc.org/support-us/donate/").catch(err => console.error('An error occurred', err))}>
                     <Text style = {styles.donateText}> Donate </Text>
-                  </ImageBackground>
                 </TouchableOpacity>
               <View style = {styles.textContainerRight}>
                 <Hyperlink linkify = {linkify} linkDefault={ true } linkStyle={ { color: 'grey' }} linkText = {this.textForLink} >
@@ -67,25 +65,25 @@ export default class ContactPage extends React.Component {
                     {"\n"}
                     Salem, MA 01970
                     {"\n"}
-                    Tel: 
-                    tel://9787458071 
+                    Tel:
+                    tel://9787458071
                     {"\n"}
                     Fax:
                     fax://9787454345
                   </Text>
                 </Hyperlink>
-                
+
                 <View style={styles.socialStyle}>
-                  <TouchableOpacity onPress={() => Linking.openURL("https://www.facebook.com/puntourbanartmuseum/").catch(err => console.error('An error occurred', err))}> 
+                  <TouchableOpacity onPress={() => Linking.openURL("https://www.facebook.com/puntourbanartmuseum/").catch(err => console.error('An error occurred', err))}>
                     <Image style={styles.iconStyle} source = {require('./assets/images/facebook.png')}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => Linking.openURL("https://www.instagram.com/urban.art.museum").catch(err => console.error('An error occurred', err))}> 
+                  <TouchableOpacity onPress={() => Linking.openURL("https://www.instagram.com/urban.art.museum").catch(err => console.error('An error occurred', err))}>
                     <Image style={styles.iconStyle}  source = {require('./assets/images/instagram.png')}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => Linking.openURL("https://www.twitter.com/NorthShoreCDC").catch(err => console.error('An error occurred', err))}> 
+                  <TouchableOpacity onPress={() => Linking.openURL("https://www.twitter.com/NorthShoreCDC").catch(err => console.error('An error occurred', err))}>
                     <Image style={styles.iconStyle}  source = {require('./assets/images/twitter.png')}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => Linking.openURL("https://goo.gl/forms/9QnLoyStB3UOLewz1").catch(err => console.error('An error occurred', err))}> 
+                  <TouchableOpacity onPress={() => Linking.openURL("https://goo.gl/forms/9QnLoyStB3UOLewz1").catch(err => console.error('An error occurred', err))}>
                     <Image style={styles.iconStyle}  source = {require('./assets/images/email.png')}/>
                   </TouchableOpacity>
                 </View>
@@ -96,7 +94,7 @@ export default class ContactPage extends React.Component {
 }
 styles = {}
 
-if (Platform.OS === 'ios') { 
+if (Platform.OS === 'ios') {
 
   styles = StyleSheet.create({
   container: {
@@ -137,35 +135,39 @@ if (Platform.OS === 'ios') {
     fontSize: 20,
     color: 'grey',
     textAlign: 'right',
-    
+
   },
   socialStyle: {
     flexDirection: 'row'
 
   },
   iconStyle: {
-    height: 30, 
-    width: 30, 
+    height: 30,
+    width: 30,
     margin: 10
 
   },
   donateText: {
-    backgroundColor: 'transparent', 
-    color: "white", 
-    fontSize: 25, 
-    paddingTop: 8, 
-    paddingLeft: 60
-
+    fontSize: 25,
+    paddingTop: '2%',
+    color: 'white',
   },
   donateImage: {
-    height: 50, 
-    marginLeft: "3%", 
-    marginRight: "auto", 
-    marginTop: "-28%"
-
+    alignItems: 'center',
+    paddingLeft: 5,
+    padding: 2,
+    paddingBottom: 5,
+    backgroundColor: pink,
+    width: 150,
+    marginLeft: "7%",
+    marginTop: "-40%",
+    borderRadius: 20,
+    shadowColor: 'black',
+    shadowOffset: {width: 3, height: 4, },
+    shadowOpacity: 0.5,
   },
-});} 
-else  { 
+});}
+else  {
   styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -183,7 +185,7 @@ else  {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     paddingLeft: '4%',
-    paddingTop: '12%',
+    paddingTop: '8%',
     marginBottom: 'auto',
   },
   textLeft: {
@@ -205,37 +207,35 @@ else  {
     fontSize: 20,
     color: 'grey',
     textAlign: 'right',
-    
+
   },
   socialStyle: {
     flexDirection: 'row'
 
   },
   iconStyle: {
-    height: 30, 
-    width: 30, 
+    height: 30,
+    width: 30,
     margin: 10
 
   },
   donateText: {
-    backgroundColor: 'transparent', 
-    color: "white", 
-    fontSize: 27, 
-    paddingTop: 4,
-    paddingLeft: 55
-
+    backgroundColor: 'transparent',
+    color: "white",
+    fontSize: 25,
   },
   donateImage: {
-    height: 50, 
-    resizeMode: 'contain', 
-    marginLeft: "8%", 
-    //marginRight: "auto", 
-    marginBottom: "20%"
-
+    alignItems: 'center',
+    backgroundColor: pink,
+    padding: 3,
+    paddingLeft: 5,
+    width: 150,
+    marginLeft: "7%",
+    marginRight: "auto",
+    marginTop: "-15%",
+    borderRadius: 20,
+    elevation: 12
   },
 });
 
 }
-
-
-
