@@ -68,6 +68,7 @@ export default class ExplorePage extends React.Component {
             <View style = {{flex: 1}}>
             <StatusBar barStyle = { Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
             <MapView
+              showsPointsOfInterest = {false}
               showsUserLocation = {true}
               style = {{flex: 1 }}
               region = {{

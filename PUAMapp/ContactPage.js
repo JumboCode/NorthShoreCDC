@@ -27,7 +27,7 @@ links = {
 export default class ContactPage extends React.Component {
   static navigationOptions = ({ navigation }) => (Platform.OS === 'ios' ? {
     headerLeft:
-    <TouchableOpacity style = {{top: 30, left: -25, padding: 40}} onPress={() => navigation.dispatch(NavigationActions.back())} >
+    <TouchableOpacity style = {{top: 25, left: -25, padding: 40}} onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image
     style= {{position: 'relative', zIndex: 100, maxWidth: 120, maxHeight: 40}}
     source={require('./assets/images/backbutton.png')} />
@@ -113,7 +113,7 @@ if (Platform.OS === 'ios') {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     paddingLeft: '4%',
-    paddingTop: '30%',
+    paddingTop: '32%',
     marginBottom: 'auto',
   },
   textLeft: {
