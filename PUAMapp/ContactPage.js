@@ -55,7 +55,7 @@ export default class ContactPage extends React.Component {
                   Coalition
                 </Text>
               </View>
-                <TouchableOpacity style= {styles.donateImage} onPress={() => Linking.openURL("http://northshorecdc.org/support-us/donate/").catch(err => console.error('An error occurred', err))}>
+                <TouchableOpacity style= {styles.donateImage} onPress={() => Linking.openURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UF8MF7Q9E7HSA").catch(err => console.error('An error occurred', err))}>
                     <Text style = {styles.donateText}> Donate </Text>
                 </TouchableOpacity>
               <View style = {styles.textContainerRight}>
