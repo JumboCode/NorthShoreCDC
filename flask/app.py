@@ -87,6 +87,12 @@ class ArtistPut(Form):
     city = StringField('City', validators=[DataRequired()])
     bio = TextAreaField('Bio', validators=[DataRequired()])
 
+class ArtistEdit(Form):
+    photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
+    name = StringField('Name', validators=[DataRequired()])
+    city = StringField('City', validators=[DataRequired()])
+    bio = TextAreaField('Bio', validators=[DataRequired()])
+
 
 def requires_auth(f):    
     @wraps(f)
@@ -231,8 +237,9 @@ def delete_mural():
 	firebase.delete('/murals', str(request.form["muralid"]))
 	return redirect(url_for('fireget'), code=302)
 
-@app.route('/api/edit_artist', methods = ['GET', 'POST'])
+@app.route('/api/artistget', methods = ['GET', 'POST'])
 @requires_auth
+@nocache
 def artistget():
     artists = firebase.get('/','artists')
     return render_template('disp-all-artists.html', artists = artists)
@@ -240,17 +247,18 @@ def artistget():
 @app.route('/api/edit_artist', methods=['GET', 'POST'])
 @requires_auth
 def edit_artist():
-    form = ArtistPut()
+    form = ArtistEdit()
+    artistid = str(request.args["artists"])
+    artists = firebase.get('/', 'artists')
+    artist = artists[artistid]
     if form.validate_on_submit():
-        uuidtoken = uuid.uuid4()
         putData = { 'photo' : form.photo.data, 'name' : form.name.data,
                     'city' : form.city.data, 'bio' : form.bio.data,
-                    'uuid' : str(uuidtoken)}
-        print putData
-        firebase.put('/artists', muralid, putData)
-        print "added"
-        return redirect(url_for('artistput'), code=302)
-    return render_template('artist-form.html', form=form, artists = artists, muralid = muralid)
+                    'uuid' : str(artistid) }
+        firebase.delete('/artists', str(artistid))
+        firebase.put('/artists', artistid, putData)
+        return redirect(url_for('artistget'), code=302)
+    return render_template('edit-artist.html', form=form, artist = artist)
 
 @app.route('/api/delete_artist', methods = ['GET', 'POST'])
 @requires_auth
