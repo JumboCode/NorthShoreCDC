@@ -1,14 +1,37 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Button, StatusBar, Platform} from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, {Polyline} from 'react-native-maps';
 import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
+import MapViewDirections from 'react-native-maps-directions';
 
+const polylines = [ 
+  {
+    latitude: 42.518351, 
+    longitude: -70.8909514 
+  },
+  //{latitude: 42.518214, longitude: 70.892871},
+  {
+    latitude: 42.5185239, 
+    longitude: -70.8910845
+  },
+  //{latitude: 42.5185389, longitude: 70.8911709},
+  {
+    latitude: 42.5183255, 
+    longitude: -70.8934113
+  }
+                      ]
 
 export default class ExplorePage extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.state = {
+        tourStarted: false,
+       
+      }
+
+        
     }
 
     componentDidMount() {
@@ -42,6 +65,7 @@ export default class ExplorePage extends React.Component {
             artistName = artists[murals[key]["Artist"]]["name"];
 
             return(
+      
               <MapView.Marker
                   key={i}
                   title = {title}
@@ -54,6 +78,19 @@ export default class ExplorePage extends React.Component {
             );
         })
     }
+
+    toggleTour() {
+      console.log("start button pressed");
+      this.props.screenProps.tourState()
+     
+    
+    }
+
+    temp() {
+      console.log("prev or next");
+    }
+
+    
 
     render() {
         const { navigate } = this.props.navigation;
@@ -69,9 +106,46 @@ export default class ExplorePage extends React.Component {
                 longitudeDelta: 0.005,
               }}>
               {this.renderImages()}
+             {/*  <Polyline
+              coordinates={polylines}
+              strokeColor="#000"
+              fillColor="rgba(255,0,0,0.5)"
+              strokeWidth={3}
+            />*/}
+            <MapViewDirections
+              origin= {polylines[0]}
+              destination= {polylines[1]}
+              apikey="AIzaSyBJaE850Gj_kT7KhTb__ifb6vA01TKmA3w"
+              strokeWidth={3}
+              strokeColor="hotpink"
+              />
             </MapView>
+            {console.log(this.props.screenProps.tourStarted)}
+          {this.props.screenProps.tourStarted ? 
+            <View>
+             <Button 
+            title="prev"
+            onPress={()=>this.temp()}
+            >  </Button>
+             <Button 
+            title="next"
+            onPress={()=>this.temp()}
+            >  </Button>
+            <Button 
+            title="end tour"
+            onPress={()=>this.toggleTour()}
+            >  </Button>
             </View>
+            :
+            <Button 
+            title="start tour"
+            onPress={()=>this.toggleTour()}>  
+            </Button>}
+          </View>
         )
     }
 }
+
+
+
 

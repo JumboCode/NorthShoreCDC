@@ -13,7 +13,7 @@ import SplashScreen from './SplashScreen'
 import { lightpurple, darkpurple, pink } from './colors.js';
 
 import {
-  getMurals, getArtists
+  getMurals, getArtists, tourState
 } from './redux';
 
 import { Provider } from 'react-redux';
@@ -67,6 +67,7 @@ const mapStateToProps = (state) => ({
     artistsloading: state.firebaseData.artistsloading,
     artistsloaded:state.firebaseData.artistsloading,
     artists: state.firebaseData.artists,
+    tourStarted: state.tourData.tourStarted,
 
     
 });
@@ -78,6 +79,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     getArtists : () => {
       dispatch(getArtists())
+    },
+    tourState : () => {
+      dispatch(tourState())
     }
   }
 };

@@ -65,6 +65,19 @@ export const getArtists = () => {
     }
 }
 
+
+export const toggleTour = () => ({
+    type: 'TOGGLE_TOUR'
+
+});
+
+
+export const tourState = () => {
+        return function (dispatch) {
+        dispatch(toggleTour());
+    }
+}
+
 // reducers
 
 const initialState = {
@@ -105,8 +118,24 @@ const firebaseData = (state = initialState, action) => {
 	}
 };
 
+const toggleState = {
+    tourStarted: false,
+}
+
+const tourData = (state = toggleState, action) => {
+    switch (action.type) {
+        case 'TOGGLE_TOUR':
+            return Object.assign({}, state, {
+                tourStarted: !state.tourStarted
+            });
+
+            default: return state;
+    }
+};
+
 export const reducers = combineReducers({
-	firebaseData
+	firebaseData,
+    tourData
 });
 
 
