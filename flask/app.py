@@ -87,6 +87,7 @@ class ArtistPut(Form):
     city = StringField('City', validators=[DataRequired()])
     bio = TextAreaField('Bio', validators=[DataRequired()])
 
+
 def requires_auth(f):    
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -180,7 +181,6 @@ def fireedit():
     c = sorted(c, key = lambda x: x[1])
     form.artist.choices = c
     if form.validate_on_submit():
-        print "hello?"
         putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
                     'Long' : form.longitude.data, 'Artist' : form.artist.data,
                     'Title' : form.title.data, 'Month' : form.month.data,
@@ -230,6 +230,33 @@ def fireget():
 def delete_mural():
 	firebase.delete('/murals', str(request.form["muralid"]))
 	return redirect(url_for('fireget'), code=302)
+
+@app.route('/api/edit_artist', methods = ['GET', 'POST'])
+@requires_auth
+def artistget():
+    artists = firebase.get('/','artists')
+    return render_template('disp-all-artists.html', artists = artists)
+
+@app.route('/api/edit_artist', methods=['GET', 'POST'])
+@requires_auth
+def edit_artist():
+    form = ArtistPut()
+    if form.validate_on_submit():
+        uuidtoken = uuid.uuid4()
+        putData = { 'photo' : form.photo.data, 'name' : form.name.data,
+                    'city' : form.city.data, 'bio' : form.bio.data,
+                    'uuid' : str(uuidtoken)}
+        print putData
+        firebase.put('/artists', muralid, putData)
+        print "added"
+        return redirect(url_for('artistput'), code=302)
+    return render_template('artist-form.html', form=form, artists = artists, muralid = muralid)
+
+@app.route('/api/delete_artist', methods = ['GET', 'POST'])
+@requires_auth
+def delete_artist():
+    firebase.delete('/artists', str(request.form["artists"]))
+    return redirect(url_for('fireget'), code=302)
 
 
 @app.route('/test')
