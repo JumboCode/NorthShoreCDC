@@ -16,6 +16,7 @@ import time
 from functools import wraps
 from flask import make_response
 from functools import update_wrapper
+import operator
 #from flask.ext.session import Session
 
 
@@ -195,13 +196,69 @@ def artistput():
 def fireget():
     artists = firebase.get('/','artists')
     murals = firebase.get('/','murals')
-    return render_template('disp-all.html', artists = artists, murals=murals)
+    
+    sorted_keys = sorted(murals, key = lambda mural: murals[mural]["Index"])
+    sorted_murals = []
+    for m in sorted_keys:
+        sorted_murals.append(murals[m])
+    
+    return render_template('disp-all.html', artists = artists, murals=sorted_murals)
 
 @app.route('/api/delete_mural', methods = ['GET', 'POST'])
 @requires_auth
 def delete_mural():
 	firebase.delete('/murals', str(request.form["muralid"]))
 	return redirect(url_for('fireget'), code=302)
+
+@app.route('/api/change_mural_index', methods = ['POST'])
+@requires_auth
+def change_mural_index():
+	# firebase.delete('/murals', str(request.form["muralid"]))
+    
+    muralID = str(request.form["muralid"])
+    up_or_down = str(request.form["upOrDown"])
+    murals = firebase.get('/','murals')
+    
+    print "All the murals:", murals
+    
+    # fromMural is the mural corresponding to the muralid
+    # toMural is the mural with the Index that fromMural's Index should be changed to
+    fromMural = None
+    toMural = None
+    
+    for m in murals:
+        if m == muralID:
+            fromMural = murals[m]
+    
+    # If the muralID turns out to not be valid
+    if fromMural == None:
+        return redirect(url_for('fireget'), code=302)
+    
+    fromMuralIndex = fromMural["Index"]
+    
+    toMuralIndex = 0
+    if up_or_down == "UP":
+        toMuralIndex = fromMuralIndex - 1
+    elif up_or_down == "DOWN":
+        toMuralIndex = fromMuralIndex + 1
+    
+    for m in murals:
+        if murals[m]["Index"] == toMuralIndex:
+            toMural = murals[m]
+    
+    # Handles when you want to move to an invalid index
+    if toMural == None:
+        return redirect(url_for('fireget'), code=302)
+    
+    fromMural["Index"] = toMuralIndex
+    toMural["Index"] = fromMuralIndex
+    
+    # TODO update firebase
+    
+    print "fromMural", fromMural
+    print "toMural", toMural
+    
+    return redirect(url_for('fireget'), code=302)
 
 
 @app.route('/test')

@@ -3,12 +3,53 @@
 {% block page_content %}
 <body>
 <table style="width:80%">
-<tr><th>Title</th><th>Artist</th><th>Photo</th><th>Latitude</th><th>Longitude</th><th>Month</th><th>Year</th></tr>
-
-{% for m in murals %}
 <tr>
-<td>{{ murals[m].Title }}</td> <td>{{ artists[murals[m].Artist].name }}</td> <td>{{ murals[m].Photo }}</td><td>{{ murals[m].Lat }}</td> <td>{{ murals[m].Long }}</td>  <td>{{ murals[m].Month }}</td> <td>{{ murals[m].Year }}</td>
-	<td><form action="{{url_for('delete_mural')}}" method = "POST"> <input type = "hidden" name = "muralid" value = "{{ m }}"><button type="submit" name="del">Delete</button></form></td><td><form action="{{url_for('fireedit')}}" method = "GET"> <input type = "hidden" name = "muralid" value = "{{ m }}"><button type="submit" name="edit">Edit</button></form></td>
+    <th>Title</th>
+    <th>Artist</th>
+    <th>Photo</th>
+    <th>Latitude</th>
+    <th>Longitude</th>
+    <th>Month</th>
+    <th>Year</th>
+    <th>Index</th>
+</tr>
+
+{% for mural in murals %}
+<tr>
+    <td>{{ mural.Title }}</td> 
+    <td>{{ artists[mural.Artist].name }}</td> 
+    <td>{{ mural.Photo }}</td>
+    <td>{{ mural.Lat }}</td> 
+    <td>{{ mural.Long }}</td>  
+    <td>{{ mural.Month }}</td> 
+    <td>{{ mural.Year }}</td>
+    <td>{{ mural.Index }}</td>
+    <td>
+        <form action="{{url_for('change_mural_index')}}" method = "POST">
+            <input type = "hidden" name = "muralid" value = "{{ mural['uuid'] }}">
+            <input type = "hidden" name = "upOrDown" value = "UP">
+            <button type="submit" name="change">UP</button>
+        </form>
+    </td>
+    <td>
+        <form action="{{url_for('change_mural_index')}}" method = "POST">
+            <input type = "hidden" name = "muralid" value = "{{ mural['uuid'] }}">
+            <input type = "hidden" name = "upOrDown" value = "DOWN">
+            <button type="submit" name="change">DOWN</button>
+        </form>
+    </td>
+	<td>
+        <form action="{{url_for('delete_mural')}}" method = "POST">
+            <input type = "hidden" name = "muralid" value = "{{ mural['uuid'] }}">
+            <button type="submit" name="del">Delete</button>
+        </form>
+    </td>
+    <td>
+        <form action="{{url_for('fireedit')}}" method = "GET">
+            <input type = "hidden" name = "muralid" value = "{{ mural['uuid'] }}">
+            <button type="submit" name="edit">Edit</button>
+        </form>
+    </td>
 </tr>
 {% endfor %}
 </table>
