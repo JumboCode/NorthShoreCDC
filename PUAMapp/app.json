@@ -6,7 +6,7 @@
     "sdkVersion": "25.0.0",
     "orientation": "portrait",
     "assetBundlePatterns": ["assets/images/*"],
-    "splash": {"image": "./assets/images/splash-background.png", "resize-mode": "cover"},
+    "splash": {"image": "./assets/images/splash-background.jpg", "resize-mode": "contain", "backgroundColor": "#ffffff"},
     "ios": {
       "bundleIdentifier": "com.jumbocode.punto",
       "icon": "./assets/images/icon.png",
