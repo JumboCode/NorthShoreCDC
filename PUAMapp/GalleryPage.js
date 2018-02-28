@@ -27,7 +27,7 @@ export default class GalleryPage extends React.Component {
  	renderImages() {
     
     var {width} = Dimensions.get('window');
-    width = width / 3 - 2
+    width = width / 3 - 1
     
 		const { navigate } = this.props.navigation;
         murals = this.props.screenProps.murals || {}
@@ -57,13 +57,13 @@ export default class GalleryPage extends React.Component {
             <View>
               <Image
                 style={{alignSelf: 'center', position: 'relative', height: height + 40, width: width, resizeMode: 'cover'}} 
-                source = {require('./assets/images/gallery_top_image.jpg')}
+                source = {Platform.OS === 'ios' ? require('./assets/images/gallery-header-new.jpeg') : require('./assets/images/gallery_top_image.jpg')}
               />
-              <View style={{backgroundColor: 'rgba(0,0,0,.6)', height: height + 40, position : 'absolute', width: width, justifyContent: 'center', alignItems: 'center' }} >
-               <Text style={{ color: 'white', fontSize: 50 / 190 * height, marginTop: Platform.OS === 'ios' ? 100 : 0}}>Gallery</Text>
+              <View style={{backgroundColor: Platform.OS === 'ios'? 'rgba(0,0,0,.0)' : 'rgba(0,0,0,.5)', height: height + 40, position : 'absolute', width: width, justifyContent: 'center', alignItems: 'center' }} >
+               <Text style={{ color: 'white', fontSize: 40 / 300 * width, fontWeight: 'bold', marginTop: Platform.OS === 'ios' ? 100 : 0}}>GALLERY</Text>
               </View>
             </View>
-            <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', marginTop: 0}}>
+            <View style={{alignSelf: 'center', alignItems: 'center', flex: 1, flexDirection: 'row', flexWrap: 'wrap', margin: -1, marginLeft: -2, marginTop: 0.5}}>
                {this.renderImages()}
             </View>
             </ScrollView>

@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground, ScrollView, Button, TouchableOpacity, Linking, StatusBar, Platform } from 'react-native';
+import { StyleSheet, Text, View, Image, ImageBackground, ScrollView, Button, TouchableOpacity, Linking, StatusBar, Platform, Dimensions } from 'react-native';
 import { lightpurple, darkpurple, pink } from './colors.js';
 import { NavigationActions } from 'react-navigation'
 import Hyperlink from 'react-native-hyperlink'
@@ -23,6 +23,15 @@ links = {
   "http://northshorecdc.org/support-us/donate/": "Donate"
 }
 
+function isIphoneX() {
+    const dimen = Dimensions.get('window');
+    return (
+        Platform.OS === 'ios' &&
+        !Platform.isPad &&
+        !Platform.isTVOS &&
+        (dimen.height === 812 || dimen.width === 812)
+    );
+}
 
 export default class ContactPage extends React.Component {
   static navigationOptions = ({ navigation }) => (Platform.OS === 'ios' ? {
@@ -113,7 +122,7 @@ if (Platform.OS === 'ios') {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     paddingLeft: '4%',
-    paddingTop: '34%',
+    paddingTop: isIphoneX() ? '40%' : '32%',
     marginBottom: 'auto',
   },
   textLeft: {
@@ -128,7 +137,7 @@ if (Platform.OS === 'ios') {
     paddingRight: '4%',
     // paddingTop: '40%',
    marginTop: 'auto',
-   paddingBottom: '4%',
+   paddingBottom: isIphoneX() ? '12%' : '4%',
 
   },
   textRight: {
@@ -155,13 +164,13 @@ if (Platform.OS === 'ios') {
   },
   donateImage: {
     alignItems: 'center',
-    paddingLeft: 6,
+    paddingLeft: 5,
     padding: 3,
-    paddingBottom: 6,
+    paddingBottom: 5,
     backgroundColor: pink,
-    width: 150,
-    marginLeft: "7%",
-    marginTop: "-40%",
+    width: 160,
+    marginLeft: "8%",
+    marginTop: isIphoneX() ? '-55%' : '-40%',
     borderRadius: 100,
     shadowColor: 'black',
     shadowOffset: {width: 3, height: 4, },
@@ -186,7 +195,7 @@ else  {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     paddingLeft: '4%',
-    paddingTop: '8%',
+    paddingTop: '10%',
     marginBottom: 'auto',
   },
   textLeft: {
@@ -222,18 +231,19 @@ else  {
   },
   donateText: {
     backgroundColor: 'transparent',
+    fontWeight: 'bold',
     color: "white",
     fontSize: 25,
   },
   donateImage: {
     alignItems: 'center',
     backgroundColor: pink,
-    padding: 4,
+    padding: 5,
     paddingLeft: 6,
     width: 150,
     marginLeft: "7%",
     marginRight: "auto",
-    marginTop: "-15%",
+    marginTop: "-20%",
     borderRadius: 100,
     elevation: 12
   },
