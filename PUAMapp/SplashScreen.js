@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image, ActivityIndicator, AppRegistry, StyleSheet, Platform } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 
 export default class SpalshScreen extends Component {
     constructor(props) {
@@ -9,7 +10,8 @@ export default class SpalshScreen extends Component {
     componentWillUpdate() {
         const { navigate } = this.props.navigation;
          if ((this.props.screenProps.muralsloaded  == true) && (this.props.screenProps.artistsloaded == true)) {
-            navigate("HomePage");
+           resetAction = NavigationActions.reset({ index: 0, actions: [NavigationActions.navigate({ routeName: 'HomePage' })] });
+           this.props.navigation.dispatch(resetAction);
          }
 
      }
