@@ -134,6 +134,7 @@ if (Platform.OS === 'ios') {
     },
     name: {
       color: 'white',
+      fontWeight: 'bold',
       textShadowColor: 'black',
       textShadowOffset: {width : -1, height: 0},
       textShadowRadius: 5,
@@ -194,6 +195,7 @@ if (Platform.OS === 'ios') {
     name: {
       color: 'white',
       textShadowColor: 'black',
+      fontWeight: 'bold',
       textShadowOffset: {width : -1, height: 0},
       textShadowRadius: 5,
       fontSize: 36

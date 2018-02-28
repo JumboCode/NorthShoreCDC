@@ -56,7 +56,7 @@ export default class ContactPage extends React.Component {
                 </Text>
               </View>
                 <TouchableOpacity style= {contactStyles.donateImage} onPress={() => Linking.openURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UF8MF7Q9E7HSA").catch(err => console.error('An error occurred', err))}>
-                    <Text style = {contactStyles.donateText}> Donate </Text>
+                    <Text style = {contactStyles.donateText}> DONATE </Text>
                 </TouchableOpacity>
               <View style = {contactStyles.textContainerRight}>
                 <Hyperlink linkify = {linkify} linkDefault={ true } linkStyle={ { color: 'grey' }} linkText = {this.textForLink} >
@@ -148,20 +148,21 @@ if (Platform.OS === 'ios') {
 
   },
   donateText: {
-    fontSize: 25,
+    fontSize: 22,
     paddingTop: '2%',
+    fontWeight: 'bold',
     color: 'white',
   },
   donateImage: {
     alignItems: 'center',
-    paddingLeft: 5,
-    padding: 2,
-    paddingBottom: 5,
+    paddingLeft: 6,
+    padding: 3,
+    paddingBottom: 6,
     backgroundColor: pink,
     width: 150,
     marginLeft: "7%",
     marginTop: "-40%",
-    borderRadius: 20,
+    borderRadius: 100,
     shadowColor: 'black',
     shadowOffset: {width: 3, height: 4, },
     shadowOpacity: 0.5,
@@ -227,13 +228,13 @@ else  {
   donateImage: {
     alignItems: 'center',
     backgroundColor: pink,
-    padding: 3,
-    paddingLeft: 5,
+    padding: 4,
+    paddingLeft: 6,
     width: 150,
     marginLeft: "7%",
     marginRight: "auto",
     marginTop: "-15%",
-    borderRadius: 20,
+    borderRadius: 100,
     elevation: 12
   },
 });
