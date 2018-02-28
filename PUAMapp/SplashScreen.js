@@ -1,18 +1,39 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ActivityIndicator, AppRegistry, StyleSheet, Platform } from 'react-native';
+import { StatusBar, Alert, View, Text, Image, ActivityIndicator, AppRegistry, StyleSheet, Platform } from 'react-native';
 
 export default class SpalshScreen extends Component {
     constructor(props) {
-        super(props)
+      super(props)
+      this.state = {
+        loaded: false
+      };
     }
 
     componentWillUpdate() {
         const { navigate } = this.props.navigation;
          if ((this.props.screenProps.muralsloaded  == true) && (this.props.screenProps.artistsloaded == true)) {
+            this.state.loaded = true;
             navigate("HomePage");
          }
 
      }
+
+    componentDidMount() {
+      // Tell user about slow connection after 10 seconds
+      setTimeout(() => {
+        if (this.state.loaded == false) {
+          Alert.alert(
+            'Slow Connection',
+            'It looks like you have a very slow or nonexistent network connection. ' + 
+            'This app requires the internet to load data.',
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            { cancelable: true }
+          ) 
+        }
+      }, 10000)
+    }
 
     static navigationOptions = {
       header: null
