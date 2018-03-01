@@ -63,7 +63,7 @@ export default class GalleryPage extends React.Component {
                <Text style={{ color: 'white', fontSize: 40 / 300 * width, fontWeight: 'bold', marginTop: Platform.OS === 'ios' ? 100 : 0}}>GALLERY</Text>
               </View>
             </View>
-            <View style={{alignSelf: 'center', alignItems: 'center', flex: 1, flexDirection: 'row', flexWrap: 'wrap', margin: -1, marginLeft: -2, marginTop: 0.5}}>
+            <View style={{alignSelf: 'center', alignItems: 'center', flex: 1, flexDirection: 'row', flexWrap: 'wrap', margin: -1, marginLeft: -2, marginTop: 1}}>
                {this.renderImages()}
             </View>
             </ScrollView>
