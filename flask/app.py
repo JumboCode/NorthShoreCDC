@@ -129,11 +129,17 @@ def fireput():
         global count
         count += 1
         uuidtoken = uuid.uuid4()
+        
+        # the new mural's index = 1 + the number of existing murals
+        murals = firebase.get('/', 'murals')
+        index = 1 + len(murals)
+        
         putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
                     'Long' : form.longitude.data, 'Artist' : form.artist.data,
                     'Title' : form.title.data, 'Month' : form.month.data,
                     'Year' : form.year.data, 'Description' : form.description.data,
-                    'Medium' : form.medium.data, 'uuid' : str(uuidtoken) }
+                    'Medium' : form.medium.data, 'uuid' : str(uuidtoken),
+                    'Index': index }
         firebase.put('/murals', uuidtoken, putData)
         return render_template('form-result.html', putData=putData)
     return render_template('My-Form.html', form=form)
