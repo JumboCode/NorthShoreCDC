@@ -164,7 +164,8 @@ def fireedit():
                     'Long' : form.longitude.data, 'Artist' : form.artist.data,
                     'Title' : form.title.data, 'Month' : form.month.data,
                     'Year' : form.year.data, 'Description' : form.description.data,
-                    'Medium' : form.medium.data, 'uuid' : str(muralid) }
+                    'Medium' : form.medium.data, 'uuid' : str(muralid),
+                    'Index': mural["Index"] }
         print putData
         firebase.delete('/murals', str(muralid))
         print "deleted"
