@@ -217,23 +217,24 @@ def delete_mural():
     
     # reindex all the murals
     murals = firebase.get('/', 'murals')
-    key = request.form["muralid"]
+    key = str(request.form["muralid"])
     removed_index = murals[key]["Index"]
     
     # if a mural's index is > removed_index, decrement the index
     for m in murals:
-        if murals[m]["Index"] > index:
+        if murals[m]["Index"] > removed_index:
             murals[m]["Index"] = murals[m]["Index"] - 1
     
     # remove the mural
     if key in murals: del murals[key]
     
     # update firebase
-    firebase.put('/murals', murals)
-	
-    # firebase.delete('/murals', str(request.form["muralid"]))
+    firebase.delete('/murals', key)
+    for uuid in murals:
+        firebase.put('/murals', uuid, murals[uuid])
     
-	return redirect(url_for('fireget'), code=302)
+    
+    return redirect(url_for('fireget'), code=302)
 
 @app.route('/api/change_mural_index', methods = ['POST'])
 @requires_auth
@@ -278,7 +279,9 @@ def change_mural_index():
     fromMural["Index"] = toMuralIndex
     toMural["Index"] = fromMuralIndex
     
-    # TODO update firebase
+    # update firebase
+    firebase.put('/murals', fromMural["uuid"], fromMural)
+    firebase.put('/murals', toMural["uuid"], toMural)
     
     print "fromMural", fromMural
     print "toMural", toMural
