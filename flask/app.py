@@ -214,7 +214,25 @@ def fireget():
 @app.route('/api/delete_mural', methods = ['GET', 'POST'])
 @requires_auth
 def delete_mural():
-	firebase.delete('/murals', str(request.form["muralid"]))
+    
+    # reindex all the murals
+    murals = firebase.get('/', 'murals')
+    key = request.form["muralid"]
+    removed_index = murals[key]["Index"]
+    
+    # if a mural's index is > removed_index, decrement the index
+    for m in murals:
+        if murals[m]["Index"] > index:
+            murals[m]["Index"] = murals[m]["Index"] - 1
+    
+    # remove the mural
+    if key in murals: del murals[key]
+    
+    # update firebase
+    firebase.put('/murals', murals)
+	
+    # firebase.delete('/murals', str(request.form["muralid"]))
+    
 	return redirect(url_for('fireget'), code=302)
 
 @app.route('/api/change_mural_index', methods = ['POST'])
