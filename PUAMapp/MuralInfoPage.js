@@ -49,7 +49,7 @@ export default class MuralInfoPage extends React.Component {
         if (this.state.descriptionVisible) {
           closeButton = <Image source={infoButtons[this.state.info]} style={{width: 30, height: 30}}/>
         } else {
-          readMoreButton =  <TouchableOpacity onPress = {this.toggleShowDescription.bind(this)}>
+          readMoreButton =  <TouchableOpacity style = {{paddingLeft: 3, paddingTop: 15, paddingBottom: 50, paddingRight: 70}} onPress = {this.toggleShowDescription.bind(this)}>
                               <Text style = {infoStyles.moreInfoButton}>Read More</Text>
                             </TouchableOpacity>
         }
@@ -67,12 +67,16 @@ export default class MuralInfoPage extends React.Component {
           description += '\n' + mural['Medium']
         }
 
-        if (artist['bio']) {
+        if (mural['Description'] && mural['Description'].trim().length > 0) {
+          description += '\n\n' + mural['Description']
+        }
+
+        if (artist['bio'] && artist['bio'].trim().length > 0) {
           description += '\n\n' + artist['bio']
         }
 
         return (
-              <TouchableOpacity style = {infoStyles.container} onPress = {this.toggleShowDescription.bind(this)} activeOpacity = {1} >
+              <View style = {infoStyles.container} >
               <StatusBar barStyle = { Platform.OS === 'ios' ? "light-content" : "light-content"}/>
                 <Image style={{flex: 1, position: "absolute", resizeMode: 'cover', height: '100%', width: '100%'}} source={{uri: mural.Photo}} />
                 <OpacityView style = {infoStyles.darkOverlay} visible = {this.state.descriptionVisible}/>
@@ -90,16 +94,18 @@ export default class MuralInfoPage extends React.Component {
                       </View>
                     </View>
                     <View style = {infoStyles.button}>
-                      <TouchableOpacity onPress = {this.toggleShowDescription.bind(this)}>
+                      <TouchableOpacity style = {{padding: 20, paddingTop: 25, paddingLeft: 20, paddingBottom: 25}} onPress = {this.toggleShowDescription.bind(this)}>
                           { closeButton }
                       </TouchableOpacity>
                     </View>
                   </View>
                   <DrawerView style = {infoStyles.description} visible = {this.state.descriptionVisible}>
+                    <ScrollView style = {{height: '100%'}}>
                     <Text style = {{color: 'white'}}>{description}</Text>
+                  </ScrollView>
                   </DrawerView>
                 </View>
-              </TouchableOpacity>
+              </View>
         )
     }
 }
@@ -116,6 +122,7 @@ if (Platform.OS === 'ios') {
       marginTop: '20%',
       paddingTop: 60,
       padding: 20,
+      paddingRight: 0,
       backgroundColor: 'transparent'
     },
     top: {
@@ -134,9 +141,13 @@ if (Platform.OS === 'ios') {
     },
     name: {
       color: 'white',
+      fontWeight: 'bold',
       textShadowColor: 'black',
       textShadowOffset: {width : -1, height: 0},
       textShadowRadius: 5,
+      paddingLeft: 3,
+      lineHeight: 35,
+      marginBottom: 5,
       fontSize: 36
     },
     artist: {
@@ -144,12 +155,15 @@ if (Platform.OS === 'ios') {
       textShadowColor: 'black',
       textShadowOffset: {width : -1, height: 0},
       textShadowRadius: 5,
+      paddingLeft: 3,
       fontSize: 24,
       marginBottom: 20
     },
     description: {
       marginTop: 50,
-      paddingTop: 30
+      paddingTop: 15,
+      paddingRight: 20,
+      paddingLeft: 3
     },
     darkOverlay: {
       position: 'absolute',
@@ -160,8 +174,8 @@ if (Platform.OS === 'ios') {
     moreInfoButton: {
       color: 'white',
       textShadowColor: 'black',
-      textShadowOffset: {width : -1, height: 0},
-      textShadowRadius: 5,
+      textShadowOffset: {width : -1, height: 1},
+      textShadowRadius: 2,
       fontSize: 15,
     }
   });
@@ -174,6 +188,7 @@ if (Platform.OS === 'ios') {
     textContainer: {
       flex: 1,
       paddingTop: 60,
+      paddingRight: 0,
       padding: 20,
       backgroundColor: 'transparent'
     },
@@ -194,8 +209,12 @@ if (Platform.OS === 'ios') {
     name: {
       color: 'white',
       textShadowColor: 'black',
+      fontWeight: 'bold',
       textShadowOffset: {width : -1, height: 0},
       textShadowRadius: 5,
+      paddingLeft: 2,
+      lineHeight: 35,
+      marginBottom: 5,
       fontSize: 36
     },
     artist: {
@@ -203,12 +222,15 @@ if (Platform.OS === 'ios') {
       textShadowColor: 'black',
       textShadowOffset: {width : -1, height: 0},
       textShadowRadius: 5,
+      paddingLeft: 2,
       fontSize: 24,
       marginBottom: 20
     },
     description: {
       marginTop: 50,
-      paddingTop: 30
+      paddingTop: 15,
+      paddingRight: 20,
+      paddingLeft: 2
     },
     darkOverlay: {
       position: 'absolute',

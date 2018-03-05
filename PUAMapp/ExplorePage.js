@@ -1,8 +1,8 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Button, StatusBar, Platform} from 'react-native';
-import {Permissions} from 'expo'
-import MapView from 'react-native-maps';
+import {Permissions} from 'expo';
+import { MapView } from 'expo';
 import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
 

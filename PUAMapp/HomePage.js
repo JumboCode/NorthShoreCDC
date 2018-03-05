@@ -117,7 +117,7 @@ export default class HomePage extends React.Component {
     },
     buttonText: {
       fontSize: 36,
-      fontWeight: 'bold',
+      fontWeight: Platform.OS === 'ios' ? '800' : 'bold',
       color: 'white'
     }
   }
