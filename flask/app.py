@@ -16,6 +16,7 @@ import time
 from functools import wraps
 from flask import make_response
 from functools import update_wrapper
+import operator
 #from flask.ext.session import Session
 
 
@@ -128,11 +129,17 @@ def fireput():
         global count
         count += 1
         uuidtoken = uuid.uuid4()
+        
+        # the new mural's index = 1 + the number of existing murals
+        murals = firebase.get('/', 'murals')
+        index = 1 + len(murals)
+        
         putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
                     'Long' : form.longitude.data, 'Artist' : form.artist.data,
                     'Title' : form.title.data, 'Month' : form.month.data,
                     'Year' : form.year.data, 'Description' : form.description.data,
-                    'Medium' : form.medium.data, 'uuid' : str(uuidtoken) }
+                    'Medium' : form.medium.data, 'uuid' : str(uuidtoken),
+                    'Index': index }
         firebase.put('/murals', uuidtoken, putData)
         return render_template('form-result.html', putData=putData)
     return render_template('My-Form.html', form=form)
@@ -157,7 +164,8 @@ def fireedit():
                     'Long' : form.longitude.data, 'Artist' : form.artist.data,
                     'Title' : form.title.data, 'Month' : form.month.data,
                     'Year' : form.year.data, 'Description' : form.description.data,
-                    'Medium' : form.medium.data, 'uuid' : str(muralid) }
+                    'Medium' : form.medium.data, 'uuid' : str(muralid),
+                    'Index': mural["Index"] }
         print putData
         firebase.delete('/murals', str(muralid))
         print "deleted"
@@ -195,13 +203,90 @@ def artistput():
 def fireget():
     artists = firebase.get('/','artists')
     murals = firebase.get('/','murals')
-    return render_template('disp-all.html', artists = artists, murals=murals)
+    
+    sorted_keys = sorted(murals, key = lambda mural: murals[mural]["Index"])
+    sorted_murals = []
+    for m in sorted_keys:
+        sorted_murals.append(murals[m])
+    
+    return render_template('disp-all.html', artists = artists, murals=sorted_murals)
 
 @app.route('/api/delete_mural', methods = ['GET', 'POST'])
 @requires_auth
 def delete_mural():
-	firebase.delete('/murals', str(request.form["muralid"]))
-	return redirect(url_for('fireget'), code=302)
+    
+    # reindex all the murals
+    murals = firebase.get('/', 'murals')
+    key = str(request.form["muralid"])
+    removed_index = murals[key]["Index"]
+    
+    # if a mural's index is > removed_index, decrement the index
+    for m in murals:
+        if murals[m]["Index"] > removed_index:
+            murals[m]["Index"] = murals[m]["Index"] - 1
+    
+    # remove the mural
+    if key in murals: del murals[key]
+    
+    # update firebase
+    firebase.delete('/murals', key)
+    for uuid in murals:
+        firebase.put('/murals', uuid, murals[uuid])
+    
+    
+    return redirect(url_for('fireget'), code=302)
+
+@app.route('/api/change_mural_index', methods = ['POST'])
+@requires_auth
+def change_mural_index():
+	# firebase.delete('/murals', str(request.form["muralid"]))
+    
+    muralID = str(request.form["muralid"])
+    up_or_down = str(request.form["upOrDown"])
+    murals = firebase.get('/','murals')
+    
+    print "All the murals:", murals
+    
+    # fromMural is the mural corresponding to the muralid
+    # toMural is the mural with the Index that fromMural's Index should be changed to
+    fromMural = None
+    toMural = None
+    
+    for m in murals:
+        if m == muralID:
+            fromMural = murals[m]
+    
+    # If the muralID turns out to not be valid
+    if fromMural == None:
+        return redirect(url_for('fireget'), code=302)
+    
+    fromMuralIndex = fromMural["Index"]
+    
+    toMuralIndex = 0
+    if up_or_down == "UP":
+        toMuralIndex = fromMuralIndex - 1
+    elif up_or_down == "DOWN":
+        toMuralIndex = fromMuralIndex + 1
+    
+    for m in murals:
+        if murals[m]["Index"] == toMuralIndex:
+            toMural = murals[m]
+    
+    # Handles when you want to move to an invalid index
+    if toMural == None:
+        return redirect(url_for('fireget'), code=302)
+    
+    fromMural["Index"] = toMuralIndex
+    toMural["Index"] = fromMuralIndex
+    
+    # update firebase
+    firebase.put('/murals', fromMural["uuid"], fromMural)
+    firebase.put('/murals', toMural["uuid"], toMural)
+    
+    print "fromMural", fromMural
+    print "toMural", toMural
+    
+    return redirect(url_for('fireget'), code=302)
 
 
 @app.route('/test')
