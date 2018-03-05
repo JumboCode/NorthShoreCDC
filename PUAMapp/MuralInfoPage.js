@@ -67,7 +67,11 @@ export default class MuralInfoPage extends React.Component {
           description += '\n' + mural['Medium']
         }
 
-        if (artist['bio']) {
+        if (mural['Description'] && mural['Description'].trim().length > 0) {
+          description += '\n\n' + mural['Description']
+        }
+
+        if (artist['bio'] && artist['bio'].trim().length > 0) {
           description += '\n\n' + artist['bio']
         }
 
@@ -170,8 +174,8 @@ if (Platform.OS === 'ios') {
     moreInfoButton: {
       color: 'white',
       textShadowColor: 'black',
-      textShadowOffset: {width : -1, height: 0},
-      textShadowRadius: 5,
+      textShadowOffset: {width : -1, height: 1},
+      textShadowRadius: 2,
       fontSize: 15,
     }
   });
