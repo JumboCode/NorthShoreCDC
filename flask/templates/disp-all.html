@@ -2,14 +2,16 @@
 
 {% block page_content %}
 <body>
-<table style="width:80%">
-<tr><th>Title</th><th>Artist</th><th>Photo</th><th>Latitude</th><th>Longitude</th><th>Month</th><th>Year</th></tr>
+<table style="width:80%" class="table table-striped">
+<thead><tr><th>Title</th><th>Artist</th><th>Photo</th><th>Latitude</th><th>Longitude</th><th>Month</th><th>Year</th></tr></thead>
 
 {% for m in murals %}
+<tbody>
 <tr>
 <td>{{ murals[m].Title }}</td> <td>{{ artists[murals[m].Artist].name }}</td> <td>{{ murals[m].Photo }}</td><td>{{ murals[m].Lat }}</td> <td>{{ murals[m].Long }}</td>  <td>{{ murals[m].Month }}</td> <td>{{ murals[m].Year }}</td>
 	<td><form action="{{url_for('delete_mural')}}" method = "POST"> <input type = "hidden" name = "muralid" value = "{{ m }}"><button type="submit" name="del">Delete</button></form></td><td><form action="{{url_for('fireedit')}}" method = "GET"> <input type = "hidden" name = "muralid" value = "{{ m }}"><button type="submit" name="edit">Edit</button></form></td>
 </tr>
+</tbody>
 {% endfor %}
 </table>
 <body>
