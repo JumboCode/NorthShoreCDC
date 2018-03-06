@@ -2,7 +2,8 @@
 
 {% block page_content %}
 <body>
-<table style="width:80%">
+<table style="width:80%" class="table table-striped">
+<thead>
 <tr>
     <th>Title</th>
     <th>Artist</th>
@@ -13,12 +14,14 @@
     <th>Year</th>
     <th>Index</th>
 </tr>
+</thead>
 
 {% for mural in murals %}
+<tbody>
 <tr>
     <td>{{ mural.Title }}</td> 
     <td>{{ artists[mural.Artist].name }}</td> 
-    <td>{{ mural.Photo }}</td>
+    <td><img src = '{{ mural.Photo }}', height = '50px'></td>
     <td>{{ mural.Lat }}</td> 
     <td>{{ mural.Long }}</td>  
     <td>{{ mural.Month }}</td> 
@@ -51,6 +54,7 @@
         </form>
     </td>
 </tr>
+</tbody>
 {% endfor %}
 </table>
 <body>
