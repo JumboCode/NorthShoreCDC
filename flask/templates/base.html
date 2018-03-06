@@ -3,17 +3,25 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel = "stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel = "stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
+
+
     <body>
-      <header id="parent_header">
-      <h1>Punto Urban Art Museum App - Admin Portal</h1>
-      </header>
-          <div>
-          <nav class="navbar navbar-inverse">
+      <div class="container">
+      <div class="row">
+        <span><img src="http://puntourbanartmuseum.org/images/logo.png" style="height:80px";/></span>
+
+      </div>
+      <div class="row">
+          <nav class="navbar navbar-inverse bg-light">
             <div class="container-fluid">
-              <ul class="nav navbar-nav">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">Admin Portal</a>
+              </div>
+              <ul class="nav navbar-nav" >
                 <li><a href="{{ url_for('fireput') }}">Add a Mural</a></li>
                 <li><a href="{{ url_for('fireget') }}">Edit/Delete Murals</a></li>
                 <li><a href="{{ url_for('artistput') }}">Add an Artist</a></li>
@@ -22,7 +30,6 @@
               </ul>
             </div>
           </nav>
-          </div>
           {% block content %}
 		<!-- <div class="container"> -->
                         <div id='page-wrap'>
@@ -35,7 +42,9 @@
 	<!-- </div> -->
        <!-- </div> -->
     <!-- </div> -->   
-    </body>
+    </div>
+    </div>
+  </body>
 
 
 </html>
