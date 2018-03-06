@@ -2,6 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Button, TouchableOpacity, Dimensions, Platform} from 'react-native';
 import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
+import Img from 'react-native-image-progress';
+import Progress from 'react-native-progress';
 
 
 
@@ -13,10 +15,11 @@ export default class GalleryPage extends React.Component {
 
     static navigationOptions = ({ navigation }) => (Platform.OS === 'ios' ? {
     headerLeft:   
-    <TouchableOpacity style = {{top: 50, left: 15, padding: 50}} onPress={() => navigation.dispatch(NavigationActions.back())} >
+    <TouchableOpacity style = {{top: 30, left: -25, padding: 40}} onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
-    style= {{position: 'absolute', zIndex: 100, maxWidth: 120, maxHeight: 40}}
-    source={require('./backbutton.png')} /> 
+
+    style= {{position: 'relative', zIndex: 100, maxWidth: 120, maxHeight: 40}}
+    source={require('./assets/images/backbutton.png')} /> 
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
     } : {title: 'Punto Urban Art', headerTintColor: 'white', headerStyle: {backgroundColor: pink},});
@@ -24,7 +27,7 @@ export default class GalleryPage extends React.Component {
  	renderImages() {
     
     var {width} = Dimensions.get('window');
-    width = width / 3 - 2
+    width = width / 3 - 1
     
 		const { navigate } = this.props.navigation;
         murals = this.props.screenProps.murals || {}
@@ -33,7 +36,12 @@ export default class GalleryPage extends React.Component {
             uri = murals[key]["Photo"]
               return(
 				<TouchableOpacity key={i} onPress = {() => navigate('MuralInfoPage', {mural: murals[key], artist: artists[murals[key]["Artist"]]})}>
-                  <Image key={i} style={{height: width, width: width, margin: 1}} source={{uri: uri}} />
+                  <Img 
+                  key={i} 
+                  style={{height: width, width: width, margin: 1}} 
+                  source={{uri: uri}} 
+                  indicator={Progress}
+                   />
 				</TouchableOpacity>
               );
         })
@@ -42,17 +50,20 @@ export default class GalleryPage extends React.Component {
     render() {
         
         var {height, width} = Dimensions.get('window');
-         height = height / 3
+        height = height / 3
+
         return (
           <ScrollView>
             <View>
-              <Image style={{height: height,  alignSelf: 'stretch'}} source={{uri: 'https://i.imgur.com/CPcgwSa.jpg'}} />
-              <View style={{backgroundColor: 'rgba(0,0,0,.4)', height: height, position : 'absolute', width: width }} >
-               <Text style={{ color: 'white', fontSize: 50 / 190 * height, marginTop: 100 / 190 * height, marginLeft: '23%'}}> Gallery </Text>
-               {/*<Text style={{ color: 'white', fontSize: 20 / 190 * height, marginTop: 0 / 190 * height, marginLeft: 20}}> {this.props.screenProps.artists[1]["name"]} </Text>*/}
+              <Image
+                style={{alignSelf: 'center', position: 'relative', height: height + 40, width: width, resizeMode: 'cover'}} 
+                source = {Platform.OS === 'ios' ? require('./assets/images/gallery-header-new.jpeg') : require('./assets/images/gallery_top_image.jpg')}
+              />
+              <View style={{backgroundColor: Platform.OS === 'ios'? 'rgba(0,0,0,.0)' : 'rgba(0,0,0,.5)', height: height + 40, position : 'absolute', width: width, justifyContent: 'center', alignItems: 'center' }} >
+               <Text style={{ color: 'white', fontSize: 40 / 300 * width, fontWeight: 'bold', marginTop: Platform.OS === 'ios' ? 100 : 0}}>GALLERY</Text>
               </View>
             </View>
-            <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', marginTop: 0}}>
+            <View style={{alignSelf: 'center', alignItems: 'center', flex: 1, flexDirection: 'row', flexWrap: 'wrap', margin: -1, marginLeft: -2, marginTop: 1}}>
                {this.renderImages()}
             </View>
             </ScrollView>

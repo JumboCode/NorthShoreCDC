@@ -1,23 +1,28 @@
 {
   "expo": {
     "name": "PUAM",
-    "version": "1.0.4",
+    "version": "1.0.9",
     "slug": "PUNTO",
-    "sdkVersion": "21.0.0",
+    "sdkVersion": "25.0.0",
     "orientation": "portrait",
-    "splash": {"image": "splash-background.png", "resize-mode": "cover"},
+    "assetBundlePatterns": ["assets/images/*"],
+    "splash": {"image": "./assets/images/splash-background.png", "resize-mode": "contain", "backgroundColor": "#ffffff"},
     "ios": {
       "bundleIdentifier": "com.jumbocode.punto",
-      "icon": "./icon.png",
+      "icon": "./assets/images/icon.png",
+      "infoPlist": {
+          "NSLocationWhenInUseUsageDescription": "The app uses the user's location to provide an interactive tour experience."
+      }
     },
     "android": {
       "package": "com.jumbocode.punto",
-      "icon": "./android-icon.png",
+      "icon": "./assets/images/android-icon.png",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyCxOTFsRnpLVDhmpVw-feRcsfndL36VfD8"
         }
-      }
+      },
+      "permissions": ["android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"]
     }
   }
 }

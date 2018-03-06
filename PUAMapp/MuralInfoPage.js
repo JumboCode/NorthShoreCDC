@@ -6,8 +6,8 @@ import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
 
 var infoButtons = [
-    require('./info.png'),
-    require('./xbutton.png')
+    require('./assets/images/info.png'),
+    require('./assets/images/xbutton.png')
 ];
 
 export default class MuralInfoPage extends React.Component {
@@ -21,10 +21,11 @@ export default class MuralInfoPage extends React.Component {
 
     static navigationOptions = ({ navigation }) => ( Platform.OS === 'ios' ? {
     headerLeft:   
-    <TouchableOpacity style = {{top: 50, left: 15, padding: 50}} onPress={() => navigation.dispatch(NavigationActions.back())} >
+    <TouchableOpacity style = {{top: 30, left: -25, padding: 40}} onPress={() => navigation.dispatch(NavigationActions.back())} >
     <Image 
-    style= {{position: 'absolute', zIndex: 100, maxWidth: 120, maxHeight: 40}}
-    source={require('./backbutton.png')} /> 
+    style= {{position: 'relative', zIndex: 100, maxWidth: 120, maxHeight: 40}}
+    source={require('./assets/images/backbutton.png')} /> 
+
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
     } : {title: 'Punto Urban Art', headerTintColor: 'white', headerStyle: {backgroundColor: pink},});
@@ -42,128 +43,217 @@ export default class MuralInfoPage extends React.Component {
     render() {
         const mural = this.props.navigation.state.params.mural
         const artist = this.props.navigation.state.params.artist
-        
+
         var readMoreButton = null
         var closeButton = null
         if (this.state.descriptionVisible) {
           closeButton = <Image source={infoButtons[this.state.info]} style={{width: 30, height: 30}}/>
         } else {
-          readMoreButton =  <TouchableOpacity onPress = {this.toggleShowDescription.bind(this)}>
-                              <Text style = {styles.moreInfoButton}>Read More</Text>
+          readMoreButton =  <TouchableOpacity style = {{paddingLeft: 3, paddingTop: 15, paddingBottom: 50, paddingRight: 70}} onPress = {this.toggleShowDescription.bind(this)}>
+                              <Text style = {infoStyles.moreInfoButton}>Read More</Text>
                             </TouchableOpacity>
         }
-        
+
         var description = ""
-        if (mural['Month'] && mural['Year']) {
-          description += mural['Month'] + ", " + mural['Year']
+        if (artist['city']) {
+          description += artist['city']
         }
-        
+
+        if (mural['Month'] && mural['Year']) {
+          description += '\n\n' + mural['Month'] + ", " + mural['Year']
+        }
+
         if (mural['Medium']) {
           description += '\n' + mural['Medium']
         }
-        
-        if (mural['Description']) {
+
+        if (mural['Description'] && mural['Description'].trim().length > 0) {
           description += '\n\n' + mural['Description']
         }
-        
+
+        if (artist['bio'] && artist['bio'].trim().length > 0) {
+          description += '\n\n' + artist['bio']
+        }
+
         return (
-              <TouchableOpacity style = {styles.container} onPress = {this.toggleShowDescription.bind(this)} activeOpacity = {1} >
+              <View style = {infoStyles.container} >
               <StatusBar barStyle = { Platform.OS === 'ios' ? "light-content" : "light-content"}/>
                 <Image style={{flex: 1, position: "absolute", resizeMode: 'cover', height: '100%', width: '100%'}} source={{uri: mural.Photo}} />
-                <OpacityView style = {styles.darkOverlay} visible = {this.state.descriptionVisible}/>
-                <View style = {styles.textContainer}>
-                  <View style = {styles.top}>
-                    <View style = {styles.info}>
+                <OpacityView style = {infoStyles.darkOverlay} visible = {this.state.descriptionVisible}/>
+                <View style = {infoStyles.textContainer}>
+                  <View style = {infoStyles.top}>
+                    <View style = {infoStyles.info}>
                       <View>
-                        <Text style = {styles.name}>{mural.Title}</Text>
+                        <Text style = {infoStyles.name}>{mural.Title}</Text>
                       </View>
                       <View>
-                        <Text style = {styles.artist}>{artist.name}</Text>
+                        <Text style = {infoStyles.artist}>{artist.name}</Text>
                       </View>
                       <View>
                         { readMoreButton }
                       </View>
                     </View>
-                    <View style = {styles.button}>
-                      <TouchableOpacity onPress = {this.toggleShowDescription.bind(this)}>
+                    <View style = {infoStyles.button}>
+                      <TouchableOpacity style = {{padding: 20, paddingTop: 25, paddingLeft: 20, paddingBottom: 25}} onPress = {this.toggleShowDescription.bind(this)}>
                           { closeButton }
                       </TouchableOpacity>
                     </View>
                   </View>
-                  <DrawerView style = {styles.description} visible = {this.state.descriptionVisible}>
+                  <DrawerView style = {infoStyles.description} visible = {this.state.descriptionVisible}>
+                    <ScrollView style = {{height: '100%'}}>
                     <Text style = {{color: 'white'}}>{description}</Text>
+                  </ScrollView>
                   </DrawerView>
                 </View>
-              </TouchableOpacity>
+              </View>
         )
     }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff'
-  },
-  textContainer: {
-    flex: 1,
-    marginTop: '10%',
-    paddingTop: 60,
-    padding: 20,
-    backgroundColor: 'transparent'
-  },
-  top: {
-    display: 'flex',
-    flexDirection: 'row'
-  },
-  info: {
-    flex: 4,
-    justifyContent: 'center',
-    alignItems: 'flex-start'
-  },
-  button: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'flex-end'
-  },
-  name: {
-    color: 'white',
-    textShadowColor: 'black',
-    textShadowOffset: {width : -1, height: 0},
-    textShadowRadius: 5,
-    fontSize: 36
-  },
-  artist: {
-    color: 'white',
-    textShadowColor: 'black',
-    textShadowOffset: {width : -1, height: 0},
-    textShadowRadius: 5,
-    fontSize: 24,
-    marginBottom: 20
-  },
-  description: {
-    marginTop: 50
-  },
-  darkOverlay: {
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    backgroundColor: 'black',
-  },
-  moreInfoButton: {
-    color: 'white',
-    textShadowColor: 'black',
-    textShadowOffset: {width : -1, height: 0},
-    textShadowRadius: 5,
-    fontSize: 15, 
-  }
-});
+infoStyles = {}
+if (Platform.OS === 'ios') {
+  infoStyles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff'
+    },
+    textContainer: {
+      flex: 1,
+      marginTop: '20%',
+      paddingTop: 60,
+      padding: 20,
+      paddingRight: 0,
+      backgroundColor: 'transparent'
+    },
+    top: {
+      display: 'flex',
+      flexDirection: 'row'
+    },
+    info: {
+      flex: 4,
+      justifyContent: 'center',
+      alignItems: 'flex-start'
+    },
+    button: {
+      flex: 2,
+      justifyContent: 'center',
+      alignItems: 'flex-end'
+    },
+    name: {
+      color: 'white',
+      fontWeight: 'bold',
+      textShadowColor: 'black',
+      textShadowOffset: {width : -1, height: 0},
+      textShadowRadius: 5,
+      paddingLeft: 3,
+      lineHeight: 35,
+      marginBottom: 5,
+      fontSize: 36
+    },
+    artist: {
+      color: 'white',
+      textShadowColor: 'black',
+      textShadowOffset: {width : -1, height: 0},
+      textShadowRadius: 5,
+      paddingLeft: 3,
+      fontSize: 24,
+      marginBottom: 20
+    },
+    description: {
+      marginTop: 50,
+      paddingTop: 15,
+      paddingRight: 20,
+      paddingLeft: 3
+    },
+    darkOverlay: {
+      position: 'absolute',
+      height: '100%',
+      width: '100%',
+      backgroundColor: 'black',
+    },
+    moreInfoButton: {
+      color: 'white',
+      textShadowColor: 'black',
+      textShadowOffset: {width : -1, height: 1},
+      textShadowRadius: 2,
+      fontSize: 15,
+    }
+  });
+} else {
+  infoStyles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff'
+    },
+    textContainer: {
+      flex: 1,
+      paddingTop: 60,
+      paddingRight: 0,
+      padding: 20,
+      backgroundColor: 'transparent'
+    },
+    top: {
+      display: 'flex',
+      flexDirection: 'row'
+    },
+    info: {
+      flex: 4,
+      justifyContent: 'center',
+      alignItems: 'flex-start'
+    },
+    button: {
+      flex: 2,
+      justifyContent: 'center',
+      alignItems: 'flex-end'
+    },
+    name: {
+      color: 'white',
+      textShadowColor: 'black',
+      fontWeight: 'bold',
+      textShadowOffset: {width : -1, height: 0},
+      textShadowRadius: 5,
+      paddingLeft: 2,
+      lineHeight: 35,
+      marginBottom: 5,
+      fontSize: 36
+    },
+    artist: {
+      color: 'white',
+      textShadowColor: 'black',
+      textShadowOffset: {width : -1, height: 0},
+      textShadowRadius: 5,
+      paddingLeft: 2,
+      fontSize: 24,
+      marginBottom: 20
+    },
+    description: {
+      marginTop: 50,
+      paddingTop: 15,
+      paddingRight: 20,
+      paddingLeft: 2
+    },
+    darkOverlay: {
+      position: 'absolute',
+      height: '100%',
+      width: '100%',
+      backgroundColor: 'black',
+    },
+    moreInfoButton: {
+      color: 'white',
+      textShadowColor: 'black',
+      textShadowOffset: {width : -1, height: 0},
+      textShadowRadius: 5,
+      fontSize: 15,
+    }
+  });
+}
 
 
 
 // A view that transitions from hidden to visible and back
 class OpacityView extends React.Component {
-  
-  
+
+
   constructor(props) {
     super(props)
 
@@ -210,11 +300,13 @@ class OpacityView extends React.Component {
   }
 }
 
+
+
 // A view that transitions from hidden to visible by rising
 // Hidden : margin-top = a big number
 // Visible : margin-top = 0
 class DrawerView extends React.Component {
-    
+
   constructor(props) {
     super(props)
 

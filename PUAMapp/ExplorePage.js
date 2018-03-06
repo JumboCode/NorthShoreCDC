@@ -1,10 +1,17 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Button, StatusBar, Platform} from 'react-native';
-import MapView from 'react-native-maps';
+import {Permissions} from 'expo';
+import { MapView } from 'expo';
 import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
 
+
+// This triggers asking the user for location permissions.
+// This won't do anything if the permission is already granted.
+// NOTE: I'm not entirely sure if this bit is necessary since permissions
+// get declared in app.json
+Permissions.askAsync(Permissions.LOCATION);
 
 export default class ExplorePage extends React.Component {
     constructor(props) {
@@ -19,12 +26,12 @@ export default class ExplorePage extends React.Component {
         // if (Platform.OS === 'ios') navigator.geolocation.clearWatch(this.watchID);
     }
 
-    static navigationOptions = ({ navigation }) => (Platform.OS === 'ios' ? {
-    headerLeft:   
-    <TouchableOpacity style = {{top: 50, left: 15, padding: 50}} onPress={() => navigation.dispatch(NavigationActions.back())} >
-    <Image 
-    style= {{position: 'absolute', zIndex: 100, maxWidth: 120, maxHeight: 40}}
-    source={require('./backbutton.png')} /> 
+
+    static navigationOptions = ({ navigation }) => 
+    (Platform.OS === 'ios' ? {headerLeft:   
+    <TouchableOpacity style = {{top: 25, left: -25, padding: 40}} onPress={() => navigation.dispatch(NavigationActions.back())} >
+    <Image style= {{position: 'relative', zIndex: 100, maxWidth: 120, maxHeight: 40}} source={require('./assets/images/backbutton.png')} /> 
+
     </TouchableOpacity>,
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
     } : {title: 'Punto Urban Art', headerTintColor: 'white', headerStyle: {backgroundColor: pink},});
@@ -61,6 +68,8 @@ export default class ExplorePage extends React.Component {
             <View style = {{flex: 1}}>
             <StatusBar barStyle = { Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
             <MapView
+              showsPointsOfInterest = {false}
+              showsUserLocation = {true}
               style = {{flex: 1 }}
               region = {{
                 latitude: 42.518217,
