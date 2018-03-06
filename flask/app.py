@@ -49,7 +49,7 @@ def sign_in_with_email_and_password(email, password):
             # session["auth_expiration"] = time.time() + 10
             session["auth_expiration"] = time.time() + int(current_user["expiresIn"]) - 60*5
             
-            return redirect("/api/put")
+            return redirect("/api/get")
         except KeyError:
             print "Invalid login attempt 47"
             return redirect("/api/login", code=302)
