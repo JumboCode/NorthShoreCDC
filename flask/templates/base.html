@@ -22,6 +22,19 @@
       <!-- </div> -->
       <!-- <div class="row"> -->
         <!-- <div class="span12"> -->
+        
+        
+        
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                    <script>alert("{{ message }}")</script>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+        
     <body>
       <header id="parent_header">
       <h1>Punto Urban Art Museum App - Admin Portal</h1>
