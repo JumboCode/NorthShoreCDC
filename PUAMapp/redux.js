@@ -78,6 +78,18 @@ export const tourState = () => {
     }
 }
 
+export const nextMarker = () => ({
+    type: 'NEXT_MARKER'
+
+});
+
+
+export const changeMarker = () => {
+        return function (dispatch) {
+        dispatch(nextMarker());
+    }
+}
+
 // reducers
 
 const initialState = {
@@ -120,13 +132,19 @@ const firebaseData = (state = initialState, action) => {
 
 const toggleState = {
     tourStarted: false,
+    currMarker: 0,
 }
 
 const tourData = (state = toggleState, action) => {
     switch (action.type) {
         case 'TOGGLE_TOUR':
             return Object.assign({}, state, {
-                tourStarted: !state.tourStarted
+                tourStarted: !state.tourStarted,
+                currMarker: 0
+            });
+        case 'NEXT_MARKER':
+            return Object.assign({}, state, {
+               currMarker: (state.currMarker + 1)
             });
 
             default: return state;

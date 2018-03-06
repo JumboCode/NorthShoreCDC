@@ -23,6 +23,8 @@ const polylines = [
   }
                       ]
 
+var _mapView: MapView;
+
 export default class ExplorePage extends React.Component {
     constructor(props) {
         super(props);
@@ -80,15 +82,44 @@ export default class ExplorePage extends React.Component {
     }
 
     toggleTour() {
+
       console.log("start button pressed");
       this.props.screenProps.tourState()
      
     
     }
 
+    tourNext () {
+        murals = this.props.screenProps.murals || {}
+        Lat = 0
+        Lon = 0
+        
+        this.props.screenProps.changeMarker();
+        //console.log(this.props.screenProps.currMarker)
+
+        Object.keys(murals).map((key,i) =>{
+
+          if (murals[key]["Index"] == this.props.screenProps.currMarker){
+            Lat = parseFloat(murals[key]["Lat"]);
+            Lon = parseFloat(murals[key]["Long"]);
+          }
+
+        })
+        
+      console.log(this.props.screenProps.currMarker)
+
+         _mapView.animateToCoordinate({
+            latitude: Lat,
+            longitude: Lon,
+          }, 1000)
+
+    }
+
     temp() {
       console.log("prev or next");
     }
+
+
 
     
 
@@ -99,11 +130,12 @@ export default class ExplorePage extends React.Component {
             <StatusBar barStyle = { Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
             <MapView
               style = {{flex: 1 }}
+              ref = {(mapView) => { _mapView = mapView; }}
               region = {{
                 latitude: 42.518217,
                 longitude: -70.891919,
-                latitudeDelta: 0.005,
-                longitudeDelta: 0.005,
+                latitudeDelta: 0.0001,
+                longitudeDelta: 0.0001,
               }}>
               {this.renderImages()}
              {/*  <Polyline
@@ -129,8 +161,8 @@ export default class ExplorePage extends React.Component {
             >  </Button>
              <Button 
             title="next"
-            onPress={()=>this.temp()}
-            >  </Button>
+            onPress = {()=>this.tourNext()} >  
+            </Button>
             <Button 
             title="end tour"
             onPress={()=>this.toggleTour()}
