@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session, url_for, request
+from flask import Flask, render_template, redirect, session, url_for, request, flash
 
 import sys
 from custom_firebase import firebase 
@@ -320,8 +320,18 @@ def edit_artist():
 @app.route('/api/delete_artist', methods = ['GET', 'POST'])
 @requires_auth
 def delete_artist():
-    firebase.delete('/artists', str(request.form["artists"]))
-    return redirect(url_for('fireget'), code=302)
+    artist = str(request.form["artistid"])
+    
+    # Don't delete an artist if they have any murals
+    murals = firebase.get('/','murals')
+    for key in murals:
+        if murals[key]["Artist"] == artist:
+            flash("Cannot delete an artist with existing murals!")
+            return redirect(url_for('artistget'), code=302)
+        
+    
+    firebase.delete('/artists', artist)
+    return redirect(url_for('artistget'), code=302)
 
 
 @app.route('/test')
