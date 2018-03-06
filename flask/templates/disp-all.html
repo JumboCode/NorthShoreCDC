@@ -21,7 +21,7 @@
 <tr>
     <td>{{ mural.Title }}</td> 
     <td>{{ artists[mural.Artist].name }}</td> 
-    <td><img src = '{{ mural.Photo }}', height = '50px'></td>
+    <td><a href="{{ mural.Photo }}"><img src = '{{ mural.Photo }}', height = '50px'></a></td>
     <td>{{ mural.Lat }}</td> 
     <td>{{ mural.Long }}</td>  
     <td>{{ mural.Month }}</td> 
