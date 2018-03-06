@@ -8,8 +8,23 @@
 {% for a in artists %}
 <tbody>
 <tr>
-<td>{{ artists[a].name }}</td> <td>{{ artists[a].city }}</td><td>{{ artists[a].bio }}</td> 
-	<td><form action="{{url_for('edit_artist')}}" method = "GET"> <input type = "hidden" name = "artists" value = "{{ a }}"><button type="submit" name="edit">Edit</button></form></td>
+    <td>{{ artists[a].name }}</td>
+    <td>{{ artists[a].city }}</td>
+    <td>{{ artists[a].bio }}</td>
+      
+    <td>
+        <form action="{{url_for('edit_artist')}}" method = "GET">
+            <input type = "hidden" name = "artists" value = "{{ a }}">
+            <button type="submit" name="edit">Edit</button>
+        </form>
+    </td>
+    <td>
+        <form action="{{url_for('delete_artist')}}" method = "POST">
+            <input type = "hidden" name = "artistid" value = "{{ a }}">
+            <button type="submit" name="del">Delete</button>
+        </form>
+    </td>
+
 </tr>
 </tbody>
 {% endfor %}
