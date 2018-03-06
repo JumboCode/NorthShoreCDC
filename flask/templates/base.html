@@ -21,27 +21,27 @@
     <body>
       <div class="container">
       <div class="row">
-        <span><img src="http://puntourbanartmuseum.org/images/logo.png" style="height:80px; margin-top: 3%; margin-bottom: 3% "/></span>
+        <span><img class="header-img" src="http://puntourbanartmuseum.org/images/logo.png" style="width: 34%; margin-top: 3%; margin-bottom: 3% "/></span>
 
       </div>
       <div class="row">
           <nav class="navbar navbar-inverse bg-light">
             <div class="container-fluid">
               <div class="navbar-header">
-                <a class="navbar-brand" href="#">Admin Portal</a>
+                <a class="navbar-brand" href="{{ url_for('fireget') }}">Admin Portal</a>
               </div>
               <ul class="nav navbar-nav" >
-                <li><a href="{{ url_for('fireput') }}">Add a Mural</a></li>
-                <li><a href="{{ url_for('fireget') }}">Edit/Delete Murals</a></li>
-                <li><a href="{{ url_for('artistput') }}">Add an Artist</a></li>
-                <li><a href="{{ url_for('artistget') }}">Edit/Delete an Artist</a></li>
-                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                  <li><a href="{{ url_for('fireget') }}">Murals</a></li>
+                  <li><a href="{{ url_for('artistget') }}">Artists</a></li>
+                  <li><a href="{{ url_for('artistput') }}">New Artist</a></li>
+                  <li><a href="{{ url_for('fireput') }}">New Mural</a></li>
+                  <li><a href="{{ url_for('logout') }}">Logout</a></li>
               </ul>
             </div>
           </nav>
           {% block content %}
 		<!-- <div class="container"> -->
-                        <div id='page-wrap'>
+                        <div id='page-wrap' style="padding: 3%;">
                             <!-- <center> -->
                                 {% block page_content %}{% endblock %}
                             <!-- </center> -->

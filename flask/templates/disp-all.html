@@ -31,26 +31,26 @@
         <form action="{{url_for('change_mural_index')}}" method = "POST">
             <input type = "hidden" name = "muralid" value = "{{ mural['uuid'] }}">
             <input type = "hidden" name = "upOrDown" value = "UP">
-            <button type="submit" name="change">UP</button>
+            <button type="submit" name="change" class="btn btn-secondary">UP</button>
         </form>
     </td>
     <td>
         <form action="{{url_for('change_mural_index')}}" method = "POST">
             <input type = "hidden" name = "muralid" value = "{{ mural['uuid'] }}">
             <input type = "hidden" name = "upOrDown" value = "DOWN">
-            <button type="submit" name="change">DOWN</button>
+            <button type="submit" name="change" class="btn btn-secondary">DOWN</button>
         </form>
     </td>
 	<td>
         <form action="{{url_for('delete_mural')}}" method = "POST">
             <input type = "hidden" name = "muralid" value = "{{ mural['uuid'] }}">
-            <button type="submit" name="del">Delete</button>
+            <button type="submit" name="del" class="btn btn-danger">Delete</button>
         </form>
     </td>
     <td>
         <form action="{{url_for('fireedit')}}" method = "GET">
             <input type = "hidden" name = "muralid" value = "{{ mural['uuid'] }}">
-            <button type="submit" name="edit">Edit</button>
+            <button type="submit" name="edit" class="btn btn-warning">Edit</button>
         </form>
     </td>
 </tr>
