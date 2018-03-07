@@ -65,14 +65,15 @@ flask run
 
 
 ## Our Team
-- Chris Anderson
-- Barry Eom
-- Benjamin Steephenson
-- Brendan Fahey
-- Emma Pannullo
-- Ian Mao
+- <a href="https://github.com/chris-anderson67">Chris Anderson</a>
 - Isaiah Fischer-Brown
-- Lillianna Levonick
-- Suruchi Devanahalli
-- Wayne Yirong Tang
 - Zach Nassar
+- <a href="https://github.com/barieom">Barry Eom</a>
+- <a href="https://github.com/bsteephenson">Benjamin Steephenson</a>
+- <a href="https://github.com/bmfahey">Brendan Fahey</a>
+- <a href="https://github.com/epannu01">Emma Pannullo</a>
+- <a href="https://github.com/ymao03">Ian Mao</a>
+- <a href="https://github.com/llevonick">Lillianna Levonick</a>
+- <a href="https://github.com/suruchidev">Suruchi Devanahalli</a>
+- <a href="https://github.com/airwayneeee">Wayne Yirong Tang</a>
+
