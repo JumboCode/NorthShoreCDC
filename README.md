@@ -44,13 +44,22 @@ npm start
 
 
 ### Run the Flask site locally
-* Set the environment variables and start the server:
+* Set up a virtual environment with Python 2.7.13. We usually use pyenv-virtualenv.
+* Set the environment variables:
 
 ```
 cd flask
-export FIREBASE_PATH="<firebase path>"
-export APP_KEY="<app key>"
+export FIREBASE_PATH=<firebase path>
+export FIREBASE_KEY=<firebase key>
+export APP_KEY=<app key>
+export SECRET_KEY=<secret key>
 export FLASK_APP=app.py
+```
+
+* Install requirements and start the server:
+
+```
+pip install -r requirements.txt
 flask run
 ```
 
