@@ -44,7 +44,7 @@ npm start
 
 
 ### Run the Flask site locally
-* Set up a virtual environment with Python 2.7.13. We usually use pyenv-virtualenv.
+* Set up a virtual environment with Python 2.7.13. We use <a href="https://github.com/pyenv/pyenv-virtualenv">pyenv-virtualenv</a> on Mac.
 * Set the environment variables:
 
 ```
