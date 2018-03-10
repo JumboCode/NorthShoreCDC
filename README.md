@@ -1,4 +1,4 @@
-<img src="banner.png" alt="PUAM Logo" width="auto">
+<img src="banner.png" alt="PUAM Logo" width="100%">
 
 # Punto Urban Art Museum App
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
