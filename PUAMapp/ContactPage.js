@@ -1,12 +1,15 @@
 
 import React from 'react';
-import { StyleSheet, Text, View, Image, ImageBackground, ScrollView, Button, TouchableOpacity, Linking, StatusBar, Platform, Dimensions } from 'react-native';
+import { Alert, Clipboard, StyleSheet, Text, View, Image, ImageBackground, ScrollView, Button, TouchableOpacity, Linking, StatusBar, Platform, Dimensions } from 'react-native';
 import { lightpurple, darkpurple, pink } from './colors.js';
 import { NavigationActions } from 'react-navigation'
 import Hyperlink from 'react-native-hyperlink'
 import LinkifyIt from 'linkify-it'
 
 linkify = new LinkifyIt().add('tel:', 'http:').add('fax:', 'http:')
+email = 'info@northshorecdc.org'
+feedbackFormURL = 'https://goo.gl/forms/j0sNljXz4mEd5lCN2'
+
 
 
 links = {
@@ -92,8 +95,14 @@ export default class ContactPage extends React.Component {
                   <TouchableOpacity onPress={() => Linking.openURL("https://www.twitter.com/NorthShoreCDC").catch(err => console.error('An error occurred', err))}>
                     <Image style={contactStyles.iconStyle}  source = {require('./assets/images/twitter.png')}/>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => Linking.openURL("https://goo.gl/forms/9QnLoyStB3UOLewz1").catch(err => console.error('An error occurred', err))}>
-                    <Image style={contactStyles.iconStyle}  source = {require('./assets/images/email.png')}/>
+                  <TouchableOpacity onPress={() => {
+                    Clipboard.setString('info@northshorecdc.org')
+                    Alert.alert(
+                      'Email Copied',
+                      email,
+                      [{text: 'OK', onPress: () => console.log('OK Pressed')}]) 
+                  }}>
+                  <Image style={contactStyles.iconStyle}  source = {require('./assets/images/email.png')}/>
                   </TouchableOpacity>
                 </View>
               </View>
