@@ -1,5 +1,4 @@
-
-<img src="http://puntourbanartmuseum.org/images/logo.png" alt="PUAM Logo" width="auto"><br>
+<img src="banner.png" alt="PUAM Logo" width="auto">
 
 # Punto Urban Art Museum App
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=102)](https://github.com/ellerbrock/open-source-badge/)
