@@ -43,26 +43,36 @@ npm start
 
 
 ### Run the Flask site locally
-* Set the environment variables and start the server:
+* Set up a virtual environment with Python 2.7.13. We use <a href="https://github.com/pyenv/pyenv-virtualenv">pyenv-virtualenv</a> on Mac.
+* Set the environment variables:
 
 ```
 cd flask
-export FIREBASE_PATH="<firebase path>"
-export APP_KEY="<app key>"
+export FIREBASE_PATH=<firebase path>
+export FIREBASE_KEY=<firebase key>
+export APP_KEY=<app key>
+export SECRET_KEY=<secret key>
 export FLASK_APP=app.py
+```
+
+* Install requirements and start the server:
+
+```
+pip install -r requirements.txt
 flask run
 ```
 
 
 ## Our Team
-- Chris Anderson
-- Barry Eom
-- Benjamin Steephenson
-- Brendan Fahey
-- Emma Pannullo
-- Ian Mao
+- <a href="https://github.com/chris-anderson67">Chris Anderson</a>
 - Isaiah Fischer-Brown
-- Lillianna Levonick
-- Suruchi Devanahalli
-- Wayne Yirong Tang
 - Zach Nassar
+- <a href="https://github.com/barieom">Barry Eom</a>
+- <a href="https://github.com/bsteephenson">Benjamin Steephenson</a>
+- <a href="https://github.com/bmfahey">Brendan Fahey</a>
+- <a href="https://github.com/epannu01">Emma Pannullo</a>
+- <a href="https://github.com/ymao03">Ian Mao</a>
+- <a href="https://github.com/llevonick">Lillianna Levonick</a>
+- <a href="https://github.com/suruchidev">Suruchi Devanahalli</a>
+- <a href="https://github.com/airwayneeee">Wayne Yirong Tang</a>
+
