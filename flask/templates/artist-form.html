@@ -5,11 +5,6 @@
     <p>Please complete the form below<p>
     <form action="" method="post" name="api">
       {{ form.csrf_token }}
-      <p> Please enter a URL for a photo of the artist you want to add. (< 200kB): <br>
-      {{ form.photo(size=40) }}<br>
-      {% for error in form.photo.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}<br>
       <p> Please enter the name of the artist: <br>
       {{ form.name(size=40) }} <br>
       {% for error in form.name.errors %}
