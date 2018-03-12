@@ -29,7 +29,7 @@ export default class ExplorePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-        tourStarted: false,
+        
        
       }
 
@@ -115,6 +115,37 @@ export default class ExplorePage extends React.Component {
 
     }
 
+    getCurrCoordsLat(){
+      murals = this.props.screenProps.murals || {}
+      Lat = 42.518217
+      Object.keys(murals).map((key,i) =>{
+
+          if (murals[key]["Index"] == this.props.screenProps.currMarker){
+            Lat = parseFloat(murals[key]["Lat"]);
+            return Lat;
+          }
+
+        })
+      return Lat;
+
+    }
+
+    getCurrCoordsLong(){
+      murals = this.props.screenProps.murals || {}
+      Lon = -70.891919
+      Object.keys(murals).map((key,i) =>{
+
+          if (murals[key]["Index"] == this.props.screenProps.currMarker){
+            Lon = parseFloat(murals[key]["Long"]);
+            return Lon;
+          }
+
+        })
+
+      return Lon;
+
+    }
+
     temp() {
       console.log("prev or next");
     }
@@ -125,6 +156,7 @@ export default class ExplorePage extends React.Component {
 
     render() {
         const { navigate } = this.props.navigation;
+       
         return (
             <View style = {{flex: 1}}>
             <StatusBar barStyle = { Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
@@ -132,10 +164,10 @@ export default class ExplorePage extends React.Component {
               style = {{flex: 1 }}
               ref = {(mapView) => { _mapView = mapView; }}
               region = {{
-                latitude: 42.518217,
-                longitude: -70.891919,
-                latitudeDelta: 0.0001,
-                longitudeDelta: 0.0001,
+                latitude: this.props.screenProps.tourStarted == false ? 42.518217 : this.getCurrCoordsLat() ,
+                longitude: this.props.screenProps.tourStarted == false ? -70.891919 : this.getCurrCoordsLong() ,
+                latitudeDelta: this.props.screenProps.tourStarted == false ? 0.005 : 0.0001,
+                longitudeDelta: this.props.screenProps.tourStarted == false ? 0.005 : 0.0001,
               }}>
               {this.renderImages()}
              {/*  <Polyline
