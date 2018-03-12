@@ -53,6 +53,7 @@ export FIREBASE_KEY=<firebase key>
 export APP_KEY=<app key>
 export SECRET_KEY=<secret key>
 export FLASK_APP=app.py
+export FLASK_DEBUG=1
 ```
 
 * Install requirements and start the server:
