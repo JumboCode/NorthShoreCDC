@@ -43,9 +43,6 @@
       {% endfor %}<br>
       <p> Please enter a description of the mural: <br>
       {{ form.description(rows=8, cols=60) }} <br>
-      {% for error in form.description.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}<br>
       <p> Please enter the medium of the mural (e.g. Spray Paint): <br>
       {{ form.medium(size=40) }} <br>
       {% for error in form.medium.errors %}
