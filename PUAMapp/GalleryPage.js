@@ -35,7 +35,7 @@ export default class GalleryPage extends React.Component {
         return Object.keys(murals).map((key,i) =>{
             uri = murals[key]["Photo"]
               return(
-				<TouchableOpacity key={i} onPress = {() => navigate('MuralInfoPage', {mural: murals[key], artist: artists[murals[key]["Artist"]]})}>
+				<TouchableOpacity key={i} onPress = {() => this.props.navigation.navigate({key: 'Screen', routeName: 'MuralInfoPage', params: {mural: murals[key], artist: artists[murals[key]["Artist"]]}})}>
                   <Img 
                   key={i} 
                   style={{height: width, width: width, margin: 1}} 

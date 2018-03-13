@@ -16,38 +16,37 @@ export default class HomePage extends React.Component {
   };
 
   render() {
-    const { navigate } = this.props.navigation;
-      return (
-        <View style = {styles.container}>
-          <Image style = {styles.image} source = {homepic} />
-          <TouchableOpacity
-            activeOpacity = {0.75}
-            style = {styles.darkPurpleButton}
-            onPress={() =>
-            navigate('ExplorePage')
-          }>
-            <Text style = {styles.buttonText}>EXPLORE</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity = {0.75}
-            style = {styles.lightPurpleButton}
-            onPress={() =>
-            navigate('GalleryPage')
-          }>
-            <Text style = {styles.buttonText}>GALLERY</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity = {0.75}
-            style = {styles.pinkButton}
-            onPress={() =>
-            navigate('ContactPage')
-          }>
-            <Text style = {styles.buttonText}>CONTACT</Text>
-          </TouchableOpacity>
-        </View>
-      )
-    }
+    return (
+      <View style = {styles.container}>
+        <Image style = {styles.image} source = {homepic} />
+        <TouchableOpacity
+          activeOpacity = {0.75}
+          style = {styles.darkPurpleButton}
+          onPress={() =>
+          this.props.navigation.navigate({ key: 'Screen1', routeName: 'ExplorePage'})
+        }>
+          <Text style = {styles.buttonText}>EXPLORE</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity = {0.75}
+          style = {styles.lightPurpleButton}
+          onPress={() =>
+          this.props.navigation.navigate({ key: 'Screen2', routeName: 'GalleryPage'})
+        }>
+          <Text style = {styles.buttonText}>GALLERY</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity = {0.75}
+          style = {styles.pinkButton}
+          onPress={() =>
+          this.props.navigation.navigate({ key: 'Screen3', routeName: 'ContactPage'})
+        }>
+          <Text style = {styles.buttonText}>CONTACT</Text>
+        </TouchableOpacity>
+      </View>
+    )
   }
+}
 
   const styles = StyleSheet.create({
     container: {
