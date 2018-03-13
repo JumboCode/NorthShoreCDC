@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+
+  <h3> Edit Artist Listing for {{ artist["name"] }}:</h3>
+  <br>
+  <script>
+  window.onload = set_bio;
+  function set_bio() {
+    select_elem = document.getElementById("bio");
+    select_elem.value = '{{artist["bio"]}}';
+  }
+</script>
+    <form action="" method="post" name="api">
+      {{ form.csrf_token }}
+      <p> Name: <br>
+      {{ form.name(size=40, value= artist["name"]) }} <br>
+      {% for error in form.name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p> Place of origin: <br>
+      {{ form.city(size=40, value= artist["city"]) }} <br>
+      {% for error in form.city.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p> Bio / about: <br>
+      {{ form.bio(rows=8, cols=60, id = 'bio', value= artist["bio"]) }} <br>
+      {% for error in form.bio.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+      <p><input type ="submit" value="Submit" class="btn btn-sm btn-primary"></p>
+    </form>
+{% endblock %}

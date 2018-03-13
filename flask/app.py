@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, session, url_for, request
+from flask import Flask, render_template, redirect, session, url_for, request, flash
 
 import sys
 from custom_firebase import firebase 
@@ -16,6 +16,7 @@ import time
 from functools import wraps
 from flask import make_response
 from functools import update_wrapper
+import operator
 #from flask.ext.session import Session
 
 
@@ -48,7 +49,7 @@ def sign_in_with_email_and_password(email, password):
             # session["auth_expiration"] = time.time() + 10
             session["auth_expiration"] = time.time() + int(current_user["expiresIn"]) - 60*5
             
-            return redirect("/api/put")
+            return redirect("/api/get")
         except KeyError:
             print "Invalid login attempt 47"
             return redirect("/api/login", code=302)
@@ -63,7 +64,7 @@ class FirePut(Form):
     title = StringField('Title', validators=[DataRequired()])
     month = StringField('Month', validators=[DataRequired(), AnyOf(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"])])
     year = IntegerField('Year', validators=[DataRequired(), NumberRange(min=1980, max = 3000)])
-    description = TextAreaField('Description', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[])
     medium = StringField('Medium', validators=[DataRequired()])
 
 class FireEdit(Form):
@@ -74,7 +75,7 @@ class FireEdit(Form):
     title = StringField('Title', validators=[DataRequired()])
     month = StringField('Month', validators=[DataRequired(), AnyOf(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"])])
     year = IntegerField('Year', validators=[DataRequired(), NumberRange(min=1980, max = 3000)])
-    description = TextAreaField('Description', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[])
     medium = StringField('Medium', validators=[DataRequired()])
 
 class Validate(Form):
@@ -82,10 +83,14 @@ class Validate(Form):
     password = PasswordField('Password', validators=[DataRequired()])
 
 class ArtistPut(Form):
-    photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
     name = StringField('Name', validators=[DataRequired()])
     city = StringField('City', validators=[DataRequired()])
-    bio = TextAreaField('Bio', validators=[DataRequired()])
+    bio = TextAreaField('Bio', validators=[])
+
+class ArtistEdit(Form):
+    name = StringField('Name', validators=[DataRequired()])
+    city = StringField('City', validators=[DataRequired()])
+    bio = TextAreaField('Bio', validators=[])
 
 
 def requires_auth(f):    
@@ -129,11 +134,17 @@ def fireput():
         global count
         count += 1
         uuidtoken = uuid.uuid4()
+        
+        # the new mural's index = 1 + the number of existing murals
+        murals = firebase.get('/', 'murals')
+        index = 1 + len(murals)
+        
         putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
                     'Long' : form.longitude.data, 'Artist' : form.artist.data,
                     'Title' : form.title.data, 'Month' : form.month.data,
                     'Year' : form.year.data, 'Description' : form.description.data,
-                    'Medium' : form.medium.data, 'uuid' : str(uuidtoken) }
+                    'Medium' : form.medium.data, 'uuid' : str(uuidtoken),
+                    'Index': index }
         firebase.put('/murals', uuidtoken, putData)
         return render_template('form-result.html', putData=putData)
     return render_template('My-Form.html', form=form)
@@ -157,7 +168,8 @@ def fireedit():
                     'Long' : form.longitude.data, 'Artist' : form.artist.data,
                     'Title' : form.title.data, 'Month' : form.month.data,
                     'Year' : form.year.data, 'Description' : form.description.data,
-                    'Medium' : form.medium.data, 'uuid' : str(muralid) }
+                    'Medium' : form.medium.data, 'uuid' : str(muralid),
+                    'Index': mural["Index"] }
         print putData
         firebase.delete('/murals', str(muralid))
         print "deleted"
@@ -179,8 +191,9 @@ def artistput():
     form = ArtistPut()
     if form.validate_on_submit():
         uuidtoken = uuid.uuid4()
-        putData = { 'photo' : form.photo.data, 'name' : form.name.data,
-                    'city' : form.city.data, 'bio' : form.bio.data,
+        putData = { 'name' : form.name.data,
+                    'city' : form.city.data, 
+                    'bio' : form.bio.data,
                     'uuid' : str(uuidtoken)}
         artists = firebase.get('/', 'artists')
         firebase.put('/artists', uuidtoken, putData)
@@ -195,16 +208,94 @@ def artistput():
 def fireget():
     artists = firebase.get('/','artists')
     murals = firebase.get('/','murals')
-    return render_template('disp-all.html', artists = artists, murals=murals)
+    
+    sorted_keys = sorted(murals, key = lambda mural: murals[mural]["Index"])
+    sorted_murals = []
+    for m in sorted_keys:
+        sorted_murals.append(murals[m])
+    
+    return render_template('disp-all.html', artists = artists, murals=sorted_murals)
 
 @app.route('/api/delete_mural', methods = ['GET', 'POST'])
 @requires_auth
 def delete_mural():
-	firebase.delete('/murals', str(request.form["muralid"]))
-	return redirect(url_for('fireget'), code=302)
+    
+    # reindex all the murals
+    murals = firebase.get('/', 'murals')
+    key = str(request.form["muralid"])
+    removed_index = murals[key]["Index"]
+    
+    # if a mural's index is > removed_index, decrement the index
+    for m in murals:
+        if murals[m]["Index"] > removed_index:
+            murals[m]["Index"] = murals[m]["Index"] - 1
+    
+    # remove the mural
+    if key in murals: del murals[key]
+    
+    # update firebase
+    firebase.delete('/murals', key)
+    for uuid in murals:
+        firebase.put('/murals', uuid, murals[uuid])
+    
+    
+    return redirect(url_for('fireget'), code=302)
 
-@app.route('/api/edit_artist', methods = ['GET', 'POST'])
+@app.route('/api/change_mural_index', methods = ['POST'])
 @requires_auth
+def change_mural_index():
+	# firebase.delete('/murals', str(request.form["muralid"]))
+    
+    muralID = str(request.form["muralid"])
+    up_or_down = str(request.form["upOrDown"])
+    murals = firebase.get('/','murals')
+    
+    print "All the murals:", murals
+    
+    # fromMural is the mural corresponding to the muralid
+    # toMural is the mural with the Index that fromMural's Index should be changed to
+    fromMural = None
+    toMural = None
+    
+    for m in murals:
+        if m == muralID:
+            fromMural = murals[m]
+    
+    # If the muralID turns out to not be valid
+    if fromMural == None:
+        return redirect(url_for('fireget'), code=302)
+    
+    fromMuralIndex = fromMural["Index"]
+    
+    toMuralIndex = 0
+    if up_or_down == "UP":
+        toMuralIndex = fromMuralIndex - 1
+    elif up_or_down == "DOWN":
+        toMuralIndex = fromMuralIndex + 1
+    
+    for m in murals:
+        if murals[m]["Index"] == toMuralIndex:
+            toMural = murals[m]
+    
+    # Handles when you want to move to an invalid index
+    if toMural == None:
+        return redirect(url_for('fireget'), code=302)
+    
+    fromMural["Index"] = toMuralIndex
+    toMural["Index"] = fromMuralIndex
+    
+    # update firebase
+    firebase.put('/murals', fromMural["uuid"], fromMural)
+    firebase.put('/murals', toMural["uuid"], toMural)
+    
+    print "fromMural", fromMural
+    print "toMural", toMural
+    
+    return redirect(url_for('fireget'), code=302)
+
+@app.route('/api/artistget', methods = ['GET', 'POST'])
+@requires_auth
+@nocache
 def artistget():
     artists = firebase.get('/','artists')
     return render_template('disp-all-artists.html', artists = artists)
@@ -212,23 +303,35 @@ def artistget():
 @app.route('/api/edit_artist', methods=['GET', 'POST'])
 @requires_auth
 def edit_artist():
-    form = ArtistPut()
+    form = ArtistEdit()
+    artistid = str(request.args["artists"])
+    artists = firebase.get('/', 'artists')
+    artist = artists[artistid]
     if form.validate_on_submit():
-        uuidtoken = uuid.uuid4()
-        putData = { 'photo' : form.photo.data, 'name' : form.name.data,
-                    'city' : form.city.data, 'bio' : form.bio.data,
-                    'uuid' : str(uuidtoken)}
-        print putData
-        firebase.put('/artists', muralid, putData)
-        print "added"
-        return redirect(url_for('artistput'), code=302)
-    return render_template('artist-form.html', form=form, artists = artists, muralid = muralid)
+        putData = { 'name' : form.name.data,
+                    'city' : form.city.data, 
+                    'bio' : form.bio.data,
+                    'uuid' : str(artistid) }
+        firebase.delete('/artists', str(artistid))
+        firebase.put('/artists', artistid, putData)
+        return redirect(url_for('artistget'), code=302)
+    return render_template('edit-artist.html', form=form, artist = artist)
 
 @app.route('/api/delete_artist', methods = ['GET', 'POST'])
 @requires_auth
 def delete_artist():
-    firebase.delete('/artists', str(request.form["artists"]))
-    return redirect(url_for('fireget'), code=302)
+    artist = str(request.form["artistid"])
+    
+    # Don't delete an artist if they have any murals
+    murals = firebase.get('/','murals')
+    for key in murals:
+        if murals[key]["Artist"] == artist:
+            flash("Cannot delete an artist with existing murals!")
+            return redirect(url_for('artistget'), code=302)
+        
+    
+    firebase.delete('/artists', artist)
+    return redirect(url_for('artistget'), code=302)
 
 
 @app.route('/test')

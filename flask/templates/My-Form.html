@@ -2,55 +2,52 @@
 {% extends "base.html" %}
 
 {% block page_content %}
-  <h3> Complete below</h3>
-    <p>Please complete the form below<p>
+  <h3>New Mural</h3>
+    <br>
     <form action="" method="post" name="api">
       {{ form.csrf_token }}
-      <p> Please enter a URL for a photo of the mural you want to add. (< 150kB): <br>
-      {{ form.photo(size=40) }}<br>
-      {% for error in form.photo.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}<br>
-      <p> Please enter the title of the mural: <br>
+      <p> Title: <br>
       {{ form.title(size=40) }} <br>
       {% for error in form.title.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
-      <p> Please select the artist (See above link to add a new one): <br>
+      <p> Photo URL: (Image the link directs to must be < 150kB)<br>
+        {{ form.photo(size=40) }}<br>
+        {% for error in form.photo.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}<br>
+      <p> Select artist: <br>
       {{ form.artist(size=5) }} <br>
       {% for error in form.artist.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
-      <p> Please enter the exact latitude: <br>
+      <p> Exact latitude: <br>
       {{ form.lat(size=40) }} <br>
       {% for error in form.lat.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
-      <p> Please enter the exact longitude: <br>
+      <p> Exact longitude: <br>
       {{ form.longitude(size=40) }} <br>
       {% for error in form.longitude.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
-      <p> Please enter the month the mural was painted: <br>
+      <p> Month: <br>
       {{ form.month(size=40) }} <br>
       {% for error in form.month.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
-      <p> Please enter the year the mural was painted: <br>
+      <p> Year: <br>
       {{ form.year(size=40) }} <br>
       {% for error in form.year.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
-      <p> Please enter a description of the mural: <br>
+      <p> Medium: (e.g. Spray Paint)<br>
+        {{ form.medium(size=40) }} <br>
+        {% for error in form.medium.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}<br>
+      <p> Description: (Optional)<br>
       {{ form.description(rows=8, cols=60) }} <br>
-      {% for error in form.description.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}<br>
-      <p> Please enter the medium of the mural (e.g. Spray Paint): <br>
-      {{ form.medium(size=40) }} <br>
-      {% for error in form.medium.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}<br>
       <p><input type ="submit" value="Add" class="btn btn-sm btn-primary"></p>
     </form>
 {% endblock %}
