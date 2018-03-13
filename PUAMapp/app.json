@@ -7,6 +7,7 @@
     "orientation": "portrait",
     "assetBundlePatterns": ["assets/images/*"],
     "splash": {"image": "./assets/images/splash-background.png", "resize-mode": "contain", "backgroundColor": "#ffffff"},
+    "icon": "./assets/images/icon.png",
     "ios": {
       "bundleIdentifier": "com.jumbocode.punto",
       "icon": "./assets/images/icon.png",
