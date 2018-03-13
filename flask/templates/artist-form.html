@@ -15,9 +15,14 @@
       {% for error in form.city.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
-      <p> Please enter a short bio for the artist: <br>
+      <p> Please enter a short bio for the artist (optional): <br>
       {{ form.bio(rows=8, cols=60) }} <br>
       {% for error in form.bio.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
+       <p> Please enter a link to the artist's portfolio (optional): <br>
+      {{ form.link(size=40) }} <br>
+      {% for error in form.link.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
       <p><input type ="submit" value="Add" class="btn btn-sm btn-primary"></p>

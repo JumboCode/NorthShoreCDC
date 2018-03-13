@@ -28,6 +28,11 @@
       {% for error in form.bio.errors %}
         <span style="color: red;">[{{ error }}]</span>
       {% endfor %}<br>
+      <p> Please enter a link to the artist's portfolio (optional): <br>
+      {{ form.link(size=40, value= artist["link"]) }} <br>
+      {% for error in form.link.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}<br>
       <p><input type ="submit" value="Submit" class="btn btn-sm btn-primary"></p>
     </form>
 {% endblock %}

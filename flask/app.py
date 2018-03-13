@@ -86,12 +86,13 @@ class ArtistPut(Form):
     name = StringField('Name', validators=[DataRequired()])
     city = StringField('City', validators=[DataRequired()])
     bio = TextAreaField('Bio', validators=[])
+    link = StringField('Link', validators=[ Optional(), URL(require_tld=True, message=None)])
 
 class ArtistEdit(Form):
     name = StringField('Name', validators=[DataRequired()])
     city = StringField('City', validators=[DataRequired()])
     bio = TextAreaField('Bio', validators=[])
-
+    link = StringField('Link', validators=[ Optional(), URL(require_tld=True, message=None)])
 
 def requires_auth(f):    
     @wraps(f)
@@ -194,6 +195,7 @@ def artistput():
         putData = { 'name' : form.name.data,
                     'city' : form.city.data, 
                     'bio' : form.bio.data,
+                    'link' : form.link.data,
                     'uuid' : str(uuidtoken)}
         artists = firebase.get('/', 'artists')
         firebase.put('/artists', uuidtoken, putData)
@@ -311,6 +313,7 @@ def edit_artist():
         putData = { 'name' : form.name.data,
                     'city' : form.city.data, 
                     'bio' : form.bio.data,
+                    'link' : form.link.data,
                     'uuid' : str(artistid) }
         firebase.delete('/artists', str(artistid))
         firebase.put('/artists', artistid, putData)
