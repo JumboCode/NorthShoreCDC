@@ -1,23 +1,20 @@
 from flask import Flask, render_template, redirect, session, url_for, request, flash
 
-import sys
-from custom_firebase import firebase 
+from custom_firebase import firebase
 
 import os
 from flask_wtf import FlaskForm as Form
 from wtforms.fields import *
 from wtforms.validators import *
-from flask_wtf.csrf import CSRFProtect
-from custom_firebase.firebase import FirebaseApplication, FirebaseAuthentication
 import uuid
 import requests
 import json
 import time
+from exponent_server_sdk import PushClient
+from exponent_server_sdk import PushMessage
 from functools import wraps
 from flask import make_response
 from functools import update_wrapper
-import operator
-#from flask.ext.session import Session
 
 
 firebase_path = os.environ.get('FIREBASE_PATH')
@@ -32,8 +29,6 @@ app.secret_key = os.environ.get('SECRET_KEY')
 firebase = firebase.FirebaseApplication(firebase_path, None)
 
 
-#SESSION_TYPE = 'redis'
-#Session(app)
 
 def sign_in_with_email_and_password(email, password):
         request_ref = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key={0}".format(os.environ.get('APP_KEY'))
@@ -54,7 +49,9 @@ def sign_in_with_email_and_password(email, password):
             print "Invalid login attempt 47"
             return redirect("/api/login", code=302)
 
- 
+
+class NotificationForm(Form):
+    message = StringField('Message', validators=[DataRequired()])
 
 class FirePut(Form):
     photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
@@ -117,6 +114,21 @@ def nocache(f):
         return resp
     return update_wrapper(new_func, f)
 
+@app.route('/api/push_notification_form', methods=['GET', 'POST'])
+@requires_auth
+def push_notification_form():
+    form = NotificationForm()
+    if form.validate_on_submit():
+        tokens = firebase.get('/', 'notificationIds')
+
+        messages = []
+        for token in tokens:
+            messages.append(PushMessage(to='ExponentPushToken[' + token + ']',
+                                        body=form.message.data))
+        PushClient().publish_multiple(messages)
+        flash("Notifications sent")
+        return redirect(url_for('fireget'))
+    return render_template('push_notification_form.html', form=form)
 
 count = 0
 

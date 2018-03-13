@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+  <h3> New Push Notification:</h3>
+    <br>
+      <form action="" method="post" name="api">
+      {{ form.csrf_token }}
+      <p> Message: <br>
+        {{ form.message(size=40) }} <br>
+        {% for error in form.message.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}<br>
+      <input type ="submit" value="Send" class="btn btn-sm btn-primary">
+    </form>
+{% endblock %}
