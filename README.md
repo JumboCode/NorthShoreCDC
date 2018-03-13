@@ -8,7 +8,7 @@
 The Punto Urban Art Museum's vision is to create a world class urban arts district in Salem’s Point Neighborhood, one that embraces its rich immigrant and architectural history and presents a dynamic opportunity for the neighborhood’s future. The PUAM App allows the user to explore over 50 murals in this neighborhood, browse them using a map view or a gallery view, and read details about each mural.
 
 
-<a href="https://play.google.com/store/apps/details?id=com.jumbocode.punto"><img src="PUAMapp/play-store.png" height="50"/></a>  <a href="https://itunes.apple.com/us/app/punto-urban-art-museum/id1320710363?ls=1&mt=8"><img src="PUAMapp/app-store.png" height="50"/></a>
+<a href="https://play.google.com/store/apps/details?id=com.jumbocode.punto"><img src="PUAMapp/play-store.png" height="80"/></a> &nbsp;&nbsp; <a href="https://itunes.apple.com/us/app/punto-urban-art-museum/id1320710363?ls=1&mt=8"><img src="PUAMapp/app-store.png" height="80"/></a>
 
 This app is a project of the <a href="http://northshorecdc.org" alt="NSCDC">North Shore Community Development Coalition</a> and <a href="http://jumbocode.org" alt="JumboCode">JumboCode</a>.
 
