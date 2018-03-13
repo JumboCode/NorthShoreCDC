@@ -64,10 +64,20 @@ export default class ContactPage extends React.Component {
                   Coalition
                 </Text>
               </View>
-                <TouchableOpacity style= {contactStyles.donateImage} onPress={() => Linking.openURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UF8MF7Q9E7HSA").catch(err => console.error('An error occurred', err))}>
-                    <Text style = {contactStyles.donateText}> DONATE </Text>
-                </TouchableOpacity>
+
+              <TouchableOpacity style= {contactStyles.donateImage} onPress={() => Linking.openURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UF8MF7Q9E7HSA").catch(err => console.error('An error occurred', err))}>
+                  <Text style = {contactStyles.donateText}> DONATE </Text>
+              </TouchableOpacity>
+
               <View style = {contactStyles.textContainerRight}>
+                <TouchableOpacity style= {contactStyles.bugReport_tourRequestImage} onPress={() => Linking.openURL("https://www.google.com").catch(err => console.error('An error occurred', err))}>
+                    <Text style = {contactStyles.bugReport_tourRequestText}> Bug Report </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style= {contactStyles.bugReport_tourRequestImage} onPress={() => Linking.openURL("https://www.facebook.com").catch(err => console.error('An error occurred', err))}>
+                    <Text style = {contactStyles.bugReport_tourRequestText}> Tour Request </Text>
+                </TouchableOpacity>
+
                 <Hyperlink linkify = {linkify} linkDefault={ true } linkStyle={ { color: 'grey' }} linkText = {this.textForLink} >
                   <Text style = {contactStyles.textRight}>
                     96 Lafayette St
@@ -136,8 +146,8 @@ if (Platform.OS === 'ios') {
     alignItems: 'flex-end',
     paddingRight: '4%',
     // paddingTop: '40%',
-   marginTop: 'auto',
-   paddingBottom: isIphoneX() ? '12%' : '4%',
+    marginTop: 'auto',
+    paddingBottom: isIphoneX() ? '12%' : '4%',
 
   },
   textRight: {
@@ -175,6 +185,27 @@ if (Platform.OS === 'ios') {
     shadowColor: 'black',
     shadowOffset: {width: 3, height: 4, },
     shadowOpacity: 0.5,
+  },
+  bugReport_tourRequestText: {
+    fontSize: 22,
+    paddingTop: '2%',
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  bugReport_tourRequestImage: {
+    alignItems: 'center',
+    paddingLeft: 5,
+    padding: 3,
+    paddingBottom: 5,
+    width: 160,
+    marginBottom: '3%',
+    marginRight: '-2%',
+    borderRadius: 100,
+    backgroundColor: pink,
+    shadowColor: 'black',
+    shadowOffset: {width: 3, height: 4, },
+    shadowOpacity: 0.5,
+    color: 'black',
   },
 });}
 else  {
@@ -246,6 +277,27 @@ else  {
     marginTop: "-20%",
     borderRadius: 100,
     elevation: 12
+  },
+  bugReport_tourRequestText: {
+    fontSize: 22,
+    paddingTop: '2%',
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  bugReport_tourRequestImage: {
+    alignItems: 'center',
+    paddingLeft: 5,
+    padding: 3,
+    paddingBottom: 5,
+    width: 160,
+    marginBottom: '3%',
+    marginRight: '-2%',
+    borderRadius: 100,
+    backgroundColor: pink,
+    shadowColor: 'black',
+    shadowOffset: {width: 3, height: 4, },
+    shadowOpacity: 0.5,
+    color: 'black',
   },
 });
 
