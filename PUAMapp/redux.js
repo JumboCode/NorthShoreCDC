@@ -8,6 +8,8 @@ import config from './firebase';
 import * as firebase from 'firebase';
 
 firebase.initializeApp(config);
+export default firebase;
+
 // Actions relating to getting murals from database 
 export const getMuralsStart = () => ({
 	type: 'GET_MURALS_START'
