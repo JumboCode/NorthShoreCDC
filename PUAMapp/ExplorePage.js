@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Button, StatusBar, Platform} from 'react-native';
-import MapView, {Polyline} from 'react-native-maps';
+import  MapView, {Polyline} from 'react-native-maps';
 import { NavigationActions } from 'react-navigation'
 import { lightpurple, darkpurple, pink } from './colors.js';
 import MapViewDirections from 'react-native-maps-directions';
@@ -23,7 +23,7 @@ const polylines = [
   }
                       ]
 
-var _mapView: MapView;
+
 
 export default class ExplorePage extends React.Component {
     constructor(props) {
@@ -97,35 +97,39 @@ export default class ExplorePage extends React.Component {
         this.props.screenProps.changeMarker();
         //console.log(this.props.screenProps.currMarker)
 
-        Object.keys(murals).map((key,i) =>{
+      //   Object.keys(murals).map((key,i) =>{
 
-          if (murals[key]["Index"] == this.props.screenProps.currMarker){
-            Lat = parseFloat(murals[key]["Lat"]);
-            Lon = parseFloat(murals[key]["Long"]);
-          }
+      //     if (murals[key]["Index"] == this.props.screenProps.currMarker){
+      //       Lat = parseFloat(murals[key]["Lat"]);
+      //       Lon = parseFloat(murals[key]["Long"]);
+      //     }
 
-        })
+      //   })
         
-      console.log(this.props.screenProps.currMarker)
+      // console.log(this.props.screenProps.currMarker)
 
-         _mapView.animateToCoordinate({
-            latitude: Lat,
-            longitude: Lon,
-          }, 1000)
+      //    _mapView.animateToCoordinate({
+      //       latitude: Lat,
+      //       longitude: Lon,
+      //     }, 1000)
 
     }
 
     getCurrCoordsLat(){
       murals = this.props.screenProps.murals || {}
       Lat = 42.518217
-      Object.keys(murals).map((key,i) =>{
 
-          if (murals[key]["Index"] == this.props.screenProps.currMarker){
-            Lat = parseFloat(murals[key]["Lat"]);
-            return Lat;
-          }
 
-        })
+        Object.keys(murals).map((key,i) =>{
+
+            if (murals[key]["Index"] == this.props.screenProps.currMarker ){
+              Lat = parseFloat(murals[key]["Lat"]);
+              return Lat;
+            }
+
+          })
+      
+    
       return Lat;
 
     }
@@ -133,14 +137,16 @@ export default class ExplorePage extends React.Component {
     getCurrCoordsLong(){
       murals = this.props.screenProps.murals || {}
       Lon = -70.891919
+     
       Object.keys(murals).map((key,i) =>{
 
-          if (murals[key]["Index"] == this.props.screenProps.currMarker){
+          if (murals[key]["Index"] == this.props.screenProps.currMarker ){
             Lon = parseFloat(murals[key]["Long"]);
             return Lon;
           }
 
         })
+
 
       return Lon;
 
@@ -160,9 +166,9 @@ export default class ExplorePage extends React.Component {
         return (
             <View style = {{flex: 1}}>
             <StatusBar barStyle = { Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
-            <MapView
+            <MapView.Animated
               style = {{flex: 1 }}
-              ref = {(mapView) => { _mapView = mapView; }}
+              ref =  {ref => {this.map = ref}}
               region = {{
                 latitude: this.props.screenProps.tourStarted == false ? 42.518217 : this.getCurrCoordsLat() ,
                 longitude: this.props.screenProps.tourStarted == false ? -70.891919 : this.getCurrCoordsLong() ,
@@ -170,12 +176,7 @@ export default class ExplorePage extends React.Component {
                 longitudeDelta: this.props.screenProps.tourStarted == false ? 0.005 : 0.0001,
               }}>
               {this.renderImages()}
-             {/*  <Polyline
-              coordinates={polylines}
-              strokeColor="#000"
-              fillColor="rgba(255,0,0,0.5)"
-              strokeWidth={3}
-            />*/}
+            
             <MapViewDirections
               origin= {polylines[0]}
               destination= {polylines[1]}
@@ -183,7 +184,7 @@ export default class ExplorePage extends React.Component {
               strokeWidth={3}
               strokeColor="hotpink"
               />
-            </MapView>
+            </MapView.Animated>
             {console.log(this.props.screenProps.tourStarted)}
           {this.props.screenProps.tourStarted ? 
             <View>
