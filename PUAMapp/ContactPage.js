@@ -71,11 +71,11 @@ export default class ContactPage extends React.Component {
 
               <View style = {contactStyles.textContainerRight}>
                 <TouchableOpacity style= {contactStyles.bugReport_tourRequestImage} onPress={() => Linking.openURL("https://www.google.com").catch(err => console.error('An error occurred', err))}>
-                    <Text style = {contactStyles.bugReport_tourRequestText}> Bug Report </Text>
+                    <Text style = {contactStyles.bugReport_tourRequestText}>Report Bug</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style= {contactStyles.bugReport_tourRequestImage} onPress={() => Linking.openURL("https://www.facebook.com").catch(err => console.error('An error occurred', err))}>
-                    <Text style = {contactStyles.bugReport_tourRequestText}> Tour Request </Text>
+                    <Text style = {contactStyles.bugReport_tourRequestText}>Book Tour</Text>
                 </TouchableOpacity>
 
                 <Hyperlink linkify = {linkify} linkDefault={ true } linkStyle={ { color: 'grey' }} linkText = {this.textForLink} >
@@ -187,25 +187,24 @@ if (Platform.OS === 'ios') {
     shadowOpacity: 0.5,
   },
   bugReport_tourRequestText: {
-    fontSize: 22,
+    fontSize: 14,
     paddingTop: '2%',
-    fontWeight: 'bold',
-    color: 'white',
+    fontWeight: 'normal',
+    color: pink,
   },
   bugReport_tourRequestImage: {
     alignItems: 'center',
     paddingLeft: 5,
     padding: 3,
     paddingBottom: 5,
-    width: 160,
-    marginBottom: '3%',
-    marginRight: '-2%',
+    width: 110,
+
+    marginBottom: '2%',
     borderRadius: 100,
-    backgroundColor: pink,
+    backgroundColor: 'white',
     shadowColor: 'black',
-    shadowOffset: {width: 3, height: 4, },
-    shadowOpacity: 0.5,
-    color: 'black',
+    shadowOffset: {width: 1, height: 2, },
+    shadowOpacity: 0.3,
   },
 });}
 else  {
@@ -297,7 +296,6 @@ else  {
     shadowColor: 'black',
     shadowOffset: {width: 3, height: 4, },
     shadowOpacity: 0.5,
-    color: 'black',
   },
 });
 
