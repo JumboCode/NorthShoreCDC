@@ -169,7 +169,6 @@ if (Platform.OS === 'ios') {
       marginBottom: 20
     },
     description: {
-      marginTop: 50,
       paddingTop: 15,
       paddingRight: 20,
       paddingLeft: 3,
@@ -237,7 +236,6 @@ if (Platform.OS === 'ios') {
       marginBottom: 20
     },
     description: {
-      marginTop: 50,
       paddingTop: 15,
       paddingRight: 20,
       paddingLeft: 2,
