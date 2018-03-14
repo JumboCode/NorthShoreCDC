@@ -15,7 +15,11 @@ export default class MuralInfoPage extends React.Component {
     constructor(props) {
       super(props)
       this.state = {
-          descriptionVisible: false
+          descriptionVisible: false,
+          
+          // should be set true after the first time the user clicks to show description
+          // this prevents fadeIn/fadeOut animations on intial render
+          pastInitialClick: false
       }
     }
 
@@ -30,14 +34,21 @@ export default class MuralInfoPage extends React.Component {
     headerStyle:{ position: 'absolute', backgroundColor: 'transparent', zIndex: 100, top: 0, left: 0, right: 0, borderBottomColor: 'transparent' }
     } : {title: 'Punto Urban Art', headerTintColor: 'white', headerStyle: {backgroundColor: pink},});
 
-
+    
+    toggleShowDescription() {
+        this.setState({
+            descriptionVisible: !this.state.descriptionVisible,
+            pastInitialClick: true
+        })
+    }
+    
     render() {
         const mural = this.props.navigation.state.params.mural
         const artist = this.props.navigation.state.params.artist
 
           closeButton = <Image source={infoButtons[1]} style={{width: 30, height: 30}}/>
           readMoreButton = 
-                            <TouchableOpacity style = {{paddingLeft: 3, paddingTop: 15, paddingBottom: 50, paddingRight: 70}} onPress = {() => this.setState({descriptionVisible: true})}>
+                            <TouchableOpacity style = {{paddingLeft: 3, paddingTop: 15, paddingBottom: 50, paddingRight: 70}} onPress = {this.toggleShowDescription.bind(this)}>
                                 <Text style = {infoStyles.moreInfoButton}>Read More</Text>
                             </TouchableOpacity>
         
@@ -64,6 +75,7 @@ export default class MuralInfoPage extends React.Component {
         }
         
         descriptionVisible = this.state.descriptionVisible
+        pastInitialClick = this.state.pastInitialClick
         
         return (
               <View style = {infoStyles.container} >
@@ -81,25 +93,26 @@ export default class MuralInfoPage extends React.Component {
                       </View>
                     </View>
                     <Animatable.View animation = {descriptionVisible ? 'fadeIn' : 'fadeOut' } duration = {200} style = {infoStyles.button}>
-                      <TouchableOpacity style = {{padding: 20, paddingTop: 25, paddingLeft: 20, paddingBottom: 25}} onPress = {() => this.setState({descriptionVisible: false})}>
+                      <TouchableOpacity style = {{padding: 20, paddingTop: 25, paddingLeft: 20, paddingBottom: 25}} onPress = {this.toggleShowDescription.bind(this)}>
                           { closeButton }
                       </TouchableOpacity>
                     </Animatable.View>
                   </View>
+                  <View>
                   {
-                      !descriptionVisible &&
-                      <Animatable.View animation = "fadeIn" duration = {500}>
+                      <Animatable.View animation = {descriptionVisible ? 'fadeOut' : 'fadeIn'} duration = {200} style = {infoStyles.description}>
                         { readMoreButton }
                       </Animatable.View>
                   }
                   {
-                      descriptionVisible && 
-                      <Animatable.View animation = "fadeInUp" duration = {500} style = {infoStyles.description}>
-                        <ScrollView style = {{height: '80%', marginBottom: 50, marginTop: -50}}>
+                      pastInitialClick && 
+                      <Animatable.View animation = {descriptionVisible ? 'fadeInUp' : 'fadeOutDown'} duration = {500} style = {infoStyles.description}>
+                        <ScrollView style = {{height: '80%', marginBottom: 50}}>
                           <Text style = {{color: 'white'}}>{description}</Text>
                         </ScrollView>
                       </Animatable.View>
                   }
+                  </View>
                 </View>
               </View>
         )
@@ -159,7 +172,8 @@ if (Platform.OS === 'ios') {
       marginTop: 50,
       paddingTop: 15,
       paddingRight: 20,
-      paddingLeft: 3
+      paddingLeft: 3,
+      position: 'absolute'
     },
     darkOverlay: {
       position: 'absolute',
@@ -226,7 +240,8 @@ if (Platform.OS === 'ios') {
       marginTop: 50,
       paddingTop: 15,
       paddingRight: 20,
-      paddingLeft: 2
+      paddingLeft: 2,
+      position: 'absolute'
     },
     darkOverlay: {
       position: 'absolute',
