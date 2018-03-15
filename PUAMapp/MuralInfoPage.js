@@ -81,7 +81,8 @@ export default class MuralInfoPage extends React.Component {
               <View style = {infoStyles.container} >
               <StatusBar barStyle = { Platform.OS === 'ios' ? "light-content" : "light-content"}/>
                 <Image style={{flex: 1, position: "absolute", resizeMode: 'cover', height: '100%', width: '100%'}} source={{uri: mural.Photo}} />
-                <Animatable.View animation = {descriptionVisible ? 'fadeIn' : 'fadeOut' } style = {infoStyles.darkOverlay} /> 
+                <Animatable.View animation = {descriptionVisible ? 'fadeIn' : 'fadeOut' } duration = {500} style = {infoStyles.darkerOverlay} /> 
+                <View style = {infoStyles.darkOverlay} /> 
                 <View style = {infoStyles.textContainer}>
                   <View style = {infoStyles.top}>
                     <View style = {infoStyles.info}>
@@ -100,7 +101,7 @@ export default class MuralInfoPage extends React.Component {
                   </View>
                   <View>
                   {
-                      <Animatable.View animation = {descriptionVisible ? 'fadeOut' : 'fadeIn'} duration = {200} style = {infoStyles.description}>
+                      <Animatable.View animation = {descriptionVisible ? 'fadeOut' : 'fadeIn'} duration = {descriptionVisible ? 200 : 1000} style = {infoStyles.description}>
                         { readMoreButton }
                       </Animatable.View>
                   }
@@ -178,7 +179,13 @@ if (Platform.OS === 'ios') {
       position: 'absolute',
       height: '100%',
       width: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.6)'
+      backgroundColor: 'rgba(0, 0, 0, 0.4)'
+    },
+    darkerOverlay: {
+      position: 'absolute',
+      height: '100%',
+      width: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.7)'
     },
     moreInfoButton: {
       color: 'white',
@@ -245,7 +252,13 @@ if (Platform.OS === 'ios') {
       position: 'absolute',
       height: '100%',
       width: '100%',
-      backgroundColor: 'rgba(0, 0, 0, 0.6)',
+      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    },
+    darkerOverlay: {
+      position: 'absolute',
+      height: '100%',
+      width: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.6)'
     },
     moreInfoButton: {
       color: 'white',
@@ -253,6 +266,7 @@ if (Platform.OS === 'ios') {
       textShadowOffset: {width : -1, height: 0},
       textShadowRadius: 5,
       fontSize: 15,
+      elevation: 12
     }
   });
 }
