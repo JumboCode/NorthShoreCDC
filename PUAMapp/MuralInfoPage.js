@@ -156,6 +156,7 @@ if (Platform.OS === 'ios') {
       textShadowOffset: {width : -1, height: 0},
       textShadowRadius: 5,
       paddingLeft: 3,
+      paddingTop: 3,
       lineHeight: 35,
       marginBottom: 5,
       fontSize: 36
