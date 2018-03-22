@@ -24,8 +24,8 @@ export default class ExplorePage extends React.Component {
     super(props);
   }
 
-  static navigationOptions = ({ navigation }) =>
-    Platform.OS === "ios"
+  static navigationOptions = ({ navigation }) => {
+    return Platform.OS === "ios"
       ? {
           headerLeft: (
             <TouchableOpacity
@@ -58,6 +58,7 @@ export default class ExplorePage extends React.Component {
           headerTintColor: "white",
           headerStyle: { backgroundColor: pink }
         };
+  }
 
   renderImages() {
     const { navigate } = this.props.navigation;

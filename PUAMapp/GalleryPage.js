@@ -20,8 +20,8 @@ export default class GalleryPage extends React.Component {
     super(props);
   }
 
-  static navigationOptions = ({ navigation }) =>
-    Platform.OS === "ios"
+  static navigationOptions = ({ navigation }) => {
+    return Platform.OS === "ios"
       ? {
           headerLeft: (
             <TouchableOpacity
@@ -54,6 +54,7 @@ export default class GalleryPage extends React.Component {
           headerTintColor: "white",
           headerStyle: { backgroundColor: pink }
         };
+  }
 
   renderImages() {
     var { width } = Dimensions.get("window");

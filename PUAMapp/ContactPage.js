@@ -47,8 +47,8 @@ function isIphoneX() {
 }
 
 export default class ContactPage extends React.Component {
-  static navigationOptions = ({ navigation }) =>
-    Platform.OS === "ios"
+  static navigationOptions = ({ navigation }) => {
+    return Platform.OS === "ios"
       ? {
           headerLeft: (
             <TouchableOpacity
@@ -81,6 +81,7 @@ export default class ContactPage extends React.Component {
           headerTintColor: "white",
           headerStyle: { backgroundColor: pink }
         };
+  }
 
   textForLink(text) {
     return links[text] || text;
