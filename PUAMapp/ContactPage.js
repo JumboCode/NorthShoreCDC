@@ -1,5 +1,7 @@
 import React from "react";
 import {
+  Alert,
+  Clipboard,
   StyleSheet,
   Text,
   View,
@@ -20,7 +22,9 @@ import LinkifyIt from "linkify-it";
 
 const paypalUrl =
   "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UF8MF7Q9E7HSA";
-linkify = new LinkifyIt().add("tel:", "http:").add("fax:", "http:");
+linkify = new LinkifyIt().add('tel:', 'http:').add('fax:', 'http:')
+email = 'info@northshorecdc.org'
+feedbackFormURL = 'https://goo.gl/forms/j0sNljXz4mEd5lCN2'
 
 links = {
   "http://northshorecdc.org/about-us/contact-us/": "Our website",
@@ -163,9 +167,9 @@ export default class ContactPage extends React.Component {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() =>
-                Linking.openURL("https://www.twitter.com/NorthShoreCDC").catch(
-                  err => console.error("An error occurred", err)
-                )
+                  Linking.openURL("https://www.twitter.com/NorthShoreCDC").catch(
+                    err => console.error("An error occurred", err)
+                  )
               }
             >
               <Image
@@ -173,16 +177,18 @@ export default class ContactPage extends React.Component {
                 source={require("./assets/images/twitter.png")}
               />
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() =>
-                Linking.openURL("https://goo.gl/forms/9QnLoyStB3UOLewz1").catch(
-                  err => console.error("An error occurred", err)
-                )
-              }
+            <TouchableOpacity 
+              onPress={() => {
+                Clipboard.setString('info@northshorecdc.org')
+                Alert.alert(
+                  'Email Copied',
+                  email,
+                  [{text: 'OK', onPress: () => console.log('OK Pressed')}]) 
+              }}
             >
-              <Image
-                style={contactStyles.iconStyle}
-                source={require("./assets/images/email.png")}
+              <Image 
+                style={contactStyles.iconStyle}  
+                source={require('./assets/images/email.png')}
               />
             </TouchableOpacity>
           </View>
