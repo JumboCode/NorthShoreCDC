@@ -53,7 +53,7 @@ export default class MuralInfoPage extends React.Component {
                   justifyContent: 'center',
                   paddingRight: 6,
                   shadowOffset: { width: 1, height: 1 },
-                  shadowRadius: 1,
+                  shadowRadius: 2,
                   shadowOpacity: 1,
                 }}
               >
@@ -197,7 +197,7 @@ export default class MuralInfoPage extends React.Component {
                 duration={500}
                 style={infoStyles.description}
               >
-                <ScrollView style={{ height: "80%", marginBottom: 50 }}>
+                <ScrollView style={{ marginTop: 10, height: "80%", marginBottom: 50 }}>
                   <Text style={{ color: "white", marginTop: 10 }}>{description}</Text>
                 </ScrollView>
               </Animatable.View>
@@ -242,8 +242,8 @@ if (Platform.OS === "ios") {
       color: "white",
       fontWeight: "bold",
       textShadowColor: "black",
-      textShadowOffset: { width: -1, height: 0 },
-      textShadowRadius: 5,
+      textShadowOffset: { width: 1, height: 1 },
+      textShadowRadius: 2,
       paddingLeft: 3,
       paddingTop: 3,
       lineHeight: 35,
@@ -253,8 +253,8 @@ if (Platform.OS === "ios") {
     artist: {
       color: "white",
       textShadowColor: "black",
-      textShadowOffset: { width: -1, height: 0 },
-      textShadowRadius: 5,
+      textShadowOffset: { width: 1, height: 1 },
+      textShadowRadius: 2,
       paddingLeft: 3,
       fontSize: 24,
     },
@@ -267,7 +267,7 @@ if (Platform.OS === "ios") {
       position: "absolute",
       height: "100%",
       width: "100%",
-      backgroundColor: "rgba(0, 0, 0, 0.4)"
+      backgroundColor: "rgba(0, 0, 0, 0.45)"
     },
     darkerOverlay: {
       position: "absolute",
@@ -295,7 +295,7 @@ if (Platform.OS === "ios") {
       justifyContent: 'center',
       shadowColor: "black",
       shadowOffset: { width: 1, height: 1 },
-      shadowRadius: 1,
+      shadowRadius: 2,
       shadowOpacity: 1,
     }
   });

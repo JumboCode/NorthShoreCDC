@@ -73,7 +73,7 @@ export default class ContactPage extends React.Component {
                   justifyContent: 'center',
                   paddingRight: 6,
                   shadowOffset: { width: 1, height: 1 },
-                  shadowRadius: 1,
+                  shadowRadius: 2,
                   shadowOpacity: 1,
                 }}
               >
