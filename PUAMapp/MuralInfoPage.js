@@ -13,11 +13,12 @@ import {
 import { NavigationActions } from "react-navigation";
 import { lightpurple, darkpurple, pink } from "./colors.js";
 import * as Animatable from "react-native-animatable";
+import { Feather } from '@expo/vector-icons';
 
-var infoButtons = [
-  require("./assets/images/info.png"),
-  require("./assets/images/xbutton.png")
-];
+// var infoButtons = [
+//   require("./assets/images/info.png"),
+//   require("./assets/images/xbutton.png")
+// ];
 
 export default class MuralInfoPage extends React.Component {
   constructor(props) {
@@ -39,15 +40,26 @@ export default class MuralInfoPage extends React.Component {
               style={{ top: 30, left: -25, padding: 40 }}
               onPress={() => navigation.dispatch(NavigationActions.back())}
             >
-              <Image
+              <View
                 style={{
                   position: "relative",
+                  flexDirection: "row",
+                  backgroundColor: 'white',
                   zIndex: 100,
-                  maxWidth: 120,
-                  maxHeight: 40
+                  width: 120,
+                  height: 40,
+                  borderRadius: 100,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  paddingRight: 6,
+                  shadowOffset: { width: 1, height: 1 },
+                  shadowRadius: 1,
+                  shadowOpacity: 1,
                 }}
-                source={require("./assets/images/backbutton.png")}
-              />
+              >
+                <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}} />
+                <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}>  Back </Text>
+              </View>
             </TouchableOpacity>
           ),
           headerStyle: {
@@ -79,7 +91,7 @@ export default class MuralInfoPage extends React.Component {
     const artist = this.props.navigation.state.params.artist;
 
     closeButton = (
-      <Image source={infoButtons[1]} style={{ width: 30, height: 30 }} />
+      <Feather name="x" size={50} color="white" style={{fontWeight: 'bold'}} />
     );
     readMoreButton = (
       <TouchableOpacity
@@ -158,10 +170,10 @@ export default class MuralInfoPage extends React.Component {
             >
               <TouchableOpacity
                 style={{
-                  padding: 20,
-                  paddingTop: 35,
-                  paddingLeft: 20,
-                  paddingBottom: 34
+                  padding: 15,
+                  paddingTop: 20,
+                  paddingLeft: 15,
+                  paddingBottom: 20
                 }}
                 onPress={this.toggleShowDescription.bind(this)}
               >
@@ -268,17 +280,19 @@ if (Platform.OS === "ios") {
       textShadowColor: "black",
       textShadowOffset: { width: -1, height: 1 },
       textShadowRadius: 2,
-      fontSize: 15
+      fontWeight: 'bold',
+      fontSize: 16
     },
     moreInfoButtonContainer: {
-      backgroundColor: "rgba(128, 128, 128, 0.2)",
-      width: 120,
-      padding: 10,
+      backgroundColor: "rgba(128, 128, 128, 0.3)",
+      width: 135,
+      height: 40,
       borderColor: 'white',
       marginLeft: -5,
-      borderWidth: 1,
+      borderWidth: 2,
       borderRadius: 100,
       alignItems: 'center',
+      justifyContent: 'center',
       shadowColor: "black",
       shadowOffset: { width: 1, height: 1 },
       shadowRadius: 1,

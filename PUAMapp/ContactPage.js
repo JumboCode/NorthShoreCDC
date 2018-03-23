@@ -19,6 +19,7 @@ import { lightpurple, darkpurple, pink } from "./colors.js";
 import { NavigationActions } from "react-navigation";
 import Hyperlink from "react-native-hyperlink";
 import LinkifyIt from "linkify-it";
+import { Feather } from '@expo/vector-icons';
 
 const paypalUrl =
   "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UF8MF7Q9E7HSA";
@@ -56,18 +57,29 @@ export default class ContactPage extends React.Component {
       ? {
           headerLeft: (
             <TouchableOpacity
-              style={{ top: 25, left: -25, padding: 40 }}
+              style={{ top: 30, left: -25, padding: 40 }}
               onPress={() => navigation.dispatch(NavigationActions.back())}
             >
-              <Image
+              <View
                 style={{
                   position: "relative",
+                  flexDirection: "row",
+                  backgroundColor: 'white',
                   zIndex: 100,
-                  maxWidth: 120,
-                  maxHeight: 40
+                  width: 120,
+                  height: 40,
+                  borderRadius: 100,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  paddingRight: 6,
+                  shadowOffset: { width: 1, height: 1 },
+                  shadowRadius: 1,
+                  shadowOpacity: 1,
                 }}
-                source={require("./assets/images/backbutton.png")}
-              />
+              >
+                <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}}/>
+                <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}>  Back </Text>
+              </View>
             </TouchableOpacity>
           ),
           headerStyle: {
