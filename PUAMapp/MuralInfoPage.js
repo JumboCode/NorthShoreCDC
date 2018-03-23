@@ -20,6 +20,8 @@ import { Feather } from '@expo/vector-icons';
 //   require("./assets/images/xbutton.png")
 // ];
 
+// TODO Do the same for Android
+
 export default class MuralInfoPage extends React.Component {
   constructor(props) {
     super(props);
@@ -54,7 +56,7 @@ export default class MuralInfoPage extends React.Component {
                   paddingRight: 6,
                   shadowOffset: { width: 1, height: 1 },
                   shadowRadius: 2,
-                  shadowOpacity: 1,
+                  shadowOpacity: 0.7,
                 }}
               >
                 <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}} />

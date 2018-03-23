@@ -74,7 +74,7 @@ export default class ContactPage extends React.Component {
                   paddingRight: 6,
                   shadowOffset: { width: 1, height: 1 },
                   shadowRadius: 2,
-                  shadowOpacity: 1,
+                  shadowOpacity: 0.7,
                 }}
               >
                 <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}}/>
@@ -277,7 +277,8 @@ if (Platform.OS === "ios") {
       borderRadius: 100,
       shadowColor: "black",
       shadowOffset: { width: 3, height: 4 },
-      shadowOpacity: 0.5
+      shadowRadius: 3,
+      shadowOpacity: 0.7
     }
   });
 } else {
