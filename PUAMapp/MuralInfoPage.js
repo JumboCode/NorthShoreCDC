@@ -84,14 +84,15 @@ export default class MuralInfoPage extends React.Component {
     readMoreButton = (
       <TouchableOpacity
         style={{
-          paddingLeft: 3,
           paddingTop: 15,
           paddingBottom: 50,
           paddingRight: 70
         }}
         onPress={this.toggleShowDescription.bind(this)}
       >
-        <Text style={infoStyles.moreInfoButton}>Read More</Text>
+        <View style={infoStyles.moreInfoButtonContainer}>
+          <Text style={infoStyles.moreInfoButton}>Read More</Text>
+        </View>
       </TouchableOpacity>
     );
 
@@ -158,9 +159,9 @@ export default class MuralInfoPage extends React.Component {
               <TouchableOpacity
                 style={{
                   padding: 20,
-                  paddingTop: 25,
+                  paddingTop: 35,
                   paddingLeft: 20,
-                  paddingBottom: 25
+                  paddingBottom: 34
                 }}
                 onPress={this.toggleShowDescription.bind(this)}
               >
@@ -244,7 +245,6 @@ if (Platform.OS === "ios") {
       textShadowRadius: 5,
       paddingLeft: 3,
       fontSize: 24,
-      marginBottom: 20
     },
     description: {
       paddingTop: 15,
@@ -270,6 +270,20 @@ if (Platform.OS === "ios") {
       textShadowOffset: { width: -1, height: 1 },
       textShadowRadius: 2,
       fontSize: 15
+    },
+    moreInfoButtonContainer: {
+      backgroundColor: "rgba(128, 128, 128, 0.2)",
+      width: 120,
+      padding: 10,
+      borderColor: 'white',
+      marginLeft: -5,
+      borderWidth: 1,
+      borderRadius: 100,
+      alignItems: 'center',
+      shadowColor: "black",
+      shadowOffset: { width: 1, height: 1 },
+      shadowRadius: 1,
+      shadowOpacity: 1,
     }
   });
 } else {
