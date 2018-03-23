@@ -186,7 +186,7 @@ export default class MuralInfoPage extends React.Component {
                 style={infoStyles.description}
               >
                 <ScrollView style={{ height: "80%", marginBottom: 50 }}>
-                  <Text style={{ color: "white" }}>{description}</Text>
+                  <Text style={{ color: "white", marginTop: 10 }}>{description}</Text>
                 </ScrollView>
               </Animatable.View>
             )}
@@ -247,7 +247,6 @@ if (Platform.OS === "ios") {
       fontSize: 24,
     },
     description: {
-      paddingTop: 15,
       paddingRight: 20,
       paddingLeft: 3,
       position: "absolute"
