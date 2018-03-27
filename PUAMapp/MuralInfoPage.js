@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   Animated,
+  Dimensions,
   TouchableOpacity,
   Platform,
   StatusBar
@@ -20,6 +21,15 @@ import { Feather } from '@expo/vector-icons';
 //   require("./assets/images/xbutton.png")
 // ];
 
+function isIphoneX() {
+  const dimen = Dimensions.get("window");
+  return (
+    Platform.OS === "ios" &&
+    !Platform.isPad &&
+    !Platform.isTVOS &&
+    (dimen.height === 812 || dimen.width === 812)
+  );
+}
 
 export default class MuralInfoPage extends React.Component {
   constructor(props) {
@@ -183,7 +193,7 @@ export default class MuralInfoPage extends React.Component {
               </TouchableOpacity>
             </Animatable.View>
           </View>
-          <View>
+          <View style={{flex: 1}}>
             {
               <Animatable.View
                 animation={descriptionVisible ? "fadeOut" : "fadeIn"}
@@ -199,7 +209,7 @@ export default class MuralInfoPage extends React.Component {
                 duration={500}
                 style={infoStyles.description}
               >
-                <ScrollView style={{ marginTop: 10, height: "80%", marginBottom: 50 }}>
+                <ScrollView style={{marginTop: 10, height: Dimensions.get("window").height / 2}}>
                   <Text style={{ color: "white", marginTop: 10 }}>{description}</Text>
                 </ScrollView>
               </Animatable.View>
@@ -263,7 +273,8 @@ if (Platform.OS === "ios") {
     description: {
       paddingRight: 20,
       paddingLeft: 3,
-      position: "absolute"
+      position: "absolute",
+      flex: 1
     },
     darkOverlay: {
       position: "absolute",
