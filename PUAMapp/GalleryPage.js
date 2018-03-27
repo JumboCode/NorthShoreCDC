@@ -63,15 +63,24 @@ export default class GalleryPage extends React.Component {
     const { navigate } = this.props.navigation;
     murals = this.props.screenProps.murals || {};
     artists = this.props.screenProps.artists || {};
-    return Object.keys(murals).map((key, i) => {
-      uri = murals[key]["Photo"];
+    muralsArray = []
+
+    Object.keys(murals).map((key, i) => {
+
+      muralsArray.push(murals[key]);
+    });
+
+    muralsArray.sort(function (a,b){return a["Index"] - b["Index"]});
+    
+    return muralsArray.map((mural, i) => {
+      uri = mural["Photo"];
       return (
         <TouchableOpacity
           key={i}
           onPress={() =>
             navigate("MuralInfoPage", {
-              mural: murals[key],
-              artist: artists[murals[key]["Artist"]]
+              mural: mural,
+              artist: artists[mural["Artist"]]
             })
           }
         >
