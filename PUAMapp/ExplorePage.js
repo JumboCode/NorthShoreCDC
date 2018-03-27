@@ -59,18 +59,25 @@ export default class ExplorePage extends React.Component {
           headerStyle: { backgroundColor: pink }
         };
   }
-
+  
   renderImages() {
     const { navigate } = this.props.navigation;
 
     murals = this.props.screenProps.murals || {};
     artists = this.props.screenProps.artists || {};
+    defaultMuralID = this.props.navigation.state.params.muralID || '';
+
 
     return Object.keys(murals).map((key, i) => {
       lat = parseFloat(murals[key]["Lat"]);
       long = parseFloat(murals[key]["Long"]);
       title = murals[key]["Title"];
       artistName = artists[murals[key]["Artist"]]["name"];
+      
+      setRefLambda = (function (ref) {
+        this.calloutToMakeVisible = ref;
+      }).bind(this);
+      
       return (
         <MapView.Marker
           key={i}
@@ -78,6 +85,7 @@ export default class ExplorePage extends React.Component {
           description={artistName}
           coordinate={{ latitude: lat, longitude: long }}
           pinColor={pink}
+          ref = {key == defaultMuralID ? setRefLambda : null}
           onCalloutPress={() => {
             navigate("MuralInfoPage", {
               mural: murals[key],
@@ -88,20 +96,26 @@ export default class ExplorePage extends React.Component {
       );
     });
   }
-
+  
+  showCallout() {
+    if (this.calloutToMakeVisible) {
+      this.calloutToMakeVisible.showCallout();
+    }
+  }
+  
   render() {
     const { navigate } = this.props.navigation;
     
     // If this.props.muralID is set, use that. Also zoom more.
     murals = this.props.screenProps.murals || {};
-    key = this.props.muralID
+    key = this.props.navigation.state.params.muralID;
     initialLat = 42.518217;
     initialLong = -70.891919;
-    initialDelta = 0.0000005;
-    if (this.props.muralID) {
+    initialDelta = 0.0005;
+    if (key) {
         initialLat = parseFloat(murals[key]["Lat"]);
         initialLong = parseFloat(murals[key]["Long"]);
-        initialDelta = 1; // more zoooooom
+        initialDelta = .0000005; // more zoooooom
     }
     
     return (
@@ -110,6 +124,7 @@ export default class ExplorePage extends React.Component {
           barStyle={Platform.OS === "ios" ? "dark-content" : "light-content"}
         />
         <MapView
+          onLayout={this.showCallout.bind(this)}
           showsPointsOfInterest={false}
           showsUserLocation={true}
           style={{ flex: 1 }}
