@@ -64,7 +64,7 @@ class FirePut(Form):
     title = StringField('Title', validators=[DataRequired()])
     month = StringField('Month', validators=[DataRequired(), AnyOf(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"])])
     year = IntegerField('Year', validators=[DataRequired(), NumberRange(min=1980, max = 3000)])
-    description = TextAreaField('Description', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[])
     medium = StringField('Medium', validators=[DataRequired()])
 
 class FireEdit(Form):
@@ -75,7 +75,7 @@ class FireEdit(Form):
     title = StringField('Title', validators=[DataRequired()])
     month = StringField('Month', validators=[DataRequired(), AnyOf(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"])])
     year = IntegerField('Year', validators=[DataRequired(), NumberRange(min=1980, max = 3000)])
-    description = TextAreaField('Description', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[])
     medium = StringField('Medium', validators=[DataRequired()])
 
 class Validate(Form):
@@ -83,17 +83,16 @@ class Validate(Form):
     password = PasswordField('Password', validators=[DataRequired()])
 
 class ArtistPut(Form):
-    photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
     name = StringField('Name', validators=[DataRequired()])
     city = StringField('City', validators=[DataRequired()])
-    bio = TextAreaField('Bio', validators=[DataRequired()])
+    bio = TextAreaField('Bio', validators=[])
+    link = StringField('Link', validators=[ Optional(), URL(require_tld=True, message=None)])
 
 class ArtistEdit(Form):
-    photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
     name = StringField('Name', validators=[DataRequired()])
     city = StringField('City', validators=[DataRequired()])
-    bio = TextAreaField('Bio', validators=[DataRequired()])
-
+    bio = TextAreaField('Bio', validators=[])
+    link = StringField('Link', validators=[ Optional(), URL(require_tld=True, message=None)])
 
 def requires_auth(f):    
     @wraps(f)
@@ -193,8 +192,10 @@ def artistput():
     form = ArtistPut()
     if form.validate_on_submit():
         uuidtoken = uuid.uuid4()
-        putData = { 'photo' : form.photo.data, 'name' : form.name.data,
-                    'city' : form.city.data, 'bio' : form.bio.data,
+        putData = { 'name' : form.name.data,
+                    'city' : form.city.data, 
+                    'bio' : form.bio.data,
+                    'link' : form.link.data,
                     'uuid' : str(uuidtoken)}
         artists = firebase.get('/', 'artists')
         firebase.put('/artists', uuidtoken, putData)
@@ -309,8 +310,10 @@ def edit_artist():
     artists = firebase.get('/', 'artists')
     artist = artists[artistid]
     if form.validate_on_submit():
-        putData = { 'photo' : form.photo.data, 'name' : form.name.data,
-                    'city' : form.city.data, 'bio' : form.bio.data,
+        putData = { 'name' : form.name.data,
+                    'city' : form.city.data, 
+                    'bio' : form.bio.data,
+                    'link' : form.link.data,
                     'uuid' : str(artistid) }
         firebase.delete('/artists', str(artistid))
         firebase.put('/artists', artistid, putData)

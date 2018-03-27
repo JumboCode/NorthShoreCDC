@@ -2,6 +2,8 @@
 
 {% block page_content %}
 <body>
+<h3>Murals</h3>
+<br>
 <table style="width:80%" class="table table-striped">
 <thead>
 <tr>
@@ -31,14 +33,14 @@
         <form action="{{url_for('change_mural_index')}}" method = "POST">
             <input type = "hidden" name = "muralid" value = "{{ mural['uuid'] }}">
             <input type = "hidden" name = "upOrDown" value = "UP">
-            <button type="submit" name="change" class="btn btn-secondary">UP</button>
+            <button type="submit" name="change" class="btn btn-secondary"><span class="glyphicon glyphicon-arrow-up"></span></button>
         </form>
     </td>
     <td>
         <form action="{{url_for('change_mural_index')}}" method = "POST">
             <input type = "hidden" name = "muralid" value = "{{ mural['uuid'] }}">
             <input type = "hidden" name = "upOrDown" value = "DOWN">
-            <button type="submit" name="change" class="btn btn-secondary">DOWN</button>
+            <button type="submit" name="change" class="btn btn-secondary"><span class="glyphicon glyphicon-arrow-down"></span></button>
         </form>
     </td>
 	<td>
