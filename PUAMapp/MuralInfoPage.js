@@ -73,7 +73,16 @@ export default class MuralInfoPage extends React.Component {
       pastInitialClick: true
     });
   }
-
+  
+  goToExplorePage() {
+    const mural = this.props.navigation.state.params.mural;
+    const artist = this.props.navigation.state.params.artist;
+    const { navigate } = this.props.navigation;
+    navigate("ExplorePage", {
+        muralID: mural["uuid"]
+    });
+  }
+  
   render() {
     const mural = this.props.navigation.state.params.mural;
     const artist = this.props.navigation.state.params.artist;
@@ -92,6 +101,20 @@ export default class MuralInfoPage extends React.Component {
         onPress={this.toggleShowDescription.bind(this)}
       >
         <Text style={infoStyles.moreInfoButton}>Read More</Text>
+      </TouchableOpacity>
+    );
+
+    goToExplorePageButton = (
+      <TouchableOpacity
+        style={{
+          paddingLeft: 3,
+          paddingTop: 15,
+          paddingBottom: 50,
+          paddingRight: 70
+        }}
+        onPress={this.goToExplorePage.bind(this)}
+      >
+        <Text style={infoStyles.moreInfoButton}>See on map</Text>
       </TouchableOpacity>
     );
 
@@ -189,6 +212,9 @@ export default class MuralInfoPage extends React.Component {
                 </ScrollView>
               </Animatable.View>
             )}
+            
+            {goToExplorePageButton}
+            
           </View>
         </View>
       </View>

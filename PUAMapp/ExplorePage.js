@@ -91,6 +91,19 @@ export default class ExplorePage extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
+    
+    // If this.props.muralID is set, use that. Also zoom more.
+    murals = this.props.screenProps.murals || {};
+    key = this.props.muralID
+    initialLat = 42.518217;
+    initialLong = -70.891919;
+    initialDelta = 0.0000005;
+    if (this.props.muralID) {
+        initialLat = parseFloat(murals[key]["Lat"]);
+        initialLong = parseFloat(murals[key]["Long"]);
+        initialDelta = 1; // more zoooooom
+    }
+    
     return (
       <View style={{ flex: 1 }}>
         <StatusBar
@@ -101,10 +114,10 @@ export default class ExplorePage extends React.Component {
           showsUserLocation={true}
           style={{ flex: 1 }}
           region={{
-            latitude: 42.518217,
-            longitude: -70.891919,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005
+            latitude: initialLat,
+            longitude: initialLong,
+            latitudeDelta: initialDelta,
+            longitudeDelta: initialDelta
           }}
         >
           {this.renderImages()}
