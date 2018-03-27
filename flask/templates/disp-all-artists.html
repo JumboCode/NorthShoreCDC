@@ -5,7 +5,7 @@
 <h3>Artists</h3>
 <br>
 <table style="width:80%" class="table table-striped">
-<thead><tr><th>Name</th><th>City</th><th>Bio</th></tr></thead>
+<thead><tr><th>Name</th><th>City</th><th>Bio</th><th>Portfolio</th></tr></thead>
 
 {% for a in artists %}
 <tbody>
@@ -13,6 +13,7 @@
     <td>{{ artists[a].name }}</td>
     <td>{{ artists[a].city }}</td>
     <td>{{ artists[a].bio }}</td>
+    <td><a href = '{{ artists[a].link }}'>{{ artists[a].link }}</a> </td>
       
     <td>
         <form action="{{url_for('edit_artist')}}" method = "GET">
