@@ -13,11 +13,13 @@ import {
 import { NavigationActions } from "react-navigation";
 import { lightpurple, darkpurple, pink } from "./colors.js";
 import * as Animatable from "react-native-animatable";
+import { Feather } from '@expo/vector-icons';
 
-var infoButtons = [
-  require("./assets/images/info.png"),
-  require("./assets/images/xbutton.png")
-];
+// var infoButtons = [
+//   require("./assets/images/info.png"),
+//   require("./assets/images/xbutton.png")
+// ];
+
 
 export default class MuralInfoPage extends React.Component {
   constructor(props) {
@@ -39,15 +41,26 @@ export default class MuralInfoPage extends React.Component {
               style={{ top: 30, left: -25, padding: 40 }}
               onPress={() => navigation.dispatch(NavigationActions.back())}
             >
-              <Image
+              <View
                 style={{
                   position: "relative",
+                  flexDirection: "row",
+                  backgroundColor: 'white',
                   zIndex: 100,
-                  maxWidth: 120,
-                  maxHeight: 40
+                  width: 120,
+                  height: 40,
+                  borderRadius: 100,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  paddingRight: 6,
+                  shadowOffset: { width: 1, height: 1 },
+                  shadowRadius: 2,
+                  shadowOpacity: 0.6,
                 }}
-                source={require("./assets/images/backbutton.png")}
-              />
+              >
+                <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}} />
+                <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}>  Back </Text>
+              </View>
             </TouchableOpacity>
           ),
           headerStyle: {
@@ -79,19 +92,20 @@ export default class MuralInfoPage extends React.Component {
     const artist = this.props.navigation.state.params.artist;
 
     closeButton = (
-      <Image source={infoButtons[1]} style={{ width: 30, height: 30 }} />
+      <Feather name="x" size={50} color="white" style={{fontWeight: 'bold'}} />
     );
     readMoreButton = (
       <TouchableOpacity
         style={{
-          paddingLeft: 3,
           paddingTop: 15,
           paddingBottom: 50,
           paddingRight: 70
         }}
         onPress={this.toggleShowDescription.bind(this)}
       >
-        <Text style={infoStyles.moreInfoButton}>Read More</Text>
+        <View style={infoStyles.moreInfoButtonContainer}>
+          <Text style={infoStyles.moreInfoButton}>Read More</Text>
+        </View>
       </TouchableOpacity>
     );
 
@@ -157,10 +171,10 @@ export default class MuralInfoPage extends React.Component {
             >
               <TouchableOpacity
                 style={{
-                  padding: 20,
-                  paddingTop: 25,
-                  paddingLeft: 20,
-                  paddingBottom: 25
+                  padding: 15,
+                  paddingTop: 20,
+                  paddingLeft: 15,
+                  paddingBottom: 20
                 }}
                 onPress={this.toggleShowDescription.bind(this)}
               >
@@ -184,8 +198,8 @@ export default class MuralInfoPage extends React.Component {
                 duration={500}
                 style={infoStyles.description}
               >
-                <ScrollView style={{ height: "80%", marginBottom: 50 }}>
-                  <Text style={{ color: "white" }}>{description}</Text>
+                <ScrollView style={{ marginTop: 10, height: "80%", marginBottom: 50 }}>
+                  <Text style={{ color: "white", marginTop: 10 }}>{description}</Text>
                 </ScrollView>
               </Animatable.View>
             )}
@@ -229,8 +243,8 @@ if (Platform.OS === "ios") {
       color: "white",
       fontWeight: "bold",
       textShadowColor: "black",
-      textShadowOffset: { width: -1, height: 0 },
-      textShadowRadius: 5,
+      textShadowOffset: { width: 1, height: 1 },
+      textShadowRadius: 2,
       paddingLeft: 3,
       paddingTop: 3,
       lineHeight: 35,
@@ -240,14 +254,12 @@ if (Platform.OS === "ios") {
     artist: {
       color: "white",
       textShadowColor: "black",
-      textShadowOffset: { width: -1, height: 0 },
-      textShadowRadius: 5,
+      textShadowOffset: { width: 1, height: 1 },
+      textShadowRadius: 2,
       paddingLeft: 3,
       fontSize: 24,
-      marginBottom: 20
     },
     description: {
-      paddingTop: 15,
       paddingRight: 20,
       paddingLeft: 3,
       position: "absolute"
@@ -256,7 +268,7 @@ if (Platform.OS === "ios") {
       position: "absolute",
       height: "100%",
       width: "100%",
-      backgroundColor: "rgba(0, 0, 0, 0.4)"
+      backgroundColor: "rgba(0, 0, 0, 0.45)"
     },
     darkerOverlay: {
       position: "absolute",
@@ -269,7 +281,23 @@ if (Platform.OS === "ios") {
       textShadowColor: "black",
       textShadowOffset: { width: -1, height: 1 },
       textShadowRadius: 2,
-      fontSize: 15
+      fontWeight: 'bold',
+      fontSize: 16
+    },
+    moreInfoButtonContainer: {
+      backgroundColor: "rgba(128, 128, 128, 0.3)",
+      width: 135,
+      height: 40,
+      borderColor: 'white',
+      marginLeft: -5,
+      borderWidth: 2,
+      borderRadius: 100,
+      alignItems: 'center',
+      justifyContent: 'center',
+      shadowColor: "black",
+      shadowOffset: { width: 1, height: 1 },
+      shadowRadius: 2,
+      shadowOpacity: 0.6,
     }
   });
 } else {
@@ -317,10 +345,8 @@ if (Platform.OS === "ios") {
       textShadowRadius: 5,
       paddingLeft: 2,
       fontSize: 24,
-      marginBottom: 20
     },
     description: {
-      paddingTop: 15,
       paddingRight: 20,
       paddingLeft: 2,
       position: "absolute"
@@ -339,11 +365,19 @@ if (Platform.OS === "ios") {
     },
     moreInfoButton: {
       color: "white",
-      textShadowColor: "black",
-      textShadowOffset: { width: -1, height: 0 },
-      textShadowRadius: 5,
       fontSize: 15,
-      elevation: 12
+      elevation: 4,
+    },
+    moreInfoButtonContainer: {
+      backgroundColor: "rgba(56, 56, 56, 0.3)",
+      width: 135,
+      height: 40,
+      borderColor: 'white',
+      borderWidth: 2,
+      borderRadius: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+      elevation: 2,
     }
   });
 }
