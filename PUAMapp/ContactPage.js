@@ -65,6 +65,7 @@ export default class ContactPage extends React.Component {
                   position: "relative",
                   flexDirection: "row",
                   backgroundColor: 'white',
+                  marginTop: -15,
                   zIndex: 100,
                   width: 120,
                   height: 40,
