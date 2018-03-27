@@ -20,7 +20,6 @@ import { Feather } from '@expo/vector-icons';
 //   require("./assets/images/xbutton.png")
 // ];
 
-// TODO Do the same for Android
 
 export default class MuralInfoPage extends React.Component {
   constructor(props) {
