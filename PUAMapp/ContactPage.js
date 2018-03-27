@@ -65,6 +65,7 @@ export default class ContactPage extends React.Component {
                   position: "relative",
                   flexDirection: "row",
                   backgroundColor: 'white',
+                  marginTop: -15,
                   zIndex: 100,
                   width: 120,
                   height: 40,
@@ -135,6 +136,14 @@ export default class ContactPage extends React.Component {
           <Text style={contactStyles.donateText}> DONATE </Text>
         </TouchableOpacity>
         <View style={contactStyles.textContainerRight}>
+
+          <TouchableOpacity style= {contactStyles.bugReport_tourRequestImage} onPress={() => Linking.openURL("www.northshorecdc.org").catch(err => console.error('An error occurred', err))}>
+            <Text style = {contactStyles.bugReport_tourRequestText}>Book Tour</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style= {contactStyles.bugReport_tourRequestImage} onPress={() => Linking.openURL(feedbackFormURL).catch(err => console.error('An error occurred', err))}>
+            <Text style = {contactStyles.bugReport_tourRequestText}>Report Bug</Text>
+          </TouchableOpacity>
           <Hyperlink
             linkify={linkify}
             linkDefault={true}
@@ -261,25 +270,42 @@ if (Platform.OS === "ios") {
     },
     donateText: {
       fontSize: 22,
-      paddingTop: "2%",
       fontWeight: "bold",
       color: "white"
     },
     donateImage: {
       alignItems: "center",
-      paddingLeft: 5,
-      padding: 3,
-      paddingBottom: 5,
+      justifyContent: "center",
       backgroundColor: pink,
       width: 160,
+      height: 40,
       marginLeft: "8%",
-      marginTop: isIphoneX() ? "-55%" : "-40%",
+      marginTop: isIphoneX() ? "-30%" : "-11%",
       borderRadius: 100,
       shadowColor: "black",
       shadowOffset: { width: 3, height: 4 },
       shadowRadius: 3,
       shadowOpacity: 0.7
-    }
+    },
+    bugReport_tourRequestText: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: pink,
+    },
+    bugReport_tourRequestImage: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      minWidth: 120,
+      paddingLeft: 25,
+      paddingRight: 25,
+      height: 40,
+      marginBottom: '3%',
+      borderRadius: 100,
+      backgroundColor: 'white',
+      shadowColor: 'black',
+      shadowOffset: {width: 1, height: 1, },
+      shadowOpacity: 0.6,
+    },
   });
 } else {
   contactStyles = StyleSheet.create({
@@ -346,6 +372,26 @@ if (Platform.OS === "ios") {
       marginTop: "-20%",
       borderRadius: 100,
       elevation: 12
-    }
+    },
+    bugReport_tourRequestText: {
+      fontSize: 22,
+      paddingTop: '2%',
+      fontWeight: 'bold',
+      color: 'white',
+    },
+    bugReport_tourRequestImage: {
+      alignItems: 'center',
+      paddingLeft: 5,
+      padding: 3,
+      paddingBottom: 5,
+      width: 160,
+      marginBottom: '3%',
+      marginRight: '-2%',
+      borderRadius: 100,
+      backgroundColor: pink,
+      shadowColor: 'black',
+      shadowOffset: {width: 3, height: 4, },
+      shadowOpacity: 0.5,
+    },
   });
 }

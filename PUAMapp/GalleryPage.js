@@ -35,6 +35,7 @@ export default class GalleryPage extends React.Component {
                   flexDirection: "row",
                   backgroundColor: 'white',
                   zIndex: 100,
+                  marginTop: -15,
                   width: 120,
                   height: 40,
                   borderRadius: 100,
