@@ -56,7 +56,7 @@ export default class MuralInfoPage extends React.Component {
                   paddingRight: 6,
                   shadowOffset: { width: 1, height: 1 },
                   shadowRadius: 2,
-                  shadowOpacity: 0.7,
+                  shadowOpacity: 0.6,
                 }}
               >
                 <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}} />
@@ -298,7 +298,7 @@ if (Platform.OS === "ios") {
       shadowColor: "black",
       shadowOffset: { width: 1, height: 1 },
       shadowRadius: 2,
-      shadowOpacity: 1,
+      shadowOpacity: 0.6,
     }
   });
 } else {
@@ -346,10 +346,8 @@ if (Platform.OS === "ios") {
       textShadowRadius: 5,
       paddingLeft: 2,
       fontSize: 24,
-      marginBottom: 20
     },
     description: {
-      paddingTop: 15,
       paddingRight: 20,
       paddingLeft: 2,
       position: "absolute"
@@ -368,11 +366,19 @@ if (Platform.OS === "ios") {
     },
     moreInfoButton: {
       color: "white",
-      textShadowColor: "black",
-      textShadowOffset: { width: -1, height: 0 },
-      textShadowRadius: 5,
       fontSize: 15,
-      elevation: 12
+      elevation: 4,
+    },
+    moreInfoButtonContainer: {
+      backgroundColor: "rgba(56, 56, 56, 0.3)",
+      width: 135,
+      height: 40,
+      borderColor: 'white',
+      borderWidth: 2,
+      borderRadius: 20,
+      alignItems: 'center',
+      justifyContent: 'center',
+      elevation: 2,
     }
   });
 }

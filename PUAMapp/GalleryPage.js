@@ -43,7 +43,7 @@ export default class GalleryPage extends React.Component {
                   paddingRight: 6,
                   shadowOffset: { width: 1, height: 1 },
                   shadowRadius: 2,
-                  shadowOpacity: 0.7,
+                  shadowOpacity: 0.6,
                 }}
               >
                 <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}}/>
