@@ -22,6 +22,7 @@ export default class HomePage extends React.Component {
     return (
       <View style={styles.container}>
         <Image style={styles.image} source={homepic} />
+        <View style={styles.overlay} />
         <Image style={styles.logo} source={homelogo} />
         <TouchableOpacity
           activeOpacity={0.75}
@@ -84,8 +85,8 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   overlay: {
-    backgroundColor: pink,
-    opacity: 0.3,
+    backgroundColor: 'black',
+    opacity: 0.1,
     position: "absolute",
     height: "100%",
     width: "100%"
