@@ -132,7 +132,7 @@ export default class GalleryPage extends React.Component {
           <View
             style={{
               backgroundColor:
-                Platform.OS === "ios" ? "rgba(0,0,0,.0)" : "rgba(0,0,0,.5)",
+                Platform.OS === "ios" ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,.5)",
               height: height + 40,
               position: "absolute",
               width: width,
