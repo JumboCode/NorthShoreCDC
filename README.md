@@ -18,12 +18,6 @@ This app is a project of the <a href="http://northshorecdc.org" alt="NSCDC">Nort
 ![screenshot](screenshots/screenshot4.png)
 ![screenshot](screenshots/screenshot5.png)
 
-## Test an *unreleased* version:
-* Download the Expo App: <a href="https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en">Android</a> / <a href="https://itunes.apple.com/us/app/expo-client/id982107779?mt=8">iOS</a>
-* Scan this QR code using the Expo app:
-
-<img src="QR.png" alt="PUAM Logo" width="225">
-
 ## Test / Develop Locally
 ### Run the react-native App locally
 * Create a file firebase.js in PUAMapp/ containing:
