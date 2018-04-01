@@ -5,6 +5,7 @@ import {
 import { lightpurple, darkpurple, pink } from "./colors.js";
 import Dimensions from "Dimensions";
 import homepic from "./assets/images/home-background.jpg";
+import homelogo from "./assets/images/home-logo.png";
 
 const x = Dimensions.get("window").width;
 const y = Dimensions.get("window").height;
@@ -21,6 +22,7 @@ export default class HomePage extends React.Component {
     return (
       <View style={styles.container}>
         <Image style={styles.image} source={homepic} />
+        <Image style={styles.logo} source={homepic} />
         <TouchableOpacity
           activeOpacity={0.75}
           style={styles.darkPurpleButton}
@@ -80,6 +82,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     height: "100%",
     width: "100%"
+  },
+  logo: {
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    width: '50%',
+    marginBottom: 'auto',
+    marginTop: 'auto'
   },
   darkPurpleButton: {
     height: "13%",
