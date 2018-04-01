@@ -280,7 +280,7 @@ if (Platform.OS === "ios") {
       position: "absolute",
       height: "100%",
       width: "100%",
-      backgroundColor: "rgba(0, 0, 0, 0.45)"
+      backgroundColor: "rgba(0, 0, 0, 0.25)"
     },
     darkerOverlay: {
       position: "absolute",
