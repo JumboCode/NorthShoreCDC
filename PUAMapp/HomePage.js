@@ -22,7 +22,8 @@ export default class HomePage extends React.Component {
     return (
       <View style={styles.container}>
         <Image style={styles.image} source={homepic} />
-        <Image style={styles.logo} source={homepic} />
+        <View style={styles.overlay} />
+        <Image style={styles.logo} source={homelogo} />
         <TouchableOpacity
           activeOpacity={0.75}
           style={styles.darkPurpleButton}
@@ -83,10 +84,17 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%"
   },
+  overlay: {
+    backgroundColor: pink,
+    opacity: 0.3,
+    position: "absolute",
+    height: "100%",
+    width: "100%"
+  },
   logo: {
     resizeMode: 'contain',
     alignSelf: 'center',
-    width: '50%',
+    width: '85%',
     marginBottom: 'auto',
     marginTop: 'auto'
   },
@@ -97,7 +105,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     opacity: 0.9,
-    margin: -1
+    margin: -1,
+    marginTop: "-10%",
   },
   lightPurpleButton: {
     height: "13%",
