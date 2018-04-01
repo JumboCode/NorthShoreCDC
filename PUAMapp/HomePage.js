@@ -22,7 +22,6 @@ export default class HomePage extends React.Component {
     return (
       <View style={styles.container}>
         <Image style={styles.image} source={homepic} />
-        <View style={styles.overlay} />
         <Image style={styles.logo} source={homelogo} />
         <TouchableOpacity
           activeOpacity={0.75}
