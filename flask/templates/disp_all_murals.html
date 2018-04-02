@@ -50,7 +50,7 @@
         </form>
     </td>
     <td>
-        <form action="{{url_for('fireedit')}}" method = "GET">
+        <form action="{{url_for('edit_mural')}}" method = "GET">
             <input type = "hidden" name = "muralid" value = "{{ mural['uuid'] }}">
             <button type="submit" name="edit" class="btn btn-warning">Edit</button>
         </form>

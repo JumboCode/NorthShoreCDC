@@ -17,8 +17,6 @@ from functools import wraps
 from flask import make_response
 from functools import update_wrapper
 import operator
-#from flask.ext.session import Session
-
 
 firebase_path = os.environ.get('FIREBASE_PATH')
 
@@ -28,12 +26,7 @@ app = Flask(__name__)
 # This is a flask specific secret_key, used for encrypting session cookies
 app.secret_key = os.environ.get('SECRET_KEY')
 
-
 firebase = firebase.FirebaseApplication(firebase_path, None)
-
-
-#SESSION_TYPE = 'redis'
-#Session(app)
 
 def sign_in_with_email_and_password(email, password):
         request_ref = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key={0}".format(os.environ.get('APP_KEY'))
@@ -49,14 +42,13 @@ def sign_in_with_email_and_password(email, password):
             # session["auth_expiration"] = time.time() + 10
             session["auth_expiration"] = time.time() + int(current_user["expiresIn"]) - 60*5
             
-            return redirect("/api/get")
+            return redirect("/get_all_murals")
         except KeyError:
-            print "Invalid login attempt 47"
-            return redirect("/api/login", code=302)
+            return redirect("/login", code=302)
 
  
 
-class FirePut(Form):
+class NewMural(Form):
     photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
     lat = DecimalField('Lat', places = 7, validators=[DataRequired(), NumberRange(min=42.51, max = 42.52)])
     longitude = DecimalField('Long', places = 7, validators=[DataRequired(), NumberRange(min=-70.9, max = -70.88)])
@@ -67,7 +59,7 @@ class FirePut(Form):
     description = TextAreaField('Description', validators=[])
     medium = StringField('Medium', validators=[DataRequired()])
 
-class FireEdit(Form):
+class EditMural(Form):
     photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
     lat = DecimalField('Lat', places = 7, validators=[DataRequired(), NumberRange(min=42.51, max = 42.52)])
     longitude = DecimalField('Long', places = 7, validators=[DataRequired(), NumberRange(min=-70.9, max = -70.88)])
@@ -78,17 +70,17 @@ class FireEdit(Form):
     description = TextAreaField('Description', validators=[])
     medium = StringField('Medium', validators=[DataRequired()])
 
-class Validate(Form):
+class Validate_User(Form):
     email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
 
-class ArtistPut(Form):
+class NewArtist(Form):
     name = StringField('Name', validators=[DataRequired()])
     city = StringField('City', validators=[DataRequired()])
     bio = TextAreaField('Bio', validators=[])
     link = StringField('Link', validators=[ Optional(), URL(require_tld=True, message=None)])
 
-class ArtistEdit(Form):
+class EditArtist(Form):
     name = StringField('Name', validators=[DataRequired()])
     city = StringField('City', validators=[DataRequired()])
     bio = TextAreaField('Bio', validators=[])
@@ -108,7 +100,7 @@ def requires_auth(f):
                 firebase.authentication = None
                 return result
             
-        return redirect('/api/login')
+        return redirect('/login')
     return decorated
 
 def nocache(f):
@@ -118,96 +110,85 @@ def nocache(f):
         return resp
     return update_wrapper(new_func, f)
 
-
-count = 0
-
-@app.route('/api/put', methods=['GET', 'POST'])
+@app.route('/put', methods=['GET', 'POST'])
 @requires_auth
-def fireput():
-    form = FirePut()
+def new_mural():
+    new_mural_form = NewMural()
     artists = firebase.get('/', 'artists')
-    c = []
+    sorted_artists = []
     for a in artists:
-    	c.append((artists[a]["uuid"], artists[a]["name"]))
- 	c = sorted(c, key = lambda x: x[1])
- 	form.artist.choices = c
-    if form.validate_on_submit():
-        global count
-        count += 1
+    	sorted_artists.append((artists[a]["uuid"], artists[a]["name"]))
+ 	sorted_artists = sorted(sorted_artists, key = lambda x: x[1])
+ 	new_mural_form.artist.choices = sorted_artists
+    if new_mural_form.validate_on_submit():
         uuidtoken = uuid.uuid4()
         
         # the new mural's index = 1 + the number of existing murals
         murals = firebase.get('/', 'murals')
         index = 1 + len(murals)
         
-        putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
-                    'Long' : form.longitude.data, 'Artist' : form.artist.data,
-                    'Title' : form.title.data, 'Month' : form.month.data,
-                    'Year' : form.year.data, 'Description' : form.description.data,
-                    'Medium' : form.medium.data, 'uuid' : str(uuidtoken),
+        putData = { 'Photo' : new_mural_form.photo.data, 'Lat' : new_mural_form.lat.data,
+                    'Long' : new_mural_form.longitude.data, 'Artist' : new_mural_form.artist.data,
+                    'Title' : new_mural_form.title.data, 'Month' : new_mural_form.month.data,
+                    'Year' : new_mural_form.year.data, 'Description' : new_mural_form.description.data,
+                    'Medium' : new_mural_form.medium.data, 'uuid' : str(uuidtoken),
                     'Index': index }
         firebase.put('/murals', uuidtoken, putData)
-        return render_template('form-result.html', putData=putData)
-    return render_template('My-Form.html', form=form)
+        return redirect(url_for('all_murals'), code=302)
+    return render_template('new_mural.html', form=new_mural_form)
 
-@app.route('/api/edit', methods=['GET', 'POST'])
+@app.route('/edit', methods=['GET', 'POST'])
 @requires_auth
-def fireedit():
-    form = FireEdit()
+def edit_mural():
+    edit_form = EditMural()
     muralid = str(request.args["muralid"])
-    print muralid
     murals = firebase.get('/', 'murals')
     mural = murals[muralid]
     artists = firebase.get('/', 'artists')
-    c = []
+    sorted_artists = []
     for a in artists:
-        c.append((artists[a]["uuid"], artists[a]["name"]))
-    c = sorted(c, key = lambda x: x[1])
-    form.artist.choices = c
-    if form.validate_on_submit():
-        putData = { 'Photo' : form.photo.data, 'Lat' : form.lat.data,
-                    'Long' : form.longitude.data, 'Artist' : form.artist.data,
-                    'Title' : form.title.data, 'Month' : form.month.data,
-                    'Year' : form.year.data, 'Description' : form.description.data,
-                    'Medium' : form.medium.data, 'uuid' : str(muralid),
+        sorted_artists.append((artists[a]["uuid"], artists[a]["name"]))
+    sorted_artists = sorted(sorted_artists, key = lambda x: x[1])
+    edit_form.artist.choices = sorted_artists
+    if edit_form.validate_on_submit():
+        putData = { 'Photo' : edit_form.photo.data, 'Lat' : edit_form.lat.data,
+                    'Long' : edit_form.longitude.data, 'Artist' : edit_form.artist.data,
+                    'Title' : edit_form.title.data, 'Month' : edit_form.month.data,
+                    'Year' : edit_form.year.data, 'Description' : edit_form.description.data,
+                    'Medium' : edit_form.medium.data, 'uuid' : str(muralid),
                     'Index': mural["Index"] }
-        print putData
         firebase.delete('/murals', str(muralid))
-        print "deleted"
         firebase.put('/murals', muralid, putData)
-        print "added"
-        return redirect(url_for('fireget'), code=302)
-    return render_template('edit.html', form=form, mural = mural, murals = murals, muralid=muralid)
+        return redirect(url_for('all_murals'), code=302)
+    return render_template('edit_mural.html', form=edit_form, mural = mural, murals = murals, muralid=muralid)
 
-@app.route('/api/login', methods=['GET','POST'])
+@app.route('/login', methods=['GET','POST'])
 def validate():
-    form = Validate()
-    if form.validate_on_submit():
-        return sign_in_with_email_and_password(form.email.data, form.password.data)
-    return render_template('validation-form.html', form=form)
+    val_form = Validate_User()
+    if val_form.validate_on_submit():
+        return sign_in_with_email_and_password(val_form.email.data, val_form.password.data)
+    return render_template('login.html', form=val_form)
 
-@app.route('/api/new_artist', methods=['GET', 'POST'])
+@app.route('/new_artist', methods=['GET', 'POST'])
 @requires_auth
 def artistput():
-    form = ArtistPut()
-    if form.validate_on_submit():
+    new_art_form = NewArtist()
+    if new_art_form.validate_on_submit():
         uuidtoken = uuid.uuid4()
-        putData = { 'name' : form.name.data,
-                    'city' : form.city.data, 
-                    'bio' : form.bio.data,
-                    'link' : form.link.data,
+        putData = { 'name' : new_art_form.name.data,
+                    'city' : new_art_form.city.data, 
+                    'bio' : new_art_form.bio.data,
+                    'link' : new_art_form.link.data,
                     'uuid' : str(uuidtoken)}
         artists = firebase.get('/', 'artists')
         firebase.put('/artists', uuidtoken, putData)
-        return redirect(url_for('fireput'), code=302)
-    return render_template('artist-form.html', form=form)
+        return redirect(url_for('all_artists'), code=302)
+    return render_template('new_artist.html', form=new_art_form)
 
-@app.route('/', methods = ['GET', 'POST'])
-
-@app.route('/api/get', methods = ['GET', 'POST'])
+@app.route('/get_all_murals', methods = ['GET', 'POST'])
 @requires_auth
 @nocache
-def fireget():
+def all_murals():
     artists = firebase.get('/','artists')
     murals = firebase.get('/','murals')
     
@@ -216,9 +197,9 @@ def fireget():
     for m in sorted_keys:
         sorted_murals.append(murals[m])
     
-    return render_template('disp-all.html', artists = artists, murals=sorted_murals)
+    return render_template('disp_all_murals.html', artists = artists, murals=sorted_murals)
 
-@app.route('/api/delete_mural', methods = ['GET', 'POST'])
+@app.route('/delete_mural', methods = ['GET', 'POST'])
 @requires_auth
 def delete_mural():
     
@@ -241,71 +222,64 @@ def delete_mural():
         firebase.put('/murals', uuid, murals[uuid])
     
     
-    return redirect(url_for('fireget'), code=302)
+    return redirect(url_for('all_murals'), code=302)
 
-@app.route('/api/change_mural_index', methods = ['POST'])
+@app.route('/change_mural_index', methods = ['POST'])
 @requires_auth
 def change_mural_index():
-	# firebase.delete('/murals', str(request.form["muralid"]))
-    
-    muralID = str(request.form["muralid"])
+    mural_id = str(request.form["muralid"])
     up_or_down = str(request.form["upOrDown"])
     murals = firebase.get('/','murals')
     
-    print "All the murals:", murals
-    
-    # fromMural is the mural corresponding to the muralid
-    # toMural is the mural with the Index that fromMural's Index should be changed to
-    fromMural = None
-    toMural = None
+    # from_mural is the mural corresponding to the muralid
+    # to_mural is the mural with the Index that from_mural's Index should be changed to
+    from_mural = None
+    to_mural = None
     
     for m in murals:
-        if m == muralID:
-            fromMural = murals[m]
+        if m == mural_id:
+            from_mural = murals[m]
     
     # If the muralID turns out to not be valid
-    if fromMural == None:
-        return redirect(url_for('fireget'), code=302)
+    if from_mural == None:
+        return redirect(url_for('all_murals'), code=302)
+
+    from_mural_index = from_mural["Index"]
     
-    fromMuralIndex = fromMural["Index"]
-    
-    toMuralIndex = 0
+    to_mural_index = 0
     if up_or_down == "UP":
-        toMuralIndex = fromMuralIndex - 1
+        to_mural_index = from_mural_index - 1
     elif up_or_down == "DOWN":
-        toMuralIndex = fromMuralIndex + 1
+        to_mural_index = from_mural_index + 1
     
     for m in murals:
-        if murals[m]["Index"] == toMuralIndex:
-            toMural = murals[m]
+        if murals[m]["Index"] == to_mural_index:
+            to_mural = murals[m]
     
     # Handles when you want to move to an invalid index
-    if toMural == None:
-        return redirect(url_for('fireget'), code=302)
+    if to_mural == None:
+        return redirect(url_for('all_murals'), code=302)
     
-    fromMural["Index"] = toMuralIndex
-    toMural["Index"] = fromMuralIndex
+    from_mural["Index"] = to_mural_index
+    to_mural["Index"] = from_mural_index
     
     # update firebase
-    firebase.put('/murals', fromMural["uuid"], fromMural)
-    firebase.put('/murals', toMural["uuid"], toMural)
+    firebase.put('/murals', from_mural["uuid"], from_mural)
+    firebase.put('/murals', to_mural["uuid"], to_mural)
     
-    print "fromMural", fromMural
-    print "toMural", toMural
-    
-    return redirect(url_for('fireget'), code=302)
+    return redirect(url_for('all_murals'), code=302)
 
-@app.route('/api/artistget', methods = ['GET', 'POST'])
+@app.route('/all_artists', methods = ['GET', 'POST'])
 @requires_auth
 @nocache
-def artistget():
+def all_artists():
     artists = firebase.get('/','artists')
-    return render_template('disp-all-artists.html', artists = artists)
+    return render_template('disp_all_artists.html', artists = artists)
 
-@app.route('/api/edit_artist', methods=['GET', 'POST'])
+@app.route('/edit_artist', methods=['GET', 'POST'])
 @requires_auth
 def edit_artist():
-    form = ArtistEdit()
+    form = EditArtist()
     artistid = str(request.args["artists"])
     artists = firebase.get('/', 'artists')
     artist = artists[artistid]
@@ -317,10 +291,10 @@ def edit_artist():
                     'uuid' : str(artistid) }
         firebase.delete('/artists', str(artistid))
         firebase.put('/artists', artistid, putData)
-        return redirect(url_for('artistget'), code=302)
-    return render_template('edit-artist.html', form=form, artist = artist)
+        return redirect(url_for('all_artists'), code=302)
+    return render_template('edit_artist.html', form=form, artist = artist)
 
-@app.route('/api/delete_artist', methods = ['GET', 'POST'])
+@app.route('/delete_artist', methods = ['GET', 'POST'])
 @requires_auth
 def delete_artist():
     artist = str(request.form["artistid"])
@@ -330,21 +304,16 @@ def delete_artist():
     for key in murals:
         if murals[key]["Artist"] == artist:
             flash("Cannot delete an artist with existing murals!")
-            return redirect(url_for('artistget'), code=302)
+            return redirect(url_for('all_artists'), code=302)
         
     
     firebase.delete('/artists', artist)
-    return redirect(url_for('artistget'), code=302)
+    return redirect(url_for('all_artists'), code=302)
 
-
-@app.route('/test')
-def hello_world():
-    return firebase.get('/', 'test')
-
-@app.route('/api/logout', methods = ['GET'])
+@app.route('/logout', methods = ['GET'])
 def logout():
     session.clear()
-    return redirect('/api/login')
+    return redirect('/login')
 
 
 if __name__ == "__main__":
