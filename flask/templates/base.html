@@ -2,51 +2,58 @@
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel = "stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
-    <!-- <div class="container"> -->
-      <!-- <div class="navbar"> -->
-      <!--   <div class="navbar-inner"> -->
-      <!--     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> -->
-      <!--       <span class="icon-bar"></span> -->
-      <!--       <span class="icon-bar"></span> -->
-      <!--       <span class="icon-bar"></span> -->
-      <!--     </a> -->
-      <!--     <a class="brand" id="brand_name" href="/">Vote Pledge</a> -->
-      <!--       <ul class="nav"> -->
-      <!--         <li><a class="page_link" href="{{ "alksdjflkasjf" }}">Home</a></li> -->
-      <!--         <li><a class="page_link" href="/login">Sign Up</a></li> -->
-      <!--       </ul> -->
-      <!--     <div class="nav-collapse collapse"> -->
-      <!--     </div> -->
-      <!--   </div> -->
-      <!-- </div> -->
-      <!-- <div class="row"> -->
-        <!-- <div class="span12"> -->
+        
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                    <script>alert("{{ message }}")</script>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
     <body>
-      <header id="parent_header">
-      <h1>Punto Urban Art Museum App - Admin Portal</h1>
-      </header>
-        <main id="override_bootstrap">
-          <div>
-            <a href = "{{ url_for('fireput') }}">Add a mural</a>&nbsp;&nbsp;
-            <a href = "{{ url_for('fireget') }}">View/Delete murals</a>&nbsp;&nbsp;
-            <a href = "{{ url_for('artistput') }}">Add an artist</a>&nbsp;&nbsp;
-            <a href = "{{ url_for('logout') }}">Logout</a>
-          </div>
+      <div class="container">
+      <div class="row">
+        <span><img class="header-img" src="http://puntourbanartmuseum.org/images/logo.png" style="width: 34%; margin-top: 3%; margin-bottom: 3% "/></span>
+
+      </div>
+      <div class="row">
+          <nav class="navbar navbar-inverse bg-light">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="{{ url_for('fireget') }}">Admin Portal</a>
+              </div>
+              <ul class="nav navbar-nav" >
+                  <li><a href="{{ url_for('fireget') }}">Murals</a></li>
+                  <li><a href="{{ url_for('artistget') }}">Artists</a></li>
+                  <li><a href="{{ url_for('artistput') }}">New Artist</a></li>
+                  <li><a href="{{ url_for('fireput') }}">New Mural</a></li>
+                  <li><a href="{{ url_for('logout') }}">Logout</a></li>
+              </ul>
+            </div>
+          </nav>
           {% block content %}
 		<!-- <div class="container"> -->
-                        <div id='page-wrap'>
+                        <div id='page-wrap' style="padding: 3%;">
                             <!-- <center> -->
                                 {% block page_content %}{% endblock %}
                             <!-- </center> -->
                         </div>
 		<!-- </div> -->
            {% endblock %}
-        </main>
 	<!-- </div> -->
        <!-- </div> -->
     <!-- </div> -->   
-    </body>
+    </div>
+    </div>
+  </body>
 
 
 </html>
