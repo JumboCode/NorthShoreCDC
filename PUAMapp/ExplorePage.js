@@ -22,33 +22,29 @@ import  MapView, {Polyline} from 'react-native-maps';
 
 
 
-// const polylines = [ 
-//   {
-//     latitude: 42.518351, 
-//     longitude: -70.8909514 
-//   },
-//   {
-//     latitude: 42.5185239, 
-//     longitude: -70.8910845
-//   },
-//   {
-//     latitude: 42.5183255, 
-//     longitude: -70.8934113
-//   }
-//                       ]
+const polylines = [ 
+  {
+    latitude: 42.518351, 
+    longitude: -70.8909514 
+  },
+  {
+    latitude: 42.5185239, 
+    longitude: -70.8910845
+  },
+  {
+    latitude: 42.5183255, 
+    longitude: -70.8934113
+  }
+                      ]
 
 
-
+// This triggers asking the user for location permissions.
+// This won't do anything if the permission is already granted.
+Permissions.askAsync(Permissions.LOCATION);
 export default class ExplorePage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-        
-       
-      }
-
-        
-    }
+ }
 
     componentDidMount() {
         // if (Platform.OS === 'ios') this.watchID = navigator.geolocation.watchPosition();
@@ -57,15 +53,6 @@ export default class ExplorePage extends React.Component {
     componentWillUnmount() {
         // if (Platform.OS === 'ios') navigator.geolocation.clearWatch(this.watchID);
     }
-
-// This triggers asking the user for location permissions.
-// This won't do anything if the permission is already granted.
-Permissions.askAsync(Permissions.LOCATION);
-
-export default class ExplorePage extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   static navigationOptions = ({ navigation }) => {
     return Platform.OS === "ios"
@@ -269,7 +256,7 @@ export default class ExplorePage extends React.Component {
             onPress={()=>this.toggleTour()}>  
             </Button>}
           </View>
-        )
+        );
     }
 }
 
