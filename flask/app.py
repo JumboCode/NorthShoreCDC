@@ -222,7 +222,7 @@ def delete_mural():
         firebase.put('/murals', uuid, murals[uuid])
     
     
-    return redirect(url_for('all_artists'), code=302)
+    return redirect(url_for('all_murals'), code=302)
 
 @app.route('/change_mural_index', methods = ['POST'])
 @requires_auth
