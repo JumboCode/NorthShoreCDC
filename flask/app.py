@@ -199,7 +199,7 @@ def all_murals():
     for m in sorted_keys:
         sorted_murals.append(murals[m])
     
-    return render_template('disp-all.html', artists = artists, murals=sorted_murals)
+    return render_template('disp_all_murals.html', artists = artists, murals=sorted_murals)
 
 @app.route('/delete_mural', methods = ['GET', 'POST'])
 @requires_auth
@@ -276,7 +276,7 @@ def change_mural_index():
 @nocache
 def all_artists():
     artists = firebase.get('/','artists')
-    return render_template('disp-all-artists.html', artists = artists)
+    return render_template('disp_all_artists.html', artists = artists)
 
 @app.route('/edit_artist', methods=['GET', 'POST'])
 @requires_auth
