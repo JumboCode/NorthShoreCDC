@@ -184,7 +184,7 @@ def artistput():
                     'uuid' : str(uuidtoken)}
         artists = firebase.get('/', 'artists')
         firebase.put('/artists', uuidtoken, putData)
-        return redirect(url_for('new_artist'), code=302)
+        return redirect(url_for('all_artists'), code=302)
     return render_template('new_artist.html', form=new_art_form)
 
 @app.route('/get_all_murals', methods = ['GET', 'POST'])
@@ -233,8 +233,8 @@ def change_mural_index():
     up_or_down = str(request.form["upOrDown"])
     murals = firebase.get('/','murals')
     
-    # fromMural is the mural corresponding to the muralid
-    # toMural is the mural with the Index that fromMural's Index should be changed to
+    # from_mural is the mural corresponding to the muralid
+    # to_mural is the mural with the Index that from_mural's Index should be changed to
     from_mural = None
     to_mural = None
     
@@ -243,7 +243,7 @@ def change_mural_index():
             from_mural = murals[m]
     
     # If the muralID turns out to not be valid
-    if fromMural == None:
+    if from_mural == None:
         return redirect(url_for('all_murals'), code=302)
 
     from_mural_index = from_mural["Index"]
