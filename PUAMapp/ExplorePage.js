@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   Button,
   StatusBar,
-  Platform
+  Platform,
+  Alert
 } from "react-native";
 import { Permissions } from "expo";
 import { MapView } from "expo";
@@ -78,8 +79,12 @@ export default class ExplorePage extends React.Component {
 
     murals = this.props.screenProps.murals || {};
     artists = this.props.screenProps.artists || {};
-    defaultMuralID = this.props.navigation.state.params.muralID || '';
-
+    
+    defaultMuralID = '';
+    if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
+      defaultMuralID = this.props.navigation.state.params.muralID;
+    }
+    
 
     return Object.keys(murals).map((key, i) => {
       lat = parseFloat(murals[key]["Lat"]);
@@ -110,34 +115,44 @@ export default class ExplorePage extends React.Component {
     });
   }
   
-  showCallout() {
+  goToMural() {
+
     if (this.calloutToMakeVisible) {
       this.calloutToMakeVisible.showCallout();
     }
+
+    if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
+        murals = this.props.screenProps.murals || {};
+        key = this.props.navigation.state.params.muralID;
+        
+        region = {
+          latitude: parseFloat(murals[key]["Lat"]),
+          longitude: parseFloat(murals[key]["Long"]),
+          latitudeDelta: .0000005,
+          longitudeDelta: .0000005,
+        }
+        
+        this.map.animateToRegion(region, 1);
+    }
+    
   }
   
   render() {
     const { navigate } = this.props.navigation;
     
-    // If this.props.muralID is set, use that. Also zoom more.
-    murals = this.props.screenProps.murals || {};
-    key = this.props.navigation.state.params.muralID;
+
     initialLat = 42.518217;
     initialLong = -70.891919;
-    initialDelta = 0.0005;
-    if (key) {
-        initialLat = parseFloat(murals[key]["Lat"]);
-        initialLong = parseFloat(murals[key]["Long"]);
-        initialDelta = .0000005; // more zoooooom
-    }
-    
+    initialDelta = 0.005;
+
     return (
       <View style={{ flex: 1 }}>
         <StatusBar
           barStyle={Platform.OS === "ios" ? "dark-content" : "light-content"}
         />
         <MapView
-          onLayout={this.showCallout.bind(this)}
+          ref = {(r) => this.map = r}
+          onLayout={this.goToMural.bind(this)}
           showsPointsOfInterest={false}
           showsUserLocation={true}
           style={{ flex: 1 }}

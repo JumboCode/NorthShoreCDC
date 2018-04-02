@@ -9,7 +9,8 @@ import {
   Dimensions,
   TouchableOpacity,
   Platform,
-  StatusBar
+  StatusBar,
+  Alert
 } from "react-native";
 import { NavigationActions } from "react-navigation";
 import { lightpurple, darkpurple, pink } from "./colors.js";
@@ -132,14 +133,15 @@ export default class MuralInfoPage extends React.Component {
     goToExplorePageButton = (
       <TouchableOpacity
         style={{
-          paddingLeft: 3,
-          paddingTop: 15,
+          paddingTop: 100,
           paddingBottom: 50,
           paddingRight: 70
         }}
         onPress={this.goToExplorePage.bind(this)}
       >
-        <Text style={infoStyles.moreInfoButton}>See on map</Text>
+        <View>
+          <Text style={infoStyles.moreInfoButton}>See on Map!</Text>
+        </View>
       </TouchableOpacity>
     );
 
