@@ -169,7 +169,7 @@ def validate():
     val_form = Validate_User()
     if val_form.validate_on_submit():
         return sign_in_with_email_and_password(val_form.email.data, val_form.password.data)
-    return render_template('validation-form.html', form=val_form)
+    return render_template('login.html', form=val_form)
 
 @app.route('/new_artist', methods=['GET', 'POST'])
 @requires_auth
