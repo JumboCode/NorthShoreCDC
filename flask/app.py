@@ -120,7 +120,7 @@ def new_mural():
     	sorted_artists.append((artists[a]["uuid"], artists[a]["name"]))
  	sorted_artists = sorted(sorted_artists, key = lambda x: x[1])
  	new_mural_form.artist.choices = sorted_artists
-    if form.validate_on_submit():
+    if new_mural_form.validate_on_submit():
         global count
         count += 1
         uuidtoken = uuid.uuid4()
@@ -136,7 +136,7 @@ def new_mural():
                     'Medium' : new_mural_form.medium.data, 'uuid' : str(uuidtoken),
                     'Index': index }
         firebase.put('/murals', uuidtoken, putData)
-        return render_template('form-result.html', putData=putData)
+        return render_template('mural_added.html', putData=putData)
     return render_template('new_mural.html', form=new_mural_form)
 
 @app.route('/edit', methods=['GET', 'POST'])
@@ -162,7 +162,7 @@ def edit_mural():
         firebase.delete('/murals', str(muralid))
         firebase.put('/murals', muralid, putData)
         return redirect(url_for('all_murals'), code=302)
-    return render_template('edit.html', form=edit_form, mural = mural, murals = murals, muralid=muralid)
+    return render_template('edit_mural.html', form=edit_form, mural = mural, murals = murals, muralid=muralid)
 
 @app.route('/login', methods=['GET','POST'])
 def validate():
@@ -175,7 +175,7 @@ def validate():
 @requires_auth
 def artistput():
     new_art_form = NewArtist()
-    if form.validate_on_submit():
+    if new_art_form.validate_on_submit():
         uuidtoken = uuid.uuid4()
         putData = { 'name' : new_art_form.name.data,
                     'city' : new_art_form.city.data, 
@@ -294,7 +294,7 @@ def edit_artist():
         firebase.delete('/artists', str(artistid))
         firebase.put('/artists', artistid, putData)
         return redirect(url_for('all_artists'), code=302)
-    return render_template('edit-artist.html', form=form, artist = artist)
+    return render_template('edit_artist.html', form=form, artist = artist)
 
 @app.route('/delete_artist', methods = ['GET', 'POST'])
 @requires_auth
