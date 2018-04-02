@@ -185,7 +185,7 @@ def artistput():
         artists = firebase.get('/', 'artists')
         firebase.put('/artists', uuidtoken, putData)
         return redirect(url_for('new_artist'), code=302)
-    return render_template('artist-form.html', form=new_art_form)
+    return render_template('new_artist.html', form=new_art_form)
 
 @app.route('/get_all_murals', methods = ['GET', 'POST'])
 @requires_auth
