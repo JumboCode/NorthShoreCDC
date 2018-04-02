@@ -116,7 +116,7 @@ export default class ContactPage extends React.Component {
         />
         <View style={contactStyles.textContainerLeft}>
           <Text style={contactStyles.textLeft}>
-            A project of the North
+            A project of North
             {"\n"}
             Shore Community
             {"\n"}
