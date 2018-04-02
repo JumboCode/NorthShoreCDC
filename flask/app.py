@@ -304,7 +304,7 @@ def delete_artist():
     for key in murals:
         if murals[key]["Artist"] == artist:
             flash("Cannot delete an artist with existing murals!")
-            return redirect(url_for('artistget'), code=302)
+            return redirect(url_for('all_artists'), code=302)
         
     
     firebase.delete('/artists', artist)
