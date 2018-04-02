@@ -121,8 +121,6 @@ def new_mural():
  	sorted_artists = sorted(sorted_artists, key = lambda x: x[1])
  	new_mural_form.artist.choices = sorted_artists
     if new_mural_form.validate_on_submit():
-        global count
-        count += 1
         uuidtoken = uuid.uuid4()
         
         # the new mural's index = 1 + the number of existing murals
@@ -136,7 +134,7 @@ def new_mural():
                     'Medium' : new_mural_form.medium.data, 'uuid' : str(uuidtoken),
                     'Index': index }
         firebase.put('/murals', uuidtoken, putData)
-        return render_template('mural_added.html', putData=putData)
+        return redirect(url_for('all_murals'), code=302)
     return render_template('new_mural.html', form=new_mural_form)
 
 @app.route('/edit', methods=['GET', 'POST'])
