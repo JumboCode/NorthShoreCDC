@@ -14,6 +14,7 @@ import { NavigationActions } from "react-navigation";
 import { lightpurple, darkpurple, pink } from "./colors.js";
 import Img from "react-native-image-progress";
 import Progress from "react-native-progress";
+import { Feather } from '@expo/vector-icons';
 
 export default class GalleryPage extends React.Component {
   constructor(props) {
@@ -28,15 +29,27 @@ export default class GalleryPage extends React.Component {
               style={{ top: 30, left: -25, padding: 40 }}
               onPress={() => navigation.dispatch(NavigationActions.back())}
             >
-              <Image
+              <View
                 style={{
                   position: "relative",
+                  flexDirection: "row",
+                  backgroundColor: 'white',
                   zIndex: 100,
-                  maxWidth: 120,
-                  maxHeight: 40
+                  marginTop: -15,
+                  width: 120,
+                  height: 40,
+                  borderRadius: 100,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  paddingRight: 6,
+                  shadowOffset: { width: 1, height: 1 },
+                  shadowRadius: 2,
+                  shadowOpacity: 0.6,
                 }}
-                source={require("./assets/images/backbutton.png")}
-              />
+              >
+                <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}}/>
+                <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}>  Back </Text>
+              </View>
             </TouchableOpacity>
           ),
           headerStyle: {
@@ -63,15 +76,24 @@ export default class GalleryPage extends React.Component {
     const { navigate } = this.props.navigation;
     murals = this.props.screenProps.murals || {};
     artists = this.props.screenProps.artists || {};
-    return Object.keys(murals).map((key, i) => {
-      uri = murals[key]["Photo"];
+    muralsArray = []
+
+    Object.keys(murals).map((key, i) => {
+
+      muralsArray.push(murals[key]);
+    });
+
+    muralsArray.sort(function (a,b){return a["Index"] - b["Index"]});
+    
+    return muralsArray.map((mural, i) => {
+      uri = mural["Photo"];
       return (
         <TouchableOpacity
           key={i}
           onPress={() =>
             navigate("MuralInfoPage", {
-              mural: murals[key],
-              artist: artists[murals[key]["Artist"]]
+              mural: mural,
+              artist: artists[mural["Artist"]]
             })
           }
         >
@@ -110,7 +132,7 @@ export default class GalleryPage extends React.Component {
           <View
             style={{
               backgroundColor:
-                Platform.OS === "ios" ? "rgba(0,0,0,.0)" : "rgba(0,0,0,.5)",
+                Platform.OS === "ios" ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,.5)",
               height: height + 40,
               position: "absolute",
               width: width,

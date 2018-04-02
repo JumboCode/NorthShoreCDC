@@ -19,6 +19,7 @@ import { lightpurple, darkpurple, pink } from "./colors.js";
 import { NavigationActions } from "react-navigation";
 import Hyperlink from "react-native-hyperlink";
 import LinkifyIt from "linkify-it";
+import { Feather } from '@expo/vector-icons';
 
 const paypalUrl =
   "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UF8MF7Q9E7HSA";
@@ -56,18 +57,30 @@ export default class ContactPage extends React.Component {
       ? {
           headerLeft: (
             <TouchableOpacity
-              style={{ top: 25, left: -25, padding: 40 }}
+              style={{ top: 30, left: -25, padding: 40 }}
               onPress={() => navigation.dispatch(NavigationActions.back())}
             >
-              <Image
+              <View
                 style={{
                   position: "relative",
+                  flexDirection: "row",
+                  backgroundColor: 'white',
+                  marginTop: -15,
                   zIndex: 100,
-                  maxWidth: 120,
-                  maxHeight: 40
+                  width: 120,
+                  height: 40,
+                  borderRadius: 100,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  paddingRight: 6,
+                  shadowOffset: { width: 1, height: 1 },
+                  shadowRadius: 2,
+                  shadowOpacity: 0.6,
                 }}
-                source={require("./assets/images/backbutton.png")}
-              />
+              >
+                <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}}/>
+                <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}>  Back </Text>
+              </View>
             </TouchableOpacity>
           ),
           headerStyle: {
@@ -123,6 +136,14 @@ export default class ContactPage extends React.Component {
           <Text style={contactStyles.donateText}> DONATE </Text>
         </TouchableOpacity>
         <View style={contactStyles.textContainerRight}>
+
+          <TouchableOpacity style= {contactStyles.bugReport_tourRequestImage} onPress={() => Linking.openURL("http://www.northshorecdc.org").catch(err => console.error('An error occurred', err))}>
+            <Text style = {contactStyles.bugReport_tourRequestText}>Book Tour</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style= {contactStyles.bugReport_tourRequestImage} onPress={() => Linking.openURL(feedbackFormURL).catch(err => console.error('An error occurred', err))}>
+            <Text style = {contactStyles.bugReport_tourRequestText}>Report Bug</Text>
+          </TouchableOpacity>
           <Hyperlink
             linkify={linkify}
             linkDefault={true}
@@ -249,24 +270,42 @@ if (Platform.OS === "ios") {
     },
     donateText: {
       fontSize: 22,
-      paddingTop: "2%",
       fontWeight: "bold",
       color: "white"
     },
     donateImage: {
       alignItems: "center",
-      paddingLeft: 5,
-      padding: 3,
-      paddingBottom: 5,
+      justifyContent: "center",
       backgroundColor: pink,
       width: 160,
+      height: 40,
       marginLeft: "8%",
-      marginTop: isIphoneX() ? "-55%" : "-40%",
+      marginTop: isIphoneX() ? "-30%" : "-11%",
       borderRadius: 100,
       shadowColor: "black",
       shadowOffset: { width: 3, height: 4 },
-      shadowOpacity: 0.5
-    }
+      shadowRadius: 3,
+      shadowOpacity: 0.7
+    },
+    bugReport_tourRequestText: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: pink,
+    },
+    bugReport_tourRequestImage: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      minWidth: 120,
+      paddingLeft: 25,
+      paddingRight: 25,
+      height: 40,
+      marginBottom: '3%',
+      borderRadius: 100,
+      backgroundColor: 'white',
+      shadowColor: 'black',
+      shadowOffset: {width: 1, height: 1, },
+      shadowOpacity: 0.6,
+    },
   });
 } else {
   contactStyles = StyleSheet.create({
@@ -324,15 +363,38 @@ if (Platform.OS === "ios") {
     },
     donateImage: {
       alignItems: "center",
+      justifyContent: "center",
       backgroundColor: pink,
-      padding: 5,
-      paddingLeft: 6,
-      width: 150,
-      marginLeft: "7%",
+      height: 45,
+      paddingBottom: 1,
+      paddingLeft: 1,
+      width: 160,
+      marginLeft: "8%",
       marginRight: "auto",
-      marginTop: "-20%",
+      marginTop: "-10%",
       borderRadius: 100,
-      elevation: 12
-    }
+      elevation: 6
+    },
+    bugReport_tourRequestText: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: pink,
+    },
+    bugReport_tourRequestImage: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      minWidth: 130,
+      height: 40,
+      paddingLeft: 20,
+      paddingRight: 20,
+      marginBottom: '3%',
+      marginRight: '-2%',
+      borderRadius: 100,
+      backgroundColor: 'white',
+      shadowColor: 'black',
+      shadowOffset: {width: 3, height: 4, },
+      shadowOpacity: 0.5,
+      elevation: 4,
+    },
   });
 }
