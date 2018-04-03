@@ -185,6 +185,8 @@ def artistput():
         return redirect(url_for('all_artists'), code=302)
     return render_template('new_artist.html', form=new_art_form)
 
+
+@app.route('/', methods = ['GET', 'POST'])
 @app.route('/get_all_murals', methods = ['GET', 'POST'])
 @requires_auth
 @nocache
