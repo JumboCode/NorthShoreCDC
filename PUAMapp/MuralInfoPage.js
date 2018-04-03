@@ -90,7 +90,7 @@ export default class MuralInfoPage extends React.Component {
                   zIndex: 100,
                   marginTop: -15,
                   marginLeft: 'auto',
-                  width: 90,
+                  width: 110,
                   height: 40,
                   borderRadius: 100,
                   alignItems: 'center',
