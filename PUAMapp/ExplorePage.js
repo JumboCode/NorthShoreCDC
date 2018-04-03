@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   Button,
   StatusBar,
-  Platform
+  Platform,
+  Alert
 } from "react-native";
 import { Permissions } from "expo";
 import { MapView } from "expo";
@@ -72,18 +73,29 @@ export default class ExplorePage extends React.Component {
           headerStyle: { backgroundColor: pink }
         };
   }
-
+  
   renderImages() {
     const { navigate } = this.props.navigation;
 
     murals = this.props.screenProps.murals || {};
     artists = this.props.screenProps.artists || {};
+    
+    defaultMuralID = '';
+    if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
+      defaultMuralID = this.props.navigation.state.params.muralID;
+    }
+    
 
     return Object.keys(murals).map((key, i) => {
       lat = parseFloat(murals[key]["Lat"]);
       long = parseFloat(murals[key]["Long"]);
       title = murals[key]["Title"];
       artistName = artists[murals[key]["Artist"]]["name"];
+      
+      setRefLambda = (function (ref) {
+        this.calloutToMakeVisible = ref;
+      }).bind(this);
+      
       return (
         <MapView.Marker
           key={i}
@@ -91,6 +103,7 @@ export default class ExplorePage extends React.Component {
           description={artistName}
           coordinate={{ latitude: lat, longitude: long }}
           pinColor={pink}
+          ref = {key == defaultMuralID ? setRefLambda : null}
           onCalloutPress={() => {
             navigate("MuralInfoPage", {
               mural: murals[key],
@@ -101,23 +114,55 @@ export default class ExplorePage extends React.Component {
       );
     });
   }
+  
+  goToMural() {
 
+    if (this.calloutToMakeVisible) {
+      this.calloutToMakeVisible.showCallout();
+    }
+
+    if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
+        murals = this.props.screenProps.murals || {};
+        key = this.props.navigation.state.params.muralID;
+        
+        region = {
+          latitude: parseFloat(murals[key]["Lat"]),
+          longitude: parseFloat(murals[key]["Long"]),
+          latitudeDelta: .001,
+          longitudeDelta: .001,
+        }
+
+      setTimeout(function () {
+        this.map.animateToRegion(region, 1000);
+      }.bind(this), 500);
+    }
+    
+  }
+  
   render() {
     const { navigate } = this.props.navigation;
+    
+
+    initialLat = 42.518217;
+    initialLong = -70.891919;
+    initialDelta = 0.005;
+
     return (
       <View style={{ flex: 1 }}>
         <StatusBar
           barStyle={Platform.OS === "ios" ? "dark-content" : "light-content"}
         />
         <MapView
+          ref = {(r) => this.map = r}
+          onLayout={this.goToMural.bind(this)}
           showsPointsOfInterest={false}
           showsUserLocation={true}
           style={{ flex: 1 }}
           region={{
-            latitude: 42.518217,
-            longitude: -70.891919,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005
+            latitude: initialLat,
+            longitude: initialLong,
+            latitudeDelta: initialDelta,
+            longitudeDelta: initialDelta
           }}
         >
           {this.renderImages()}
