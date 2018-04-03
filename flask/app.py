@@ -1,22 +1,17 @@
-from flask import Flask, render_template, redirect, session, url_for, request, flash
+from flask import Flask, render_template, redirect, session, url_for, request, flash, current_app
 
-import sys
-from custom_firebase import firebase 
+from custom_firebase import firebase
 
 import os
 from flask_wtf import FlaskForm as Form
 from wtforms.fields import *
 from wtforms.validators import *
-from flask_wtf.csrf import CSRFProtect
-from custom_firebase.firebase import FirebaseApplication, FirebaseAuthentication
 import uuid
 import requests
 import json
 import time
-from functools import wraps
 from flask import make_response
-from functools import update_wrapper
-import operator
+from functools import update_wrapper, wraps
 
 firebase_path = os.environ.get('FIREBASE_PATH')
 
@@ -103,6 +98,20 @@ def requires_auth(f):
         return redirect('/login')
     return decorated
 
+
+def ssl_required(fn):
+    @wraps(fn)
+    def decorated_view(*args, **kwargs):
+        if current_app.config.get("SSL"):
+            if request.is_secure:
+                return fn(*args, **kwargs)
+            else:
+                return redirect(request.url.replace("http://", "https://"))
+
+        return fn(*args, **kwargs)
+
+    return decorated_view
+
 def nocache(f):
     def new_func(*args, **kwargs):
         resp = make_response(f(*args, **kwargs))
@@ -112,6 +121,7 @@ def nocache(f):
 
 @app.route('/put', methods=['GET', 'POST'])
 @requires_auth
+@ssl_required
 def new_mural():
     new_mural_form = NewMural()
     artists = firebase.get('/', 'artists')
@@ -139,6 +149,7 @@ def new_mural():
 
 @app.route('/edit', methods=['GET', 'POST'])
 @requires_auth
+@ssl_required
 def edit_mural():
     edit_form = EditMural()
     muralid = str(request.args["muralid"])
@@ -163,6 +174,7 @@ def edit_mural():
     return render_template('edit_mural.html', form=edit_form, mural = mural, murals = murals, muralid=muralid)
 
 @app.route('/login', methods=['GET','POST'])
+@ssl_required
 def validate():
     val_form = Validate_User()
     if val_form.validate_on_submit():
@@ -171,6 +183,7 @@ def validate():
 
 @app.route('/new_artist', methods=['GET', 'POST'])
 @requires_auth
+@ssl_required
 def artistput():
     new_art_form = NewArtist()
     if new_art_form.validate_on_submit():
@@ -189,6 +202,7 @@ def artistput():
 @app.route('/', methods = ['GET', 'POST'])
 @app.route('/get_all_murals', methods = ['GET', 'POST'])
 @requires_auth
+@ssl_required
 @nocache
 def all_murals():
     artists = firebase.get('/','artists')
@@ -203,6 +217,7 @@ def all_murals():
 
 @app.route('/delete_mural', methods = ['GET', 'POST'])
 @requires_auth
+@ssl_required
 def delete_mural():
     
     # reindex all the murals
@@ -228,6 +243,7 @@ def delete_mural():
 
 @app.route('/change_mural_index', methods = ['POST'])
 @requires_auth
+@ssl_required
 def change_mural_index():
     mural_id = str(request.form["muralid"])
     up_or_down = str(request.form["upOrDown"])
@@ -274,12 +290,14 @@ def change_mural_index():
 @app.route('/all_artists', methods = ['GET', 'POST'])
 @requires_auth
 @nocache
+@ssl_required
 def all_artists():
     artists = firebase.get('/','artists')
     return render_template('disp_all_artists.html', artists = artists)
 
 @app.route('/edit_artist', methods=['GET', 'POST'])
 @requires_auth
+@ssl_required
 def edit_artist():
     form = EditArtist()
     artistid = str(request.args["artists"])
@@ -298,6 +316,7 @@ def edit_artist():
 
 @app.route('/delete_artist', methods = ['GET', 'POST'])
 @requires_auth
+@ssl_required
 def delete_artist():
     artist = str(request.form["artistid"])
     
@@ -313,6 +332,7 @@ def delete_artist():
     return redirect(url_for('all_artists'), code=302)
 
 @app.route('/logout', methods = ['GET'])
+@ssl_required
 def logout():
     session.clear()
     return redirect('/login')
