@@ -28,29 +28,22 @@
           <nav class="navbar navbar-inverse bg-light">
             <div class="container-fluid">
               <div class="navbar-header">
-                <a class="navbar-brand" href="{{ url_for('fireget') }}">Admin Portal</a>
+                <a class="navbar-brand" href="{{ url_for('all_murals') }}">Admin Portal</a>
               </div>
               <ul class="nav navbar-nav" >
-                  <li><a href="{{ url_for('fireget') }}">Murals</a></li>
-                  <li><a href="{{ url_for('artistget') }}">Artists</a></li>
+                  <li><a href="{{ url_for('all_murals') }}">Murals</a></li>
+                  <li><a href="{{ url_for('all_artists') }}">Artists</a></li>
                   <li><a href="{{ url_for('artistput') }}">New Artist</a></li>
-                  <li><a href="{{ url_for('fireput') }}">New Mural</a></li>
+                  <li><a href="{{ url_for('new_mural') }}">New Mural</a></li>
                   <li><a href="{{ url_for('logout') }}">Logout</a></li>
               </ul>
             </div>
           </nav>
           {% block content %}
-		<!-- <div class="container"> -->
                         <div id='page-wrap' style="padding: 3%;">
-                            <!-- <center> -->
                                 {% block page_content %}{% endblock %}
-                            <!-- </center> -->
                         </div>
-		<!-- </div> -->
-           {% endblock %}
-	<!-- </div> -->
-       <!-- </div> -->
-    <!-- </div> -->   
+           {% endblock %} 
     </div>
     </div>
   </body>
