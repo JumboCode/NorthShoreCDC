@@ -104,12 +104,7 @@ export default class ExplorePage extends React.Component {
           coordinate={{ latitude: lat, longitude: long }}
           pinColor={pink}
           ref = {key == defaultMuralID ? setRefLambda : null}
-          onCalloutPress={() => {
-            navigate("MuralInfoPage", {
-              mural: murals[key],
-              artist: artists[murals[key]["Artist"]]
-            });
-          }}
+          onCalloutPress = {() => this.props.navigation.navigate({key: 'screen', routeName: 'MuralInfoPage', params: {mural: murals[key], artist: artists[murals[key]["Artist"]]}})}
         />
       );
     });

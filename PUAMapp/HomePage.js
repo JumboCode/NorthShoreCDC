@@ -27,21 +27,21 @@ export default class HomePage extends React.Component {
         <TouchableOpacity
           activeOpacity={0.75}
           style={styles.darkPurpleButton}
-          onPress={() => navigate("ExplorePage")}
+          onPress={() => navigate({ key: 'Screen1', routeName: 'ExplorePage'})}
         >
           <Text style={styles.buttonText}>EXPLORE</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.75}
           style={styles.lightPurpleButton}
-          onPress={() => navigate("GalleryPage")}
+          onPress={() => navigate({ key: 'Screen2', routeName: 'GalleryPage'})}
         >
           <Text style={styles.buttonText}>GALLERY</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.75}
           style={styles.pinkButton}
-          onPress={() => navigate("ContactPage")}
+          onPress={() => navigate({ key: 'Screen3', routeName: 'ContactPage'})}
         >
           <Text style={styles.buttonText}>CONTACT</Text>
         </TouchableOpacity>
