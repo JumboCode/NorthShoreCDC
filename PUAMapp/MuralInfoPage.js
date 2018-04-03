@@ -10,8 +10,10 @@ import {
   TouchableOpacity,
   Platform,
   StatusBar,
+  Linking,
   Alert
 } from "react-native";
+import Hyperlink from "react-native-hyperlink";
 import { NavigationActions } from "react-navigation";
 import { lightpurple, darkpurple, pink } from "./colors.js";
 import * as Animatable from "react-native-animatable";
@@ -181,6 +183,24 @@ export default class MuralInfoPage extends React.Component {
       description += "\n\n" + artist["bio"];
     }
 
+    if (artist["link"] && artist["link"].trim().length > 0) {
+      var linkText = artist["link"];
+      linkButton = (
+       <TouchableOpacity
+         style={{
+           paddingTop: 15,
+           paddingBottom: 50,
+           paddingRight: 70
+         }}
+         onPress={() => Linking.openURL(artist["link"])}
+       >
+         <View>
+           <Text style={{color: "white", fontSize: 15}}>{artist["link"]} </Text>
+         </View>
+       </TouchableOpacity>
+      );
+    }
+
     descriptionVisible = this.state.descriptionVisible;
     pastInitialClick = this.state.pastInitialClick;
 
@@ -251,6 +271,7 @@ export default class MuralInfoPage extends React.Component {
               >
                 <ScrollView style={{marginTop: 10, height: Dimensions.get("window").height / 2}}>
                   <Text style={{ color: "white", marginTop: 10 }}>{description}</Text>
+                  {linkButton}
                 </ScrollView>
               </Animatable.View>
             )}
