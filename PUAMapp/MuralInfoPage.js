@@ -183,24 +183,6 @@ export default class MuralInfoPage extends React.Component {
       description += "\n\n" + artist["bio"];
     }
 
-    if (artist["link"] && artist["link"].trim().length > 0) {
-      var linkText = artist["link"];
-      linkButton = (
-       <TouchableOpacity
-         style={{
-           paddingTop: 15,
-           paddingBottom: 50,
-           paddingRight: 70
-         }}
-         onPress={() => Linking.openURL(artist["link"])}
-       >
-         <View>
-           <Text style={{color: "white", fontSize: 15}}>{artist["link"]} </Text>
-         </View>
-       </TouchableOpacity>
-      );
-    }
-
     descriptionVisible = this.state.descriptionVisible;
     pastInitialClick = this.state.pastInitialClick;
 
@@ -271,7 +253,20 @@ export default class MuralInfoPage extends React.Component {
               >
                 <ScrollView style={{marginTop: 10, height: Dimensions.get("window").height / 2}}>
                   <Text style={{ color: "white", marginTop: 10 }}>{description}</Text>
-                  {linkButton}
+                  {(artist["link"] && artist["link"].trim().length > 0) &&
+                    <TouchableOpacity
+                      style={{
+                        paddingTop: 30,
+                        paddingBottom: 30,
+                        paddingRight: 15
+                      }}
+                      onPress={() => Linking.openURL(artist["link"])}
+                    >
+                      <View>
+                        <Text style={{color: "white", fontSize: 15, textDecorationLine: 'underline'}}>See more by {artist["name"]}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  }
                 </ScrollView>
               </Animatable.View>
             )}
