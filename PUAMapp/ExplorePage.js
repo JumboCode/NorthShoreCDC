@@ -128,11 +128,13 @@ export default class ExplorePage extends React.Component {
         region = {
           latitude: parseFloat(murals[key]["Lat"]),
           longitude: parseFloat(murals[key]["Long"]),
-          latitudeDelta: .0000005,
-          longitudeDelta: .0000005,
+          latitudeDelta: .001,
+          longitudeDelta: .001,
         }
-        
-        this.map.animateToRegion(region, 1);
+
+      setTimeout(function () {
+        this.map.animateToRegion(region, 1000);
+      }.bind(this), 500);
     }
     
   }

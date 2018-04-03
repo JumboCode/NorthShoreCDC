@@ -16,6 +16,7 @@ import { NavigationActions } from "react-navigation";
 import { lightpurple, darkpurple, pink } from "./colors.js";
 import * as Animatable from "react-native-animatable";
 import { Feather } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 
 // var infoButtons = [
 //   require("./assets/images/info.png"),
@@ -31,10 +32,11 @@ function isIphoneX() {
     (dimen.height === 812 || dimen.width === 812)
   );
 }
-
+var self;
 export default class MuralInfoPage extends React.Component {
   constructor(props) {
     super(props);
+    self = this; // Hackily access component from static navigationOptions
     this.state = {
       descriptionVisible: false,
 
@@ -72,6 +74,34 @@ export default class MuralInfoPage extends React.Component {
               >
                 <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}} />
                 <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}>  Back </Text>
+              </View>
+            </TouchableOpacity>
+          ),
+          headerRight: (
+            <TouchableOpacity
+              style={{ top: 30, right: -25, padding: 40, marginLeft: 'auto' }}
+              onPress={() => self.goToExplorePage()}
+            >
+              <View
+                style={{
+                  position: "relative",
+                  flexDirection: "row",
+                  backgroundColor: 'white',
+                  zIndex: 100,
+                  marginTop: -15,
+                  marginLeft: 'auto',
+                  width: 90,
+                  height: 40,
+                  borderRadius: 100,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  shadowOffset: { width: 1, height: 1 },
+                  shadowRadius: 2,
+                  shadowOpacity: 0.6,
+                }}
+              >
+                <Entypo name="location-pin" size={20} color={pink} />
+                <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}> Map </Text>
               </View>
             </TouchableOpacity>
           ),
@@ -126,21 +156,6 @@ export default class MuralInfoPage extends React.Component {
       >
         <View style={infoStyles.moreInfoButtonContainer}>
           <Text style={infoStyles.moreInfoButton}>Read More</Text>
-        </View>
-      </TouchableOpacity>
-    );
-
-    goToExplorePageButton = (
-      <TouchableOpacity
-        style={{
-          paddingTop: 100,
-          paddingBottom: 50,
-          paddingRight: 70
-        }}
-        onPress={this.goToExplorePage.bind(this)}
-      >
-        <View>
-          <Text style={infoStyles.moreInfoButton}>See on Map!</Text>
         </View>
       </TouchableOpacity>
     );
@@ -239,8 +254,6 @@ export default class MuralInfoPage extends React.Component {
                 </ScrollView>
               </Animatable.View>
             )}
-            
-            {goToExplorePageButton}
             
           </View>
         </View>
