@@ -102,7 +102,7 @@ def requires_auth(f):
 def ssl_required(fn):
     @wraps(fn)
     def decorated_view(*args, **kwargs):
-        if current_app.config.get("SSL"):
+        if not app.debug:
             if request.is_secure:
                 return fn(*args, **kwargs)
             else:
