@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   Button,
   StatusBar,
-  Platform
+  Platform,
+  Alert
 } from "react-native";
 import { Permissions } from "expo";
 //import { MapView } from "expo";
@@ -44,14 +45,45 @@ Permissions.askAsync(Permissions.LOCATION);
 export default class ExplorePage extends React.Component {
     constructor(props) {
         super(props);
+        
+        initialLat = 42.518217;
+        initialLong = -70.891919;
+        initialDelta = 0.005;
+        
+        this.state = { region: {
+        latitude: initialLat,
+        longitude: initialLong ,
+        latitudeDelta: initialDelta,
+        longitudeDelta: initialDelta,
+      }};
+
+      this.onRegionChange = this.onRegionChange.bind(this);
  }
 
+  getInitialState() {
+    initialLat = 42.518217;
+    initialLong = -70.891919;
+    initialDelta = 0.005;
+    return {
+
+      region: {
+        latitude: initialLat,
+        longitude: initialLong ,
+        latitudeDelta: initialDelta,
+        longitudeDelta: initialDelta,
+      },
+    };
+  }
     componentDidMount() {
         // if (Platform.OS === 'ios') this.watchID = navigator.geolocation.watchPosition();
     }
 
     componentWillUnmount() {
         // if (Platform.OS === 'ios') navigator.geolocation.clearWatch(this.watchID);
+    }
+
+    onRegionChange(region) {
+      this.setState({ region });
     }
 
   static navigationOptions = ({ navigation }) => {
@@ -101,18 +133,29 @@ export default class ExplorePage extends React.Component {
           headerStyle: { backgroundColor: pink }
         };
   }
-
+  
   renderImages() {
     const { navigate } = this.props.navigation;
 
     murals = this.props.screenProps.murals || {};
     artists = this.props.screenProps.artists || {};
+    
+    defaultMuralID = '';
+    if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
+      defaultMuralID = this.props.navigation.state.params.muralID;
+    }
+    
 
     return Object.keys(murals).map((key, i) => {
       lat = parseFloat(murals[key]["Lat"]);
       long = parseFloat(murals[key]["Long"]);
       title = murals[key]["Title"];
       artistName = artists[murals[key]["Artist"]]["name"];
+      
+      setRefLambda = (function (ref) {
+        this.calloutToMakeVisible = ref;
+      }).bind(this);
+      
       return (
         <MapView.Marker
           key={i}
@@ -120,6 +163,7 @@ export default class ExplorePage extends React.Component {
           description={artistName}
           coordinate={{ latitude: lat, longitude: long }}
           pinColor={pink}
+          ref = {key == defaultMuralID ? setRefLambda : null}
           onCalloutPress={() => {
             navigate("MuralInfoPage", {
               mural: murals[key],
@@ -130,6 +174,31 @@ export default class ExplorePage extends React.Component {
       );
     });
   }
+  
+  goToMural() {
+
+    if (this.calloutToMakeVisible) {
+      this.calloutToMakeVisible.showCallout();
+    }
+
+    if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
+        murals = this.props.screenProps.murals || {};
+        key = this.props.navigation.state.params.muralID;
+        
+        region = {
+          latitude: parseFloat(murals[key]["Lat"]),
+          longitude: parseFloat(murals[key]["Long"]),
+          latitudeDelta: .001,
+          longitudeDelta: .001,
+        }
+          setTimeout(function () {
+        this.map.animateToRegion(region, 1000);
+      }.bind(this), 500);
+    }
+    
+  }
+
+
 
 
 
@@ -142,28 +211,34 @@ export default class ExplorePage extends React.Component {
     }
 
     tourNext () {
+
         murals = this.props.screenProps.murals || {}
         Lat = 0
         Lon = 0
         
         this.props.screenProps.changeMarker();
-        //console.log(this.props.screenProps.currMarker)
-
-      //   Object.keys(murals).map((key,i) =>{
-
-      //     if (murals[key]["Index"] == this.props.screenProps.currMarker){
-      //       Lat = parseFloat(murals[key]["Lat"]);
-      //       Lon = parseFloat(murals[key]["Long"]);
-      //     }
-
-      //   })
         
-      // console.log(this.props.screenProps.currMarker)
+       Object.keys(murals).map((key,i) =>{
 
-      //    _mapView.animateToCoordinate({
-      //       latitude: Lat,
-      //       longitude: Lon,
-      //     }, 1000)
+        if (murals[key]["Index"] == this.props.screenProps.currMarker){
+          Lat = parseFloat(murals[key]["Lat"]);
+          Lon = parseFloat(murals[key]["Long"]);
+          
+          }
+
+        })
+        
+     
+
+       region = {
+          latitude: Lat,
+          longitude: Lon,
+          latitudeDelta: .0005,
+          longitudeDelta: .0005,
+        }
+         
+        this.map.animateToRegion(region, 1000);
+      
 
     }
 
@@ -211,19 +286,22 @@ export default class ExplorePage extends React.Component {
 
     render() {
         const { navigate } = this.props.navigation;
+        initialLat = 42.518217;
+        initialLong = -70.891919;
+        initialDelta = 0.001;
        
         return (
             <View style = {{flex: 1}}>
             <StatusBar barStyle = { Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
-            <MapView.Animated
+            <MapView
               style = {{flex: 1 }}
-              ref =  {ref => {this.map = ref}}
-              region = {{
-                latitude: this.props.screenProps.tourStarted == false ? 42.518217 : this.getCurrCoordsLat() ,
-                longitude: this.props.screenProps.tourStarted == false ? -70.891919 : this.getCurrCoordsLong() ,
-                latitudeDelta: this.props.screenProps.tourStarted == false ? 0.005 : 0.0001,
-                longitudeDelta: this.props.screenProps.tourStarted == false ? 0.005 : 0.0001,
-              }}>
+              ref =  {r => {this.map = r}}
+              showsPointsOfInterest={false}
+              showsUserLocation={true}
+              onLayout={this.goToMural.bind(this)}
+              region =  {this.state.region}
+              onRegionChange= {this.onRegionChange}
+               >
               {this.renderImages()}
             
             <MapViewDirections
@@ -233,7 +311,7 @@ export default class ExplorePage extends React.Component {
               strokeWidth={3}
               strokeColor="hotpink"
               />
-            </MapView.Animated>
+            </MapView>
             {console.log(this.props.screenProps.tourStarted)}
           {this.props.screenProps.tourStarted ? 
             <View>
@@ -258,10 +336,33 @@ export default class ExplorePage extends React.Component {
           </View>
         );
     }
+
 }
 
 
+//console.log(this.props.screenProps.currMarker)
 
+      //   Object.keys(murals).map((key,i) =>{
+
+      //     if (murals[key]["Index"] == this.props.screenProps.currMarker){
+      //       Lat = parseFloat(murals[key]["Lat"]);
+      //       Lon = parseFloat(murals[key]["Long"]);
+      //     }
+
+      //   })
+        
+      // console.log(this.props.screenProps.currMarker)
+
+      //    _mapView.animateToCoordinate({
+      //       latitude: Lat,
+      //       longitude: Lon,
+      //     }, 1000)
+// {{
+//                 latitude: this.props.screenProps.tourStarted == false ? initialLat: this.getCurrCoordsLat() ,
+//                 longitude: this.props.screenProps.tourStarted == false ? initialLong : this.getCurrCoordsLong() ,
+//                 latitudeDelta: this.props.screenProps.tourStarted == false ? initialDelta : 0.0001,
+//                 longitudeDelta: this.props.screenProps.tourStarted == false ? initialDelta : 0.0001,
+//               }}
 
 
 
