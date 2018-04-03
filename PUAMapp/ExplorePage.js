@@ -127,9 +127,7 @@ export default class ExplorePage extends React.Component {
           longitudeDelta: .001,
         }
 
-      setTimeout(function () {
-        this.map.animateToRegion(region, 1000);
-      }.bind(this), 500);
+        this.map.animateToRegion(region, 1);
     }
     
   }
@@ -150,6 +148,7 @@ export default class ExplorePage extends React.Component {
         <MapView
           ref = {(r) => this.map = r}
           onLayout={this.goToMural.bind(this)}
+          onMapReady={this.goToMural.bind(this)}
           showsPointsOfInterest={false}
           showsUserLocation={true}
           style={{ flex: 1 }}
