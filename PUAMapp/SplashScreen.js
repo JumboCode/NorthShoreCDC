@@ -9,9 +9,20 @@ import {
   ActivityIndicator,
   AppRegistry,
   StyleSheet,
-  Platform
+  Platform,
+  Dimensions
 } from "react-native";
 import { NavigationActions } from "react-navigation";
+
+  function isIphoneX() {
+    const dimen = Dimensions.get("window");
+    return (
+      Platform.OS === "ios" &&
+      !Platform.isPad &&
+      !Platform.isTVOS &&
+      (dimen.height === 812 || dimen.width === 812)
+    );
+  }
 
 export default class SpalshScreen extends Component {
   constructor(props) {
@@ -67,7 +78,7 @@ export default class SpalshScreen extends Component {
           source={require("./assets/images/splash-background.png")}
         />
         <View style={[styles.container, styles.horizontal]}>
-          <ActivityIndicator size="large" color="gray" />
+          <ActivityIndicator size="large" color="black" />
         </View>
       </View>
     );
@@ -83,6 +94,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     padding: 100,
-    marginTop: "80%"
+    marginTop: isIphoneX() ? "130%" : "120%"
   }
 });
