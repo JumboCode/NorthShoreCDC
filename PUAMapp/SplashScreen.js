@@ -78,7 +78,7 @@ export default class SpalshScreen extends Component {
           source={require("./assets/images/splash-background.png")}
         />
         <View style={[styles.container, styles.horizontal]}>
-          <ActivityIndicator size="large" color="black" />
+          <ActivityIndicator size="large" color="gray" />
         </View>
       </View>
     );
