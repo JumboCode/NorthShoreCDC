@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "PUAM",
-    "version": "1.0.15",
+    "version": "1.0.16",
     "slug": "PUNTO",
     "sdkVersion": "25.0.0",
     "orientation": "portrait",
@@ -15,7 +15,7 @@
       }
     },
     "android": {
-      "versionCode": 6,
+      "versionCode": 7,
       "package": "com.jumbocode.punto",
       "icon": "./assets/images/android-icon.png",
       "config": {
