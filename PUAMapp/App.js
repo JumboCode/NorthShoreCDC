@@ -52,12 +52,37 @@ class AppInner extends React.Component {
 }
 
 export default class App extends React.Component {
+  state = {isReady: false,};
   render() {
+    if (!this.state.isReady) {
+      return (
+        <AppLoading
+          startAsync={this._cacheResourcesAsync}
+          onFinish={() => this.setState({ isReady: true })}
+          onError={console.warn}
+        />
+      );
+    }
     return (
       <Provider store={store}>
         <AppContainer />
       </Provider>
     );
+  }
+  async _cacheResourcesAsync() {
+    const images = [
+      require('./assets/images/gallery-header-new.jpg'),
+      require('./assets/images/splash-background.png'),
+      require('./assets/images/home-logo.png'),
+      require('./assets/images/home-background.jpg'),
+      require('./assets/images/gallery_top_image.jpg'),
+    ];
+
+    const cacheImages = images.map((image) => {
+      return Asset.fromModule(image).downloadAsync();
+    });
+    return Promise.all(cacheImages)
+
   }
 }
 
