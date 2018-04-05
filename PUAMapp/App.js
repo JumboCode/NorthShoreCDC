@@ -12,7 +12,7 @@ import {
 import { StackNavigator } from "react-navigation";
 import { connect } from "react-redux";
 import { NavigationActions } from "react-navigation";
-
+import { AppLoading, Asset } from "expo";
 import HomePage from "./HomePage";
 import GalleryPage from "./GalleryPage";
 import ExplorePage from "./ExplorePage";
@@ -52,7 +52,13 @@ class AppInner extends React.Component {
 }
 
 export default class App extends React.Component {
-  state = {isReady: false,};
+  constructor(props) {
+    super(props); 
+    this.state = {
+      isReady: false,
+    };
+  }
+
   render() {
     if (!this.state.isReady) {
       return (
@@ -76,6 +82,7 @@ export default class App extends React.Component {
       require('./assets/images/home-logo.png'),
       require('./assets/images/home-background.jpg'),
       require('./assets/images/gallery_top_image.jpg'),
+      require('./assets/images/contact_background.jpg'),
     ];
 
     const cacheImages = images.map((image) => {
