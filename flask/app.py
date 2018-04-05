@@ -109,7 +109,7 @@ def requires_auth(f):
     return decorated
 
 
-def ssl_required(fn):
+def requires_ssl(fn):
     @wraps(fn)
     def decorated_view(*args, **kwargs):
         if not app.debug:
@@ -134,7 +134,7 @@ def nocache(f):
 
 @app.route('/put', methods=['GET', 'POST'])
 @requires_auth
-@ssl_required
+@requires_ssl
 def new_mural():
     new_mural_form = NewMural()
     artists = firebase.get('/', 'artists')
@@ -163,7 +163,7 @@ def new_mural():
 
 @app.route('/edit', methods=['GET', 'POST'])
 @requires_auth
-@ssl_required
+@requires_ssl
 def edit_mural():
     edit_form = EditMural()
     mural_id = str(request.args["muralid"])
@@ -189,7 +189,7 @@ def edit_mural():
 
 
 @app.route('/login', methods=['GET', 'POST'])
-@ssl_required
+@requires_ssl
 def validate():
     val_form = Validate_User()
     if val_form.validate_on_submit():
@@ -199,7 +199,7 @@ def validate():
 
 @app.route('/new_artist', methods=['GET', 'POST'])
 @requires_auth
-@ssl_required
+@requires_ssl
 def artist_put():
     new_art_form = NewArtist()
     if new_art_form.validate_on_submit():
@@ -217,7 +217,7 @@ def artist_put():
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/get_all_murals', methods=['GET', 'POST'])
 @requires_auth
-@ssl_required
+@requires_ssl
 @nocache
 def all_murals():
     artists = firebase.get('/', 'artists')
@@ -233,7 +233,7 @@ def all_murals():
 
 @app.route('/delete_mural', methods=['GET', 'POST'])
 @requires_auth
-@ssl_required
+@requires_ssl
 def delete_mural():
     # reindex all the murals
     murals = firebase.get('/', 'murals')
@@ -258,7 +258,7 @@ def delete_mural():
 
 @app.route('/change_mural_index', methods=['POST'])
 @requires_auth
-@ssl_required
+@requires_ssl
 def change_mural_index():
     mural_id = str(request.form["muralid"])
     up_or_down = str(request.form["upOrDown"])
@@ -306,7 +306,7 @@ def change_mural_index():
 @app.route('/all_artists', methods=['GET', 'POST'])
 @requires_auth
 @nocache
-@ssl_required
+@requires_ssl
 def all_artists():
     artists = firebase.get('/', 'artists')
     return render_template('disp_all_artists.html', artists=artists)
@@ -314,7 +314,7 @@ def all_artists():
 
 @app.route('/edit_artist', methods=['GET', 'POST'])
 @requires_auth
-@ssl_required
+@requires_ssl
 def edit_artist():
     form = EditArtist()
     artist_id = str(request.args["artists"])
@@ -334,7 +334,7 @@ def edit_artist():
 
 @app.route('/delete_artist', methods=['GET', 'POST'])
 @requires_auth
-@ssl_required
+@requires_ssl
 def delete_artist():
     artist = str(request.form["artistid"])
 
@@ -350,7 +350,7 @@ def delete_artist():
 
 
 @app.route('/logout', methods=['GET'])
-@ssl_required
+@requires_ssl
 def logout():
     session.clear()
     return redirect('/login')
