@@ -6,6 +6,7 @@ import os
 from flask_wtf import FlaskForm as Form
 from wtforms.fields import *
 from wtforms.validators import *
+from wtforms.validators import ValidationError
 import uuid
 import requests
 import json
@@ -21,6 +22,8 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY')
 
 firebase = firebase.FirebaseApplication(firebase_path, None)
+
+MAX_IMAGE_SIZE_KB = 175
 
 
 def sign_in_with_email_and_password(email, password):
@@ -43,6 +46,17 @@ def sign_in_with_email_and_password(email, password):
         return redirect("/login", code=302)
 
 
+def get_url_file_size_kb(uri):
+    import urllib
+    return float(urllib.urlopen(uri).info()['Content-Length']) / 1000.00
+
+
+def image_size_validator(form, field):
+    if get_url_file_size_kb(field.data) > MAX_IMAGE_SIZE_KB:
+        raise ValidationError("Image file at specified URL must be less than " +
+                              str(MAX_IMAGE_SIZE_KB - 25) + " KB.")
+
+
 class NewMural(Form):
     photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
     lat = DecimalField('Lat', places=7, validators=[DataRequired(), NumberRange(min=42.51, max=42.52)])
@@ -58,7 +72,7 @@ class NewMural(Form):
 
 
 class EditMural(Form):
-    photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
+    photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None), image_size_validator])
     lat = DecimalField('Lat', places=7, validators=[DataRequired(), NumberRange(min=42.51, max=42.52)])
     longitude = DecimalField('Long', places=7, validators=[DataRequired(), NumberRange(min=-70.9, max=-70.88)])
     artist = SelectField('Artist', coerce=unicode, validators=[DataRequired()])
