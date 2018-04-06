@@ -129,7 +129,7 @@ export default class GalleryPage extends React.Component {
             }}
             source={
               Platform.OS === "ios"
-                ? require("./assets/images/gallery-header-new.jpeg")
+                ? require("./assets/images/gallery-header-new.jpg")
                 : require("./assets/images/gallery_top_image.jpg")
             }
           />
