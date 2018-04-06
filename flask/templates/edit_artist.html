@@ -16,22 +16,30 @@
       <p> Name: <br>
       {{ form.name(size=40, value= artist["name"]) }} <br>
       {% for error in form.name.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+      <div class="alert alert-danger" style="width:400px;">
+        <span>{{ error }}</span>
+      </div>
       {% endfor %}<br>
       <p> Place of origin: <br>
       {{ form.city(size=40, value= artist["city"]) }} <br>
       {% for error in form.city.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+      <div class="alert alert-danger" style="width:400px;">
+        <span>{{ error }}</span>
+      </div>
       {% endfor %}<br>
       <p> Bio / about: <br>
       {{ form.bio(rows=8, cols=60, id = 'bio', value= artist["bio"]) }} <br>
       {% for error in form.bio.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+      <div class="alert alert-danger" style="width:400px;">
+        <span>{{ error }}</span>
+      </div>
       {% endfor %}<br>
       <p> Please enter a link to the artist's portfolio (optional): <br>
       {{ form.link(size=40, value= artist["link"]) }} <br>
       {% for error in form.link.errors %}
-        <span style="color: red;">[{{ error }}]</span>
+      <div class="alert alert-danger" style="width:400px;">
+        <span>{{ error }}</span>
+      </div>
       {% endfor %}<br>
       <p><input type ="submit" value="Submit" class="btn btn-sm btn-primary"></p>
     </form>
