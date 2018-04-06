@@ -58,7 +58,7 @@ def image_size_validator(form, field):
 
 
 class NewMural(Form):
-    photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None)])
+    photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None), image_size_validator])
     lat = DecimalField('Lat', places=7, validators=[DataRequired(), NumberRange(min=42.51, max=42.52)])
     longitude = DecimalField('Long', places=7, validators=[DataRequired(), NumberRange(min=-70.9, max=-70.88)])
     artist = SelectField('Artist', coerce=unicode, validators=[DataRequired()])
