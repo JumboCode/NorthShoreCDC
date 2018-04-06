@@ -52,56 +52,85 @@ def get_url_file_size_kb(uri):
 
 
 def image_size_validator(form, field):
-    if get_url_file_size_kb(field.data) > MAX_IMAGE_SIZE_KB:
-        raise ValidationError("Image file at specified URL must be less than " +
-                              str(MAX_IMAGE_SIZE_KB - 25) + " KB.")
+    try:
+        if get_url_file_size_kb(field.data) > MAX_IMAGE_SIZE_KB:
+            raise ValidationError("Image file at specified URL must be less than " +
+                                  str(MAX_IMAGE_SIZE_KB - 25) + " KB.")
+    except IOError:
+        pass  # Invalid URL should be handled by URL Validator
+
+FIELD_REQUIRED_MESSAGE = "This field is required."
+INVALID_URL_MESSAGE = "This is not a valid URL."
+INVALID_RANGE_MESSAGE = "Value is outside of reasonable range."
+INVALID_YEAR_MESSAGE = "This is not a reasonable year value."
+INVALID_MONTH_MESSAGE = "This is not a month."
 
 
 class NewMural(Form):
-    photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None), image_size_validator])
-    lat = DecimalField('Lat', places=7, validators=[DataRequired(), NumberRange(min=42.51, max=42.52)])
-    longitude = DecimalField('Long', places=7, validators=[DataRequired(), NumberRange(min=-70.9, max=-70.88)])
-    artist = SelectField('Artist', coerce=unicode, validators=[DataRequired()])
-    title = StringField('Title', validators=[DataRequired()])
-    month = StringField('Month', validators=[DataRequired(), AnyOf(
-        ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November",
-         "December"])])
-    year = IntegerField('Year', validators=[DataRequired(), NumberRange(min=1980, max=3000)])
+    photo = StringField('Photo', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE),
+                                             URL(require_tld=True, message=INVALID_URL_MESSAGE),
+                                             image_size_validator])
+    lat = DecimalField('Lat', places=7, validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE),
+                                                    NumberRange(min=42.51,
+                                                                max=42.52,
+                                                                message=INVALID_RANGE_MESSAGE)])
+    longitude = DecimalField('Long', places=7, validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE),
+                                                           NumberRange(min=-70.9,
+                                                                       max=-70.88,
+                                                                       message=INVALID_RANGE_MESSAGE)])
+    artist = SelectField('Artist', coerce=unicode, validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE)])
+    title = StringField('Title', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE)])
+    month = StringField('Month', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE),
+                                             AnyOf(["January", "February", "March", "April", "May", "June", "July",
+                                                    "August", "September", "October", "November", "December"],
+                                                   message=INVALID_MONTH_MESSAGE)])
+    year = IntegerField('Year', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE),
+                                            NumberRange(min=1980, max=3000, message=INVALID_YEAR_MESSAGE)])
     description = TextAreaField('Description', validators=[])
-    medium = StringField('Medium', validators=[DataRequired()])
+    medium = StringField('Medium', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE)])
 
 
 class EditMural(Form):
-    photo = StringField('Photo', validators=[DataRequired(), URL(require_tld=True, message=None), image_size_validator])
-    lat = DecimalField('Lat', places=7, validators=[DataRequired(), NumberRange(min=42.51, max=42.52)])
-    longitude = DecimalField('Long', places=7, validators=[DataRequired(), NumberRange(min=-70.9, max=-70.88)])
-    artist = SelectField('Artist', coerce=unicode, validators=[DataRequired()])
-    title = StringField('Title', validators=[DataRequired()])
-    month = StringField('Month', validators=[DataRequired(), AnyOf(
-        ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November",
-         "December"])])
-    year = IntegerField('Year', validators=[DataRequired(), NumberRange(min=1980, max=3000)])
+    photo = StringField('Photo', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE),
+                                             URL(require_tld=True, message=INVALID_URL_MESSAGE),
+                                             image_size_validator])
+    lat = DecimalField('Lat', places=7, validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE),
+                                                    NumberRange(min=42.51,
+                                                                max=42.52,
+                                                                message=INVALID_RANGE_MESSAGE)])
+    longitude = DecimalField('Long', places=7, validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE),
+                                                           NumberRange(min=-70.9,
+                                                                       max=-70.88,
+                                                                       message=INVALID_RANGE_MESSAGE)])
+    artist = SelectField('Artist', coerce=unicode, validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE)])
+    title = StringField('Title', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE)])
+    month = StringField('Month', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE),
+                                             AnyOf(["January", "February", "March", "April", "May", "June",
+                                                    "July", "August", "September", "October", "November", "December"],
+                                                   message=INVALID_MONTH_MESSAGE)])
+    year = IntegerField('Year', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE),
+                                            NumberRange(min=1980, max=3000, message=INVALID_YEAR_MESSAGE)])
     description = TextAreaField('Description', validators=[])
-    medium = StringField('Medium', validators=[DataRequired()])
+    medium = StringField('Medium', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE)])
 
 
 class Validate_User(Form):
-    email = StringField('Email', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE)])
+    password = PasswordField('Password', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE)])
 
 
 class NewArtist(Form):
-    name = StringField('Name', validators=[DataRequired()])
-    city = StringField('City', validators=[DataRequired()])
+    name = StringField('Name', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE)])
+    city = StringField('City', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE)])
     bio = TextAreaField('Bio', validators=[])
-    link = StringField('Link', validators=[Optional(), URL(require_tld=True, message=None)])
+    link = StringField('Link', validators=[Optional(), URL(require_tld=True, message=INVALID_URL_MESSAGE)])
 
 
 class EditArtist(Form):
-    name = StringField('Name', validators=[DataRequired()])
-    city = StringField('City', validators=[DataRequired()])
+    name = StringField('Name', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE)])
+    city = StringField('City', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE)])
     bio = TextAreaField('Bio', validators=[])
-    link = StringField('Link', validators=[Optional(), URL(require_tld=True, message=None)])
+    link = StringField('Link', validators=[Optional(), URL(require_tld=True, message=INVALID_URL_MESSAGE)])
 
 
 def requires_auth(f):
