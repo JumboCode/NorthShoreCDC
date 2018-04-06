@@ -41,6 +41,8 @@
         <span>{{ error }}</span>
       </div>
       {% endfor %}<br>
-      <p><input type ="submit" value="Submit" class="btn btn-sm btn-primary"></p>
+      <p>
+        <a href="{{ url_for('all_artists') }}" class="btn btn-md btn-default" role="button">Cancel</a>&nbsp;&nbsp;
+        <input type ="submit" value="Submit" class="btn btn-md btn-success"></p>
     </form>
 {% endblock %}
