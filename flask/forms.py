@@ -14,32 +14,32 @@ INVALID_MONTH_MESSAGE = "This is not a month."
 MAX_IMAGE_SIZE_KB = 175
 
 
-def get_url_file_size_kb(uri):
-    return float(urllib.urlopen(uri).info()['Content-Length']) / 1000.00
-
-
-def image_size_validator(form, field):
+# Check field for a url which links to an image of small size
+# The built-in URL Validator should have already run but is not sufficient
+def image_validator(form, field):
     try:
-        if get_url_file_size_kb(field.data) > MAX_IMAGE_SIZE_KB:
+        info = urllib.urlopen(field.data).info()
+
+        response_type = info['Content-Type']
+        if 'image' not in response_type:
+            raise ValidationError("URL must link directly to an image.")
+
+        size_kb = float(info['Content-Length']) / 1000.00
+        if size_kb > MAX_IMAGE_SIZE_KB:
             raise ValidationError("Image file at specified URL must be less than " +
                                   str(MAX_IMAGE_SIZE_KB - 25) + " KB.")
-    except IOError:
-        pass  # Invalid URL should be handled by URL Validator
 
+    except IOError:  # URL that passes the URL validator but is not valid. e.g. helloworldhttps://google.com
+        raise ValidationError("This URL is not accessible.")
 
-def image_type_validator(form, field):
-    try:
-        if get_url_file_size_kb(field.data) > MAX_IMAGE_SIZE_KB:
-            raise ValidationError("Image file at specified URL must be less than " +
-                                  str(MAX_IMAGE_SIZE_KB - 25) + " KB.")
-    except IOError:
-        pass  # Invalid URL should be handled by URL Validator
+    except KeyError:  # Something with weird headers probably
+        raise ValidationError("Unknown URL Error: ensure the URL links to an image.")
 
 
 class NewMural(Form):
     photo = StringField('Photo', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE),
                                              URL(require_tld=True, message=INVALID_URL_MESSAGE),
-                                             image_size_validator])
+                                             image_validator])
     lat = DecimalField('Lat', places=7, validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE),
                                                     NumberRange(min=42.51,
                                                                 max=42.52,
@@ -63,7 +63,7 @@ class NewMural(Form):
 class EditMural(Form):
     photo = StringField('Photo', validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE),
                                              URL(require_tld=True, message=INVALID_URL_MESSAGE),
-                                             image_size_validator])
+                                             image_validator])
     lat = DecimalField('Lat', places=7, validators=[DataRequired(message=FIELD_REQUIRED_MESSAGE),
                                                     NumberRange(min=42.51,
                                                                 max=42.52,
