@@ -118,11 +118,25 @@ export default class MuralInfoPage extends React.Component {
             borderBottomColor: "transparent"
           }
         }
-      : {
+      : { // Android
           title: "Punto Urban Art",
           headerTintColor: "white",
-          headerStyle: { backgroundColor: pink }
-        };
+          headerStyle: { backgroundColor: pink },
+          headerRight: (
+            <TouchableOpacity 
+              onPress={() => self.goToExplorePage()} 
+              style={{
+                flex: 1, 
+                width: 60, 
+                height: '100%', 
+                justifyContent: 'center', 
+                alignItems: 'center'
+              }}
+            >
+              <Entypo name="location-pin" size={25} color={'white'} />
+            </TouchableOpacity>
+          )
+      };
   }
 
   toggleShowDescription() {
