@@ -26,6 +26,15 @@ import { getMurals, getArtists } from "./redux";
 import { Provider } from "react-redux";
 import { store } from "./redux";
 
+
+import Sentry from 'sentry-expo';
+
+// Remove this once Sentry is correctly setup.
+Sentry.enableInExpoDevelopment = true;
+
+Sentry.config('https://5afc3fdb504e4aef92dd8c1c455a215b@sentry.io/980051').install();
+
+
 class AppInner extends React.Component {
   constructor(props) {
     Text.defaultProps.allowFontScaling = false;
