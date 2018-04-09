@@ -295,7 +295,7 @@ export default class ExplorePage extends React.Component {
         }
         
         // If we're on a tour
-        if (this.props.screenProps.tourStarted) {
+        else if (this.props.screenProps.tourStarted) {
             console.log("299", this.props.screenProps.currMarker)
             // See if the currMarker corresponds to a mural
             
@@ -321,6 +321,10 @@ export default class ExplorePage extends React.Component {
                    longitudeDelta: .0005,
                  }            
             }
+        }
+
+        else {
+          region = initialRegion
         }
         
         console.log("326", region)
