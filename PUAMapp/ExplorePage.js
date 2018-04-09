@@ -96,32 +96,46 @@ export default class ExplorePage extends React.Component {
         this.calloutToMakeVisible = ref;
       }).bind(this);
       
-      return (
-        <MapView.Marker
-          key={i}
-          title={title}
-          description={artistName}
-          coordinate={{ latitude: lat, longitude: long }}
-          pinColor={pink}
-          ref = {key == defaultMuralID ? setRefLambda : null}
-          onCalloutPress = {() => this.props.navigation.navigate({key: murals[key]['uuid'], routeName: 'MuralInfoPage', params: {mural: murals[key], artist: artists[murals[key]["Artist"]]}})}
-        >
-          <MapView.Callout 
-            tooltip={false}
-            onPress = {() => this.props.navigation.navigate({key: murals[key]['uuid'], routeName: 'MuralInfoPage', params: {mural: murals[key], artist: artists[murals[key]["Artist"]]}})}
+      if (Platform.OS === 'ios') {
+        return (
+          <MapView.Marker
+            key={i}
+            title={title}
+            description={artistName}
+            coordinate={{ latitude: lat, longitude: long }}
+            pinColor={pink}
+            ref = {key == defaultMuralID ? setRefLambda : null}
+            onCalloutPress = {() => this.props.navigation.navigate({key: murals[key]['uuid'], routeName: 'MuralInfoPage', params: {mural: murals[key], artist: artists[murals[key]["Artist"]]}})}
           >
-            <View style={{flexDirection: "row", flex: 1}}>
-              <View style={{flexDirection: "column", flex: 1}}>
-                <Text style={{fontWeight: 'bold', fontSize: 17}}>{title}</Text>
-                <Text>{artistName}</Text>
+            <MapView.Callout 
+              tooltip={false}
+              onPress = {() => this.props.navigation.navigate({key: murals[key]['uuid'], routeName: 'MuralInfoPage', params: {mural: murals[key], artist: artists[murals[key]["Artist"]]}})}
+            >
+              <View style={{flexDirection: "row", flex: 1}}>
+                <View style={{flexDirection: "column", flex: 1}}>
+                  <Text style={{fontWeight: 'bold', fontSize: 17}}>{title}</Text>
+                  <Text>{artistName}</Text>
+                </View>
+                <View style={{flex: 1, alignItems: "center", justifyContent: "center", marginLeft: 15}}>
+                  <Feather name="chevron-right" size={30} color={pink} style={{marginBottom: 1}}/>
+                </View>
               </View>
-              <View style={{flex: 1, alignItems: "center", justifyContent: "center", marginLeft: 15}}>
-                <Feather name="chevron-right" size={30} color={pink} style={{marginBottom: 1}}/>
-              </View>
-            </View>
-          </MapView.Callout>
-        </MapView.Marker>
-      );
+            </MapView.Callout>
+          </MapView.Marker>
+        );
+      } else {
+        return (
+          <MapView.Marker
+            key={i}
+            title={title}
+            description={artistName}
+            coordinate={{ latitude: lat, longitude: long }}
+            pinColor={pink}
+            ref = {key == defaultMuralID ? setRefLambda : null}
+            onCalloutPress = {() => this.props.navigation.navigate({key: murals[key]['uuid'], routeName: 'MuralInfoPage', params: {mural: murals[key], artist: artists[murals[key]["Artist"]]}})}
+          />
+        );
+      }
     });
   }
   
