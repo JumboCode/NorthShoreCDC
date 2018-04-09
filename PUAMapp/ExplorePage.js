@@ -181,21 +181,23 @@ export default class ExplorePage extends React.Component {
       this.calloutToMakeVisible.showCallout();
     }
 
-    if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
-        murals = this.props.screenProps.murals || {};
-        key = this.props.navigation.state.params.muralID;
-        
-        region = {
-          latitude: parseFloat(murals[key]["Lat"]),
-          longitude: parseFloat(murals[key]["Long"]),
-          latitudeDelta: .001,
-          longitudeDelta: .001,
-        }
-          setTimeout(function () {
-        this.map.animateToRegion(region, 1000);
-      }.bind(this), 500);
-    }
+    // if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
+    //     murals = this.props.screenProps.murals || {};
+    //     key = this.props.navigation.state.params.muralID;
+    // 
+    //     region = {
+    //       latitude: parseFloat(murals[key]["Lat"]),
+    //       longitude: parseFloat(murals[key]["Long"]),
+    //       latitudeDelta: .001,
+    //       longitudeDelta: .001,
+    //     }
+    //       setTimeout(function () {
+    //     this.map.animateToRegion(region, 1000);
+    //   }.bind(this), 500);
+    // }
     
+    
+
   }
 
 
@@ -212,32 +214,10 @@ export default class ExplorePage extends React.Component {
 
     tourNext () {
 
-        murals = this.props.screenProps.murals || {}
-        Lat = 0
-        Lon = 0
-        
         this.props.screenProps.changeMarker();
-        
-       Object.keys(murals).map((key,i) =>{
-
-        if (murals[key]["Index"] == this.props.screenProps.currMarker){
-          Lat = parseFloat(murals[key]["Lat"]);
-          Lon = parseFloat(murals[key]["Long"]);
-          
-          }
-
-        })
-        
-     
-
-       region = {
-          latitude: Lat,
-          longitude: Lon,
-          latitudeDelta: .0005,
-          longitudeDelta: .0005,
-        }
-         
-        this.map.animateToRegion(region, 1000);
+        // 
+        // 
+        // this.map.animateToRegion(region, 1000);
       
 
     }
@@ -288,19 +268,73 @@ export default class ExplorePage extends React.Component {
         const { navigate } = this.props.navigation;
         initialLat = 42.518217;
         initialLong = -70.891919;
-        initialDelta = 0.001;
-       
+        initialDelta = 0.005;
+        
+        initialRegion = {
+            longitude: initialLong,
+            latitude: initialLat,
+            latitudeDelta: initialDelta,
+            longitudeDelta: initialDelta
+        };
+        
+        // Determine which region we WANT to go to.
+        region = undefined;
+        
+        murals = this.props.screenProps.murals || {};
+
+        // If we came from the MuralInfoPage
+        if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
+            key = this.props.navigation.state.params.muralID;
+        
+            region = {
+              latitude: parseFloat(murals[key]["Lat"]),
+              longitude: parseFloat(murals[key]["Long"]),
+              latitudeDelta: .001,
+              longitudeDelta: .001,
+            }
+        }
+        
+        // If we're on a tour
+        if (this.props.screenProps.tourStarted) {
+            console.log("299", this.props.screenProps.currMarker)
+            // See if the currMarker corresponds to a mural
+            
+            Lat = 0
+            Lon = 0
+
+            Object.keys(murals).map((key,i) =>{
+                    console.log("306")
+                    if (murals[key]["Index"] == this.props.screenProps.currMarker){
+                      Lat = parseFloat(murals[key]["Lat"]);
+                      Lon = parseFloat(murals[key]["Long"]);
+                      
+                      }
+
+                  });
+            
+            if (Lat != 0 && Lon != 0) {
+                console.log("316")
+                region = {
+                   latitude: Lat,
+                   longitude: Lon,
+                   latitudeDelta: .0005,
+                   longitudeDelta: .0005,
+                 }            
+            }
+        }
+        
+        console.log("326", region)
+        
         return (
             <View style = {{flex: 1}}>
             <StatusBar barStyle = { Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
-            <MapView
+            <AnimatedMapView
               style = {{flex: 1 }}
-              ref =  {r => {this.map = r}}
               showsPointsOfInterest={false}
               showsUserLocation={true}
-              onLayout={this.goToMural.bind(this)}
-              region =  {this.state.region}
-              onRegionChange= {this.onRegionChange}
+              initialRegion = {initialRegion}
+              region =  {region}
+              onLayout = {this.goToMural.bind(this)}
                >
               {this.renderImages()}
             
@@ -311,7 +345,7 @@ export default class ExplorePage extends React.Component {
               strokeWidth={3}
               strokeColor="hotpink"
               />
-            </MapView>
+            </AnimatedMapView>
             {console.log(this.props.screenProps.tourStarted)}
           {this.props.screenProps.tourStarted ? 
             <View>
@@ -365,4 +399,46 @@ export default class ExplorePage extends React.Component {
 //               }}
 
 
+/*****************************************************************************/
+
+// Just a MapView but it animates to region if the region prop changes!
+class AnimatedMapView extends React.Component {
+    
+    shouldComponentUpdate(nextProps, nextState) {
+        console.log("408")
+        this.goToRegion(nextProps.region, nextProps.onLayout);
+        return false;
+    }
+    
+    // Note: onLayout (which gets passed in as a prop) is called afterwards so
+    // that the parent component has a way to hook into onLayout.
+    // But TBH im not sure if this is the right way to do this lol.
+    goToRegion(region, onLayout) {
+        if (region) {
+            console.log("415")
+            setTimeout(function () {
+                this.map.animateToRegion(region, 1000);
+            }.bind(this), 500);
+        }
+        
+        if (onLayout) {
+            onLayout();
+        }
+    }
+    
+    render() {
+        var {initialRegion, region, children, onLayout, ...otherProps} = this.props;
+                
+        return (
+            <MapView 
+                onLayout={this.goToRegion.bind(this, region, onLayout)}
+                initialRegion =  {initialRegion}
+                ref =  {r => {this.map = r}}
+                {...otherProps}>
+                {children}
+            </MapView>
+        )
+    }
+    
+}
 
