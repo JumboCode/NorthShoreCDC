@@ -25,7 +25,8 @@ import { Provider } from "react-redux";
 import { store } from "./redux";
 
 import Sentry from 'sentry-expo';
-Sentry.config('https://5afc3fdb504e4aef92dd8c1c455a215b@sentry.io/980051').install();
+import configString from "./sentry";
+Sentry.config(configString.publicDSN).install();
 
 class AppInner extends React.Component {
   constructor(props) {
