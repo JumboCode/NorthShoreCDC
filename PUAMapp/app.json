@@ -24,6 +24,18 @@
         }
       },
       "permissions": ["android.permission.ACCESS_COARSE_LOCATION", "android.permission.ACCESS_FINE_LOCATION"]
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "Jumbo Code",
+            "project": "PUAM",
+            "authToken": "eaedc7f6a4b24497b407aa7a64b635c104b2835bf31e4c4cbc2515e7038a7087"
+          }
+        }
+      ]
     }
   }
 }

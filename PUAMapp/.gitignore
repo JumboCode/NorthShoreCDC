@@ -2,5 +2,6 @@ node_modules/
 package-lock.json
 .expo/
 firebase.js
+sentry.js
 npm-debug.*
 package-lock.json
