@@ -10,7 +10,7 @@ The Punto Urban Art Museum's vision is to create a world class urban arts distri
 
 <a href="https://play.google.com/store/apps/details?id=com.jumbocode.punto"><img src="PUAMapp/play-store.png" height="65"/></a> &nbsp;&nbsp; <a href="https://itunes.apple.com/us/app/punto-urban-art-museum/id1320710363?ls=1&mt=8"><img src="PUAMapp/app-store.png" height="65"/></a>
 
-This app is a project of the <a href="http://northshorecdc.org" alt="NSCDC">North Shore Community Development Coalition</a> and <a href="http://jumbocode.org" alt="JumboCode">JumboCode</a>.
+This app is a project of <a href="http://northshorecdc.org" alt="NSCDC">North Shore Community Development Coalition</a> and <a href="http://jumbocode.org" alt="JumboCode">JumboCode</a>.
 
 ![screenshot](screenshots/screenshot1.png)
 ![screenshot](screenshots/screenshot2.png)
