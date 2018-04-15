@@ -17,6 +17,12 @@ This app is a project of the <a href="http://northshorecdc.org" alt="NSCDC">Nort
 ![screenshot](screenshots/screenshot3.png)
 ![screenshot](screenshots/screenshot4.png)
 ![screenshot](screenshots/screenshot5.png)
+<br>
+![screenshot](screenshots/screenshot6.png)
+![screenshot](screenshots/screenshot7.png)
+![screenshot](screenshots/screenshot8.png)
+![screenshot](screenshots/screenshot9.png)
+![screenshot](screenshots/screenshot10.png)
 
 ## Test / Develop Locally
 ### Run the react-native App locally
