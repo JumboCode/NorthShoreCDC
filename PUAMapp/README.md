@@ -1,5 +1,5 @@
 ## Navigation
-* [Home Page]
+* [Home Page](#updating-to-new-releases)
 * []
 
 ## Table of Contents
