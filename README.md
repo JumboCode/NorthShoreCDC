@@ -33,12 +33,26 @@ var config = {... firebase config info ...};
 export default config;
 ```
 
+* Create a file sentry.js in PUAMapp/ containing:
+
+```
+var configString = {... sentry config string ...};
+export default configString;
+```
+
 * Install the dependencies and start the packager:
 
 ```
 cd PUAMapp
 npm install
 npm start
+```
+
+* Build standalone apps
+```
+npm install -g exp
+exp build:ios
+exp build:android
 ```
 
 
@@ -61,6 +75,12 @@ export FLASK_DEBUG=1
 ```
 pip install -r requirements.txt
 flask run
+```
+
+* Publish Site with <a href="https://devcenter.heroku.com/articles/heroku-cli">Heroku CLI</a>
+  
+```
+sh push_to_heroku.sh
 ```
 
 
