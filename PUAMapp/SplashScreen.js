@@ -13,7 +13,11 @@ import {
   Dimensions
 } from "react-native";
 import { NavigationActions } from "react-navigation";
-
+  
+  function isIOS() {
+      return Platform.OS === "ios";
+  }
+  
   function isIphoneX() {
     const dimen = Dimensions.get("window");
     return (
@@ -67,16 +71,19 @@ export default class SpalshScreen extends Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
-        <Image
-          style={{
-            flex: 1,
-            resizeMode: "contain",
-            position: "absolute",
-            height: "100%",
-            width: "100%"
-          }}
-          source={require("./assets/images/splash-background.png")}
-        />
+        {
+            isIOS() && 
+            <Image
+              style={{
+                flex: 1,
+                resizeMode: "contain",
+                position: "absolute",
+                height: "100%",
+                width: "100%"
+              }}
+              source={require("./assets/images/splash-background.png")}
+            />
+        }
         <View style={[styles.container, styles.horizontal]}>
           <ActivityIndicator size="large" color="gray" />
         </View>
@@ -94,6 +101,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     padding: 100,
-    marginTop: isIphoneX() ? "130%" : "120%"
+    // if iphoneX, 130%, else if iOS, 120%, else (if android) 0%
+    marginTop: isIphoneX() ? "130%" : (isIOS() ? "120%" : "0%")
   }
 });
