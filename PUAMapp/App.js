@@ -24,9 +24,9 @@ import { getMurals, getArtists } from "./redux";
 import { Provider } from "react-redux";
 import { store } from "./redux";
 
-// import Sentry from 'sentry-expo';
-// import configString from "./sentry";
-// Sentry.config(configString.publicDSN).install();
+import Sentry from 'sentry-expo';
+import configString from "./sentry";
+Sentry.config(configString.publicDSN).install();
 
 class AppInner extends React.Component {
   constructor(props) {
