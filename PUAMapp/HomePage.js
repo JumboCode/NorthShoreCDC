@@ -1,3 +1,8 @@
+/*
+ * HomePage.js is a component that makes up of Home page in the app.
+ * It is the first page after Splash Screen, and can navigate user to
+ * Explore page, Gallery page, and Contact page.
+ */
 import React from "react";
 import {
   StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Platform

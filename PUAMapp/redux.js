@@ -1,3 +1,8 @@
+/*
+ * redux.js is a component that host Redux, which is a predictable state 
+ * container for our app. It provides functions that can talk to Firebase
+ * and get information needed.
+ */
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import thunk from "redux-thunk";
 import config from "./firebase";

@@ -1,5 +1,10 @@
+/*
+ * SplashScreen.js is a component that display the first page when
+ * openning the app. It waits and load the murals, artists, and 
+ * all the information needed. After everything is loaded correctly
+ * it will direct the user to home page
+ */
 import React, { Component } from "react";
-
 import {
   StatusBar,
   Alert,

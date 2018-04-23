@@ -1,3 +1,9 @@
+/*
+ * MuralInfoPage.js is a component that displays specific information
+ * for mural. It can navigate user to Explore page with the mural pin
+ * at the center of the map, or go back to page where user was previously
+ * at.
+ */
 import React from "react";
 import {
   StyleSheet,

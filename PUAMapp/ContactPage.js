@@ -1,3 +1,8 @@
+/*
+ * ContactPage.js is a component that makes up of Contact page in the app.
+ * It uses linkify to create links connecting to different utility pages and
+ * contacts.
+ */
 import React from "react";
 import {
   Alert,

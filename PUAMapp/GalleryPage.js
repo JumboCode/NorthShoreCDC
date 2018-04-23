@@ -1,3 +1,8 @@
+/*
+ * GalleryPage.js is a component that makes up of Gallery page in the app.
+ * It displays each picture of mural on the page, and by tapping the picture
+ * of the mural, user can navigate to mural info page accordingly.
+ */
 import React from "react";
 import {
   StyleSheet,
@@ -79,7 +84,6 @@ export default class GalleryPage extends React.Component {
     muralsArray = []
 
     Object.keys(murals).map((key, i) => {
-
       muralsArray.push(murals[key]);
     });
 

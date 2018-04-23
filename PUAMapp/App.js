@@ -1,3 +1,8 @@
+/*
+ * App.js is a component that gather and coordinate different
+ * components of the project. It is in charge of navigation,
+ * communication with redux, talking to firebase.
+ */
 import React from "react";
 import {
   StyleSheet,
@@ -77,6 +82,7 @@ export default class App extends React.Component {
       </Provider>
     );
   }
+
   async _cacheResourcesAsync() {
     const images = [
       require('./assets/images/gallery-header-new.jpg'),

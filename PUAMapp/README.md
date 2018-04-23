@@ -1,3 +1,10 @@
+## Overview
+This app uses React to create interactive UIs and uses Redux to update and store 
+information(murals, artists, etc.). It has a App component, which gather individual
+react components: Home, Explore, Gallery, Mural Information, and Contact. It gets
+information from firebase, and uses sentry to automatically report errors when
+the app is crashed.
+
 ## Navigation  
 * [Home Page](#home-page)  
   --> Explore Page  

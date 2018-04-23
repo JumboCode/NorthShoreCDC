@@ -1,3 +1,10 @@
+/*
+ * ExplorePage.js is a component that makes up of Explore page in the app.
+ * It provides the location service if user grants the access; it has a
+ * map and pins that represent murals in the map; by tapping the pin,
+ * pop-up will appear, and tapping the pop-up can leads user to Mural
+ * Info Page.
+ */
 import React from "react";
 import {
   StyleSheet,
