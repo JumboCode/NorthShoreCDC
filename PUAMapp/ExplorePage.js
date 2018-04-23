@@ -50,14 +50,11 @@ export default class ExplorePage extends React.Component {
         initialLong = -70.891919;
         initialDelta = 0.005;
         
-        this.state = { region: {
-        latitude: initialLat,
-        longitude: initialLong ,
-        latitudeDelta: initialDelta,
-        longitudeDelta: initialDelta,
-      }};
+        this.state = { markers : [],
+                        };
 
       this.onRegionChange = this.onRegionChange.bind(this);
+      this.tourNext = this.tourNext.bind(this);
  }
 
   getInitialState() {
@@ -76,12 +73,26 @@ export default class ExplorePage extends React.Component {
   }
     componentDidMount() {
         // if (Platform.OS === 'ios') this.watchID = navigator.geolocation.watchPosition();
+        
     }
 
     componentWillUnmount() {
         // if (Platform.OS === 'ios') navigator.geolocation.clearWatch(this.watchID);
-    }
 
+    }
+    componentDidUpdate (){
+      // if (this.props.screenProps.tourStarted){
+
+      //        if(this.markers){
+      //           if(this.markerID){
+      //                 this.markers[this.markerID].showCallout();  
+      //               }
+      //         }
+      //         if( this.props.screenProps.currMarker == Object.keys(this.props.screenProps.murals).length){
+      //             this.toggleTour();
+      //           }
+      //       }
+    }
     onRegionChange(region) {
       this.setState({ region });
     }
@@ -145,15 +156,17 @@ export default class ExplorePage extends React.Component {
       defaultMuralID = this.props.navigation.state.params.muralID;
     }
     
+    
+    //this.markers = [];
 
     return Object.keys(murals).map((key, i) => {
       lat = parseFloat(murals[key]["Lat"]);
       long = parseFloat(murals[key]["Long"]);
       title = murals[key]["Title"];
       artistName = artists[murals[key]["Artist"]]["name"];
-      
+
       setRefLambda = (function (ref) {
-        this.calloutToMakeVisible = ref;
+        this.calloutToMakeVisible = ref
       }).bind(this);
       
       return (
@@ -163,7 +176,9 @@ export default class ExplorePage extends React.Component {
           description={artistName}
           coordinate={{ latitude: lat, longitude: long }}
           pinColor={pink}
-          ref = {key == defaultMuralID ? setRefLambda : null}
+          ref = {(ref) => this.state.markers[i] = ref}
+          //{key == defaultMuralID ? setRefLambda : null} 
+
           onCalloutPress={() => {
             navigate("MuralInfoPage", {
               mural: murals[key],
@@ -173,6 +188,8 @@ export default class ExplorePage extends React.Component {
         />
       );
     });
+
+   
   }
   
   goToMural() {
@@ -208,16 +225,20 @@ export default class ExplorePage extends React.Component {
 
       console.log("start button pressed");
       this.props.screenProps.tourState()
-     
+      
     
     }
 
     tourNext () {
 
         this.props.screenProps.changeMarker();
-        // 
-        // 
-        // this.map.animateToRegion(region, 1000);
+        
+       
+      
+        if( this.props.screenProps.currMarker == Object.keys(this.props.screenProps.murals).length - 1){
+            this.toggleTour();
+        }
+          
       
 
     }
@@ -301,13 +322,14 @@ export default class ExplorePage extends React.Component {
             
             Lat = 0
             Lon = 0
+            markerID =0
 
             Object.keys(murals).map((key,i) =>{
                     console.log("306")
                     if (murals[key]["Index"] == this.props.screenProps.currMarker){
                       Lat = parseFloat(murals[key]["Lat"]);
                       Lon = parseFloat(murals[key]["Long"]);
-                      
+                      markerID = i;
                       }
 
                   });
@@ -317,10 +339,16 @@ export default class ExplorePage extends React.Component {
                 region = {
                    latitude: Lat,
                    longitude: Lon,
-                   latitudeDelta: .0005,
-                   longitudeDelta: .0005,
-                 }            
+                   latitudeDelta: .0001,
+                   longitudeDelta: .0001,
+                 } 
+                 console.log("markerID", markerID);
+                 if (this.state.markers) {
+                  this.state.markers[markerID].showCallout();}
+                
+                     
             }
+            
         }
 
         else {
@@ -445,4 +473,12 @@ class AnimatedMapView extends React.Component {
     }
     
 }
+
+
+
+
+
+
+
+
 

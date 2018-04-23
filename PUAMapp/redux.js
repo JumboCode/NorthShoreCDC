@@ -129,7 +129,7 @@ const firebaseData = (state = initialState, action) => {
 
 const toggleState = {
     tourStarted: false,
-    currMarker: 0,
+    currMarker: 1,
 }
 
 const tourData = (state = toggleState, action) => {
@@ -137,7 +137,7 @@ const tourData = (state = toggleState, action) => {
         case 'TOGGLE_TOUR':
             return Object.assign({}, state, {
                 tourStarted: !state.tourStarted,
-                currMarker: 0
+                currMarker: 1
             });
         case 'NEXT_MARKER':
             return Object.assign({}, state, {
