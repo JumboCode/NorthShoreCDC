@@ -325,7 +325,7 @@ if (Platform.OS === "ios") {
       justifyContent: "flex-start",
       alignItems: "flex-start",
       paddingLeft: "4%",
-      paddingTop: "10%",
+      paddingTop: "5%",
       marginBottom: "auto"
     },
     textLeft: {
