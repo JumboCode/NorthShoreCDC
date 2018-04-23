@@ -16,71 +16,73 @@
     <br>
     <form action="" method="post" name="api">
       {{ form.csrf_token }}
-      <p> Title: <br>
-      {{ form.title(size=40, value= mural["Title"]) }} <br>
-      {% for error in form.title.errors %}
-      <div class="alert alert-danger" style="width:400px;">
-        <span>{{ error }}</span>
-      </div>
-      {% endfor %}<br>
-      <p> Photo URL: (Image the link directs to must be < 150kB)<br>
-        {{ form.photo(size=40, value= mural["Photo"])}}<br>
-        {% for error in form.photo.errors %}
-      <div class="alert alert-danger" style="width:400px;">
-        <span>{{ error }}</span>
-      </div>
+      <div class="col-xs-5">
+        <p> Title: <br>
+        {{ form.title(size=40, value= mural["Title"], class_="form-control") }} <br>
+        {% for error in form.title.errors %}
+        <div class="alert alert-danger" style="width:400px;">
+          <span>{{ error }}</span>
+        </div>
         {% endfor %}<br>
-      <p> Select artist: <br>
-      {{ form.artist(size=5, id = "select_elem", option= mural["Artist"]) }} <br>
-      {% for error in form.artist.errors %}
-      <div class="alert alert-danger" style="width:400px;">
-        <span>{{ error }}</span>
-      </div>
-      {% endfor %}<br>
-      <p> Exact latitude: <br>
-      {{ form.lat(size=40, value= mural["Lat"]) }} <br>
-      {% for error in form.lat.errors %}
-      <div class="alert alert-danger" style="width:400px;">
-        <span>{{ error }}</span>
-      </div>
-      {% endfor %}<br>
-      <p> Exact longitude: <br>
-      {{ form.longitude(size=40, value= mural["Long"]) }} <br>
-      {% for error in form.longitude.errors %}
-      <div class="alert alert-danger" style="width:400px;">
-        <span>{{ error }}</span>
-      </div>
-      {% endfor %}<br>
-      <p> Month: <br>
-      {{ form.month(size=40, value= mural["Month"]) }} <br>
-      {% for error in form.month.errors %}
-      <div class="alert alert-danger" style="width:400px;">
-        <span>{{ error }}</span>
-      </div>
-      {% endfor %}<br>
-      <p> Year: <br>
-      {{ form.year(size=40, value= mural["Year"]) }} <br>
-      {% for error in form.year.errors %}
-      <div class="alert alert-danger" style="width:400px;">
-        <span>{{ error }}</span>
-      </div>
-      {% endfor %}<br>
-      <p> Medium: (e.g. Spray Paint)<br>
-        {{ form.medium(size=40, value= mural["Medium"]) }} <br>
-        {% for error in form.medium.errors %}
-      <div class="alert alert-danger" style="width:400px;">
-        <span>{{ error }}</span>
-      </div>
+        <p> Photo URL: (Image the link directs to must be < 150kB)<br>
+          {{ form.photo(size=40, value= mural["Photo"], class_="form-control")}}<br>
+          {% for error in form.photo.errors %}
+        <div class="alert alert-danger" style="width:400px;">
+          <span>{{ error }}</span>
+        </div>
+          {% endfor %}<br>
+        <p> Select artist: <br>
+        {{ form.artist(size=5, id = "select_elem", option= mural["Artist"], class_="form-control") }} <br>
+        {% for error in form.artist.errors %}
+        <div class="alert alert-danger" style="width:400px;">
+          <span>{{ error }}</span>
+        </div>
         {% endfor %}<br>
-      <p> Description: (Optional)<br>
-      {{ form.description(rows = 8, cols = 60, id = "desc", value= mural["Description"]) }} <br>
-      {% for error in form.description.errors %}
-      <div class="alert alert-danger" style="width:400px;">
-        <span>{{ error }}</span>
-      </div>
-      {% endfor %}<br>
-      <p>
-        <a href="{{ url_for('all_murals') }}" class="btn btn-md btn-default" role="button">Cancel</a>&nbsp;&nbsp;
-        <input type ="submit" value="Submit" class="btn btn-md btn-success"></p>
+        <p> Exact latitude: <br>
+        {{ form.lat(size=40, value= mural["Lat"], class_="form-control") }} <br>
+        {% for error in form.lat.errors %}
+        <div class="alert alert-danger" style="width:400px;">
+          <span>{{ error }}</span>
+        </div>
+        {% endfor %}<br>
+        <p> Exact longitude: <br>
+        {{ form.longitude(size=40, value= mural["Long"], class_="form-control") }} <br>
+        {% for error in form.longitude.errors %}
+        <div class="alert alert-danger" style="width:400px;">
+          <span>{{ error }}</span>
+        </div>
+        {% endfor %}<br>
+        <p> Month: <br>
+        {{ form.month(size=40, value= mural["Month"], class_="form-control") }} <br>
+        {% for error in form.month.errors %}
+        <div class="alert alert-danger" style="width:400px;">
+          <span>{{ error }}</span>
+        </div>
+        {% endfor %}<br>
+        <p> Year: <br>
+        {{ form.year(size=40, value= mural["Year"], class_="form-control") }} <br>
+        {% for error in form.year.errors %}
+        <div class="alert alert-danger" style="width:400px;">
+          <span>{{ error }}</span>
+        </div>
+        {% endfor %}<br>
+        <p> Medium: (e.g. Spray Paint)<br>
+          {{ form.medium(size=40, value= mural["Medium"], class_="form-control") }} <br>
+          {% for error in form.medium.errors %}
+        <div class="alert alert-danger" style="width:400px;">
+          <span>{{ error }}</span>
+        </div>
+          {% endfor %}<br>
+        <p> Description: (Optional)<br>
+        {{ form.description(rows = 8, cols = 60, id = "desc", value= mural["Description"], class_="form-control") }} <br>
+        {% for error in form.description.errors %}
+        <div class="alert alert-danger" style="width:400px;">
+          <span>{{ error }}</span>
+        </div>
+        {% endfor %}<br>
+        <p>
+          <a href="{{ url_for('all_murals') }}" class="btn btn-md btn-default" role="button">Cancel</a>&nbsp;&nbsp;
+          <input type ="submit" value="Submit" class="btn btn-md btn-success"></p>
+        </div>
     </form>
 {% endblock %}

@@ -13,36 +13,38 @@
 </script>
     <form action="" method="post" name="api">
       {{ form.csrf_token }}
-      <p> Name: <br>
-      {{ form.name(size=40, value= artist["name"]) }} <br>
-      {% for error in form.name.errors %}
-      <div class="alert alert-danger" style="width:400px;">
-        <span>{{ error }}</span>
-      </div>
-      {% endfor %}<br>
-      <p> Place of origin: <br>
-      {{ form.city(size=40, value= artist["city"]) }} <br>
-      {% for error in form.city.errors %}
-      <div class="alert alert-danger" style="width:400px;">
-        <span>{{ error }}</span>
-      </div>
-      {% endfor %}<br>
-      <p> Bio / about: <br>
-      {{ form.bio(rows=8, cols=60, id = 'bio', value= artist["bio"]) }} <br>
-      {% for error in form.bio.errors %}
-      <div class="alert alert-danger" style="width:400px;">
-        <span>{{ error }}</span>
-      </div>
-      {% endfor %}<br>
-      <p> Please enter a link to the artist's portfolio (optional): <br>
-      {{ form.link(size=40, value= artist["link"]) }} <br>
-      {% for error in form.link.errors %}
-      <div class="alert alert-danger" style="width:400px;">
-        <span>{{ error }}</span>
-      </div>
-      {% endfor %}<br>
-      <p>
-        <a href="{{ url_for('all_artists') }}" class="btn btn-md btn-default" role="button">Cancel</a>&nbsp;&nbsp;
-        <input type ="submit" value="Submit" class="btn btn-md btn-success"></p>
+      <div class="col-xs-5">
+        <p> Name: <br>
+        {{ form.name(size=40, value= artist["name"], class_="form-control") }} <br>
+        {% for error in form.name.errors %}
+        <div class="alert alert-danger" style="width:400px;">
+          <span>{{ error }}</span>
+        </div>
+        {% endfor %}<br>
+        <p> Place of origin: <br>
+        {{ form.city(size=40, value= artist["city"], class_="form-control") }} <br>
+        {% for error in form.city.errors %}
+        <div class="alert alert-danger" style="width:400px;">
+          <span>{{ error }}</span>
+        </div>
+        {% endfor %}<br>
+        <p> Bio / about: <br>
+        {{ form.bio(rows=8, cols=60, id = 'bio', value= artist["bio"], class_="form-control") }} <br>
+        {% for error in form.bio.errors %}
+        <div class="alert alert-danger" style="width:400px;">
+          <span>{{ error }}</span>
+        </div>
+        {% endfor %}<br>
+        <p> Please enter a link to the artist's portfolio (optional): <br>
+        {{ form.link(size=40, value= artist["link"], class_="form-control") }} <br>
+        {% for error in form.link.errors %}
+        <div class="alert alert-danger" style="width:400px;">
+          <span>{{ error }}</span>
+        </div>
+        {% endfor %}<br>
+        <p>
+          <a href="{{ url_for('all_artists') }}" class="btn btn-md btn-default" role="button">Cancel</a>&nbsp;&nbsp;
+          <input type ="submit" value="Submit" class="btn btn-md btn-success"></p>
+        </div>
     </form>
 {% endblock %}
