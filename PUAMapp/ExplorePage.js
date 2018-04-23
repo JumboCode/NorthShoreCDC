@@ -156,8 +156,6 @@ export default class ExplorePage extends React.Component {
       defaultMuralID = this.props.navigation.state.params.muralID;
     }
     
-    
-    //this.markers = [];
 
     return Object.keys(murals).map((key, i) => {
       lat = parseFloat(murals[key]["Lat"]);
@@ -176,7 +174,7 @@ export default class ExplorePage extends React.Component {
           description={artistName}
           coordinate={{ latitude: lat, longitude: long }}
           pinColor={pink}
-          ref = {(ref) => this.state.markers[i] = ref}
+          ref = {(ref) => this.state.markers[key] = ref}
           //{key == defaultMuralID ? setRefLambda : null} 
 
           onCalloutPress={() => {
@@ -194,31 +192,39 @@ export default class ExplorePage extends React.Component {
   
   goToMural() {
 
-    if (this.calloutToMakeVisible) {
-      this.calloutToMakeVisible.showCallout();
-    }
-
+   
+    // if (this.calloutToMakeVisible) {
+    //   this.calloutToMakeVisible.showCallout();
+    // }
+    murals = this.props.screenProps.murals || {};
     if (this.props.screenProps.tourStarted) {
             // See if the currMarker corresponds to a mural
+        if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
+            this.toggleTour();
+            this.state.markers[this.props.navigation.state.params.muralID].showCallout();
+            return;
+            }
             
             Lat = 0
             Lon = 0
-            markerID =0
-
+            markerKey =0
+            console.log ("murals", murals);
             Object.keys(murals).map((key,i) =>{
                     console.log("306")
                     if (murals[key]["Index"] == this.props.screenProps.currMarker){
                       Lat = parseFloat(murals[key]["Lat"]);
                       Lon = parseFloat(murals[key]["Long"]);
-                      markerID = i;
+                      markerKey = key;
                       }
 
                   });
       if (this.state.markers) {
-                  this.state.markers[markerID].showCallout();
-                }
+                  this.state.markers[markerKey].showCallout();
+        }
     
-    
+  }
+     if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
+      this.state.markers[this.props.navigation.state.params.muralID].showCallout();
 
     }
 
@@ -231,11 +237,11 @@ export default class ExplorePage extends React.Component {
     toggleTour() {
 
       console.log("start button pressed");
-
+      murals = this.props.screenProps.murals || {};
       if (this.props.screenProps.tourStarted){
-        for (i = 0; i < this.state.markers.length;i++){
-            this.state.markers[i].hideCallout();
-        }
+        Object.keys(murals).map((key,i) =>{
+          this.state.markers[key].hideCallout();
+        });
         
       }
       
@@ -340,14 +346,14 @@ export default class ExplorePage extends React.Component {
             
             Lat = 0
             Lon = 0
-            markerID =0
+      
 
             Object.keys(murals).map((key,i) =>{
                     console.log("306")
                     if (murals[key]["Index"] == this.props.screenProps.currMarker){
                       Lat = parseFloat(murals[key]["Lat"]);
                       Lon = parseFloat(murals[key]["Long"]);
-                      markerID = i;
+                     
                       }
 
                   });
@@ -360,7 +366,7 @@ export default class ExplorePage extends React.Component {
                    latitudeDelta: .0001,
                    longitudeDelta: .0001,
                  } 
-                 console.log("markerID", markerID);
+                
                  // if (this.state.markers) {
                  //  this.state.markers[markerID].showCallout();}
                 
