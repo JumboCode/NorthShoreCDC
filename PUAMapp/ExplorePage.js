@@ -198,22 +198,29 @@ export default class ExplorePage extends React.Component {
       this.calloutToMakeVisible.showCallout();
     }
 
-    // if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
-    //     murals = this.props.screenProps.murals || {};
-    //     key = this.props.navigation.state.params.muralID;
-    // 
-    //     region = {
-    //       latitude: parseFloat(murals[key]["Lat"]),
-    //       longitude: parseFloat(murals[key]["Long"]),
-    //       latitudeDelta: .001,
-    //       longitudeDelta: .001,
-    //     }
-    //       setTimeout(function () {
-    //     this.map.animateToRegion(region, 1000);
-    //   }.bind(this), 500);
-    // }
+    if (this.props.screenProps.tourStarted) {
+            // See if the currMarker corresponds to a mural
+            
+            Lat = 0
+            Lon = 0
+            markerID =0
+
+            Object.keys(murals).map((key,i) =>{
+                    console.log("306")
+                    if (murals[key]["Index"] == this.props.screenProps.currMarker){
+                      Lat = parseFloat(murals[key]["Lat"]);
+                      Lon = parseFloat(murals[key]["Long"]);
+                      markerID = i;
+                      }
+
+                  });
+      if (this.state.markers) {
+                  this.state.markers[markerID].showCallout();
+                }
     
     
+
+    }
 
   }
 
@@ -224,7 +231,18 @@ export default class ExplorePage extends React.Component {
     toggleTour() {
 
       console.log("start button pressed");
-      this.props.screenProps.tourState()
+
+      if (this.props.screenProps.tourStarted){
+        for (i = 0; i < this.state.markers.length;i++){
+            this.state.markers[i].hideCallout();
+        }
+        
+      }
+      
+      
+        this.props.screenProps.tourState()
+
+
       
     
     }
@@ -343,8 +361,8 @@ export default class ExplorePage extends React.Component {
                    longitudeDelta: .0001,
                  } 
                  console.log("markerID", markerID);
-                 if (this.state.markers) {
-                  this.state.markers[markerID].showCallout();}
+                 // if (this.state.markers) {
+                 //  this.state.markers[markerID].showCallout();}
                 
                      
             }
