@@ -29,6 +29,7 @@ import  MapView, {Polyline} from 'react-native-maps';
 // This triggers asking the user for location permissions.
 // This won't do anything if the permission is already granted.
 Permissions.askAsync(Permissions.LOCATION);
+
 export default class ExplorePage extends React.Component {
     constructor(props) {
         super(props);
@@ -49,7 +50,6 @@ export default class ExplorePage extends React.Component {
     initialLong = -70.891919;
     initialDelta = 0.005;
     return {
-
       region: {
         latitude: initialLat,
         longitude: initialLong ,
@@ -58,31 +58,10 @@ export default class ExplorePage extends React.Component {
       },
     };
   }
-    componentDidMount() {
-        // if (Platform.OS === 'ios') this.watchID = navigator.geolocation.watchPosition();
-        
-    }
 
-    componentWillUnmount() {
-        // if (Platform.OS === 'ios') navigator.geolocation.clearWatch(this.watchID);
-
-    }
-    componentDidUpdate (){
-      // if (this.props.screenProps.tourStarted){
-
-      //        if(this.markers){
-      //           if(this.markerID){
-      //                 this.markers[this.markerID].showCallout();  
-      //               }
-      //         }
-      //         if( this.props.screenProps.currMarker == Object.keys(this.props.screenProps.murals).length){
-      //             this.toggleTour();
-      //           }
-      //       }
-    }
-    onRegionChange(region) {
-      this.setState({ region });
-    }
+  onRegionChange(region) {
+    this.setState({ region });
+  }
 
   static navigationOptions = ({ navigation}) => {
     return Platform.OS === "ios"
@@ -179,11 +158,6 @@ export default class ExplorePage extends React.Component {
   }
   
   goToMural() {
-
-   
-    // if (this.calloutToMakeVisible) {
-    //   this.calloutToMakeVisible.showCallout();
-    // }
     murals = this.props.screenProps.murals || {};
     if (this.props.screenProps.tourStarted) {
             // See if the currMarker corresponds to a mural
@@ -219,10 +193,6 @@ export default class ExplorePage extends React.Component {
 
   }
 
-
-
-
-
     toggleTour() {
 
       console.log("start button pressed");
@@ -233,12 +203,9 @@ export default class ExplorePage extends React.Component {
         });
         
       }
-      
-      
+
         this.props.screenProps.tourState()
 
-
-      
     
     }
 
@@ -251,12 +218,8 @@ export default class ExplorePage extends React.Component {
         if( this.props.screenProps.currMarker == Object.keys(this.props.screenProps.murals).length - 1){
             this.toggleTour();
         }
-          
-      
 
     }
-
-
 
     getCurrCoordsLat(){
       murals = this.props.screenProps.murals || {}
@@ -269,10 +232,8 @@ export default class ExplorePage extends React.Component {
               Lat = parseFloat(murals[key]["Lat"]);
               return Lat;
             }
-
           })
       
-    
       return Lat;
 
     }
@@ -287,12 +248,8 @@ export default class ExplorePage extends React.Component {
             Lon = parseFloat(murals[key]["Long"]);
             return Lon;
           }
-
         })
-
-
       return Lon;
-
     }
 
     tourPrev() {
@@ -304,7 +261,6 @@ export default class ExplorePage extends React.Component {
       }
     }
     
-
     render() {
         const { navigate } = this.props.navigation;
         initialLat = 42.518217;
@@ -415,31 +371,6 @@ export default class ExplorePage extends React.Component {
     }
 
 }
-
-
-//console.log(this.props.screenProps.currMarker)
-
-      //   Object.keys(murals).map((key,i) =>{
-
-      //     if (murals[key]["Index"] == this.props.screenProps.currMarker){
-      //       Lat = parseFloat(murals[key]["Lat"]);
-      //       Lon = parseFloat(murals[key]["Long"]);
-      //     }
-
-      //   })
-        
-      // console.log(this.props.screenProps.currMarker)
-
-      //    _mapView.animateToCoordinate({
-      //       latitude: Lat,
-      //       longitude: Lon,
-      //     }, 1000)
-// {{
-//                 latitude: this.props.screenProps.tourStarted == false ? initialLat: this.getCurrCoordsLat() ,
-//                 longitude: this.props.screenProps.tourStarted == false ? initialLong : this.getCurrCoordsLong() ,
-//                 latitudeDelta: this.props.screenProps.tourStarted == false ? initialDelta : 0.0001,
-//                 longitudeDelta: this.props.screenProps.tourStarted == false ? initialDelta : 0.0001,
-//               }}
 
 
 /*****************************************************************************/
