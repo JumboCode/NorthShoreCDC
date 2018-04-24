@@ -92,7 +92,7 @@ export default class ExplorePage extends React.Component {
     return (this.props.navigation.state.params && this.props.navigation.state.params.muralID);
   }
   
-  renderImages() {
+  renderMarkers() {
     const { navigate } = this.props.navigation;
 
     murals = this.props.screenProps.murals || {};
@@ -319,7 +319,7 @@ export default class ExplorePage extends React.Component {
               region =  {region}
               onLayout = {this.goToMural.bind(this)}
                >
-              {this.renderImages()}
+              {this.renderMarkers()}
             
            
             </AnimatedMapView>
