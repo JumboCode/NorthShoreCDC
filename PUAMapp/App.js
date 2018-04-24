@@ -23,7 +23,7 @@ import { lightpurple, darkpurple, pink } from "./colors.js";
 
 
 import {
-  getMurals, getArtists, tourState, changeMarker
+  getMurals, getArtists, tourState, changeMarker, changeMarkerPrev, trueGallery, falseGallery
 } from './redux';
 
 
@@ -84,6 +84,7 @@ const mapStateToProps = (state) => ({
     artists: state.firebaseData.artists,
     tourStarted: state.tourData.tourStarted,
     currMarker: state.tourData.currMarker,
+    fromGallery: state.tourData.fromGallery,
 
 
 });
@@ -103,7 +104,19 @@ const mapDispatchToProps = dispatch => {
     changeMarker : () => {
       dispatch(changeMarker())
 
-    }
+    },
+    trueFromGallery : () => {
+      dispatch(trueGallery())
+
+    },
+    falseFromGallery : () => {
+      dispatch(falseGallery())
+
+    },
+    changeMarkerPrev : () => {
+      dispatch(changeMarkerPrev())
+
+    },
   };
 };
 

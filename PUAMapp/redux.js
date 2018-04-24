@@ -68,6 +68,27 @@ export const toggleTour = () => ({
 
 });
 
+export const trueFromGallery= () => ({
+    type: 'TRUE_FROM_GALLERY'
+
+});
+
+export const trueGallery = () => {
+        return function (dispatch) {
+        dispatch(trueFromGallery());
+    }
+}
+
+export const falseFromGallery= () => ({
+    type: 'FALSE_FROM_GALLERY'
+
+});
+
+export const falseGallery = () => {
+        return function (dispatch) {
+        dispatch(falseFromGallery());
+    }
+}
 
 export const tourState = () => {
         return function (dispatch) {
@@ -80,10 +101,21 @@ export const nextMarker = () => ({
 
 });
 
+export const prevMarker = () => ({
+    type: 'PREV_MARKER'
+
+});
+
 
 export const changeMarker = () => {
         return function (dispatch) {
         dispatch(nextMarker());
+    }
+}
+
+export const changeMarkerPrev = () => {
+        return function (dispatch) {
+        dispatch(prevMarker());
     }
 }
 
@@ -130,6 +162,7 @@ const firebaseData = (state = initialState, action) => {
 const toggleState = {
     tourStarted: false,
     currMarker: 1,
+    fromGallery: false,
 }
 
 const tourData = (state = toggleState, action) => {
@@ -142,6 +175,18 @@ const tourData = (state = toggleState, action) => {
         case 'NEXT_MARKER':
             return Object.assign({}, state, {
                currMarker: (state.currMarker + 1)
+            });
+        case 'PREV_MARKER':
+            return Object.assign({}, state, {
+               currMarker: (state.currMarker - 1)
+            });
+        case 'TRUE_FROM_GALLERY':
+            return Object.assign({}, state, {
+               fromGallery: true ,
+            });
+        case 'FALSE_FROM_GALLERY':
+            return Object.assign({}, state, {
+               fromGallery: false ,
             });
 
             default: return state;

@@ -23,20 +23,7 @@ import  MapView, {Polyline} from 'react-native-maps';
 
 
 
-const polylines = [ 
-  {
-    latitude: 42.518351, 
-    longitude: -70.8909514 
-  },
-  {
-    latitude: 42.5185239, 
-    longitude: -70.8910845
-  },
-  {
-    latitude: 42.5183255, 
-    longitude: -70.8934113
-  }
-                      ]
+
 
 
 // This triggers asking the user for location permissions.
@@ -45,7 +32,7 @@ Permissions.askAsync(Permissions.LOCATION);
 export default class ExplorePage extends React.Component {
     constructor(props) {
         super(props);
-        
+        self = this; 
         initialLat = 42.518217;
         initialLong = -70.891919;
         initialDelta = 0.005;
@@ -97,13 +84,14 @@ export default class ExplorePage extends React.Component {
       this.setState({ region });
     }
 
-  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = ({ navigation}) => {
     return Platform.OS === "ios"
       ? {
           headerLeft: (
             <TouchableOpacity
               style={{ top: 30, left: -25, padding: 40 }}
-              onPress={() => navigation.dispatch(NavigationActions.back())}
+              onPress={() => {self.props.screenProps.falseFromGallery() 
+                              navigation.dispatch(NavigationActions.back())}}
             >
               <View
                 style={{
@@ -201,6 +189,8 @@ export default class ExplorePage extends React.Component {
             // See if the currMarker corresponds to a mural
         if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
             this.toggleTour();
+            this.props.screenProps.trueFromGallery();
+
             this.state.markers[this.props.navigation.state.params.muralID].showCallout();
             return;
             }
@@ -208,7 +198,6 @@ export default class ExplorePage extends React.Component {
             Lat = 0
             Lon = 0
             markerKey =0
-            console.log ("murals", murals);
             Object.keys(murals).map((key,i) =>{
                     console.log("306")
                     if (murals[key]["Index"] == this.props.screenProps.currMarker){
@@ -267,6 +256,8 @@ export default class ExplorePage extends React.Component {
 
     }
 
+
+
     getCurrCoordsLat(){
       murals = this.props.screenProps.murals || {}
       Lat = 42.518217
@@ -304,8 +295,13 @@ export default class ExplorePage extends React.Component {
 
     }
 
-    temp() {
-      console.log("prev or next");
+    tourPrev() {
+      if(this.props.screenProps.currMarker == 1){
+        return;
+      }
+      else{
+        this.props.screenProps.changeMarkerPrev();
+      }
     }
     
 
@@ -363,14 +359,10 @@ export default class ExplorePage extends React.Component {
                 region = {
                    latitude: Lat,
                    longitude: Lon,
-                   latitudeDelta: .0001,
-                   longitudeDelta: .0001,
+                   latitudeDelta: .001,
+                   longitudeDelta: .001,
                  } 
-                
-                 // if (this.state.markers) {
-                 //  this.state.markers[markerID].showCallout();}
-                
-                     
+                  
             }
             
         }
@@ -394,20 +386,14 @@ export default class ExplorePage extends React.Component {
                >
               {this.renderImages()}
             
-            <MapViewDirections
-              origin= {polylines[0]}
-              destination= {polylines[1]}
-              apikey="AIzaSyBJaE850Gj_kT7KhTb__ifb6vA01TKmA3w"
-              strokeWidth={3}
-              strokeColor="hotpink"
-              />
+           
             </AnimatedMapView>
             {console.log(this.props.screenProps.tourStarted)}
           {this.props.screenProps.tourStarted ? 
             <View>
              <Button 
             title="prev"
-            onPress={()=>this.temp()}
+            onPress={()=>this.tourPrev()}
             >  </Button>
              <Button 
             title="next"
@@ -418,11 +404,12 @@ export default class ExplorePage extends React.Component {
             onPress={()=>this.toggleTour()}
             >  </Button>
             </View>
-            :
+            : this.props.screenProps.fromGallery ?
+            <View></View> :
             <Button 
             title="start tour"
             onPress={()=>this.toggleTour()}>  
-            </Button>}
+            </Button>  }
           </View>
         );
     }
