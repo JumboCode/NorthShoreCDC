@@ -26,6 +26,9 @@ import  MapView, {Polyline} from 'react-native-maps';
 // This won't do anything if the permission is already granted.
 Permissions.askAsync(Permissions.LOCATION);
 
+// Note: For all intents and purposes, "mural key" is the same as "mural id".
+// But "mural index" does not refer to either of those things, it only refers
+// to a mural's order in the tour.
 export default class ExplorePage extends React.Component {
     constructor(props) {
         super(props);
@@ -92,7 +95,10 @@ export default class ExplorePage extends React.Component {
     return (this.props.navigation.state.params && this.props.navigation.state.params.muralID);
   }
   
-  // Logic for determining which mural should currently be shown to the user
+  // Logic for determining which mural should currently be shown to the user.
+  // If we came from the gallery -> mural info page, show that mural.
+  // If we're on a tour, show the mural of the index we're currently at
+  // Otherwise return undefined.
   currentMuralID() {
     if (this.didComeFromGallery()) {
       return this.props.navigation.state.params.muralID;
@@ -220,12 +226,9 @@ export default class ExplorePage extends React.Component {
             longitudeDelta: initialDelta
         };
         
-        // Determine which region we WANT to go to.
         region = undefined;
-        
         murals = this.props.screenProps.murals || {};
 
-        
         if (this.currentMuralID()) {
           mural = murals[this.currentMuralID()];
           region = {
