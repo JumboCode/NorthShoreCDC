@@ -110,10 +110,6 @@ export default class ExplorePage extends React.Component {
       title = murals[key]["Title"];
       artistName = artists[murals[key]["Artist"]]["name"];
 
-      setRefLambda = (function (ref) {
-        this.calloutToMakeVisible = ref
-      }).bind(this);
-      
       return (
         <MapView.Marker
           key={i}
@@ -122,8 +118,6 @@ export default class ExplorePage extends React.Component {
           coordinate={{ latitude: lat, longitude: long }}
           pinColor={pink}
           ref = {(ref) => this.markers[key] = ref}
-          //{key == defaultMuralID ? setRefLambda : null} 
-
           onCalloutPress={() => {
             navigate("MuralInfoPage", {
               mural: murals[key],
@@ -200,36 +194,6 @@ export default class ExplorePage extends React.Component {
 
     }
 
-    getCurrCoordsLat(){
-      murals = this.props.screenProps.murals || {}
-      Lat = 42.518217
-
-
-        Object.keys(murals).map((key,i) =>{
-
-            if (murals[key]["Index"] == this.props.screenProps.currMarker ){
-              Lat = parseFloat(murals[key]["Lat"]);
-              return Lat;
-            }
-          })
-      
-      return Lat;
-
-    }
-
-    getCurrCoordsLong(){
-      murals = this.props.screenProps.murals || {}
-      Lon = -70.891919
-     
-      Object.keys(murals).map((key,i) =>{
-
-          if (murals[key]["Index"] == this.props.screenProps.currMarker ){
-            Lon = parseFloat(murals[key]["Long"]);
-            return Lon;
-          }
-        })
-      return Lon;
-    }
 
     tourPrev() {
       if(this.props.screenProps.currMarker == 1){
