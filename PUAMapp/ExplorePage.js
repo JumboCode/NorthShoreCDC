@@ -22,10 +22,6 @@ import MapViewDirections from 'react-native-maps-directions';
 import  MapView, {Polyline} from 'react-native-maps';
 
 
-
-
-
-
 // This triggers asking the user for location permissions.
 // This won't do anything if the permission is already granted.
 Permissions.askAsync(Permissions.LOCATION);
@@ -41,27 +37,9 @@ export default class ExplorePage extends React.Component {
         this.state = { markers : [],
                         };
 
-      this.onRegionChange = this.onRegionChange.bind(this);
       this.tourNext = this.tourNext.bind(this);
  }
 
-  getInitialState() {
-    initialLat = 42.518217;
-    initialLong = -70.891919;
-    initialDelta = 0.005;
-    return {
-      region: {
-        latitude: initialLat,
-        longitude: initialLong ,
-        latitudeDelta: initialDelta,
-        longitudeDelta: initialDelta,
-      },
-    };
-  }
-
-  onRegionChange(region) {
-    this.setState({ region });
-  }
 
   static navigationOptions = ({ navigation}) => {
     return Platform.OS === "ios"
