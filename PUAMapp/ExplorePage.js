@@ -45,8 +45,7 @@ export default class ExplorePage extends React.Component {
           headerLeft: (
             <TouchableOpacity
               style={{ top: 30, left: -25, padding: 40 }}
-              onPress={() => {self.props.screenProps.falseFromGallery() 
-                              navigation.dispatch(NavigationActions.back())}}
+              onPress={() => {navigation.dispatch(NavigationActions.back())}}
             >
               <View
                 style={{
@@ -86,6 +85,11 @@ export default class ExplorePage extends React.Component {
           headerTintColor: "white",
           headerStyle: { backgroundColor: pink }
         };
+  }
+  
+  // Returns true if we came from the gallery's mural info page ("see mural on map" button)
+  didComeFromGallery() {
+    return (this.props.navigation.state.params && this.props.navigation.state.params.muralID);
   }
   
   renderImages() {
@@ -139,7 +143,6 @@ export default class ExplorePage extends React.Component {
             // See if the currMarker corresponds to a mural
         if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
             this.toggleTour();
-            this.props.screenProps.trueFromGallery();
 
             this.markers[this.props.navigation.state.params.muralID].showCallout();
             return;
@@ -336,7 +339,7 @@ export default class ExplorePage extends React.Component {
             onPress={()=>this.toggleTour()}
             >  </Button>
             </View>
-            : this.props.screenProps.fromGallery ?
+            : this.didComeFromGallery() ?
             <View></View> :
             <Button 
             title="start tour"
