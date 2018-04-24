@@ -33,7 +33,7 @@ export default class ExplorePage extends React.Component {
 
         // Where we will store the refs to all the markers
         // This is necessary because showing and hiding a callout must be done imperatively.
-        this.markers = []
+        this.markers = {}
 
       this.tourNext = this.tourNext.bind(this);
  }
@@ -155,7 +155,20 @@ export default class ExplorePage extends React.Component {
     murals = this.props.screenProps.murals || {};
     
       if (this.markers && this.currentMuralID()) {
-        this.markers[this.currentMuralID()].showCallout();
+        
+        // Note: we must delay showing the callout because it should only happen
+        // AFTER we animate to the region for that callout.
+        // This prevents an animation bug in which we showed the callout while
+        // the map was still animating to the region.
+        
+        // TODO: use constants to determine the delay amount. Here we use 1500
+        // because it is the sum of the map's animation delays (500ms before
+        // animating, animate moving to new region for 1000ms).
+        
+        setTimeout(function () {
+          this.markers[this.currentMuralID()].showCallout();
+        }.bind(this), 1500);
+
       }
   }
 
@@ -163,16 +176,16 @@ export default class ExplorePage extends React.Component {
     toggleTour() {
 
       console.log("start button pressed");
+      
+      // If we're ending a tour, hide any callouts that may be still visible.
       murals = this.props.screenProps.murals || {};
       if (this.props.screenProps.tourStarted){
         Object.keys(murals).map((key,i) =>{
           this.markers[key].hideCallout();
         });
-        
       }
-
-        this.props.screenProps.tourState()
-
+      
+      this.props.screenProps.tourState()
     
     }
 
@@ -279,7 +292,12 @@ class AnimatedMapView extends React.Component {
     
     shouldComponentUpdate(nextProps, nextState) {
         console.log("408")
-        this.goToRegion(nextProps.region, nextProps.onLayout);
+        
+        // Only animate to the region if the region is different
+        if (this.props.region !== nextProps.region) {
+          this.goToRegion(nextProps.region, nextProps.onLayout);          
+        }
+        
         return false;
     }
     
@@ -301,7 +319,12 @@ class AnimatedMapView extends React.Component {
     
     render() {
         var {initialRegion, region, children, onLayout, ...otherProps} = this.props;
-                
+        
+        // Avoid a weird animation from initialRegion to region if theyre the same
+        if (region === initialRegion) {
+          region = undefined;
+        }
+        
         return (
             <MapView 
                 onLayout={this.goToRegion.bind(this, region, onLayout)}
@@ -314,12 +337,4 @@ class AnimatedMapView extends React.Component {
     }
     
 }
-
-
-
-
-
-
-
-
 
