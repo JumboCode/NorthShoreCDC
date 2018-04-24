@@ -140,21 +140,31 @@ export default class ContactPage extends React.Component {
 
         <View style={contactStyles.textContainerRight}>
 
+          <TouchableOpacity style= {contactStyles.tourRequestImage} onPress={() => Linking.openURL("http://puntourbanartmuseum.org/open-air-museum/educational-tours/").catch(err => console.error('An error occurred', err))}>
+            <Text style = {contactStyles.tourRequestText}>Book Tour</Text>
+          </TouchableOpacity>
           <Hyperlink
             linkify={linkify}
             linkDefault={true}
             linkStyle={{ color: "white" }}
             linkText={this.textForLink}
           >
-            <Text style={contactStyles.textRight}>96 Lafayette St</Text>
-            <Text style={contactStyles.textRight}>Salem, MA 01970</Text>
-            <Text style={contactStyles.textRight}>tel://9787458071</Text>
+            <View style={contactStyles.textRightContainer}>
+              <Text style={contactStyles.textRight}>96 Lafayette St</Text>
+            </View>
+            <View style={contactStyles.textRightContainer}>
+              <Text style={contactStyles.textRight}>Salem, MA 01970</Text>
+            </View>
+            <View style={contactStyles.textRightContainer}>
+              <Text style={contactStyles.textRight}>tel://9787458071</Text>
+            </View>
           </Hyperlink>
 
-          <TouchableOpacity style= {contactStyles.tourRequestImage} onPress={() => Linking.openURL("http://puntourbanartmuseum.org/open-air-museum/educational-tours/").catch(err => console.error('An error occurred', err))}>
-            <Text style = {contactStyles.tourRequestText}>Book Tour</Text>
-          </TouchableOpacity>
 
+          <View style={contactStyles.bottomRow}>
+          <TouchableOpacity style= {contactStyles.bugReport} onPress={() => Linking.openURL(feedbackFormURL).catch(err => console.error('An error occurred', err))}>
+            <Text style = {contactStyles.bugReport}>Report Bug Here</Text>
+          </TouchableOpacity>
           <View style={contactStyles.socialStyle}>
             <TouchableOpacity
               onPress={() =>
@@ -207,10 +217,8 @@ export default class ContactPage extends React.Component {
               />
             </TouchableOpacity>
           </View>
+        </View>
 
-          <TouchableOpacity style= {contactStyles.bugReport} onPress={() => Linking.openURL(feedbackFormURL).catch(err => console.error('An error occurred', err))}>
-            <Text style = {contactStyles.bugReport}>Report Bug Here</Text>
-          </TouchableOpacity>
 
         </View>
       </View>
@@ -247,22 +255,35 @@ if (Platform.OS === "ios") {
     textContainerRight: {
       backgroundColor: "transparent",
       display: "flex",
-      justifyContent: "flex-start",
       alignItems: "flex-end",
       paddingRight: "5%",
       marginTop: "auto",
       paddingBottom: isIphoneX() ? "12%" : "4%"
     },
     textRight: {
+      display: "flex",
+      width: null,
+      justifyContent: "flex-end",
+      alignItems: "flex-end",
       backgroundColor: pink,
-      fontSize: 24,
-      lineHeight: 26,
+      fontSize: 20,
+      alignSelf: 'baseline',
+      padding: 3,
+      paddingBottom: 1,
+      lineHeight: 20,
       color: "white",
       textAlign: "right",
-      marginBottom: '2%',
+      marginBottom: 5,
+    },
+    textRightContainer: {
+      alignSelf: 'flex-end',
     },
     socialStyle: {
-      flexDirection: "row"
+      flexDirection: "row",
+      alignSelf: "flex-end",
+    },
+    bottomRow: {
+      flexDirection: "row",
     },
     iconStyle: {
       tintColor: pink,
@@ -290,7 +311,7 @@ if (Platform.OS === "ios") {
       shadowOpacity: 0.7
     },
     tourRequestText: {
-      fontSize: 22,
+      fontSize: 16,
       fontWeight: 'bold',
       color: pink,
     },
@@ -301,7 +322,7 @@ if (Platform.OS === "ios") {
       paddingLeft: 25,
       paddingRight: 25,
       marginTop: '2%',
-      marginBottom: '1%',
+      marginBottom: 16,
       marginRight: '1%',
       height: 40,
       borderRadius: 100,
@@ -311,7 +332,9 @@ if (Platform.OS === "ios") {
       shadowOpacity: 0.6,
     },
     bugReport: {
-      fontSize: 20,
+      fontSize: 12,
+      alignSelf: "flex-start",
+      justifySelf: "flex-start",
       color: pink,
       fontWeight: "bold",
       textDecorationLine: "underline",
