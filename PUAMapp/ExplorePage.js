@@ -33,9 +33,7 @@ export default class ExplorePage extends React.Component {
         initialLat = 42.518217;
         initialLong = -70.891919;
         initialDelta = 0.005;
-        
-        this.state = { markers : [],
-                        };
+        this.markers = []
 
       this.tourNext = this.tourNext.bind(this);
  }
@@ -119,7 +117,7 @@ export default class ExplorePage extends React.Component {
           description={artistName}
           coordinate={{ latitude: lat, longitude: long }}
           pinColor={pink}
-          ref = {(ref) => this.state.markers[key] = ref}
+          ref = {(ref) => this.markers[key] = ref}
           //{key == defaultMuralID ? setRefLambda : null} 
 
           onCalloutPress={() => {
@@ -143,7 +141,7 @@ export default class ExplorePage extends React.Component {
             this.toggleTour();
             this.props.screenProps.trueFromGallery();
 
-            this.state.markers[this.props.navigation.state.params.muralID].showCallout();
+            this.markers[this.props.navigation.state.params.muralID].showCallout();
             return;
             }
             
@@ -159,13 +157,13 @@ export default class ExplorePage extends React.Component {
                       }
 
                   });
-      if (this.state.markers) {
-                  this.state.markers[markerKey].showCallout();
+      if (this.markers) {
+                  this.markers[markerKey].showCallout();
         }
     
   }
      if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
-      this.state.markers[this.props.navigation.state.params.muralID].showCallout();
+      this.markers[this.props.navigation.state.params.muralID].showCallout();
 
     }
 
@@ -177,7 +175,7 @@ export default class ExplorePage extends React.Component {
       murals = this.props.screenProps.murals || {};
       if (this.props.screenProps.tourStarted){
         Object.keys(murals).map((key,i) =>{
-          this.state.markers[key].hideCallout();
+          this.markers[key].hideCallout();
         });
         
       }
