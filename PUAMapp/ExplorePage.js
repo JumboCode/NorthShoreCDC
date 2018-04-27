@@ -22,67 +22,25 @@ import MapViewDirections from 'react-native-maps-directions';
 import  MapView, {Polyline} from 'react-native-maps';
 
 
-
-
-
-
 // This triggers asking the user for location permissions.
 // This won't do anything if the permission is already granted.
 Permissions.askAsync(Permissions.LOCATION);
+
+// Note: For all intents and purposes, "mural key" is the same as "mural id".
+// But "mural index" does not refer to either of those things, it only refers
+// to a mural's order in the tour.
 export default class ExplorePage extends React.Component {
     constructor(props) {
         super(props);
         self = this; 
-        initialLat = 42.518217;
-        initialLong = -70.891919;
-        initialDelta = 0.005;
-        
-        this.state = { markers : [],
-                        };
 
-      this.onRegionChange = this.onRegionChange.bind(this);
+        // Where we will store the refs to all the markers
+        // This is necessary because showing and hiding a callout must be done imperatively.
+        this.markers = {}
+
       this.tourNext = this.tourNext.bind(this);
  }
 
-  getInitialState() {
-    initialLat = 42.518217;
-    initialLong = -70.891919;
-    initialDelta = 0.005;
-    return {
-
-      region: {
-        latitude: initialLat,
-        longitude: initialLong ,
-        latitudeDelta: initialDelta,
-        longitudeDelta: initialDelta,
-      },
-    };
-  }
-    componentDidMount() {
-        // if (Platform.OS === 'ios') this.watchID = navigator.geolocation.watchPosition();
-        
-    }
-
-    componentWillUnmount() {
-        // if (Platform.OS === 'ios') navigator.geolocation.clearWatch(this.watchID);
-
-    }
-    componentDidUpdate (){
-      // if (this.props.screenProps.tourStarted){
-
-      //        if(this.markers){
-      //           if(this.markerID){
-      //                 this.markers[this.markerID].showCallout();  
-      //               }
-      //         }
-      //         if( this.props.screenProps.currMarker == Object.keys(this.props.screenProps.murals).length){
-      //             this.toggleTour();
-      //           }
-      //       }
-    }
-    onRegionChange(region) {
-      this.setState({ region });
-    }
 
   static navigationOptions = ({ navigation}) => {
     return Platform.OS === "ios"
@@ -90,8 +48,7 @@ export default class ExplorePage extends React.Component {
           headerLeft: (
             <TouchableOpacity
               style={{ top: 30, left: -25, padding: 40 }}
-              onPress={() => {self.props.screenProps.falseFromGallery() 
-                              navigation.dispatch(NavigationActions.back())}}
+              onPress={() => {navigation.dispatch(NavigationActions.back())}}
             >
               <View
                 style={{
@@ -133,7 +90,35 @@ export default class ExplorePage extends React.Component {
         };
   }
   
-  renderImages() {
+  // Returns true if we came from the gallery's mural info page ("see mural on map" button)
+  didComeFromGallery() {
+    return (this.props.navigation.state.params && this.props.navigation.state.params.muralID);
+  }
+  
+  // Logic for determining which mural should currently be shown to the user.
+  // If we came from the gallery -> mural info page, show that mural.
+  // If we're on a tour, show the mural of the index we're currently at
+  // Otherwise return undefined.
+  currentMuralID() {
+    if (this.didComeFromGallery()) {
+      return this.props.navigation.state.params.muralID;
+    }
+    else if (this.props.screenProps.tourStarted) {
+      currMarkerIndex = this.props.screenProps.currMarker
+      murals = this.props.screenProps.murals || {};
+
+      for (muralKey in murals) {
+        if (murals[muralKey]["Index"] == currMarkerIndex) {
+          return muralKey;
+        }
+      }
+    }
+    
+    return undefined;
+    
+  }
+  
+  renderMarkers() {
     const { navigate } = this.props.navigation;
 
     murals = this.props.screenProps.murals || {};
@@ -151,10 +136,6 @@ export default class ExplorePage extends React.Component {
       title = murals[key]["Title"];
       artistName = artists[murals[key]["Artist"]]["name"];
 
-      setRefLambda = (function (ref) {
-        this.calloutToMakeVisible = ref
-      }).bind(this);
-      
       return (
         <MapView.Marker
           key={i}
@@ -162,9 +143,7 @@ export default class ExplorePage extends React.Component {
           description={artistName}
           coordinate={{ latitude: lat, longitude: long }}
           pinColor={pink}
-          ref = {(ref) => this.state.markers[key] = ref}
-          //{key == defaultMuralID ? setRefLambda : null} 
-
+          ref = {(ref) => this.markers[key] = ref}
           onCalloutPress={() => {
             navigate("MuralInfoPage", {
               mural: murals[key],
@@ -179,119 +158,49 @@ export default class ExplorePage extends React.Component {
   }
   
   goToMural() {
-
-   
-    // if (this.calloutToMakeVisible) {
-    //   this.calloutToMakeVisible.showCallout();
-    // }
     murals = this.props.screenProps.murals || {};
-    if (this.props.screenProps.tourStarted) {
-            // See if the currMarker corresponds to a mural
-        if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
-            this.toggleTour();
-            this.props.screenProps.trueFromGallery();
-
-            this.state.markers[this.props.navigation.state.params.muralID].showCallout();
-            return;
-            }
-            
-            Lat = 0
-            Lon = 0
-            markerKey =0
-            Object.keys(murals).map((key,i) =>{
-                    console.log("306")
-                    if (murals[key]["Index"] == this.props.screenProps.currMarker){
-                      Lat = parseFloat(murals[key]["Lat"]);
-                      Lon = parseFloat(murals[key]["Long"]);
-                      markerKey = key;
-                      }
-
-                  });
-      if (this.state.markers) {
-                  this.state.markers[markerKey].showCallout();
-        }
     
+      if (this.markers && this.currentMuralID()) {
+        
+        // Note: we must delay showing the callout because it should only happen
+        // AFTER we animate to the region for that callout.
+        // This prevents an animation bug in which we showed the callout while
+        // the map was still animating to the region.
+        
+        // TODO: use constants to determine the delay amount. Here we use 1500
+        // because it is the sum of the map's animation delays (500ms before
+        // animating, animate moving to new region for 1000ms).
+        
+        setTimeout(function () {
+          this.markers[this.currentMuralID()].showCallout();
+        }.bind(this), 1500);
+
+      }
   }
-     if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
-      this.state.markers[this.props.navigation.state.params.muralID].showCallout();
-
-    }
-
-  }
-
-
-
 
 
     toggleTour() {
 
       console.log("start button pressed");
+      
+      // If we're ending a tour, hide any callouts that may be still visible.
       murals = this.props.screenProps.murals || {};
       if (this.props.screenProps.tourStarted){
         Object.keys(murals).map((key,i) =>{
-          this.state.markers[key].hideCallout();
+          this.markers[key].hideCallout();
         });
-        
       }
       
-      
-        this.props.screenProps.tourState()
-
-
-      
+      this.props.screenProps.tourState()
     
     }
 
     tourNext () {
 
         this.props.screenProps.changeMarker();
-        
-       
-      
         if( this.props.screenProps.currMarker == Object.keys(this.props.screenProps.murals).length - 1){
             this.toggleTour();
         }
-          
-      
-
-    }
-
-
-
-    getCurrCoordsLat(){
-      murals = this.props.screenProps.murals || {}
-      Lat = 42.518217
-
-
-        Object.keys(murals).map((key,i) =>{
-
-            if (murals[key]["Index"] == this.props.screenProps.currMarker ){
-              Lat = parseFloat(murals[key]["Lat"]);
-              return Lat;
-            }
-
-          })
-      
-    
-      return Lat;
-
-    }
-
-    getCurrCoordsLong(){
-      murals = this.props.screenProps.murals || {}
-      Lon = -70.891919
-     
-      Object.keys(murals).map((key,i) =>{
-
-          if (murals[key]["Index"] == this.props.screenProps.currMarker ){
-            Lon = parseFloat(murals[key]["Long"]);
-            return Lon;
-          }
-
-        })
-
-
-      return Lon;
 
     }
 
@@ -304,7 +213,6 @@ export default class ExplorePage extends React.Component {
       }
     }
     
-
     render() {
         const { navigate } = this.props.navigation;
         initialLat = 42.518217;
@@ -318,55 +226,18 @@ export default class ExplorePage extends React.Component {
             longitudeDelta: initialDelta
         };
         
-        // Determine which region we WANT to go to.
         region = undefined;
-        
         murals = this.props.screenProps.murals || {};
 
-        // If we came from the MuralInfoPage
-        if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
-            key = this.props.navigation.state.params.muralID;
-        
-            region = {
-              latitude: parseFloat(murals[key]["Lat"]),
-              longitude: parseFloat(murals[key]["Long"]),
-              latitudeDelta: .001,
-              longitudeDelta: .001,
-            }
+        if (this.currentMuralID()) {
+          mural = murals[this.currentMuralID()];
+          region = {
+            longitude: mural["Long"],
+            latitude: mural["Lat"],
+            longitudeDelta: .001,
+            latitudeDelta: .001
+          };
         }
-        
-        // If we're on a tour
-        else if (this.props.screenProps.tourStarted) {
-            console.log("299", this.props.screenProps.currMarker)
-            // See if the currMarker corresponds to a mural
-            
-            Lat = 0
-            Lon = 0
-      
-
-            Object.keys(murals).map((key,i) =>{
-                    console.log("306")
-                    if (murals[key]["Index"] == this.props.screenProps.currMarker){
-                      Lat = parseFloat(murals[key]["Lat"]);
-                      Lon = parseFloat(murals[key]["Long"]);
-                     
-                      }
-
-                  });
-            
-            if (Lat != 0 && Lon != 0) {
-                console.log("316")
-                region = {
-                   latitude: Lat,
-                   longitude: Lon,
-                   latitudeDelta: .001,
-                   longitudeDelta: .001,
-                 } 
-                  
-            }
-            
-        }
-
         else {
           region = initialRegion
         }
@@ -384,7 +255,7 @@ export default class ExplorePage extends React.Component {
               region =  {region}
               onLayout = {this.goToMural.bind(this)}
                >
-              {this.renderImages()}
+              {this.renderMarkers()}
             
            
             </AnimatedMapView>
@@ -404,7 +275,7 @@ export default class ExplorePage extends React.Component {
             onPress={()=>this.toggleTour()}
             >  </Button>
             </View>
-            : this.props.screenProps.fromGallery ?
+            : this.didComeFromGallery() ?
             <View></View> :
             <Button 
             title="start tour"
@@ -417,31 +288,6 @@ export default class ExplorePage extends React.Component {
 }
 
 
-//console.log(this.props.screenProps.currMarker)
-
-      //   Object.keys(murals).map((key,i) =>{
-
-      //     if (murals[key]["Index"] == this.props.screenProps.currMarker){
-      //       Lat = parseFloat(murals[key]["Lat"]);
-      //       Lon = parseFloat(murals[key]["Long"]);
-      //     }
-
-      //   })
-        
-      // console.log(this.props.screenProps.currMarker)
-
-      //    _mapView.animateToCoordinate({
-      //       latitude: Lat,
-      //       longitude: Lon,
-      //     }, 1000)
-// {{
-//                 latitude: this.props.screenProps.tourStarted == false ? initialLat: this.getCurrCoordsLat() ,
-//                 longitude: this.props.screenProps.tourStarted == false ? initialLong : this.getCurrCoordsLong() ,
-//                 latitudeDelta: this.props.screenProps.tourStarted == false ? initialDelta : 0.0001,
-//                 longitudeDelta: this.props.screenProps.tourStarted == false ? initialDelta : 0.0001,
-//               }}
-
-
 /*****************************************************************************/
 
 // Just a MapView but it animates to region if the region prop changes!
@@ -449,7 +295,12 @@ class AnimatedMapView extends React.Component {
     
     shouldComponentUpdate(nextProps, nextState) {
         console.log("408")
-        this.goToRegion(nextProps.region, nextProps.onLayout);
+        
+        // Only animate to the region if the region is different
+        if (this.props.region !== nextProps.region) {
+          this.goToRegion(nextProps.region, nextProps.onLayout);          
+        }
+        
         return false;
     }
     
@@ -471,7 +322,12 @@ class AnimatedMapView extends React.Component {
     
     render() {
         var {initialRegion, region, children, onLayout, ...otherProps} = this.props;
-                
+        
+        // Avoid a weird animation from initialRegion to region if theyre the same
+        if (region === initialRegion) {
+          region = undefined;
+        }
+        
         return (
             <MapView 
                 onLayout={this.goToRegion.bind(this, region, onLayout)}
@@ -484,12 +340,4 @@ class AnimatedMapView extends React.Component {
     }
     
 }
-
-
-
-
-
-
-
-
 
