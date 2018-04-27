@@ -334,7 +334,6 @@ if (Platform.OS === "ios") {
     bugReport: {
       fontSize: 12,
       alignSelf: "flex-start",
-      justifySelf: "flex-start",
       color: pink,
       fontWeight: "bold",
       textDecorationLine: "underline",
