@@ -139,10 +139,6 @@ export default class ContactPage extends React.Component {
         </TouchableOpacity>
 
         <View style={contactStyles.textContainerRight}>
-
-          <TouchableOpacity style= {contactStyles.tourRequestImage} onPress={() => Linking.openURL("http://puntourbanartmuseum.org/open-air-museum/educational-tours/").catch(err => console.error('An error occurred', err))}>
-            <Text style = {contactStyles.tourRequestText}>Book Tour</Text>
-          </TouchableOpacity>
           <Hyperlink
             linkify={linkify}
             linkDefault={true}
@@ -159,12 +155,11 @@ export default class ContactPage extends React.Component {
               <Text style={contactStyles.textRight}>tel://9787458071</Text>
             </View>
           </Hyperlink>
-
+          <TouchableOpacity style= {contactStyles.tourRequestImage} onPress={() => Linking.openURL("http://puntourbanartmuseum.org/open-air-museum/educational-tours/").catch(err => console.error('An error occurred', err))}>
+            <Text style = {contactStyles.tourRequestText}> Book Tour </Text>
+          </TouchableOpacity>
 
           <View style={contactStyles.bottomRow}>
-          <TouchableOpacity style= {contactStyles.bugReport} onPress={() => Linking.openURL(feedbackFormURL).catch(err => console.error('An error occurred', err))}>
-            <Text style = {contactStyles.bugReport}>Report Bug Here</Text>
-          </TouchableOpacity>
           <View style={contactStyles.socialStyle}>
             <TouchableOpacity
               onPress={() =>
@@ -218,8 +213,9 @@ export default class ContactPage extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
-
-
+          <TouchableOpacity onPress={() => Linking.openURL(feedbackFormURL).catch(err => console.error('An error occurred', err))}>
+            <Text style = {contactStyles.bugReportText}>Report Bug Here</Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -266,11 +262,11 @@ if (Platform.OS === "ios") {
       justifyContent: "flex-end",
       alignItems: "flex-end",
       backgroundColor: pink,
-      fontSize: 20,
+      fontSize: 16,
       alignSelf: 'baseline',
       padding: 3,
       paddingBottom: 1,
-      lineHeight: 20,
+      lineHeight: 16,
       color: "white",
       textAlign: "right",
       marginBottom: 5,
@@ -287,9 +283,11 @@ if (Platform.OS === "ios") {
     },
     iconStyle: {
       tintColor: pink,
-      height: 30,
-      width: 30,
+      height: 32,
+      width: 32,
       margin: 10,
+      marginLeft: 20,
+      marginRight: 0,
     },
     donateText: {
       fontSize: 22,
@@ -321,8 +319,8 @@ if (Platform.OS === "ios") {
       minWidth: 120,
       paddingLeft: 25,
       paddingRight: 25,
-      marginTop: '2%',
-      marginBottom: 16,
+      marginTop: '3%',
+      marginBottom: '1%',
       marginRight: '1%',
       height: 40,
       borderRadius: 100,
@@ -331,14 +329,12 @@ if (Platform.OS === "ios") {
       shadowOffset: {width: 1, height: 1, },
       shadowOpacity: 0.6,
     },
-    bugReport: {
-      fontSize: 12,
-      alignSelf: "flex-start",
+    bugReportText: {
+      fontSize: 10,
       color: pink,
       fontWeight: "bold",
       textDecorationLine: "underline",
-      marginRight: '1%'
-    }
+    },
   });
 } else {
   contactStyles = StyleSheet.create({
@@ -432,11 +428,11 @@ if (Platform.OS === "ios") {
       shadowOpacity: 0.5,
       elevation: 4,
     },
-    bugReport: {
+    bugReportText: {
       fontSize: 20,
       color: pink,
       fontWeight: "bold",
       textDecorationLine: "underline",
-    }
+    },
   });
 }
