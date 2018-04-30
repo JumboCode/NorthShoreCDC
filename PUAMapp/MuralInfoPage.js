@@ -56,24 +56,7 @@ export default class MuralInfoPage extends React.Component {
               style={{ top: 30, left: -25, padding: 40 }}
               onPress={() => navigation.dispatch(NavigationActions.back())}
             >
-              <View
-                style={{
-                  position: "relative",
-                  flexDirection: "row",
-                  backgroundColor: 'white',
-                  zIndex: 100,
-                  marginTop: -15,
-                  width: 120,
-                  height: 40,
-                  borderRadius: 100,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  paddingRight: 6,
-                  shadowOffset: { width: 1, height: 1 },
-                  shadowRadius: 2,
-                  shadowOpacity: 0.6,
-                }}
-              >
+              <View style={infoStyles.backButton}>
                 <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}} />
                 <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}>  Back </Text>
               </View>
@@ -84,25 +67,7 @@ export default class MuralInfoPage extends React.Component {
               style={{ top: 30, right: -25, padding: 40, marginLeft: 'auto' }}
               onPress={() => self.goToExplorePage()}
             >
-              <View
-                style={{
-                  position: "relative",
-                  flexDirection: "row",
-                  backgroundColor: 'white',
-                  zIndex: 100,
-                  marginTop: -15,
-                  marginLeft: 'auto',
-                  width: 110,
-                  height: 40,
-                  borderRadius: 100,
-                  paddingLeft: 3,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  shadowOffset: { width: 1, height: 1 },
-                  shadowRadius: 2,
-                  shadowOpacity: 0.6,
-                }}
-              >
+              <View style={infoStyles.mapButton}>
                 <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}> Map  </Text>
                 <Entypo name="location-pin" size={20} color={pink} />
               </View>
@@ -125,13 +90,7 @@ export default class MuralInfoPage extends React.Component {
           headerRight: (
             <TouchableOpacity 
               onPress={() => self.goToExplorePage()} 
-              style={{
-                flex: 1, 
-                width: 60, 
-                height: '100%', 
-                justifyContent: 'center', 
-                alignItems: 'center'
-              }}
+              style={infoStyles.androidMapButton}
             >
               <Entypo name="location-pin" size={25} color={'white'} />
             </TouchableOpacity>
@@ -164,11 +123,7 @@ export default class MuralInfoPage extends React.Component {
     );
     readMoreButton = (
       <TouchableOpacity
-        style={{
-          paddingTop: 15,
-          paddingBottom: 50,
-          paddingRight: 70
-        }}
+        style={{ paddingTop: 15, paddingBottom: 50, paddingRight: 70}}
         onPress={this.toggleShowDescription.bind(this)}
       >
         <View style={infoStyles.moreInfoButtonContainer}>
@@ -207,13 +162,7 @@ export default class MuralInfoPage extends React.Component {
           barStyle={Platform.OS === "ios" ? "light-content" : "light-content"}
         />
         <Image
-          style={{
-            flex: 1,
-            position: "absolute",
-            resizeMode: "cover",
-            height: "100%",
-            width: "100%"
-          }}
+          style={infoStyles.muralPhoto}
           source={{ uri: mural.Photo }}
         />
         <Animatable.View
@@ -238,12 +187,7 @@ export default class MuralInfoPage extends React.Component {
               style={infoStyles.button}
             >
               <TouchableOpacity
-                style={{
-                  padding: 15,
-                  paddingTop: 20,
-                  paddingLeft: 15,
-                  paddingBottom: 20
-                }}
+                style={{ padding: 15, paddingTop: 20, paddingLeft: 15, paddingBottom: 20}}
                 onPress={this.toggleShowDescription.bind(this)}
               >
                 {closeButton}
@@ -270,11 +214,7 @@ export default class MuralInfoPage extends React.Component {
                   <Text style={{ color: "white", marginTop: 10 }}>{description}</Text>
                   {(artist["link"] && artist["link"].trim().length > 0) &&
                     <TouchableOpacity
-                      style={{
-                        paddingTop: 30,
-                        paddingBottom: 30,
-                        paddingRight: 15
-                      }}
+                      style={{ paddingTop: 30, paddingBottom: 30, paddingRight: 15}}
                       onPress={() => Linking.openURL(artist["link"])}
                     >
                       <View>
@@ -299,6 +239,46 @@ if (Platform.OS === "ios") {
     container: {
       flex: 1,
       backgroundColor: "#fff"
+    },
+    backButton: {
+      position: "relative",
+      flexDirection: "row",
+      backgroundColor: 'white',
+      zIndex: 100,
+      marginTop: -15,
+      width: 120,
+      height: 40,
+      borderRadius: 100,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingRight: 6,
+      shadowOffset: { width: 1, height: 1 },
+      shadowRadius: 2,
+      shadowOpacity: 0.6,
+    },
+    muralPhoto: {
+      flex: 1,
+      position: "absolute",
+      resizeMode: "cover",
+      height: "100%",
+      width: "100%"
+    },
+    mapButton: {
+      position: "relative",
+      flexDirection: "row",
+      backgroundColor: 'white',
+      zIndex: 100,
+      marginTop: -15,
+      marginLeft: 'auto',
+      width: 110,
+      height: 40,
+      borderRadius: 100,
+      paddingLeft: 3,
+      alignItems: 'center',
+      justifyContent: 'center',
+      shadowOffset: { width: 1, height: 1 },
+      shadowRadius: 2,
+      shadowOpacity: 0.6,
     },
     textContainer: {
       flex: 1,
@@ -390,6 +370,36 @@ if (Platform.OS === "ios") {
     container: {
       flex: 1,
       backgroundColor: "#fff"
+    },
+    backButton: {
+      position: "relative",
+      flexDirection: "row",
+      backgroundColor: 'white',
+      zIndex: 100,
+      marginTop: -15,
+      width: 120,
+      height: 40,
+      borderRadius: 100,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingRight: 6,
+      shadowOffset: { width: 1, height: 1 },
+      shadowRadius: 2,
+      shadowOpacity: 0.6,
+    },
+    muralPhoto: {
+      flex: 1,
+      position: "absolute",
+      resizeMode: "cover",
+      height: "100%",
+      width: "100%"
+    },
+    androidMapButton: {
+      flex: 1, 
+      width: 60, 
+      height: '100%', 
+      justifyContent: 'center', 
+      alignItems: 'center'
     },
     textContainer: {
       flex: 1,

@@ -60,24 +60,7 @@ export default class ContactPage extends React.Component {
               style={{ top: 30, left: -25, padding: 40 }}
               onPress={() => navigation.dispatch(NavigationActions.back())}
             >
-              <View
-                style={{
-                  position: "relative",
-                  flexDirection: "row",
-                  backgroundColor: 'white',
-                  marginTop: -15,
-                  zIndex: 100,
-                  width: 120,
-                  height: 40,
-                  borderRadius: 100,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  paddingRight: 6,
-                  shadowOffset: { width: 1, height: 1 },
-                  shadowRadius: 2,
-                  shadowOpacity: 0.6,
-                }}
-              >
+              <View style={contactStyles.backButton}>
                 <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}}/>
                 <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}>  Back </Text>
               </View>
@@ -232,6 +215,22 @@ if (Platform.OS === "ios") {
       height: "100%",
       width: "100%"
     },
+    backButton: {
+      position: "relative",
+      flexDirection: "row",
+      backgroundColor: 'white',
+      marginTop: -15,
+      zIndex: 100,
+      width: 120,
+      height: 40,
+      borderRadius: 100,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingRight: 6,
+      shadowOffset: { width: 1, height: 1 },
+      shadowRadius: 2,
+      shadowOpacity: 0.6,
+    },
     textContainerLeft: {
       backgroundColor: "transparent",
       display: "flex",
@@ -318,6 +317,22 @@ if (Platform.OS === "ios") {
       resizeMode: "cover",
       height: "100%",
       width: "100%"
+    },
+    backButton: {
+      position: "relative",
+      flexDirection: "row",
+      backgroundColor: 'white',
+      marginTop: -15,
+      zIndex: 100,
+      width: 120,
+      height: 40,
+      borderRadius: 100,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingRight: 6,
+      shadowOffset: { width: 1, height: 1 },
+      shadowRadius: 2,
+      shadowOpacity: 0.6,
     },
     textContainerLeft: {
       backgroundColor: "transparent",

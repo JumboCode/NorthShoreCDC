@@ -40,12 +40,7 @@ class AppInner extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <StatusBar barStyle="light-content" />
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: pink
-          }}
-        >
+        <View style={{ flex: 1, backgroundColor: pink }}>
           <AppNav screenProps={this.props} />
         </View>
       </View>

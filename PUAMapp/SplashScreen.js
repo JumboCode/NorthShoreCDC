@@ -74,13 +74,7 @@ export default class SpalshScreen extends Component {
         {
             isIOS() && 
             <Image
-              style={{
-                flex: 1,
-                resizeMode: "contain",
-                position: "absolute",
-                height: "100%",
-                width: "100%"
-              }}
+              style={styles.background}
               source={require("./assets/images/splash-background.png")}
             />
         }
@@ -103,5 +97,12 @@ const styles = StyleSheet.create({
     padding: 100,
     // if iphoneX, 130%, else if iOS, 120%, else (if android) 0%
     marginTop: isIphoneX() ? "130%" : (isIOS() ? "120%" : "0%")
+  },
+  background: {
+    flex: 1,
+    resizeMode: "contain",
+    position: "absolute",
+    height: "100%",
+    width: "100%"
   }
 });
