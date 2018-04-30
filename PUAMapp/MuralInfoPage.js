@@ -68,7 +68,13 @@ export default class MuralInfoPage extends React.Component {
           headerRight: (
             <TouchableOpacity
               style={infoStyles.mapButtonTouchable}
-              onPress={() => self.goToExplorePage()}
+              onPress={() => {
+                if (!self.props.navigation.state.params.fromGalleryPage) {
+                  navigation.dispatch(NavigationActions.back())
+                } else {
+                  self.goToExplorePage()
+                }
+              }}
             >
               <View style={infoStyles.mapButton}>
                 <Text style={infoStyles.headerButtonText}> Map  </Text>
