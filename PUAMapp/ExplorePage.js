@@ -261,31 +261,68 @@ export default class ExplorePage extends React.Component {
             </AnimatedMapView>
             {console.log(this.props.screenProps.tourStarted)}
           {this.props.screenProps.tourStarted ? 
-            <View>
-             <Button 
-            title="prev"
-            onPress={()=>this.tourPrev()}
-            >  </Button>
-             <Button 
-            title="next"
-            onPress = {()=>this.tourNext()} >  
-            </Button>
-            <Button 
-            title="end tour"
-            onPress={()=>this.toggleTour()}
-            >  </Button>
-            </View>
-            : this.didComeFromGallery() ?
-            <View></View> :
-            <Button 
-            title="start tour"
-            onPress={()=>this.toggleTour()}>  
-            </Button>  }
+            <View style = {style.buttonContainer}>
+              <View style = {style.previousNextContainer}>
+                <TouchableOpacity style= {style.button} onPress={() => this.tourPrev()}>
+                  <Text style = {style.text}>Previous</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style= {style.button} onPress={() => this.tourNext()}>
+                  <Text style = {style.text}>Next</Text>
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity style= {style.button} onPress={() => this.toggleTour()}>
+                <Text style = {style.text}>End Tour</Text>
+              </TouchableOpacity>
+            </View> 
+            :
+                this.didComeFromGallery() ? null : 
+                <View style = {style.buttonContainer}>
+                  <TouchableOpacity style= {style.button} onPress={() => this.toggleTour()}>
+                    <Text style = {style.text}>Start Tour</Text>
+                  </TouchableOpacity>
+                </View>
+
+            }
           </View>
         );
     }
-
 }
+
+style = StyleSheet.create({
+    text: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: pink,
+    },
+    buttonContainer: {
+      flex: 1,
+      flexDirection: "column",
+      justifyContent: "flex-end",
+      alignItems: "center",
+      position: "absolute",
+      width: "100%",
+      height: "100%%"
+    },
+    previousNextContainer: {
+      flexDirection: "row",
+      justifyContent: "space-around",
+    },
+    button: {
+      flexDirection: "row",
+      backgroundColor: 'white',
+      zIndex: 100,
+      margin: 15,
+      width: 120,
+      height: 40,
+      borderRadius: 100,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingRight: 6,
+      shadowOffset: { width: 1, height: 1 },
+      shadowRadius: 2,
+      shadowOpacity: 0.6,
+    }
+});
 
 
 /*****************************************************************************/
