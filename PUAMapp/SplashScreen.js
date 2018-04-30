@@ -1,32 +1,30 @@
 import React, { Component } from "react";
-
 import {
-  StatusBar,
   Alert,
   View,
-  Text,
   Image,
   ActivityIndicator,
-  AppRegistry,
   StyleSheet,
   Platform,
   Dimensions
 } from "react-native";
 import { NavigationActions } from "react-navigation";
-  
-  function isIOS() {
-      return Platform.OS === "ios";
-  }
-  
-  function isIphoneX() {
-    const dimen = Dimensions.get("window");
-    return (
-      Platform.OS === "ios" &&
-      !Platform.isPad &&
-      !Platform.isTVOS &&
-      (dimen.height === 812 || dimen.width === 812)
-    );
-  }
+
+function isIOS() {
+  return Platform.OS === "ios";
+}
+
+function isIphoneX() {
+  const dimen = Dimensions.get("window");
+  return (
+    Platform.OS === "ios" &&
+    !Platform.isPad &&
+    !Platform.isTVOS &&
+    (dimen.height === 812 || dimen.width === 812)
+  );
+}
+
+const SPLASH_BACKGROUND_IMAGE = "./assets/images/splash-background.png";
 
 export default class SpalshScreen extends Component {
   constructor(props) {
@@ -37,13 +35,14 @@ export default class SpalshScreen extends Component {
   }
 
   componentWillUpdate() {
-    const { navigate } = this.props.navigation;
-    if (this.props.screenProps.muralsloaded == true && 
-        this.props.screenProps.artistsloaded == true ) {
+    let resetAction;
+
+    if (this.props.screenProps.muralsloaded === true &&
+      this.props.screenProps.artistsloaded === true) {
       this.state.loaded = true;
       resetAction = NavigationActions.reset({
         index: 0,
-        actions: [NavigationActions.navigate({ routeName: "HomePage" })]
+        actions: [NavigationActions.navigate({routeName: "HomePage"})]
       });
       this.props.navigation.dispatch(resetAction);
     }
@@ -52,7 +51,7 @@ export default class SpalshScreen extends Component {
   componentDidMount() {
     // Tell user about slow connection after 10 seconds
     setTimeout(() => {
-      if (this.state.loaded == false) {
+      if (this.state.loaded === false) {
         Alert.alert(
           "Slow Connection",
           "It looks like you have a very slow or nonexistent network connection. " +
@@ -75,7 +74,7 @@ export default class SpalshScreen extends Component {
             isIOS() && 
             <Image
               style={styles.background}
-              source={require("./assets/images/splash-background.png")}
+              source={require(SPLASH_BACKGROUND_IMAGE)}
             />
         }
         <View style={[styles.container, styles.horizontal]}>

@@ -5,25 +5,23 @@ import {
   View,
   Image,
   ScrollView,
-  Animated,
   Dimensions,
   TouchableOpacity,
   Platform,
   StatusBar,
-  Linking,
-  Alert
-} from "react-native";
-import Hyperlink from "react-native-hyperlink";
+  Linking} from "react-native";
 import { NavigationActions } from "react-navigation";
-import { lightpurple, darkpurple, pink } from "./colors.js";
+import { pink } from "./colors.js";
 import * as Animatable from "react-native-animatable";
 import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
-// var infoButtons = [
-//   require("./assets/images/info.png"),
-//   require("./assets/images/xbutton.png")
-// ];
+const DESCRIPTION_FADE_DURATION = 500;
+const DARK_OVERLAY_FADE_DURATION = 500;
+
+const READ_MORE_FADE_OUT_DURATION = 200;
+const CLOSE_BUTTON_FADE_DURATION = 200;
+const READ_MORE_FADE_IN_DURATION = 1000;
 
 function isIphoneX() {
   const dimen = Dimensions.get("window");
@@ -97,7 +95,7 @@ export default class MuralInfoPage extends React.Component {
             </TouchableOpacity>
           )
       };
-  }
+  };
 
   toggleShowDescription() {
     this.setState({
@@ -108,7 +106,6 @@ export default class MuralInfoPage extends React.Component {
   
   goToExplorePage() {
     const mural = this.props.navigation.state.params.mural;
-    const artist = this.props.navigation.state.params.artist;
     const { navigate } = this.props.navigation;
     navigate("ExplorePage", {
         muralID: mural["uuid"]
@@ -119,12 +116,12 @@ export default class MuralInfoPage extends React.Component {
     const mural = this.props.navigation.state.params.mural;
     const artist = this.props.navigation.state.params.artist;
 
-    closeButton = (
-      <Feather name="x" size={50} color="white" style={{fontWeight: 'bold'}} />
+    let closeButton = (
+      <Feather name="x" size={50} color="white" style={{fontWeight: 'bold'}}/>
     );
-    readMoreButton = (
+    let readMoreButton = (
       <TouchableOpacity
-        style={{ paddingTop: 15, paddingBottom: 50, paddingRight: 70}}
+        style={{paddingTop: 15, paddingBottom: 50, paddingRight: 70}}
         onPress={this.toggleShowDescription.bind(this)}
       >
         <View style={infoStyles.moreInfoButtonContainer}>
@@ -133,7 +130,7 @@ export default class MuralInfoPage extends React.Component {
       </TouchableOpacity>
     );
 
-    var description = "";
+    let description = "";
     if (artist["city"]) {
       description += artist["city"];
     }
@@ -154,8 +151,8 @@ export default class MuralInfoPage extends React.Component {
       description += "\n\n" + artist["bio"];
     }
 
-    descriptionVisible = this.state.descriptionVisible;
-    pastInitialClick = this.state.pastInitialClick;
+    let descriptionVisible = this.state.descriptionVisible;
+    let pastInitialClick = this.state.pastInitialClick;
 
     return (
       <View style={infoStyles.container}>
@@ -168,7 +165,7 @@ export default class MuralInfoPage extends React.Component {
         />
         <Animatable.View
           animation={descriptionVisible ? "fadeIn" : "fadeOut"}
-          duration={500}
+          duration={DARK_OVERLAY_FADE_DURATION}
           style={infoStyles.darkerOverlay}
         />
         <View style={infoStyles.darkOverlay} />
@@ -184,7 +181,7 @@ export default class MuralInfoPage extends React.Component {
             </View>
             <Animatable.View
               animation={descriptionVisible ? "fadeIn" : "fadeOut"}
-              duration={200}
+              duration={CLOSE_BUTTON_FADE_DURATION}
               style={infoStyles.button}
             >
               <TouchableOpacity
@@ -199,7 +196,7 @@ export default class MuralInfoPage extends React.Component {
             {
               <Animatable.View
                 animation={descriptionVisible ? "fadeOut" : "fadeIn"}
-                duration={descriptionVisible ? 200 : 1000}
+                duration={descriptionVisible ? READ_MORE_FADE_OUT_DURATION : READ_MORE_FADE_IN_DURATION}
                 style={infoStyles.description}
               >
                 {readMoreButton}
@@ -208,7 +205,7 @@ export default class MuralInfoPage extends React.Component {
             {pastInitialClick && (
               <Animatable.View
                 animation={descriptionVisible ? "fadeInUp" : "fadeOutDown"}
-                duration={500}
+                duration={DESCRIPTION_FADE_DURATION}
                 style={infoStyles.description}
               >
                 <ScrollView style={infoStyles.descriptionScrollView}>
