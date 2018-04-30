@@ -16,6 +16,8 @@ import Img from "react-native-image-progress";
 import Progress from "react-native-progress";
 import { Feather } from '@expo/vector-icons';
 
+let galleryStyles = {};
+
 export default class GalleryPage extends React.Component {
   constructor(props) {
     super(props);
@@ -113,7 +115,6 @@ let { height, width } = Dimensions.get("window");
 let gridSquareSize = width / 3 - 1;
 let headerHeight = height / 3;
 
-galleryStyles = {};
 if (Platform.OS === "ios") {
   galleryStyles = StyleSheet.create({
     backButton: {

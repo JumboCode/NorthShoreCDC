@@ -70,7 +70,7 @@ export default class SpalshScreen extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
+      <View style={styles.backgroundContainer}>
         {
             isIOS() && 
             <Image
@@ -87,6 +87,10 @@ export default class SpalshScreen extends Component {
 }
 
 const styles = StyleSheet.create({
+  backgroundContainer: {
+    flex: 1,
+    backgroundColor: "#ffffff"
+  },
   container: {
     flex: 1,
     justifyContent: "center"

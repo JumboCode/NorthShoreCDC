@@ -207,7 +207,8 @@ export default class MuralInfoPage extends React.Component {
               >
                 <ScrollView style={infoStyles.descriptionScrollView}>
                   <Text style={infoStyles.descriptionText}>{description}</Text>
-                  {(artist["link"] && artist["link"].trim().length > 0) &&
+
+                  { !!(artist["link"] && artist["link"].trim().length > 0) &&
                     <TouchableOpacity
                       style={infoStyles.artistLinkTouchable}
                       onPress={() => Linking.openURL(artist["link"])}
@@ -217,10 +218,10 @@ export default class MuralInfoPage extends React.Component {
                       </View>
                     </TouchableOpacity>
                   }
+
                 </ScrollView>
               </Animatable.View>
             )}
-            
           </View>
         </View>
       </View>
