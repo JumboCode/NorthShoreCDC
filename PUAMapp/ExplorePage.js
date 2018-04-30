@@ -180,9 +180,6 @@ export default class ExplorePage extends React.Component {
 
 
     toggleTour() {
-
-      console.log("start button pressed");
-      
       // If we're ending a tour, hide any callouts that may be still visible.
       murals = this.props.screenProps.murals || {};
       if (this.props.screenProps.tourStarted){
@@ -242,8 +239,6 @@ export default class ExplorePage extends React.Component {
           region = initialRegion
         }
         
-        console.log("326", region)
-        
         return (
             <View style = {{flex: 1}}>
             <StatusBar barStyle = { Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
@@ -256,10 +251,8 @@ export default class ExplorePage extends React.Component {
               onLayout = {this.goToMural.bind(this)}
                >
               {this.renderMarkers()}
-            
-           
             </AnimatedMapView>
-            {console.log(this.props.screenProps.tourStarted)}
+  
           {this.props.screenProps.tourStarted ? 
             <View style = {style.buttonContainer}>
               <View style = {style.previousNextContainer}>
@@ -331,8 +324,6 @@ style = StyleSheet.create({
 class AnimatedMapView extends React.Component {
     
     shouldComponentUpdate(nextProps, nextState) {
-        console.log("408")
-        
         // Only animate to the region if the region is different
         if (this.props.region !== nextProps.region) {
           this.goToRegion(nextProps.region, nextProps.onLayout);          
@@ -346,7 +337,6 @@ class AnimatedMapView extends React.Component {
     // But TBH im not sure if this is the right way to do this lol.
     goToRegion(region, onLayout) {
         if (region) {
-            console.log("415")
             setTimeout(function () {
                 this.map.animateToRegion(region, 1000);
             }.bind(this), 500);
