@@ -5,18 +5,19 @@ import {
   View,
   Image,
   ScrollView,
-  Button,
   TouchableOpacity,
   Dimensions,
   Platform
 } from "react-native";
 import { NavigationActions } from "react-navigation";
-import { lightpurple, darkpurple, pink } from "./colors.js";
+import { pink } from "./colors.js";
 import Img from "react-native-image-progress";
 import Progress from "react-native-progress";
 import { Feather } from '@expo/vector-icons';
 
-let galleryStyles = {};
+const IOS_HEADER_IMAGE = "./assets/images/gallery-header-new.jpg";
+const ANDROID_HEADER_IMAGE = "./assets/images/gallery_top_image.jpg";
+
 
 function isIphoneX() {
   const dimen = Dimensions.get("window");
@@ -27,6 +28,8 @@ function isIphoneX() {
     (dimen.height === 812 || dimen.width === 812)
   );
 }
+
+let galleryStyles = {};
 
 export default class GalleryPage extends React.Component {
   constructor(props) {
@@ -54,14 +57,16 @@ export default class GalleryPage extends React.Component {
           headerTintColor: "white",
           headerStyle: { backgroundColor: pink }
         };
-  }
+  };
 
   renderImages() {
 
     const { navigate } = this.props.navigation;
+
+    let murals, artists, muralsArray;
     murals = this.props.screenProps.murals || {};
     artists = this.props.screenProps.artists || {};
-    muralsArray = []
+    muralsArray = [];
 
     Object.keys(murals).map((key, i) => {
       muralsArray.push(murals[key]);
@@ -70,7 +75,7 @@ export default class GalleryPage extends React.Component {
     muralsArray.sort(function (a,b){return a["Index"] - b["Index"]});
     
     return muralsArray.map((mural, i) => {
-      uri = mural["Photo"];
+      let uri = mural["Photo"];
       return (
         <TouchableOpacity
           key={i}
@@ -104,8 +109,8 @@ export default class GalleryPage extends React.Component {
           <Image style={galleryStyles.image}
             source={
               Platform.OS === "ios"
-                ? require("./assets/images/gallery-header-new.jpg")
-                : require("./assets/images/gallery_top_image.jpg")
+                ? require(IOS_HEADER_IMAGE)
+                : require(ANDROID_HEADER_IMAGE)
             }
           />
           <View style={galleryStyles.imageGallery}>
