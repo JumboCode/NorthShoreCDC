@@ -2,44 +2,38 @@ import React from "react";
 import {
   Alert,
   Clipboard,
+  Dimensions,
+  Image,
+  Linking,
+  Platform,
+  StatusBar,
   StyleSheet,
   Text,
-  View,
-  Image,
-  ImageBackground,
-  ScrollView,
-  Button,
   TouchableOpacity,
-  Linking,
-  StatusBar,
-  Platform,
-  Dimensions
+  View
 } from "react-native";
-import { lightpurple, darkpurple, pink } from "./colors.js";
-import { NavigationActions } from "react-navigation";
-import Hyperlink from "react-native-hyperlink";
-import LinkifyIt from "linkify-it";
-import { Feather } from '@expo/vector-icons';
+import {pink} from "./colors.js";
+import {NavigationActions} from "react-navigation";
+import {Feather} from '@expo/vector-icons';
 
-const paypalUrl =
-  "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UF8MF7Q9E7HSA";
-linkify = new LinkifyIt().add('tel:', 'http:').add('fax:', 'http:')
-email = 'info@northshorecdc.org'
-feedbackFormURL = 'https://goo.gl/forms/j0sNljXz4mEd5lCN2'
+const PAYPAL_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UF8MF7Q9E7HSA";
 
-links = {
-  "http://northshorecdc.org/about-us/contact-us/": "Our website",
-  "tel://9787458071": "978-745-8071",
-  "fax://9787454345": "978-745-4345",
-  "http://northshorecdc.org/": "NSCDC Website",
+const ADDRESS_LINE_1 = "96 Lafayette St";
+const ADDRESS_LINE_2 = "Salem, MA 01970";
+const PHONE_NUMBER_LINK = "tel://9787458071";
+const PHONE_NUMBER_DISPLAY = "978-745-8071";
+const BOOK_TOUR_URL = "http://puntourbanartmuseum.org/open-air-museum/educational-tours/";
+const CONTACT_EMAIL = 'info@northshorecdc.org';
+const FACEBOOK_URL = "https://www.facebook.com/puntourbanartmuseum/";
+const INSTAGRAM_URL = "https://www.instagram.com/urban.art.museum";
+const TWITTER_URL = "https://www.twitter.com/NorthShoreCDC";
+const FEEDBACK_FORM_URL = 'https://goo.gl/forms/j0sNljXz4mEd5lCN2';
 
-  "https://www.facebook.com/puntourbanartmuseum/":
-    "Facebook: @puntourbanartmuseum",
-  "https://www.twitter.com/NorthShoreCDC": "Twitter: @NorthShoreCDC",
-  "https://www.instagram.com/urban.art.museum": "Instagram: @urban.art.museum",
-  "mailto:info@northshorecdc.org": "info@northshorecdc.org",
-  "http://northshorecdc.org/support-us/donate/": "Donate"
-};
+const CONTACT_BACKGROUND_IMAGE = "./assets/images/contact_background.jpg";
+const FACEBOOK_ICON = "./assets/images/facebook.png";
+const INSTAGRAM_ICON = "./assets/images/instagram.png";
+const TWITTER_ICON = "./assets/images/twitter.png";
+const EMAIL_ICON = './assets/images/email.png';
 
 function isIphoneX() {
   const dimen = Dimensions.get("window");
@@ -54,34 +48,31 @@ function isIphoneX() {
 let contactStyles = {};
 
 export default class ContactPage extends React.Component {
-  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = ({navigation}) => {
     return Platform.OS === "ios"
       ? {
-          headerLeft: (
-            <TouchableOpacity
-              style={contactStyles.backButtonTouchable}
-              onPress={() => navigation.dispatch(NavigationActions.back())}
-            >
-              <View style={contactStyles.backButton}>
-                <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}}/>
-                <Text style={contactStyles.headerButtonText}>  Back </Text>
-              </View>
-            </TouchableOpacity>
-          ),
-          headerStyle: contactStyles.headerStyle
-        }
+        headerLeft: (
+          <TouchableOpacity
+            style={contactStyles.backButtonTouchable}
+            onPress={() => navigation.dispatch(NavigationActions.back())}
+          >
+            <View style={contactStyles.backButton}>
+              <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}}/>
+              <Text style={contactStyles.headerButtonText}> Back </Text>
+            </View>
+          </TouchableOpacity>
+        ),
+        headerStyle: contactStyles.headerStyle
+      }
       : {
-          title: "Punto Urban Art",
-          headerTintColor: "white",
-          headerStyle: { backgroundColor: pink }
-        };
-  }
-
-  textForLink(text) {
-    return links[text] || text;
-  }
+        title: "Punto Urban Art",
+        headerTintColor: "white",
+        headerStyle: {backgroundColor: pink}
+      };
+  };
 
   render() {
+
     return (
       <View style={contactStyles.container}>
         <StatusBar
@@ -89,7 +80,7 @@ export default class ContactPage extends React.Component {
         />
         <Image
           style={contactStyles.image}
-          source={require("./assets/images/contact_background.jpg")}
+          source={require(CONTACT_BACKGROUND_IMAGE)}
         />
 
         <View style={contactStyles.textContainerLeft}>
@@ -107,7 +98,7 @@ export default class ContactPage extends React.Component {
         <TouchableOpacity
           style={contactStyles.donateImage}
           onPress={() =>
-            Linking.openURL(paypalUrl).catch(err =>
+            Linking.openURL(PAYPAL_URL).catch(err =>
               console.error("An error occurred", err)
             )
           }
@@ -116,82 +107,88 @@ export default class ContactPage extends React.Component {
         </TouchableOpacity>
 
         <View style={contactStyles.textContainerRight}>
-          <Hyperlink
-            linkify={linkify}
-            linkDefault={true}
-            linkStyle={{ color: "white" }}
-            linkText={this.textForLink}
+            <View style={contactStyles.textRightContainer}>
+              <Text style={contactStyles.textRight}>{ADDRESS_LINE_1}</Text>
+            </View>
+            <View style={contactStyles.textRightContainer}>
+              <Text style={contactStyles.textRight}>{ADDRESS_LINE_2}</Text>
+            </View>
+            <View style={contactStyles.textRightContainer}>
+              <Text
+                style={contactStyles.textRight}
+                onPress={() => Linking.openURL(PHONE_NUMBER_LINK)}
+              >
+                {PHONE_NUMBER_DISPLAY}
+              </Text>
+            </View>
+
+          <TouchableOpacity
+            style={contactStyles.tourRequestImage}
+            onPress={() =>
+              Linking.openURL(BOOK_TOUR_URL)
+                .catch(err => console.error('An error occurred', err))
+            }
           >
-            <View style={contactStyles.textRightContainer}>
-              <Text style={contactStyles.textRight}>96 Lafayette St</Text>
-            </View>
-            <View style={contactStyles.textRightContainer}>
-              <Text style={contactStyles.textRight}>Salem, MA 01970</Text>
-            </View>
-            <View style={contactStyles.textRightContainer}>
-              <Text style={contactStyles.textRight}>tel://9787458071</Text>
-            </View>
-          </Hyperlink>
-          <TouchableOpacity style= {contactStyles.tourRequestImage} onPress={() => Linking.openURL("http://puntourbanartmuseum.org/open-air-museum/educational-tours/").catch(err => console.error('An error occurred', err))}>
-            <Text style = {contactStyles.tourRequestText}> Book Tour </Text>
+            <Text style={contactStyles.tourRequestText}> Book Tour </Text>
           </TouchableOpacity>
 
           <View style={contactStyles.bottomRow}>
-          <View style={contactStyles.socialStyle}>
-            <TouchableOpacity
-              onPress={() =>
-                Linking.openURL(
-                  "https://www.facebook.com/puntourbanartmuseum/"
-                ).catch(err => console.error("An error occurred", err))
-              }
-            >
-              <Image
-                style={contactStyles.iconStyle}
-                source={require("./assets/images/facebook.png")}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() =>
-                Linking.openURL(
-                  "https://www.instagram.com/urban.art.museum"
-                ).catch(err => console.error("An error occurred", err))
-              }
-            >
-              <Image
-                style={contactStyles.iconStyle}
-                source={require("./assets/images/instagram.png")}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() =>
-                  Linking.openURL("https://www.twitter.com/NorthShoreCDC").catch(
+            <View style={contactStyles.socialStyle}>
+              <TouchableOpacity
+                onPress={() =>
+                  Linking.openURL(
+                    FACEBOOK_URL
+                  ).catch(err => console.error("An error occurred", err))
+                }
+              >
+                <Image
+                  style={contactStyles.iconStyle}
+                  source={require(FACEBOOK_ICON)}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  Linking.openURL(
+                    INSTAGRAM_URL
+                  ).catch(err => console.error("An error occurred", err))
+                }
+              >
+                <Image
+                  style={contactStyles.iconStyle}
+                  source={require(INSTAGRAM_ICON)}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  Linking.openURL(TWITTER_URL).catch(
                     err => console.error("An error occurred", err)
                   )
-              }
-            >
-              <Image
-                style={contactStyles.iconStyle}
-                source={require("./assets/images/twitter.png")}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity 
-              onPress={() => {
-                Clipboard.setString('info@northshorecdc.org')
-                Alert.alert(
-                  'Email Copied',
-                  email,
-                  [{text: 'OK', onPress: () => console.log('OK Pressed')}]) 
-              }}
-            >
-              <Image 
-                style={contactStyles.iconStyle}  
-                source={require('./assets/images/email.png')}
-              />
-            </TouchableOpacity>
+                }
+              >
+                <Image
+                  style={contactStyles.iconStyle}
+                  source={require(TWITTER_ICON)}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  Clipboard.setString(CONTACT_EMAIL);
+                  Alert.alert(
+                    'Email Copied',
+                    CONTACT_EMAIL,
+                    [{text: 'OK', onPress: () => console.log('OK Pressed')}])
+                }}
+              >
+                <Image
+                  style={contactStyles.iconStyle}
+                  source={require(EMAIL_ICON)}
+                />
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-          <TouchableOpacity onPress={() => Linking.openURL(feedbackFormURL).catch(err => console.error('An error occurred', err))}>
-            <Text style = {contactStyles.bugReportText}>Report Bug Here</Text>
+          <TouchableOpacity
+            onPress={() => Linking.openURL(FEEDBACK_FORM_URL).catch(err => console.error('An error occurred', err))}>
+            <Text style={contactStyles.bugReportText}>Report Bug Here</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -242,7 +239,7 @@ if (Platform.OS === "ios") {
       alignItems: 'center',
       justifyContent: 'center',
       paddingRight: 6,
-      shadowOffset: { width: 1, height: 1 },
+      shadowOffset: {width: 1, height: 1},
       shadowRadius: 2,
       shadowOpacity: 0.6,
     },
@@ -315,7 +312,7 @@ if (Platform.OS === "ios") {
       marginTop: isIphoneX() ? "-25%" : "-20%",
       borderRadius: 100,
       shadowColor: "black",
-      shadowOffset: { width: 3, height: 4 },
+      shadowOffset: {width: 3, height: 4},
       shadowRadius: 3,
       shadowOpacity: 0.7
     },
@@ -336,7 +333,7 @@ if (Platform.OS === "ios") {
       borderRadius: 100,
       backgroundColor: 'white',
       shadowColor: 'black',
-      shadowOffset: {width: 1, height: 1, },
+      shadowOffset: {width: 1, height: 1,},
       shadowOpacity: 0.6,
     },
     bugReportText: {
@@ -371,7 +368,7 @@ if (Platform.OS === "ios") {
       alignItems: 'center',
       justifyContent: 'center',
       paddingRight: 6,
-      shadowOffset: { width: 1, height: 1 },
+      shadowOffset: {width: 1, height: 1},
       shadowRadius: 2,
       shadowOpacity: 0.6,
     },

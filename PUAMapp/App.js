@@ -1,17 +1,10 @@
 import React from "react";
 import {
-  StyleSheet,
   Text,
   View,
-  Image,
-  ScrollView,
-  Button,
-  StatusBar,
-  Platform
-} from "react-native";
+  StatusBar} from "react-native";
 import { StackNavigator } from "react-navigation";
 import { connect } from "react-redux";
-import { NavigationActions } from "react-navigation";
 import { AppLoading, Asset } from "expo";
 import HomePage from "./HomePage";
 import GalleryPage from "./GalleryPage";
@@ -19,7 +12,7 @@ import ExplorePage from "./ExplorePage";
 import ContactPage from "./ContactPage";
 import MuralInfoPage from "./MuralInfoPage";
 import SplashScreen from "./SplashScreen";
-import { lightpurple, darkpurple, pink } from "./colors.js";
+import { pink } from "./colors.js";
 import { getMurals, getArtists } from "./redux";
 import { Provider } from "react-redux";
 import { store } from "./redux";
@@ -89,15 +82,6 @@ export default class App extends React.Component {
 
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
 
 const mapStateToProps = state => ({
   murals: state.firebaseData.murals,
