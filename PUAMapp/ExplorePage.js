@@ -21,6 +21,8 @@ import { Feather } from '@expo/vector-icons';
 // This won't do anything if the permission is already granted.
 Permissions.askAsync(Permissions.LOCATION);
 
+let exploreStyles = {};
+
 export default class ExplorePage extends React.Component {
   constructor(props) {
     super(props);
@@ -31,24 +33,16 @@ export default class ExplorePage extends React.Component {
       ? {
           headerLeft: (
             <TouchableOpacity
-              style={{ top: 30, left: -25, padding: 40 }}
+              style={exploreStyles.backButtonTouchable}
               onPress={() => navigation.dispatch(NavigationActions.back())}
             >
               <View style={exploreStyles.backButton}>
                 <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}}/>
-                <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}>  Back </Text>
+                <Text style={exploreStyles.headerButtonText}>  Back </Text>
               </View>
             </TouchableOpacity>
           ),
-          headerStyle: {
-            position: "absolute",
-            backgroundColor: "transparent",
-            zIndex: 100,
-            top: 0,
-            left: 0,
-            right: 0,
-            borderBottomColor: "transparent"
-          }
+          headerStyle: exploreStyles.headerStyle
         }
       : {
           title: "Punto Urban Art",
@@ -93,12 +87,12 @@ export default class ExplorePage extends React.Component {
               tooltip={false}
               onPress = {() => this.props.navigation.navigate({key: murals[key]['uuid'], routeName: 'MuralInfoPage', params: {mural: murals[key], artist: artists[murals[key]["Artist"]]}})}
             >
-              <View style={{flexDirection: "row", flex: 1}}>
-                <View style={{flexDirection: "column", flex: 1}}>
-                  <Text style={{fontWeight: 'bold', fontSize: 17}}>{title}</Text>
+              <View style={exploreStyles.callOutContainer}>
+                <View style={exploreStyles.callOutTextContainer}>
+                  <Text style={exploreStyles.callOutTitle}>{title}</Text>
                   <Text>{artistName}</Text>
                 </View>
-                <View style={{flex: 1, alignItems: "center", justifyContent: "center", marginLeft: 15}}>
+                <View style={exploreStyles.callOutIconContainer}>
                   <Feather name="chevron-right" size={30} color={pink} style={{marginBottom: 1}}/>
                 </View>
               </View>
@@ -177,7 +171,6 @@ export default class ExplorePage extends React.Component {
   }
 }
 
-exploreStyles = {};
 if (Platform.OS === "ios") {
   exploreStyles = StyleSheet.create({
     backButton: {
@@ -195,5 +188,42 @@ if (Platform.OS === "ios") {
       shadowOffset: { width: 1, height: 1 },
       shadowRadius: 2,
       shadowOpacity: 0.6,
+    },
+    backButtonTouchable: {
+      top: 30,
+      left: -25,
+      padding: 40
+    },
+    headerButtonText: {
+      fontWeight: 'bold',
+      fontSize: 17,
+      color: pink
+    },
+    headerStyle: {
+      position: "absolute",
+      backgroundColor: "transparent",
+      zIndex: 100,
+      top: 0,
+      left: 0,
+      right: 0,
+      borderBottomColor: "transparent"
+    },
+    callOutIconContainer: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      marginLeft: 15
+    },
+    callOutContainer: {
+      flexDirection: "row",
+      flex: 1
+    },
+    callOutTextContainer: {
+      flexDirection: "column",
+      flex: 1
+    },
+    callOutTitle: {
+      fontWeight: 'bold',
+      fontSize: 17
     }
   })}

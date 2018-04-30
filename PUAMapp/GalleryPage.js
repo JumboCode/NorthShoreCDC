@@ -26,24 +26,16 @@ export default class GalleryPage extends React.Component {
       ? {
           headerLeft: (
             <TouchableOpacity
-              style={{ top: 30, left: -25, padding: 40 }}
+              style={galleryStyles.backButtonTouchable}
               onPress={() => navigation.dispatch(NavigationActions.back())}
             >
               <View style={galleryStyles.backButton}>
                 <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}}/>
-                <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}>  Back </Text>
+                <Text style={galleryStyles.headerButtonText}>  Back </Text>
               </View>
             </TouchableOpacity>
           ),
-          headerStyle: {
-            position: "absolute",
-            backgroundColor: "transparent",
-            zIndex: 100,
-            top: 0,
-            left: 0,
-            right: 0,
-            borderBottomColor: "transparent"
-          }
+          headerStyle: galleryStyles.headerStyle
         }
       : {
           title: "Punto Urban Art",
@@ -53,8 +45,6 @@ export default class GalleryPage extends React.Component {
   }
 
   renderImages() {
-    var { width } = Dimensions.get("window");
-    width = width / 3 - 1;
 
     const { navigate } = this.props.navigation;
     murals = this.props.screenProps.murals || {};
@@ -85,7 +75,7 @@ export default class GalleryPage extends React.Component {
         >
           <Img
             key={i}
-            style={{ height: width, width: width, margin: 1 }}
+            style={galleryStyles.gridSquareImage}
             source={{ uri: uri }}
             indicator={Progress}
           />
@@ -119,8 +109,9 @@ export default class GalleryPage extends React.Component {
   }
 }
 
-var { height, width } = Dimensions.get("window");
-height = height / 3;
+let { height, width } = Dimensions.get("window");
+let gridSquareSize = width / 3 - 1;
+let headerHeight = height / 3;
 
 galleryStyles = {};
 if (Platform.OS === "ios") {
@@ -141,17 +132,36 @@ if (Platform.OS === "ios") {
       shadowRadius: 2,
       shadowOpacity: 0.6,
     },
+    backButtonTouchable: {
+      top: 30,
+      left: -25,
+      padding: 40
+    },
+    headerButtonText: {
+      fontWeight: 'bold',
+      fontSize: 17,
+      color: pink
+    },
+    headerStyle: {
+      position: "absolute",
+      backgroundColor: "transparent",
+      zIndex: 100,
+      top: 0,
+      left: 0,
+      right: 0,
+      borderBottomColor: "transparent"
+    },
     image: {
       alignSelf: "center",
       position: "relative",
-      height: height + 40,
+      height: headerHeight + 40,
       width: width,
       resizeMode: "cover"
     },
     imageGallery: {
       backgroundColor:
         Platform.OS === "ios" ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,.5)",
-      height: height + 0,
+      height: headerHeight,
       position: "absolute",
       width: width,
       justifyContent: "center",
@@ -162,6 +172,11 @@ if (Platform.OS === "ios") {
       fontSize: 40 / 300 * width,
       fontWeight: "bold",
       marginTop: Platform.OS === "ios" ? 100 : 0
+    },
+    gridSquareImage: {
+      height: gridSquareSize,
+      width: gridSquareSize,
+      margin: 1
     },
     imageCollection: {
       alignSelf: "center",
@@ -175,7 +190,7 @@ if (Platform.OS === "ios") {
     }
   })
 } else {
-    galleryStyles = StyleSheet.create({
+  galleryStyles = StyleSheet.create({
     backButton: {
       position: "relative",
       flexDirection: "row",
@@ -195,14 +210,14 @@ if (Platform.OS === "ios") {
     image: {
       alignSelf: "center",
       position: "relative",
-      height: height + 40,
+      height: headerHeight + 40,
       width: width,
       resizeMode: "cover"
     },
     imageGallery: {
       backgroundColor:
         Platform.OS === "ios" ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,.5)",
-      height: height + 0,
+      height: headerHeight + 0,
       position: "absolute",
       width: width,
       justifyContent: "center",
@@ -223,6 +238,11 @@ if (Platform.OS === "ios") {
       margin: -1,
       marginLeft: -2,
       marginTop: 1
-    }
+    },
+    gridSquareImage: {
+      height: gridSquareSize,
+      width: gridSquareSize,
+      margin: 1
+    },
   })
 }
