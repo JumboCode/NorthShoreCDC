@@ -294,12 +294,16 @@ export default class ExplorePage extends React.Component {
           {this.props.screenProps.tourStarted ? 
             <View style = {style.buttonContainer}>
               <View style = {style.previousNextContainer}>
-                <TouchableOpacity style= {style.button} onPress={() => this.tourPrev()}>
-                  <Text style = {style.text}>Previous</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style= {style.button} onPress={() => this.tourNext()}>
-                  <Text style = {style.text}>Next</Text>
-                </TouchableOpacity>
+                <View style={style.previousContainer}>
+                  <TouchableOpacity style= {[style.button, style.prevNextButton]} onPress={() => this.tourPrev()}>
+                    <Text numberOfLines={1} style = {style.text}>Previous</Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={style.nextContainer}>
+                  <TouchableOpacity style= {[style.button, style.prevNextButton]} onPress={() => this.tourNext()}>
+                    <Text style = {style.text}>Next</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
               <TouchableOpacity style= {style.button} onPress={() => this.toggleTour()}>
                 <Text style = {style.text}> End Virtual Tour </Text>
@@ -336,8 +340,21 @@ style = StyleSheet.create({
       width: "100%",
     },
     previousNextContainer: {
+      flex: 1,
       flexDirection: "row",
-      justifyContent: "space-around",
+    },
+    previousContainer: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "flex-start",
+    },
+    nextContainer: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "flex-end",
+    }, 
+    prevNextButton: {
+      width: 130,
     },
     button: {
       flexDirection: "row",
@@ -353,6 +370,7 @@ style = StyleSheet.create({
       shadowOffset: { width: 1, height: 1 },
       shadowRadius: 2,
       shadowOpacity: 0.6,
+      elevation: 6,
     }
 });
 
