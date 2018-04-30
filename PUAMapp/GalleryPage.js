@@ -18,6 +18,16 @@ import { Feather } from '@expo/vector-icons';
 
 let galleryStyles = {};
 
+function isIphoneX() {
+  const dimen = Dimensions.get("window");
+  return (
+    Platform.OS === "ios" &&
+    !Platform.isPad &&
+    !Platform.isTVOS &&
+    (dimen.height === 812 || dimen.width === 812)
+  );
+}
+
 export default class GalleryPage extends React.Component {
   constructor(props) {
     super(props);
@@ -155,7 +165,7 @@ if (Platform.OS === "ios") {
     image: {
       alignSelf: "center",
       position: "relative",
-      height: headerHeight + 40,
+      height: headerHeight,
       width: width,
       resizeMode: "cover"
     },
@@ -170,9 +180,9 @@ if (Platform.OS === "ios") {
     },
     textGallery: {
       color: "white",
-      fontSize: 40 / 300 * width,
+      fontSize: 38 / 300 * width,
       fontWeight: "bold",
-      marginTop: Platform.OS === "ios" ? 100 : 0
+      marginTop: (isIphoneX() ? "30%" : "26%")
     },
     gridSquareImage: {
       height: gridSquareSize,
@@ -211,14 +221,14 @@ if (Platform.OS === "ios") {
     image: {
       alignSelf: "center",
       position: "relative",
-      height: headerHeight + 40,
+      height: headerHeight,
       width: width,
       resizeMode: "cover"
     },
     imageGallery: {
       backgroundColor:
         Platform.OS === "ios" ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,.5)",
-      height: headerHeight + 0,
+      height: headerHeight,
       position: "absolute",
       width: width,
       justifyContent: "center",
@@ -228,7 +238,7 @@ if (Platform.OS === "ios") {
       color: "white",
       fontSize: 40 / 300 * width,
       fontWeight: "bold",
-      marginTop: Platform.OS === "ios" ? 100 : 0
+      marginTop: 0
     },
     imageCollection: {
       alignSelf: "center",
