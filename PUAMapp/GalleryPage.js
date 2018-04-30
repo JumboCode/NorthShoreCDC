@@ -79,7 +79,8 @@ export default class GalleryPage extends React.Component {
               key: mural["uuid"], 
               routeName: 'MuralInfoPage', 
               params: {
-                mural: mural, 
+                mural: mural,
+                fromGalleryPage: true,
                 artist: artists[mural["Artist"]]
               }
             })
