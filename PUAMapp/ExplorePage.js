@@ -264,14 +264,14 @@ export default class ExplorePage extends React.Component {
                 </TouchableOpacity>
               </View>
               <TouchableOpacity style= {style.button} onPress={() => this.toggleTour()}>
-                <Text style = {style.text}>End Tour</Text>
+                <Text style = {style.text}> End Virtual Tour </Text>
               </TouchableOpacity>
             </View> 
             :
                 this.didComeFromGallery() ? null : 
                 <View style = {style.buttonContainer}>
                   <TouchableOpacity style= {style.button} onPress={() => this.toggleTour()}>
-                    <Text style = {style.text}>Start Tour</Text>
+                    <Text style = {style.text}>Start Virtual Tour</Text>
                   </TouchableOpacity>
                 </View>
 
@@ -293,8 +293,9 @@ style = StyleSheet.create({
       justifyContent: "flex-end",
       alignItems: "center",
       position: "absolute",
+      marginTop: "auto",
+      bottom: 0,
       width: "100%",
-      height: "100%%"
     },
     previousNextContainer: {
       flexDirection: "row",
@@ -305,12 +306,12 @@ style = StyleSheet.create({
       backgroundColor: 'white',
       zIndex: 100,
       margin: 15,
-      width: 120,
+      paddingLeft: 30,
+      paddingRight: 30,
       height: 40,
       borderRadius: 100,
       alignItems: 'center',
       justifyContent: 'center',
-      paddingRight: 6,
       shadowOffset: { width: 1, height: 1 },
       shadowRadius: 2,
       shadowOpacity: 0.6,
