@@ -7,27 +7,18 @@ import {
   ScrollView,
   TouchableOpacity,
   Dimensions,
-  Platform
 } from "react-native";
 import { NavigationActions } from "react-navigation";
-import { pink } from "./colors.js";
 import Img from "react-native-image-progress";
 import Progress from "react-native-progress";
 import { Feather } from '@expo/vector-icons';
 
+import { pink } from "./colors.js";
+import { isIOS, isIphoneX } from "./utilities";
+
 const IOS_HEADER_IMAGE = "./assets/images/gallery-header-new.jpg";
 const ANDROID_HEADER_IMAGE = "./assets/images/gallery_top_image.jpg";
 
-
-function isIphoneX() {
-  const dimen = Dimensions.get("window");
-  return (
-    Platform.OS === "ios" &&
-    !Platform.isPad &&
-    !Platform.isTVOS &&
-    (dimen.height === 812 || dimen.width === 812)
-  );
-}
 
 let galleryStyles = {};
 
@@ -37,7 +28,7 @@ export default class GalleryPage extends React.Component {
   }
 
   static navigationOptions = ({ navigation }) => {
-    return Platform.OS === "ios"
+    return isIOS()
       ? {
           headerLeft: (
             <TouchableOpacity
@@ -108,7 +99,7 @@ export default class GalleryPage extends React.Component {
         <View>
           <Image style={galleryStyles.image}
             source={
-              Platform.OS === "ios"
+              isIOS()
                 ? require(IOS_HEADER_IMAGE)
                 : require(ANDROID_HEADER_IMAGE)
             }
@@ -131,7 +122,7 @@ let { height, width } = Dimensions.get("window");
 let gridSquareSize = width / 3 - 1;
 let headerHeight = height / 3;
 
-if (Platform.OS === "ios") {
+if (isIOS()) {
   galleryStyles = StyleSheet.create({
     backButton: {
       position: "relative",
@@ -177,7 +168,7 @@ if (Platform.OS === "ios") {
     },
     imageGallery: {
       backgroundColor:
-        Platform.OS === "ios" ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,.5)",
+        isIOS() ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,.5)",
       height: headerHeight,
       position: "absolute",
       width: width,
@@ -233,7 +224,7 @@ if (Platform.OS === "ios") {
     },
     imageGallery: {
       backgroundColor:
-        Platform.OS === "ios" ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,.5)",
+        isIOS() ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,.5)",
       height: headerHeight,
       position: "absolute",
       width: width,

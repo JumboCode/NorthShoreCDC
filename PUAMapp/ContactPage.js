@@ -5,19 +5,19 @@ import {
   Dimensions,
   Image,
   Linking,
-  Platform,
   StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
   View
 } from "react-native";
-import {pink} from "./colors.js";
 import {NavigationActions} from "react-navigation";
 import {Feather} from '@expo/vector-icons';
 
-const PAYPAL_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UF8MF7Q9E7HSA";
+import {pink} from "./colors.js";
+import { isIOS, isIphoneX } from "./utilities";
 
+const PAYPAL_URL = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UF8MF7Q9E7HSA";
 const ADDRESS_LINE_1 = "96 Lafayette St";
 const ADDRESS_LINE_2 = "Salem, MA 01970";
 const PHONE_NUMBER_LINK = "tel://9787458071";
@@ -35,21 +35,12 @@ const INSTAGRAM_ICON = "./assets/images/instagram.png";
 const TWITTER_ICON = "./assets/images/twitter.png";
 const EMAIL_ICON = './assets/images/email.png';
 
-function isIphoneX() {
-  const dimen = Dimensions.get("window");
-  return (
-    Platform.OS === "ios" &&
-    !Platform.isPad &&
-    !Platform.isTVOS &&
-    (dimen.height === 812 || dimen.width === 812)
-  );
-}
 
 let contactStyles = {};
 
 export default class ContactPage extends React.Component {
   static navigationOptions = ({navigation}) => {
-    return Platform.OS === "ios"
+    return isIOS()
       ? {
         headerLeft: (
           <TouchableOpacity
@@ -76,7 +67,7 @@ export default class ContactPage extends React.Component {
     return (
       <View style={contactStyles.container}>
         <StatusBar
-          barStyle={Platform.OS === "ios" ? "dark-content" : "light-content"}
+          barStyle={isIOS() ? "dark-content" : "light-content"}
         />
         <Image
           style={contactStyles.image}
@@ -196,7 +187,7 @@ export default class ContactPage extends React.Component {
   }
 }
 
-if (Platform.OS === "ios") {
+if (isIOS()) {
   contactStyles = StyleSheet.create({
     backButtonTouchable: {
       top: 30,

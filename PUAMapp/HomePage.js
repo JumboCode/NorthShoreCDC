@@ -1,14 +1,21 @@
 import React from "react";
 import {
-  StyleSheet, Text, View, Image, TouchableOpacity, Platform
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity
 } from "react-native";
-import { lightpurple, darkpurple, pink } from "./colors.js";
 import Dimensions from "Dimensions";
+
+import { lightpurple, darkpurple, pink } from "./colors.js";
 import homepic from "./assets/images/home-background.jpg";
 import homelogo from "./assets/images/home-logo.png";
+import { isIOS } from "./utilities";
 
 const height = Dimensions.get("window").height;
 const FONT_SIZE = height * 0.1;
+
 
 export default class HomePage extends React.Component {
   static navigationOptions = {
@@ -50,7 +57,7 @@ export default class HomePage extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Platform.OS === "ios" ? "0%" : "-8%",
+    marginTop: isIOS() ? "0%" : "-8%",
     flex: 1,
     display: "flex",
     backgroundColor: "#fff",
@@ -122,7 +129,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 36,
-    fontWeight: Platform.OS === "ios" ? "800" : "bold",
+    fontWeight: isIOS() ? "800" : "bold",
     color: "white"
   }
 });

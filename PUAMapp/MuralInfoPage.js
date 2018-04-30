@@ -7,31 +7,22 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
-  Platform,
   StatusBar,
   Linking} from "react-native";
 import { NavigationActions } from "react-navigation";
-import { pink } from "./colors.js";
 import * as Animatable from "react-native-animatable";
 import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 
+import { pink } from "./colors.js";
+import { isIOS, isIphoneX } from "./utilities";
+
 const DESCRIPTION_FADE_DURATION = 500;
 const DARK_OVERLAY_FADE_DURATION = 500;
-
 const READ_MORE_FADE_OUT_DURATION = 200;
 const CLOSE_BUTTON_FADE_DURATION = 200;
 const READ_MORE_FADE_IN_DURATION = 1000;
 
-function isIphoneX() {
-  const dimen = Dimensions.get("window");
-  return (
-    Platform.OS === "ios" &&
-    !Platform.isPad &&
-    !Platform.isTVOS &&
-    (dimen.height === 812 || dimen.width === 812)
-  );
-}
 
 let self;
 let infoStyles = {};
@@ -50,7 +41,7 @@ export default class MuralInfoPage extends React.Component {
   }
 
   static navigationOptions = ({ navigation }) => {
-    return Platform.OS === "ios"
+    return isIOS()
       ? {
           headerLeft: (
             <TouchableOpacity
@@ -157,7 +148,7 @@ export default class MuralInfoPage extends React.Component {
     return (
       <View style={infoStyles.container}>
         <StatusBar
-          barStyle={Platform.OS === "ios" ? "light-content" : "light-content"}
+          barStyle={isIOS() ? "light-content" : "light-content"}
         />
         <Image
           style={infoStyles.muralPhoto}
@@ -232,7 +223,7 @@ export default class MuralInfoPage extends React.Component {
   }
 }
 
-if (Platform.OS === "ios") {
+if (isIOS()) {
   infoStyles = StyleSheet.create({
     backButtonTouchable: {
       top: 30,

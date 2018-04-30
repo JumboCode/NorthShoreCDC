@@ -5,26 +5,13 @@ import {
   Image,
   ActivityIndicator,
   StyleSheet,
-  Platform,
-  Dimensions
 } from "react-native";
 import { NavigationActions } from "react-navigation";
-
-function isIOS() {
-  return Platform.OS === "ios";
-}
-
-function isIphoneX() {
-  const dimen = Dimensions.get("window");
-  return (
-    Platform.OS === "ios" &&
-    !Platform.isPad &&
-    !Platform.isTVOS &&
-    (dimen.height === 812 || dimen.width === 812)
-  );
-}
+import { isIOS, isIphoneX } from "./utilities";
 
 const SPLASH_BACKGROUND_IMAGE = "./assets/images/splash-background.png";
+const SLOW_CONNECTION_THRESHOLD = 10000;
+
 
 export default class SpalshScreen extends Component {
   constructor(props) {
@@ -49,7 +36,7 @@ export default class SpalshScreen extends Component {
   }
 
   componentDidMount() {
-    // Tell user about slow connection after 10 seconds
+    // Tell user about slow connection after a while
     setTimeout(() => {
       if (this.state.loaded === false) {
         Alert.alert(
@@ -60,7 +47,7 @@ export default class SpalshScreen extends Component {
           { cancelable: true }
         );
       }
-    }, 10000);
+    }, SLOW_CONNECTION_THRESHOLD);
   }
 
   static navigationOptions = {
