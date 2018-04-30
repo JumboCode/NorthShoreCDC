@@ -10,8 +10,10 @@ import {
   TouchableOpacity,
   Platform,
   StatusBar,
+  Linking,
   Alert
 } from "react-native";
+import Hyperlink from "react-native-hyperlink";
 import { NavigationActions } from "react-navigation";
 import { lightpurple, darkpurple, pink } from "./colors.js";
 import * as Animatable from "react-native-animatable";
@@ -90,9 +92,10 @@ export default class MuralInfoPage extends React.Component {
                   zIndex: 100,
                   marginTop: -15,
                   marginLeft: 'auto',
-                  width: 90,
+                  width: 110,
                   height: 40,
                   borderRadius: 100,
+                  paddingLeft: 3,
                   alignItems: 'center',
                   justifyContent: 'center',
                   shadowOffset: { width: 1, height: 1 },
@@ -100,8 +103,8 @@ export default class MuralInfoPage extends React.Component {
                   shadowOpacity: 0.6,
                 }}
               >
+                <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}> Map  </Text>
                 <Entypo name="location-pin" size={20} color={pink} />
-                <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}> Map </Text>
               </View>
             </TouchableOpacity>
           ),
@@ -115,11 +118,25 @@ export default class MuralInfoPage extends React.Component {
             borderBottomColor: "transparent"
           }
         }
-      : {
+      : { // Android
           title: "Punto Urban Art",
           headerTintColor: "white",
-          headerStyle: { backgroundColor: pink }
-        };
+          headerStyle: { backgroundColor: pink },
+          headerRight: (
+            <TouchableOpacity 
+              onPress={() => self.goToExplorePage()} 
+              style={{
+                flex: 1, 
+                width: 60, 
+                height: '100%', 
+                justifyContent: 'center', 
+                alignItems: 'center'
+              }}
+            >
+              <Entypo name="location-pin" size={25} color={'white'} />
+            </TouchableOpacity>
+          )
+      };
   }
 
   toggleShowDescription() {
@@ -257,6 +274,20 @@ export default class MuralInfoPage extends React.Component {
               >
                 <ScrollView style={{marginTop: 10, height: Dimensions.get("window").height / 2}}>
                   <Text style={{ color: "white", marginTop: 10 }}>{description}</Text>
+                  {(artist["link"] && artist["link"].trim().length > 0) &&
+                    <TouchableOpacity
+                      style={{
+                        paddingTop: 30,
+                        paddingBottom: 30,
+                        paddingRight: 15
+                      }}
+                      onPress={() => Linking.openURL(artist["link"])}
+                    >
+                      <View>
+                        <Text style={{color: "white", fontSize: 15, textDecorationLine: 'underline'}}>See more by {artist["name"]}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  }
                 </ScrollView>
               </Animatable.View>
             )}
@@ -277,7 +308,7 @@ if (Platform.OS === "ios") {
     },
     textContainer: {
       flex: 1,
-      marginTop: "20%",
+      marginTop: isIphoneX() ? "25%" : "20%",
       paddingTop: 60,
       padding: 20,
       paddingRight: 0,
@@ -316,6 +347,7 @@ if (Platform.OS === "ios") {
       textShadowRadius: 2,
       paddingLeft: 3,
       fontSize: 24,
+      marginBottom: "5%"
     },
     description: {
       paddingRight: 20,

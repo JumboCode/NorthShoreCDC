@@ -137,7 +137,7 @@ export default class ContactPage extends React.Component {
         </TouchableOpacity>
         <View style={contactStyles.textContainerRight}>
 
-          <TouchableOpacity style= {contactStyles.bugReport_tourRequestImage} onPress={() => Linking.openURL("http://www.northshorecdc.org").catch(err => console.error('An error occurred', err))}>
+          <TouchableOpacity style= {contactStyles.bugReport_tourRequestImage} onPress={() => Linking.openURL("http://puntourbanartmuseum.org/open-air-museum/educational-tours/").catch(err => console.error('An error occurred', err))}>
             <Text style = {contactStyles.bugReport_tourRequestText}>Book Tour</Text>
           </TouchableOpacity>
 
@@ -325,7 +325,7 @@ if (Platform.OS === "ios") {
       justifyContent: "flex-start",
       alignItems: "flex-start",
       paddingLeft: "4%",
-      paddingTop: "10%",
+      paddingTop: "5%",
       marginBottom: "auto"
     },
     textLeft: {

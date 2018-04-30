@@ -23,7 +23,7 @@ export const getMurals = () => {
             .database()
             .ref("murals")
             .orderByKey()
-            .on("value", snapshot => {
+            .once("value").then(function(snapshot) {
                 // gets around Redux panicking about actions in reducers
                 setTimeout(() => {
                     const messages = snapshot.val() || [];

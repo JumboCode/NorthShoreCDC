@@ -90,11 +90,15 @@ export default class GalleryPage extends React.Component {
       return (
         <TouchableOpacity
           key={i}
-          onPress={() =>
-            navigate("MuralInfoPage", {
-              mural: mural,
-              artist: artists[mural["Artist"]]
-            })
+          onPress = {() => 
+              navigate({
+                key: mural["uuid"], 
+                routeName: 'MuralInfoPage', 
+                params: {
+                  mural: mural, 
+                  artist: artists[mural["Artist"]]
+                }
+              })
           }
         >
           <Img
@@ -125,7 +129,7 @@ export default class GalleryPage extends React.Component {
             }}
             source={
               Platform.OS === "ios"
-                ? require("./assets/images/gallery-header-new.jpeg")
+                ? require("./assets/images/gallery-header-new.jpg")
                 : require("./assets/images/gallery_top_image.jpg")
             }
           />

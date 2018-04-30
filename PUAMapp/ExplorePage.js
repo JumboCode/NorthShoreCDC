@@ -12,7 +12,6 @@ import {
   Alert
 } from "react-native";
 import { Permissions } from "expo";
-//import { MapView } from "expo";
 import { NavigationActions } from "react-navigation";
 import { lightpurple, darkpurple, pink } from "./colors.js";
 import { Feather } from '@expo/vector-icons';
@@ -136,22 +135,63 @@ export default class ExplorePage extends React.Component {
       title = murals[key]["Title"];
       artistName = artists[murals[key]["Artist"]]["name"];
 
-      return (
-        <MapView.Marker
-          key={i}
-          title={title}
-          description={artistName}
-          coordinate={{ latitude: lat, longitude: long }}
-          pinColor={pink}
-          ref = {(ref) => this.markers[key] = ref}
-          onCalloutPress={() => {
-            navigate("MuralInfoPage", {
-              mural: murals[key],
-              artist: artists[murals[key]["Artist"]]
-            });
-          }}
-        />
-      );
+      if (Platform.OS === 'ios') {
+        return (
+          <MapView.Marker
+            key={i}
+            title={title}
+            description={artistName}
+            coordinate={{ latitude: lat, longitude: long }}
+            pinColor={pink}
+            ref = {(ref) => this.markers[key] = ref}
+          >
+            <MapView.Callout 
+              tooltip={false}
+              onPress = {() => 
+                  this.props.navigation.navigate({
+                    key: murals[key]['uuid'], 
+                    routeName: 'MuralInfoPage', 
+                    params: {
+                      mural: murals[key], 
+                      artist: artists[murals[key]["Artist"]]
+                    }
+                  })
+              }
+            >
+              <View style={{flexDirection: "row", flex: 1}}>
+                <View style={{flexDirection: "column", flex: 1}}>
+                  <Text style={{fontWeight: 'bold', fontSize: 17}}>{title}</Text>
+                  <Text>{artistName}</Text>
+                </View>
+                <View style={{flex: 1, alignItems: "center", justifyContent: "center", marginLeft: 15}}>
+                  <Feather name="chevron-right" size={30} color={pink} style={{marginBottom: 1}}/>
+                </View>
+              </View>
+            </MapView.Callout>
+          </MapView.Marker>
+        );
+      } else { // UnStyled marker for Android
+        return (
+          <MapView.Marker
+            key={i}
+            title={title}
+            description={artistName}
+            coordinate={{ latitude: lat, longitude: long }}
+            pinColor={pink}
+            ref = {(ref) => this.markers[key] = ref}
+            onCalloutPress = {() => 
+                this.props.navigation.navigate({
+                  key: murals[key]['uuid'], 
+                  routeName: 'MuralInfoPage', 
+                  params: {
+                    mural: murals[key], 
+                    artist: artists[murals[key]["Artist"]]
+                  }
+                })
+            }
+          />
+        );
+      }
     });
 
    
@@ -193,12 +233,10 @@ export default class ExplorePage extends React.Component {
     }
 
     tourNext () {
-
         this.props.screenProps.changeMarker();
         if( this.props.screenProps.currMarker == Object.keys(this.props.screenProps.murals).length - 1){
             this.toggleTour();
         }
-
     }
 
     tourPrev() {

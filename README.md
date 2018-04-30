@@ -10,13 +10,19 @@ The Punto Urban Art Museum's vision is to create a world class urban arts distri
 
 <a href="https://play.google.com/store/apps/details?id=com.jumbocode.punto"><img src="PUAMapp/play-store.png" height="65"/></a> &nbsp;&nbsp; <a href="https://itunes.apple.com/us/app/punto-urban-art-museum/id1320710363?ls=1&mt=8"><img src="PUAMapp/app-store.png" height="65"/></a>
 
-This app is a project of the <a href="http://northshorecdc.org" alt="NSCDC">North Shore Community Development Coalition</a> and <a href="http://jumbocode.org" alt="JumboCode">JumboCode</a>.
+This app is a project of <a href="http://northshorecdc.org" alt="NSCDC">North Shore Community Development Coalition</a> and <a href="http://jumbocode.org" alt="JumboCode">JumboCode</a>.
 
 ![screenshot](screenshots/screenshot1.png)
 ![screenshot](screenshots/screenshot2.png)
 ![screenshot](screenshots/screenshot3.png)
 ![screenshot](screenshots/screenshot4.png)
 ![screenshot](screenshots/screenshot5.png)
+<br>
+![screenshot](screenshots/screenshot6.png)
+![screenshot](screenshots/screenshot7.png)
+![screenshot](screenshots/screenshot8.png)
+![screenshot](screenshots/screenshot9.png)
+![screenshot](screenshots/screenshot10.png)
 
 ## Test / Develop Locally
 ### Run the react-native App locally
@@ -27,12 +33,26 @@ var config = {... firebase config info ...};
 export default config;
 ```
 
+* Create a file sentry.js in PUAMapp/ containing:
+
+```
+var configString = {... sentry config string ...};
+export default configString;
+```
+
 * Install the dependencies and start the packager:
 
 ```
 cd PUAMapp
 npm install
 npm start
+```
+
+* Build standalone apps
+```
+npm install -g exp
+exp build:ios
+exp build:android
 ```
 
 
@@ -55,6 +75,12 @@ export FLASK_DEBUG=1
 ```
 pip install -r requirements.txt
 flask run
+```
+
+* Publish Site with <a href="https://devcenter.heroku.com/articles/heroku-cli">Heroku CLI</a>
+  
+```
+sh push_to_heroku.sh
 ```
 
 
