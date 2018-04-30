@@ -34,7 +34,10 @@ function isIphoneX() {
     (dimen.height === 812 || dimen.width === 812)
   );
 }
-var self;
+
+let self;
+let infoStyles = {};
+
 export default class MuralInfoPage extends React.Component {
   constructor(props) {
     super(props);
@@ -53,35 +56,27 @@ export default class MuralInfoPage extends React.Component {
       ? {
           headerLeft: (
             <TouchableOpacity
-              style={{ top: 30, left: -25, padding: 40 }}
+              style={infoStyles.backButtonTouchable}
               onPress={() => navigation.dispatch(NavigationActions.back())}
             >
               <View style={infoStyles.backButton}>
                 <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}} />
-                <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}>  Back </Text>
+                <Text style={infoStyles.headerButtonText}>  Back </Text>
               </View>
             </TouchableOpacity>
           ),
           headerRight: (
             <TouchableOpacity
-              style={{ top: 30, right: -25, padding: 40, marginLeft: 'auto' }}
+              style={infoStyles.mapButtonTouchable}
               onPress={() => self.goToExplorePage()}
             >
               <View style={infoStyles.mapButton}>
-                <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}> Map  </Text>
+                <Text style={infoStyles.headerButtonText}> Map  </Text>
                 <Entypo name="location-pin" size={20} color={pink} />
               </View>
             </TouchableOpacity>
           ),
-          headerStyle: {
-            position: "absolute",
-            backgroundColor: "transparent",
-            zIndex: 100,
-            top: 0,
-            left: 0,
-            right: 0,
-            borderBottomColor: "transparent"
-          }
+          headerStyle: infoStyles.headerStyle
         }
       : { // Android
           title: "Punto Urban Art",
@@ -187,7 +182,7 @@ export default class MuralInfoPage extends React.Component {
               style={infoStyles.button}
             >
               <TouchableOpacity
-                style={{ padding: 15, paddingTop: 20, paddingLeft: 15, paddingBottom: 20}}
+                style={infoStyles.closeTouchable}
                 onPress={this.toggleShowDescription.bind(this)}
               >
                 {closeButton}
@@ -210,15 +205,15 @@ export default class MuralInfoPage extends React.Component {
                 duration={500}
                 style={infoStyles.description}
               >
-                <ScrollView style={{marginTop: 10, height: Dimensions.get("window").height / 2}}>
-                  <Text style={{ color: "white", marginTop: 10 }}>{description}</Text>
+                <ScrollView style={infoStyles.descriptionScrollView}>
+                  <Text style={infoStyles.descriptionText}>{description}</Text>
                   {(artist["link"] && artist["link"].trim().length > 0) &&
                     <TouchableOpacity
-                      style={{ paddingTop: 30, paddingBottom: 30, paddingRight: 15}}
+                      style={infoStyles.artistLinkTouchable}
                       onPress={() => Linking.openURL(artist["link"])}
                     >
                       <View>
-                        <Text style={{color: "white", fontSize: 15, textDecorationLine: 'underline'}}>See more by {artist["name"]}</Text>
+                        <Text style={infoStyles.artistLinkText}>See more by {artist["name"]}</Text>
                       </View>
                     </TouchableOpacity>
                   }
@@ -233,9 +228,33 @@ export default class MuralInfoPage extends React.Component {
   }
 }
 
-infoStyles = {};
 if (Platform.OS === "ios") {
   infoStyles = StyleSheet.create({
+    backButtonTouchable: {
+      top: 30,
+      left: -25,
+      padding: 40
+    },
+    mapButtonTouchable: {
+      top: 30,
+      right: -25,
+      padding: 40,
+      marginLeft: 'auto'
+    },
+    headerStyle: {
+      position: "absolute",
+      backgroundColor: "transparent",
+      zIndex: 100,
+      top: 0,
+      left: 0,
+      right: 0,
+      borderBottomColor: "transparent"
+    },
+    headerButtonText: {
+      fontWeight: 'bold',
+      fontSize: 17,
+      color: pink
+    },
     container: {
       flex: 1,
       backgroundColor: "#fff"
@@ -349,6 +368,12 @@ if (Platform.OS === "ios") {
       fontWeight: 'bold',
       fontSize: 16
     },
+    closeTouchable: {
+      padding: 15,
+      paddingTop: 20,
+      paddingLeft: 15,
+      paddingBottom: 20
+    },
     moreInfoButtonContainer: {
       backgroundColor: "rgba(128, 128, 128, 0.3)",
       width: 135,
@@ -363,10 +388,38 @@ if (Platform.OS === "ios") {
       shadowOffset: { width: 1, height: 1 },
       shadowRadius: 2,
       shadowOpacity: 0.6,
+    },
+    descriptionScrollView: {
+      marginTop: 10,
+      height:
+      Dimensions.get("window").height / 2
+    },
+    descriptionText: {
+      color: "white",
+      marginTop: 10
+    },
+    artistLinkTouchable: {
+      paddingTop: 30,
+      paddingBottom: 30,
+      paddingRight: 15
+    },
+    artistLinkText: {
+      color: "white",
+      fontSize: 15,
+      textDecorationLine: 'underline'
     }
   });
 } else {
   infoStyles = StyleSheet.create({
+    headerStyle: {
+      position: "absolute",
+      backgroundColor: "transparent",
+      zIndex: 100,
+      top: 0,
+      left: 0,
+      right: 0,
+      borderBottomColor: "transparent"
+    },
     container: {
       flex: 1,
       backgroundColor: "#fff"
@@ -473,6 +526,31 @@ if (Platform.OS === "ios") {
       alignItems: 'center',
       justifyContent: 'center',
       elevation: 2,
+    },
+    closeTouchable: {
+      padding: 15,
+      paddingTop: 20,
+      paddingLeft: 15,
+      paddingBottom: 20
+    },
+    descriptionScrollView: {
+      marginTop: 10,
+      height:
+      Dimensions.get("window").height / 2
+    },
+    descriptionText: {
+      color: "white",
+      marginTop: 10
+    },
+    artistLinkTouchable: {
+      paddingTop: 30,
+      paddingBottom: 30,
+      paddingRight: 15
+    },
+    artistLinkText: {
+      color: "white",
+      fontSize: 15,
+      textDecorationLine: 'underline'
     }
   });
 }
