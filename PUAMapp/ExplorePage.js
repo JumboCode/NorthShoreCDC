@@ -25,6 +25,8 @@ import  MapView, {Polyline} from 'react-native-maps';
 // This won't do anything if the permission is already granted.
 Permissions.askAsync(Permissions.LOCATION);
 
+let exploreStyles = {};
+
 // Note: For all intents and purposes, "mural key" is the same as "mural id".
 // But "mural index" does not refer to either of those things, it only refers
 // to a mural's order in the tour.
@@ -46,41 +48,16 @@ export default class ExplorePage extends React.Component {
       ? {
           headerLeft: (
             <TouchableOpacity
-              style={{ top: 30, left: -25, padding: 40 }}
-              onPress={() => {navigation.dispatch(NavigationActions.back())}}
+              style={exploreStyles.backButtonTouchable}
+              onPress={() => navigation.dispatch(NavigationActions.back())}
             >
-              <View
-                style={{
-                  position: "relative",
-                  flexDirection: "row",
-                  backgroundColor: 'white',
-                  zIndex: 100,
-                  marginTop: -15,
-                  width: 120,
-                  height: 40,
-                  borderRadius: 100,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  paddingRight: 6,
-                  shadowOffset: { width: 1, height: 1 },
-                  shadowRadius: 2,
-                  shadowOpacity: 0.6,
-                }}
-              >
+              <View style={exploreStyles.backButton}>
                 <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}}/>
-                <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}>  Back </Text>
+                <Text style={exploreStyles.headerButtonText}>  Back </Text>
               </View>
             </TouchableOpacity>
           ),
-          headerStyle: {
-            position: "absolute",
-            backgroundColor: "transparent",
-            zIndex: 100,
-            top: 0,
-            left: 0,
-            right: 0,
-            borderBottomColor: "transparent"
-          }
+          headerStyle: exploreStyles.headerStyle
         }
       : {
           title: "Punto Urban Art",
@@ -128,7 +105,6 @@ export default class ExplorePage extends React.Component {
       defaultMuralID = this.props.navigation.state.params.muralID;
     }
     
-
     return Object.keys(murals).map((key, i) => {
       lat = parseFloat(murals[key]["Lat"]);
       long = parseFloat(murals[key]["Long"]);
@@ -158,12 +134,12 @@ export default class ExplorePage extends React.Component {
                   })
               }
             >
-              <View style={{flexDirection: "row", flex: 1}}>
-                <View style={{flexDirection: "column", flex: 1}}>
-                  <Text style={{fontWeight: 'bold', fontSize: 17}}>{title}</Text>
+              <View style={exploreStyles.callOutContainer}>
+                <View style={exploreStyles.callOutTextContainer}>
+                  <Text style={exploreStyles.callOutTitle}>{title}</Text>
                   <Text>{artistName}</Text>
                 </View>
-                <View style={{flex: 1, alignItems: "center", justifyContent: "center", marginLeft: 15}}>
+                <View style={exploreStyles.callOutIconContainer}>
                   <Feather name="chevron-right" size={30} color={pink} style={{marginBottom: 1}}/>
                 </View>
               </View>
@@ -292,28 +268,28 @@ export default class ExplorePage extends React.Component {
             </AnimatedMapView>
   
           {this.props.screenProps.tourStarted ? 
-            <View style = {style.buttonContainer}>
-              <View style = {style.previousNextContainer}>
-                <View style={style.previousContainer}>
-                  <TouchableOpacity style= {[style.button, style.prevNextButton]} onPress={() => this.tourPrev()}>
-                    <Text numberOfLines={1} style = {style.text}>Previous</Text>
+            <View style = {exploreStyles.buttonContainer}>
+              <View style = {exploreStyles.previousNextContainer}>
+                <View style={exploreStyles.previousContainer}>
+                  <TouchableOpacity style= {[exploreStyles.button, exploreStyles.prevNextButton]} onPress={() => this.tourPrev()}>
+                    <Text numberOfLines={1} style = {exploreStyles.text}>Previous</Text>
                   </TouchableOpacity>
                 </View>
-                <View style={style.nextContainer}>
-                  <TouchableOpacity style= {[style.button, style.prevNextButton]} onPress={() => this.tourNext()}>
-                    <Text style = {style.text}>Next</Text>
+                <View style={exploreStyles.nextContainer}>
+                  <TouchableOpacity style= {[exploreStyles.button, exploreStyles.prevNextButton]} onPress={() => this.tourNext()}>
+                    <Text style = {exploreStyles.text}>Next</Text>
                   </TouchableOpacity>
                 </View>
               </View>
-              <TouchableOpacity style= {style.button} onPress={() => this.toggleTour()}>
-                <Text style = {style.text}> End Virtual Tour </Text>
+              <TouchableOpacity style= {exploreStyles.button} onPress={() => this.toggleTour()}>
+                <Text style = {exploreStyles.text}> End Virtual Tour </Text>
               </TouchableOpacity>
             </View> 
             :
                 this.didComeFromGallery() ? null : 
-                <View style = {style.buttonContainer}>
-                  <TouchableOpacity style= {style.button} onPress={() => this.toggleTour()}>
-                    <Text style = {style.text}>Start Virtual Tour</Text>
+                <View style = {exploreStyles.buttonContainer}>
+                  <TouchableOpacity style= {exploreStyles.button} onPress={() => this.toggleTour()}>
+                    <Text style = {exploreStyles.text}>Start Virtual Tour</Text>
                   </TouchableOpacity>
                 </View>
 
@@ -322,58 +298,6 @@ export default class ExplorePage extends React.Component {
         );
     }
 }
-
-style = StyleSheet.create({
-    text: {
-      fontSize: 16,
-      fontWeight: 'bold',
-      color: pink,
-    },
-    buttonContainer: {
-      flex: 1,
-      flexDirection: "column",
-      justifyContent: "flex-end",
-      alignItems: "center",
-      position: "absolute",
-      marginTop: "auto",
-      bottom: 0,
-      width: "100%",
-    },
-    previousNextContainer: {
-      flex: 1,
-      flexDirection: "row",
-    },
-    previousContainer: {
-      flex: 1,
-      flexDirection: "row",
-      justifyContent: "flex-start",
-    },
-    nextContainer: {
-      flex: 1,
-      flexDirection: "row",
-      justifyContent: "flex-end",
-    }, 
-    prevNextButton: {
-      width: 130,
-    },
-    button: {
-      flexDirection: "row",
-      backgroundColor: 'white',
-      zIndex: 100,
-      margin: 15,
-      paddingLeft: 30,
-      paddingRight: 30,
-      height: 40,
-      borderRadius: 100,
-      alignItems: 'center',
-      justifyContent: 'center',
-      shadowOffset: { width: 1, height: 1 },
-      shadowRadius: 2,
-      shadowOpacity: 0.6,
-      elevation: 6,
-    }
-});
-
 
 /*****************************************************************************/
 
@@ -425,3 +349,159 @@ class AnimatedMapView extends React.Component {
     
 }
 
+if (Platform.OS === "ios") {
+  exploreStyles = StyleSheet.create({
+    backButton: {
+      position: "relative",
+      flexDirection: "row",
+      backgroundColor: 'white',
+      zIndex: 100,
+      marginTop: -15,
+      width: 120,
+      height: 40,
+      borderRadius: 100,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingRight: 6,
+      shadowOffset: { width: 1, height: 1 },
+      shadowRadius: 2,
+      shadowOpacity: 0.6,
+    },
+    backButtonTouchable: {
+      top: 30,
+      left: -25,
+      padding: 40
+    },
+    headerButtonText: {
+      fontWeight: 'bold',
+      fontSize: 17,
+      color: pink
+    },
+    headerStyle: {
+      position: "absolute",
+      backgroundColor: "transparent",
+      zIndex: 100,
+      top: 0,
+      left: 0,
+      right: 0,
+      borderBottomColor: "transparent"
+    },
+    callOutIconContainer: {
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      marginLeft: 15
+    },
+    callOutContainer: {
+      flexDirection: "row",
+      flex: 1
+    },
+    callOutTextContainer: {
+      flexDirection: "column",
+      flex: 1
+    },
+    callOutTitle: {
+      fontWeight: 'bold',
+      fontSize: 17
+    },
+    text: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: pink,
+    },
+    buttonContainer: {
+      flex: 1,
+      flexDirection: "column",
+      justifyContent: "flex-end",
+      alignItems: "center",
+      position: "absolute",
+      marginTop: "auto",
+      bottom: 0,
+      width: "100%",
+    },
+    previousNextContainer: {
+      flex: 1,
+      flexDirection: "row",
+    },
+    previousContainer: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "flex-start",
+    },
+    nextContainer: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "flex-end",
+    }, 
+    prevNextButton: {
+      width: 130,
+    },
+    button: {
+      flexDirection: "row",
+      backgroundColor: 'white',
+      zIndex: 100,
+      margin: 15,
+      paddingLeft: 30,
+      paddingRight: 30,
+      height: 40,
+      borderRadius: 100,
+      alignItems: 'center',
+      justifyContent: 'center',
+      shadowOffset: { width: 1, height: 1 },
+      shadowRadius: 2,
+      shadowOpacity: 0.6,
+      elevation: 6,
+    }
+  });
+} else { // Android
+  exploreStyles = StyleSheet.create({
+    text: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: pink,
+    },
+    buttonContainer: {
+      flex: 1,
+      flexDirection: "column",
+      justifyContent: "flex-end",
+      alignItems: "center",
+      position: "absolute",
+      marginTop: "auto",
+      bottom: 0,
+      width: "100%",
+    },
+    previousNextContainer: {
+      flex: 1,
+      flexDirection: "row",
+    },
+    previousContainer: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "flex-start",
+    },
+    nextContainer: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "flex-end",
+    }, 
+    prevNextButton: {
+      width: 130,
+    },
+    button: {
+      flexDirection: "row",
+      backgroundColor: 'white',
+      zIndex: 100,
+      margin: 15,
+      paddingLeft: 30,
+      paddingRight: 30,
+      height: 40,
+      borderRadius: 100,
+      alignItems: 'center',
+      justifyContent: 'center',
+      shadowOffset: { width: 1, height: 1 },
+      shadowRadius: 2,
+      shadowOpacity: 0.6,
+      elevation: 6,
+    }
+  });
+}

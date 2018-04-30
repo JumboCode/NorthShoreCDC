@@ -51,47 +51,24 @@ function isIphoneX() {
   );
 }
 
+let contactStyles = {};
+
 export default class ContactPage extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return Platform.OS === "ios"
       ? {
           headerLeft: (
             <TouchableOpacity
-              style={{ top: 30, left: -25, padding: 40 }}
+              style={contactStyles.backButtonTouchable}
               onPress={() => navigation.dispatch(NavigationActions.back())}
             >
-              <View
-                style={{
-                  position: "relative",
-                  flexDirection: "row",
-                  backgroundColor: 'white',
-                  marginTop: -15,
-                  zIndex: 100,
-                  width: 120,
-                  height: 40,
-                  borderRadius: 100,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  paddingRight: 6,
-                  shadowOffset: { width: 1, height: 1 },
-                  shadowRadius: 2,
-                  shadowOpacity: 0.6,
-                }}
-              >
+              <View style={contactStyles.backButton}>
                 <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}}/>
-                <Text style={{fontWeight: 'bold', fontSize: 17, color: pink}}>  Back </Text>
+                <Text style={contactStyles.headerButtonText}>  Back </Text>
               </View>
             </TouchableOpacity>
           ),
-          headerStyle: {
-            position: "absolute",
-            backgroundColor: "transparent",
-            zIndex: 100,
-            top: 0,
-            left: 0,
-            right: 0,
-            borderBottomColor: "transparent"
-          }
+          headerStyle: contactStyles.headerStyle
         }
       : {
           title: "Punto Urban Art",
@@ -114,6 +91,7 @@ export default class ContactPage extends React.Component {
           style={contactStyles.image}
           source={require("./assets/images/contact_background.jpg")}
         />
+
         <View style={contactStyles.textContainerLeft}>
           <Text style={contactStyles.textLeft}>
             A project of North
@@ -125,6 +103,7 @@ export default class ContactPage extends React.Component {
             Coalition
           </Text>
         </View>
+
         <TouchableOpacity
           style={contactStyles.donateImage}
           onPress={() =>
@@ -135,32 +114,29 @@ export default class ContactPage extends React.Component {
         >
           <Text style={contactStyles.donateText}> DONATE </Text>
         </TouchableOpacity>
+
         <View style={contactStyles.textContainerRight}>
-
-          <TouchableOpacity style= {contactStyles.bugReport_tourRequestImage} onPress={() => Linking.openURL("http://puntourbanartmuseum.org/open-air-museum/educational-tours/").catch(err => console.error('An error occurred', err))}>
-            <Text style = {contactStyles.bugReport_tourRequestText}>Book Tour</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style= {contactStyles.bugReport_tourRequestImage} onPress={() => Linking.openURL(feedbackFormURL).catch(err => console.error('An error occurred', err))}>
-            <Text style = {contactStyles.bugReport_tourRequestText}>Report Bug</Text>
-          </TouchableOpacity>
           <Hyperlink
             linkify={linkify}
             linkDefault={true}
-            linkStyle={{ color: "grey" }}
+            linkStyle={{ color: "white" }}
             linkText={this.textForLink}
           >
-            <Text style={contactStyles.textRight}>
-              96 Lafayette St
-              {"\n"}
-              Salem, MA 01970
-              {"\n"}
-              Tel: tel://9787458071
-              {"\n"}
-              Fax: fax://9787454345
-            </Text>
+            <View style={contactStyles.textRightContainer}>
+              <Text style={contactStyles.textRight}>96 Lafayette St</Text>
+            </View>
+            <View style={contactStyles.textRightContainer}>
+              <Text style={contactStyles.textRight}>Salem, MA 01970</Text>
+            </View>
+            <View style={contactStyles.textRightContainer}>
+              <Text style={contactStyles.textRight}>tel://9787458071</Text>
+            </View>
           </Hyperlink>
+          <TouchableOpacity style= {contactStyles.tourRequestImage} onPress={() => Linking.openURL("http://puntourbanartmuseum.org/open-air-museum/educational-tours/").catch(err => console.error('An error occurred', err))}>
+            <Text style = {contactStyles.tourRequestText}> Book Tour </Text>
+          </TouchableOpacity>
 
+          <View style={contactStyles.bottomRow}>
           <View style={contactStyles.socialStyle}>
             <TouchableOpacity
               onPress={() =>
@@ -214,14 +190,36 @@ export default class ContactPage extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
+          <TouchableOpacity onPress={() => Linking.openURL(feedbackFormURL).catch(err => console.error('An error occurred', err))}>
+            <Text style = {contactStyles.bugReportText}>Report Bug Here</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
 }
 
-contactStyles = {};
 if (Platform.OS === "ios") {
   contactStyles = StyleSheet.create({
+    backButtonTouchable: {
+      top: 30,
+      left: -25,
+      padding: 40
+    },
+    headerButtonText: {
+      fontWeight: 'bold',
+      fontSize: 17,
+      color: pink
+    },
+    headerStyle: {
+      position: "absolute",
+      backgroundColor: "transparent",
+      zIndex: 100,
+      top: 0,
+      left: 0,
+      right: 0,
+      borderBottomColor: "transparent"
+    },
     container: {
       flex: 1
     },
@@ -231,6 +229,22 @@ if (Platform.OS === "ios") {
       resizeMode: "cover",
       height: "100%",
       width: "100%"
+    },
+    backButton: {
+      position: "relative",
+      flexDirection: "row",
+      backgroundColor: 'white',
+      marginTop: -15,
+      zIndex: 100,
+      width: 120,
+      height: 40,
+      borderRadius: 100,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingRight: 6,
+      shadowOffset: { width: 1, height: 1 },
+      shadowRadius: 2,
+      shadowOpacity: 0.6,
     },
     textContainerLeft: {
       backgroundColor: "transparent",
@@ -248,25 +262,43 @@ if (Platform.OS === "ios") {
     textContainerRight: {
       backgroundColor: "transparent",
       display: "flex",
-      justifyContent: "flex-start",
       alignItems: "flex-end",
-      paddingRight: "4%",
-      // paddingTop: '40%',
+      paddingRight: "5%",
       marginTop: "auto",
       paddingBottom: isIphoneX() ? "12%" : "4%"
     },
     textRight: {
+      display: "flex",
+      width: null,
+      justifyContent: "flex-end",
+      alignItems: "flex-end",
+      backgroundColor: pink,
       fontSize: 20,
-      color: "grey",
-      textAlign: "right"
+      alignSelf: 'baseline',
+      padding: 3,
+      paddingBottom: 1,
+      lineHeight: 20,
+      color: "white",
+      textAlign: "right",
+      marginBottom: 5,
+    },
+    textRightContainer: {
+      alignSelf: 'flex-end',
     },
     socialStyle: {
-      flexDirection: "row"
+      flexDirection: "row",
+      alignSelf: "flex-end",
+    },
+    bottomRow: {
+      flexDirection: "row",
     },
     iconStyle: {
-      height: 30,
-      width: 30,
-      margin: 10
+      tintColor: pink,
+      height: 37,
+      width: 37,
+      margin: 10,
+      marginLeft: 25,
+      marginRight: 0,
     },
     donateText: {
       fontSize: 22,
@@ -280,31 +312,39 @@ if (Platform.OS === "ios") {
       width: 160,
       height: 40,
       marginLeft: "8%",
-      marginTop: isIphoneX() ? "-30%" : "-11%",
+      marginTop: isIphoneX() ? "-25%" : "-20%",
       borderRadius: 100,
       shadowColor: "black",
       shadowOffset: { width: 3, height: 4 },
       shadowRadius: 3,
       shadowOpacity: 0.7
     },
-    bugReport_tourRequestText: {
+    tourRequestText: {
       fontSize: 16,
       fontWeight: 'bold',
       color: pink,
     },
-    bugReport_tourRequestImage: {
+    tourRequestImage: {
       alignItems: 'center',
       justifyContent: 'center',
       minWidth: 120,
       paddingLeft: 25,
       paddingRight: 25,
-      height: 40,
+      marginTop: '6%',
       marginBottom: '3%',
+      height: 40,
       borderRadius: 100,
       backgroundColor: 'white',
       shadowColor: 'black',
       shadowOffset: {width: 1, height: 1, },
       shadowOpacity: 0.6,
+    },
+    bugReportText: {
+      fontSize: 10,
+      marginTop: 5,
+      color: pink,
+      fontWeight: "bold",
+      textDecorationLine: "underline",
     },
   });
 } else {
@@ -318,6 +358,22 @@ if (Platform.OS === "ios") {
       resizeMode: "cover",
       height: "100%",
       width: "100%"
+    },
+    backButton: {
+      position: "relative",
+      flexDirection: "row",
+      backgroundColor: 'white',
+      marginTop: -15,
+      zIndex: 100,
+      width: 120,
+      height: 40,
+      borderRadius: 100,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingRight: 6,
+      shadowOffset: { width: 1, height: 1 },
+      shadowRadius: 2,
+      shadowOpacity: 0.6,
     },
     textContainerLeft: {
       backgroundColor: "transparent",
@@ -335,25 +391,39 @@ if (Platform.OS === "ios") {
     textContainerRight: {
       backgroundColor: "transparent",
       display: "flex",
-      justifyContent: "flex-start",
       alignItems: "flex-end",
-      paddingRight: "4%",
-      // paddingTop: '40%',
+      paddingRight: "5%",
       marginTop: "auto",
-      paddingBottom: "4%"
+      paddingBottom: isIphoneX() ? "12%" : "4%"
     },
     textRight: {
-      fontSize: 20,
-      color: "grey",
-      textAlign: "right"
+      display: "flex",
+      width: null,
+      justifyContent: "flex-end",
+      alignItems: "flex-end",
+      backgroundColor: pink,
+      fontSize: 15,
+      alignSelf: 'baseline',
+      padding: 3,
+      paddingBottom: 1,
+      lineHeight: 15,
+      color: "white",
+      textAlign: "right",
+      marginBottom: 5,
+    },
+    textRightContainer: {
+      alignSelf: 'flex-end',
     },
     socialStyle: {
       flexDirection: "row"
     },
     iconStyle: {
-      height: 30,
-      width: 30,
-      margin: 10
+      tintColor: pink,
+      height: 32,
+      width: 32,
+      margin: 10,
+      marginLeft: 20,
+      marginRight: 0,
     },
     donateText: {
       backgroundColor: "transparent",
@@ -375,26 +445,29 @@ if (Platform.OS === "ios") {
       borderRadius: 100,
       elevation: 6
     },
-    bugReport_tourRequestText: {
-      fontSize: 16,
+    tourRequestText: {
+      fontSize: 15,
       fontWeight: 'bold',
       color: pink,
     },
-    bugReport_tourRequestImage: {
+    tourRequestImage: {
       alignItems: 'center',
       justifyContent: 'center',
-      minWidth: 130,
+      minWidth: 120,
+      paddingLeft: 25,
+      paddingRight: 25,
+      marginTop: "3%",
+      marginBottom: "1%",
       height: 40,
-      paddingLeft: 20,
-      paddingRight: 20,
-      marginBottom: '3%',
-      marginRight: '-2%',
       borderRadius: 100,
       backgroundColor: 'white',
-      shadowColor: 'black',
-      shadowOffset: {width: 3, height: 4, },
-      shadowOpacity: 0.5,
       elevation: 4,
+    },
+    bugReportText: {
+      fontSize: 10,
+      color: pink,
+      fontWeight: "bold",
+      textDecorationLine: "underline",
     },
   });
 }
