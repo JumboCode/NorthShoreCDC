@@ -319,7 +319,7 @@ if (isIOS()) {
       paddingLeft: 25,
       paddingRight: 25,
       marginTop: '6%',
-      marginBottom: '3%',
+      marginBottom: '4%',
       height: 40,
       borderRadius: 100,
       backgroundColor: 'white',

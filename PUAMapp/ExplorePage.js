@@ -114,11 +114,11 @@ export default class ExplorePage extends React.Component {
             description={artistName}
             coordinate={{ latitude: lat, longitude: long }}
             pinColor={pink}
-            ref = {(ref) => this.markers[key] = ref}
+            ref={(ref) => this.markers[key] = ref}
           >
             <MapView.Callout
               tooltip={false}
-              onPress = {() =>
+              onPress={() =>
                 this.props.navigation.navigate({
                   key: murals[key]['uuid'],
                   routeName: 'MuralInfoPage',
@@ -149,7 +149,7 @@ export default class ExplorePage extends React.Component {
             description={artistName}
             coordinate={{ latitude: lat, longitude: long }}
             pinColor={pink}
-            ref = {(ref) => this.markers[key] = ref}
+            ref={(ref) => this.markers[key] = ref}
             onCalloutPress = {() =>
               this.props.navigation.navigate({
                 key: murals[key]['uuid'],
@@ -174,7 +174,6 @@ export default class ExplorePage extends React.Component {
       // AFTER we animate to the region for that callout.
       // This prevents an animation bug in which we showed the callout while
       // the map was still animating to the region.
-
       setTimeout(function () {
         if(this.markers[this.currentMuralID()]){
           this.markers[this.currentMuralID()].showCallout();
