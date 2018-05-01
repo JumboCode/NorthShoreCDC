@@ -16,7 +16,7 @@
     <br>
     <form action="" method="post" name="api">
       {{ form.csrf_token }}
-      <div class="col-xs-5">
+      <div class="col-sm-5">
         <p> Title: <br>
         {{ form.title(size=40, value= mural["Title"], class_="form-control") }} <br>
         {% for error in form.title.errors %}

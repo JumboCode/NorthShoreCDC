@@ -5,7 +5,7 @@
     <br>
     <form action="" method="post" name="api">
       {{ form.csrf_token }}
-      <div class="col-xs-5">
+      <div class="col-sm-5">
         <p> Name: <br>
         {{ form.name(size=40, class_="form-control")}} <br>
         {% for error in form.name.errors %}
