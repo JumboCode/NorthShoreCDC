@@ -6,16 +6,18 @@
 <br>
 <form action="" method="post" name="api">
 {{ form.csrf_token}}
+<div class="col-sm-5">
 <p>Email: <br>
-{{form.email(size=40)}}<br>
+{{form.email(size=40, class_="form-control")}}<br>
 {% for error in form.email.errors %}
 <span style="color: red;">[{{ error }}]</span>
-{% endfor %}<br>
+{% endfor %}</p><br>
 <p>Password: <br>
-{{form.password(size=40)}} <br>
+{{form.password(size=40, class_="form-control")}} <br>
 {% for error in form.password.errors %}
 <span style="color: red;">[{{ error }}] </span>
-{% endfor %}<br>
+{% endfor %}<br></p>
 <p><input type="submit" value="Submit" class="btn btn-md btn-primary">
-</p></form>
+</p>
+</div></form>
 {% endblock %}
