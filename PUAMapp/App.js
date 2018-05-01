@@ -16,7 +16,7 @@ import {changeMarker, changeMarkerPrev, getArtists, getMurals, store, tourState,
 import Sentry from 'sentry-expo';
 import configString from "./sentry";
 
-Sentry.config(configString.publicDSN).install();
+Sentry.config(configString).install();
 
 class AppInner extends React.Component {
   constructor(props) {
