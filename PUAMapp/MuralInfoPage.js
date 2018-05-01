@@ -98,6 +98,12 @@ export default class MuralInfoPage extends React.Component {
   goToExplorePage() {
     const mural = this.props.navigation.state.params.mural;
     const { navigate } = this.props.navigation;
+    
+    // Going to the explore page from the mural info page should end the tour.
+    if (this.props.screenProps.tourStarted) {
+        this.props.screenProps.tourState();
+    }
+    
     navigate("ExplorePage", {
         muralID: mural["uuid"]
     });

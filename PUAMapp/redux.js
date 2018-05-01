@@ -62,6 +62,45 @@ export const getArtists = () => {
     };
 };
 
+
+export const toggleTour = () => ({
+    type: 'TOGGLE_TOUR'
+
+});
+
+
+
+
+
+export const tourState = () => {
+        return function (dispatch) {
+        dispatch(toggleTour());
+    }
+}
+
+export const nextMarker = () => ({
+    type: 'NEXT_MARKER'
+
+});
+
+export const prevMarker = () => ({
+    type: 'PREV_MARKER'
+
+});
+
+
+export const changeMarker = () => {
+        return function (dispatch) {
+        dispatch(nextMarker());
+    }
+}
+
+export const changeMarkerPrev = () => {
+        return function (dispatch) {
+        dispatch(prevMarker());
+    }
+}
+
 // reducers
 
 const initialState = {
@@ -102,8 +141,38 @@ const firebaseData = (state = initialState, action) => {
     }
 };
 
+const toggleState = {
+    tourStarted: false,
+    currMarker: 1,
+    
+}
+
+const tourData = (state = toggleState, action) => {
+    switch (action.type) {
+        case 'TOGGLE_TOUR':
+            return Object.assign({}, state, {
+                tourStarted: !state.tourStarted,
+                currMarker: 1
+            });
+        case 'NEXT_MARKER':
+            return Object.assign({}, state, {
+               currMarker: (state.currMarker + 1)
+            });
+        case 'PREV_MARKER':
+            return Object.assign({}, state, {
+               currMarker: (state.currMarker - 1)
+            });
+     
+
+            default: return state;
+    }
+};
+
 export const reducers = combineReducers({
-    firebaseData
+
+	firebaseData,
+    tourData
+
 });
 
 export const store = createStore(reducers, applyMiddleware(thunk));

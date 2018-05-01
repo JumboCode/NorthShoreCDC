@@ -10,7 +10,8 @@ import ContactPage from "./ContactPage";
 import MuralInfoPage from "./MuralInfoPage";
 import SplashScreen from "./SplashScreen";
 import {pink} from "./colors.js";
-import {getArtists, getMurals, store} from "./redux";
+
+import {changeMarker, changeMarkerPrev, getArtists, getMurals, store, tourState,} from './redux';
 
 import Sentry from 'sentry-expo';
 import configString from "./sentry";
@@ -80,13 +81,15 @@ export default class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   murals: state.firebaseData.murals,
   muralsloading: state.firebaseData.muralsloading,
   muralsloaded: state.firebaseData.muralsloading,
   artistsloading: state.firebaseData.artistsloading,
   artistsloaded: state.firebaseData.artistsloading,
-  artists: state.firebaseData.artists
+  artists: state.firebaseData.artists,
+  tourStarted: state.tourData.tourStarted,
+  currMarker: state.tourData.currMarker,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -94,9 +97,21 @@ const mapDispatchToProps = dispatch => {
     getMurals: () => {
       dispatch(getMurals());
     },
-    getArtists: () => {
-      dispatch(getArtists());
-    }
+
+    getArtists : () => {
+      dispatch(getArtists())
+    },
+    tourState : () => {
+      dispatch(tourState())
+    },
+    changeMarker : () => {
+      dispatch(changeMarker())
+
+    },
+    changeMarkerPrev : () => {
+      dispatch(changeMarkerPrev())
+
+    },
   };
 };
 
