@@ -1,16 +1,21 @@
 import React from "react";
 import {
-  StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Platform
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity
 } from "react-native";
-import { lightpurple, darkpurple, pink } from "./colors.js";
 import Dimensions from "Dimensions";
+
+import { lightpurple, darkpurple, pink } from "./colors.js";
 import homepic from "./assets/images/home-background.jpg";
 import homelogo from "./assets/images/home-logo.png";
+import { isIOS } from "./utilities";
 
-const x = Dimensions.get("window").width;
-const y = Dimensions.get("window").height;
+const height = Dimensions.get("window").height;
+const FONT_SIZE = height * 0.1;
 
-var FONT_SIZE = y * 0.1;
 
 export default class HomePage extends React.Component {
   static navigationOptions = {
@@ -52,7 +57,7 @@ export default class HomePage extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Platform.OS === "ios" ? "0%" : "-8%",
+    marginTop: isIOS() ? "0%" : "-8%",
     flex: 1,
     display: "flex",
     backgroundColor: "#fff",
@@ -60,14 +65,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end"
   },
   titleContainer: {
-    // marginTop: '4%',
-    // marginRight: '3%',
     flex: 1,
     justifyContent: "space-between",
     alignItems: "flex-start",
     backgroundColor: "rgba(0,0,0,.4)"
-
-    // style={{, , ,  }}
   },
   innerTitleContainer: {
     marginTop: "13.5%",
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 36,
-    fontWeight: Platform.OS === "ios" ? "800" : "bold",
+    fontWeight: isIOS() ? "800" : "bold",
     color: "white"
   }
 });

@@ -5,28 +5,22 @@ import {
   View,
   Image,
   ScrollView,
-  Button,
   TouchableOpacity,
   Dimensions,
-  Platform
 } from "react-native";
 import { NavigationActions } from "react-navigation";
-import { lightpurple, darkpurple, pink } from "./colors.js";
 import Img from "react-native-image-progress";
 import Progress from "react-native-progress";
 import { Feather } from '@expo/vector-icons';
 
-let galleryStyles = {};
+import { pink } from "./colors.js";
+import { isIOS, isIphoneX } from "./utilities";
 
-function isIphoneX() {
-  const dimen = Dimensions.get("window");
-  return (
-    Platform.OS === "ios" &&
-    !Platform.isPad &&
-    !Platform.isTVOS &&
-    (dimen.height === 812 || dimen.width === 812)
-  );
-}
+const IOS_HEADER_IMAGE = "./assets/images/gallery-header-new.jpg";
+const ANDROID_HEADER_IMAGE = "./assets/images/gallery_top_image.jpg";
+
+
+let galleryStyles = {};
 
 export default class GalleryPage extends React.Component {
   constructor(props) {
@@ -34,7 +28,7 @@ export default class GalleryPage extends React.Component {
   }
 
   static navigationOptions = ({ navigation }) => {
-    return Platform.OS === "ios"
+    return isIOS()
       ? {
           headerLeft: (
             <TouchableOpacity
@@ -54,14 +48,16 @@ export default class GalleryPage extends React.Component {
           headerTintColor: "white",
           headerStyle: { backgroundColor: pink }
         };
-  }
+  };
 
   renderImages() {
 
     const { navigate } = this.props.navigation;
+
+    let murals, artists, muralsArray;
     murals = this.props.screenProps.murals || {};
     artists = this.props.screenProps.artists || {};
-    muralsArray = []
+    muralsArray = [];
 
     Object.keys(murals).map((key, i) => {
       muralsArray.push(murals[key]);
@@ -70,7 +66,7 @@ export default class GalleryPage extends React.Component {
     muralsArray.sort(function (a,b){return a["Index"] - b["Index"]});
     
     return muralsArray.map((mural, i) => {
-      uri = mural["Photo"];
+      let uri = mural["Photo"];
       return (
         <TouchableOpacity
           key={i}
@@ -103,9 +99,9 @@ export default class GalleryPage extends React.Component {
         <View>
           <Image style={galleryStyles.image}
             source={
-              Platform.OS === "ios"
-                ? require("./assets/images/gallery-header-new.jpg")
-                : require("./assets/images/gallery_top_image.jpg")
+              isIOS()
+                ? require(IOS_HEADER_IMAGE)
+                : require(ANDROID_HEADER_IMAGE)
             }
           />
           <View style={galleryStyles.imageGallery}>
@@ -126,7 +122,7 @@ let { height, width } = Dimensions.get("window");
 let gridSquareSize = width / 3 - 1;
 let headerHeight = height / 3;
 
-if (Platform.OS === "ios") {
+if (isIOS()) {
   galleryStyles = StyleSheet.create({
     backButton: {
       position: "relative",
@@ -172,7 +168,7 @@ if (Platform.OS === "ios") {
     },
     imageGallery: {
       backgroundColor:
-        Platform.OS === "ios" ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,.5)",
+        isIOS() ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,.5)",
       height: headerHeight,
       position: "absolute",
       width: width,
@@ -228,7 +224,7 @@ if (Platform.OS === "ios") {
     },
     imageGallery: {
       backgroundColor:
-        Platform.OS === "ios" ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,.5)",
+        isIOS() ? "rgba(0,0,0,0.1)" : "rgba(0,0,0,.5)",
       height: headerHeight,
       position: "absolute",
       width: width,
