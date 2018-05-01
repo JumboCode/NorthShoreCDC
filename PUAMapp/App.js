@@ -22,7 +22,7 @@ import SplashScreen from "./SplashScreen";
 import { lightpurple, darkpurple, pink } from "./colors.js";
 
 import {
-  getMurals, getArtists, tourState, changeMarker, changeMarkerPrev, trueGallery, falseGallery
+  getMurals, getArtists, tourState, changeMarker, changeMarkerPrev, 
 } from './redux';
 
 import { Provider } from "react-redux";
@@ -113,7 +113,7 @@ const mapStateToProps = (state) => ({
     artists: state.firebaseData.artists,
     tourStarted: state.tourData.tourStarted,
     currMarker: state.tourData.currMarker,
-    fromGallery: state.tourData.fromGallery,
+   
 
 
 });
@@ -132,14 +132,6 @@ const mapDispatchToProps = dispatch => {
     },
     changeMarker : () => {
       dispatch(changeMarker())
-
-    },
-    trueFromGallery : () => {
-      dispatch(trueGallery())
-
-    },
-    falseFromGallery : () => {
-      dispatch(falseGallery())
 
     },
     changeMarkerPrev : () => {

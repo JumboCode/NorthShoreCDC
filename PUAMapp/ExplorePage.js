@@ -15,9 +15,6 @@ import { Permissions } from "expo";
 import { NavigationActions } from "react-navigation";
 import { lightpurple, darkpurple, pink } from "./colors.js";
 import { Feather } from '@expo/vector-icons';
-import MapViewDirections from 'react-native-maps-directions';
-
-
 import  MapView, {Polyline} from 'react-native-maps';
 
 
@@ -183,12 +180,10 @@ export default class ExplorePage extends React.Component {
         // This prevents an animation bug in which we showed the callout while
         // the map was still animating to the region.
         
-        // TODO: use constants to determine the delay amount. Here we use 1500
-        // because it is the sum of the map's animation delays (500ms before
-        // animating, animate moving to new region for 1000ms).
-        
         setTimeout(function () {
-          this.markers[this.currentMuralID()].showCallout();
+          if(this.markers[this.currentMuralID()]){
+            this.markers[this.currentMuralID()].showCallout();
+          }
         }.bind(this), 1500);
 
       }
