@@ -147,7 +147,7 @@ if (isIOS()) {
     },
     headerButtonText: {
       fontWeight: 'bold',
-      fontSize: 17,
+      fontSize: 16,
       color: pink
     },
     headerStyle: {

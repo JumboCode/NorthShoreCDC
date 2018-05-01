@@ -3,24 +3,28 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  ScrollView,
   TouchableOpacity,
-  Button,
   StatusBar,
-  Platform,
-  Alert
 } from "react-native";
 import { Permissions } from "expo";
 import { NavigationActions } from "react-navigation";
-import { lightpurple, darkpurple, pink } from "./colors.js";
+import { pink } from "./colors.js";
 import { Feather } from '@expo/vector-icons';
-import  MapView, {Polyline} from 'react-native-maps';
+import  MapView from 'react-native-maps';
+import { isIOS } from "./utilities";
 
+const INITIAL_LAT = 42.518217;
+const INITIAL_LONG = -70.891919;
+const INITIAL_DELTA = 0.005;
+const ZOOM_IN_DELTA = .001;
+
+const ANIMATION_DELAY = 500;
+const ANIMATION_DURATION = 1000;
 
 // This triggers asking the user for location permissions.
 // This won't do anything if the permission is already granted.
 Permissions.askAsync(Permissions.LOCATION);
+
 
 let exploreStyles = {};
 
@@ -28,46 +32,48 @@ let exploreStyles = {};
 // But "mural index" does not refer to either of those things, it only refers
 // to a mural's order in the tour.
 export default class ExplorePage extends React.Component {
-    constructor(props) {
-        super(props);
-        self = this; 
+  constructor(props) {
+    super(props);
+    self = this;
 
-        // Where we will store the refs to all the markers
-        // This is necessary because showing and hiding a callout must be done imperatively.
-        this.markers = {}
+    // Where we will store the refs to all the markers
+    // This is necessary because showing and hiding a callout must be done imperatively.
+    this.markers = {};
 
-      this.tourNext = this.tourNext.bind(this);
- }
+    this.tourNext = this.tourNext.bind(this);
+  }
 
 
   static navigationOptions = ({ navigation}) => {
-    return Platform.OS === "ios"
+    return isIOS()
       ? {
-          headerLeft: (
-            <TouchableOpacity
-              style={exploreStyles.backButtonTouchable}
-              onPress={() => navigation.dispatch(NavigationActions.back())}
-            >
-              <View style={exploreStyles.backButton}>
-                <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}}/>
-                <Text style={exploreStyles.headerButtonText}>  Back </Text>
-              </View>
-            </TouchableOpacity>
-          ),
-          headerStyle: exploreStyles.headerStyle
-        }
+        headerLeft: (
+          <TouchableOpacity
+            style={exploreStyles.backButtonTouchable}
+            onPress={() => navigation.dispatch(NavigationActions.back())}
+          >
+            <View style={exploreStyles.backButton}>
+              <Feather name="chevron-left" size={25} color={pink} style={{marginBottom: 1}}/>
+              <Text style={exploreStyles.headerButtonText}>  Back </Text>
+            </View>
+          </TouchableOpacity>
+        ),
+        headerStyle: exploreStyles.headerStyle
+      }
       : {
-          title: "Punto Urban Art",
-          headerTintColor: "white",
-          headerStyle: { backgroundColor: pink }
-        };
-  }
-  
+        title: "Punto Urban Art",
+        headerTintColor: "white",
+        headerStyle: { backgroundColor: pink }
+      };
+  };
+
+
   // Returns true if we came from the gallery's mural info page ("see mural on map" button)
   didComeFromGallery() {
     return (this.props.navigation.state.params && this.props.navigation.state.params.muralID);
   }
-  
+
+
   // Logic for determining which mural should currently be shown to the user.
   // If we came from the gallery -> mural info page, show that mural.
   // If we're on a tour, show the mural of the index we're currently at
@@ -77,38 +83,30 @@ export default class ExplorePage extends React.Component {
       return this.props.navigation.state.params.muralID;
     }
     else if (this.props.screenProps.tourStarted) {
-      currMarkerIndex = this.props.screenProps.currMarker
-      murals = this.props.screenProps.murals || {};
+      let currMarkerIndex = this.props.screenProps.currMarker
+      let murals = this.props.screenProps.murals || {};
 
-      for (muralKey in murals) {
-        if (murals[muralKey]["Index"] == currMarkerIndex) {
+      for (let muralKey in murals) {
+        if (murals[muralKey]["Index"] === currMarkerIndex) {
           return muralKey;
         }
       }
     }
-    
     return undefined;
-    
   }
-  
+
+
   renderMarkers() {
-    const { navigate } = this.props.navigation;
+    let murals = this.props.screenProps.murals || {};
+    let artists = this.props.screenProps.artists || {};
 
-    murals = this.props.screenProps.murals || {};
-    artists = this.props.screenProps.artists || {};
-    
-    defaultMuralID = '';
-    if (this.props.navigation.state.params && this.props.navigation.state.params.muralID) {
-      defaultMuralID = this.props.navigation.state.params.muralID;
-    }
-    
     return Object.keys(murals).map((key, i) => {
-      lat = parseFloat(murals[key]["Lat"]);
-      long = parseFloat(murals[key]["Long"]);
-      title = murals[key]["Title"];
-      artistName = artists[murals[key]["Artist"]]["name"];
+      let lat = parseFloat(murals[key]["Lat"]);
+      let long = parseFloat(murals[key]["Long"]);
+      let title = murals[key]["Title"];
+      let artistName = artists[murals[key]["Artist"]]["name"];
 
-      if (Platform.OS === 'ios') {
+      if (isIOS()) {
         return (
           <MapView.Marker
             key={i}
@@ -118,17 +116,17 @@ export default class ExplorePage extends React.Component {
             pinColor={pink}
             ref = {(ref) => this.markers[key] = ref}
           >
-            <MapView.Callout 
+            <MapView.Callout
               tooltip={false}
-              onPress = {() => 
-                  this.props.navigation.navigate({
-                    key: murals[key]['uuid'], 
-                    routeName: 'MuralInfoPage', 
-                    params: {
-                      mural: murals[key], 
-                      artist: artists[murals[key]["Artist"]]
-                    }
-                  })
+              onPress = {() =>
+                this.props.navigation.navigate({
+                  key: murals[key]['uuid'],
+                  routeName: 'MuralInfoPage',
+                  params: {
+                    mural: murals[key],
+                    artist: artists[murals[key]["Artist"]]
+                  }
+                })
               }
             >
               <View style={exploreStyles.callOutContainer}>
@@ -152,199 +150,198 @@ export default class ExplorePage extends React.Component {
             coordinate={{ latitude: lat, longitude: long }}
             pinColor={pink}
             ref = {(ref) => this.markers[key] = ref}
-            onCalloutPress = {() => 
-                this.props.navigation.navigate({
-                  key: murals[key]['uuid'], 
-                  routeName: 'MuralInfoPage', 
-                  params: {
-                    mural: murals[key], 
-                    artist: artists[murals[key]["Artist"]]
-                  }
-                })
+            onCalloutPress = {() =>
+              this.props.navigation.navigate({
+                key: murals[key]['uuid'],
+                routeName: 'MuralInfoPage',
+                params: {
+                  mural: murals[key],
+                  artist: artists[murals[key]["Artist"]]
+                }
+              })
             }
           />
         );
       }
     });
-
-   
   }
-  
+
+
   goToMural() {
-    murals = this.props.screenProps.murals || {};
-    
-      if (this.markers && this.currentMuralID()) {
-        
-        // Note: we must delay showing the callout because it should only happen
-        // AFTER we animate to the region for that callout.
-        // This prevents an animation bug in which we showed the callout while
-        // the map was still animating to the region.
-        
-        setTimeout(function () {
-          if(this.markers[this.currentMuralID()]){
-            this.markers[this.currentMuralID()].showCallout();
-          }
-        }.bind(this), 1500);
+    if (this.markers && this.currentMuralID()) {
 
-      }
+      // Note: we must delay showing the callout because it should only happen
+      // AFTER we animate to the region for that callout.
+      // This prevents an animation bug in which we showed the callout while
+      // the map was still animating to the region.
+
+      setTimeout(function () {
+        if(this.markers[this.currentMuralID()]){
+          this.markers[this.currentMuralID()].showCallout();
+        }
+      }.bind(this), ANIMATION_DELAY + ANIMATION_DURATION);
+    }
   }
 
 
-    toggleTour() {
-      // If we're ending a tour, hide any callouts that may be still visible.
-      murals = this.props.screenProps.murals || {};
-      if (this.props.screenProps.tourStarted){
-        Object.keys(murals).map((key,i) =>{
-          this.markers[key].hideCallout();
-        });
-      }
-      
-      this.props.screenProps.tourState()
-    
+  toggleTour() {
+    let murals = this.props.screenProps.murals || {};
+
+    // If we're ending a tour, hide any callouts that may be still visible.
+    if (this.props.screenProps.tourStarted){
+      Object.keys(murals).map((key,i) =>{
+        this.markers[key].hideCallout();
+      });
+    }
+    this.props.screenProps.tourState()
+  }
+
+
+  tourNext () {
+    this.props.screenProps.changeMarker();
+    if (this.props.screenProps.currMarker === Object.keys(this.props.screenProps.murals).length - 1) {
+      this.toggleTour();
+    }
+  }
+
+
+  tourPrev() {
+    if (this.props.screenProps.currMarker !== 1) {
+      this.props.screenProps.changeMarkerPrev();
+    }
+  }
+
+
+  render() {
+    let initialRegion = {
+      longitude: INITIAL_LONG,
+      latitude: INITIAL_LAT,
+      latitudeDelta: INITIAL_DELTA,
+      longitudeDelta: INITIAL_DELTA
+    };
+
+    let region = undefined;
+    let murals = this.props.screenProps.murals || {};
+
+    if (this.currentMuralID()) {
+      let mural = murals[this.currentMuralID()];
+      region = {
+        longitude: mural["Long"],
+        latitude: mural["Lat"],
+        longitudeDelta: ZOOM_IN_DELTA,
+        latitudeDelta: ZOOM_IN_DELTA
+      };
+    } else {
+      region = initialRegion
     }
 
-    tourNext () {
-        this.props.screenProps.changeMarker();
-        if( this.props.screenProps.currMarker == Object.keys(this.props.screenProps.murals).length - 1){
-            this.toggleTour();
-        }
-    }
+    return (
+      <View style={{flex: 1}}>
+        <StatusBar barStyle={ isIOS() ? "dark-content" : "light-content"}/>
+        <AnimatedMapView
+          style={{flex: 1 }}
+          showsPointsOfInterest={false}
+          showsUserLocation={true}
+          initialRegion={initialRegion}
+          region={region}
+          onLayout={this.goToMural.bind(this)}
+        >
+          {this.renderMarkers()}
+        </AnimatedMapView>
 
-    tourPrev() {
-      if(this.props.screenProps.currMarker == 1){
-        return;
-      }
-      else{
-        this.props.screenProps.changeMarkerPrev();
-      }
-    }
-    
-    render() {
-        const { navigate } = this.props.navigation;
-        initialLat = 42.518217;
-        initialLong = -70.891919;
-        initialDelta = 0.005;
-        
-        initialRegion = {
-            longitude: initialLong,
-            latitude: initialLat,
-            latitudeDelta: initialDelta,
-            longitudeDelta: initialDelta
-        };
-        
-        region = undefined;
-        murals = this.props.screenProps.murals || {};
-
-        if (this.currentMuralID()) {
-          mural = murals[this.currentMuralID()];
-          region = {
-            longitude: mural["Long"],
-            latitude: mural["Lat"],
-            longitudeDelta: .001,
-            latitudeDelta: .001
-          };
-        }
-        else {
-          region = initialRegion
-        }
-        
-        return (
-            <View style = {{flex: 1}}>
-            <StatusBar barStyle = { Platform.OS === 'ios' ? "dark-content" : "light-content"}/>
-            <AnimatedMapView
-              style = {{flex: 1 }}
-              showsPointsOfInterest={false}
-              showsUserLocation={true}
-              initialRegion = {initialRegion}
-              region =  {region}
-              onLayout = {this.goToMural.bind(this)}
-               >
-              {this.renderMarkers()}
-            </AnimatedMapView>
-  
-          {this.props.screenProps.tourStarted ? 
-            <View style = {exploreStyles.buttonContainer}>
-              <View style = {exploreStyles.previousNextContainer}>
-                <View style={exploreStyles.previousContainer}>
-                  <TouchableOpacity style= {[exploreStyles.button, exploreStyles.prevNextButton]} onPress={() => this.tourPrev()}>
-                    <Text numberOfLines={1} style = {exploreStyles.text}>Previous</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={exploreStyles.nextContainer}>
-                  <TouchableOpacity style= {[exploreStyles.button, exploreStyles.prevNextButton]} onPress={() => this.tourNext()}>
-                    <Text style = {exploreStyles.text}>Next</Text>
-                  </TouchableOpacity>
-                </View>
+        {this.props.screenProps.tourStarted ?
+          <View style = {exploreStyles.buttonContainer}>
+            <View style = {exploreStyles.previousNextContainer}>
+              <View style={exploreStyles.previousContainer}>
+                <TouchableOpacity
+                  style={[exploreStyles.button, exploreStyles.prevNextButton]}
+                  onPress={() => this.tourPrev()}
+                >
+                  <Text style={exploreStyles.text}>Previous</Text>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity style= {exploreStyles.button} onPress={() => this.toggleTour()}>
-                <Text style = {exploreStyles.text}> End Virtual Tour </Text>
-              </TouchableOpacity>
-            </View> 
-            :
-                this.didComeFromGallery() ? null : 
-                <View style = {exploreStyles.buttonContainer}>
-                  <TouchableOpacity style= {exploreStyles.button} onPress={() => this.toggleTour()}>
-                    <Text style = {exploreStyles.text}>Start Virtual Tour</Text>
-                  </TouchableOpacity>
-                </View>
-
-            }
+              <View style={exploreStyles.nextContainer}>
+                <TouchableOpacity
+                  style={[exploreStyles.button, exploreStyles.prevNextButton]}
+                  onPress={() => this.tourNext()}
+                >
+                  <Text style = {exploreStyles.text}>Next</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <TouchableOpacity
+              style={exploreStyles.button}
+              onPress={() => this.toggleTour()}
+            >
+              <Text style={exploreStyles.text}> End Virtual Tour </Text>
+            </TouchableOpacity>
           </View>
-        );
-    }
+          :
+          this.didComeFromGallery() ? null :
+            <View style={exploreStyles.buttonContainer}>
+              <TouchableOpacity
+                style={exploreStyles.button}
+                onPress={() => this.toggleTour()}>
+                <Text style={exploreStyles.text}>Start Virtual Tour</Text>
+              </TouchableOpacity>
+            </View>
+        }
+      </View>
+    );
+  }
 }
 
 /*****************************************************************************/
 
 // Just a MapView but it animates to region if the region prop changes!
 class AnimatedMapView extends React.Component {
-    
-    shouldComponentUpdate(nextProps, nextState) {
-        // Only animate to the region if the region is different
-        if (this.props.region !== nextProps.region) {
-          this.goToRegion(nextProps.region, nextProps.onLayout);          
-        }
-        
-        return false;
+
+  shouldComponentUpdate(nextProps, nextState) {
+    // Only animate to the region if the region is different
+    if (this.props.region !== nextProps.region) {
+      this.goToRegion(nextProps.region, nextProps.onLayout);
     }
-    
-    // Note: onLayout (which gets passed in as a prop) is called afterwards so
-    // that the parent component has a way to hook into onLayout.
-    // But TBH im not sure if this is the right way to do this lol.
-    goToRegion(region, onLayout) {
-        if (region) {
-            setTimeout(function () {
-                this.map.animateToRegion(region, 1000);
-            }.bind(this), 500);
-        }
-        
-        if (onLayout) {
-            onLayout();
-        }
+
+    return false;
+  }
+
+  // Note: onLayout (which gets passed in as a prop) is called afterwards so
+  // that the parent component has a way to hook into onLayout.
+  // But TBH im not sure if this is the right way to do this lol.
+  goToRegion(region, onLayout) {
+    if (region) {
+      setTimeout(function () {
+        this.map.animateToRegion(region, ANIMATION_DURATION);
+      }.bind(this), ANIMATION_DELAY);
     }
-    
-    render() {
-        var {initialRegion, region, children, onLayout, ...otherProps} = this.props;
-        
-        // Avoid a weird animation from initialRegion to region if theyre the same
-        if (region === initialRegion) {
-          region = undefined;
-        }
-        
-        return (
-            <MapView 
-                onLayout={this.goToRegion.bind(this, region, onLayout)}
-                initialRegion =  {initialRegion}
-                ref =  {r => {this.map = r}}
-                {...otherProps}>
-                {children}
-            </MapView>
-        )
+
+    if (onLayout) {
+      onLayout();
     }
-    
+  }
+
+  render() {
+    let {initialRegion, region, children, onLayout, ...otherProps} = this.props;
+
+    // Avoid a weird animation from initialRegion to region if theyre the same
+    if (region === initialRegion) {
+      region = undefined;
+    }
+
+    return (
+      <MapView
+        onLayout={this.goToRegion.bind(this, region, onLayout)}
+        initialRegion =  {initialRegion}
+        ref =  {r => {this.map = r}}
+        {...otherProps}>
+        {children}
+      </MapView>
+    )
+  }
+
 }
 
-if (Platform.OS === "ios") {
+if (isIOS()) {
   exploreStyles = StyleSheet.create({
     backButton: {
       position: "relative",
@@ -369,7 +366,7 @@ if (Platform.OS === "ios") {
     },
     headerButtonText: {
       fontWeight: 'bold',
-      fontSize: 17,
+      fontSize: 16,
       color: pink
     },
     headerStyle: {
@@ -410,6 +407,8 @@ if (Platform.OS === "ios") {
       justifyContent: "flex-end",
       alignItems: "center",
       position: "absolute",
+      paddingLeft: 5,
+      paddingRight: 5,
       marginTop: "auto",
       bottom: 0,
       width: "100%",
@@ -427,7 +426,7 @@ if (Platform.OS === "ios") {
       flex: 1,
       flexDirection: "row",
       justifyContent: "flex-end",
-    }, 
+    },
     prevNextButton: {
       width: 130,
     },
@@ -460,6 +459,8 @@ if (Platform.OS === "ios") {
       flexDirection: "column",
       justifyContent: "flex-end",
       alignItems: "center",
+      paddingLeft: 5,
+      paddingRight: 5,
       position: "absolute",
       marginTop: "auto",
       bottom: 0,
@@ -478,7 +479,7 @@ if (Platform.OS === "ios") {
       flex: 1,
       flexDirection: "row",
       justifyContent: "flex-end",
-    }, 
+    },
     prevNextButton: {
       width: 130,
     },

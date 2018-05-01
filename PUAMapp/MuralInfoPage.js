@@ -253,7 +253,7 @@ if (isIOS()) {
     },
     headerButtonText: {
       fontWeight: 'bold',
-      fontSize: 17,
+      fontSize: 16,
       color: pink
     },
     container: {
@@ -353,7 +353,7 @@ if (isIOS()) {
       position: "absolute",
       height: "100%",
       width: "100%",
-      backgroundColor: "rgba(0, 0, 0, 0.3)"
+      backgroundColor: "rgba(0, 0, 0, 0.4)"
     },
     darkerOverlay: {
       position: "absolute",
