@@ -21,7 +21,8 @@
     <body>
       <div class="container">
       <div class="row">
-        <span><img class="header-img" src="http://puntourbanartmuseum.org/images/logo.png" style="width: 34%; margin-top: 3%; margin-bottom: 3% "/></span>
+       
+        <span><img class="header-img" src="{{ url_for('static', filename = 'banner.png') }}" style="width: 34%; margin-top: 3%; margin-bottom: 3% "/></span>
 
       </div>
       <div class="row">
@@ -40,10 +41,10 @@
             </div>
           </nav>
           {% block content %}
-                        <div id='page-wrap' style="padding: 3%;">
-                                {% block page_content %}{% endblock %}
-                        </div>
            {% endblock %} 
+           <div id='page-wrap' style="padding: 3%; padding-bottom: 10% !import;">
+              {% block page_content %}{% endblock %}
+           </div>
     </div>
     </div>
   </body>
